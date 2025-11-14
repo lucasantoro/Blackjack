@@ -194,6 +194,10 @@ h2 {
   text-align: left;
 }
 
+.description-long {
+  text-align: justify;
+}
+
 .panel {
   background: rgba(10, 0, 16, 0.55);  /* trasparenza viola scura */
   backdrop-filter: blur(6px);         /* sfocatura epica */
