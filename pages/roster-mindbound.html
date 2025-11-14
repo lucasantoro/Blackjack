@@ -34,20 +34,8 @@
 <main class="panel">
 <h2>Roster MindBound</h2>
 
-<div class="roster-grid">
-  <!-- ripeti questi blocchi -->
-  <div class="member">
-    <img src="../img/placeholder-member.jpg" alt="Membro">
-    <h3>ODETTA</h3>
-    <p class="tagline">Spacciatore del Raid</p>
-    <p class="description-long">
-      Ho scoperto il brivido delle mitiche su WoW a 42 anni — e non ho più smesso di divertirmi.. Spacciatore ufficiale del raid, distribuisco pozze, consigli e meme con la stessa generosità con cui i boss distribuiscono wipe.
-      In game sono il tipo che arriva preparato, ma non si tira mai indietro davanti a un rischio calcolato (o completamente folle). Fuori dal gioco sono una persona curiosa, ironica e sempre pronta a ridere di me stesso.
-      Amo le sfide, le serate in compagnia e quel momento magico in cui tutto va storto… ma si ride lo stesso. 
-
-      Se c'è da trasformare un dungeon in un'avventura epica, Odetta è il compagno che vuoi al tuo fianco... o no?
-    </p>
-  </div>
+<div class="roster-grid" id="roster-container">
+  <!-- qui verranno caricati i membri -->
 </div>
 
 </main>
@@ -55,6 +43,24 @@
 <footer>
 <p>&copy; 2025 Delirium Tremens</p>
 </footer>
+
+<script>
+// LISTA DEI FILE MEMBRO
+const members = [
+  "odetta.html"
+];
+
+const container = document.getElementById("roster-container");
+
+members.forEach(file => {
+  fetch(`../members/${file}`)
+    .then(response => response.text())
+    .then(html => {
+      container.innerHTML += html;
+    });
+});
+</script>
+
 
 </body>
 </html>
