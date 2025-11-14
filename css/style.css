@@ -1,4 +1,22 @@
 /* --- Tema Cthulhu / Void --- */
+/* CENTRA TUTTO IL CONTENUTO DELLE PAGINE */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* CENTRA ANCHE LA HERO SECTION */
+.hero {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero img {
+  margin: 0 auto;
+  display: block;
+}
 
 
 .hero h2 {
