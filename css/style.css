@@ -253,6 +253,15 @@ h2 {
   box-shadow: 0 0 15px rgba(150,60,255,0.7);
 }
 
+/* ANIMAZIONE TRANSIZIONE PAGINA */
+.page-transition {
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.page-loaded {
+  opacity: 1;
+}
 
 
 
