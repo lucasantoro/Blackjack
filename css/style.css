@@ -28,10 +28,18 @@ body {
 
 
 /* CONTENITORE CENTRATO */
-main, .statuto {
+main {
   max-width: 1100px;
   margin: 0 auto;
-  text-align: left;
+  text-align: center;
+  padding: 20px;
+  flex: 1;     /* <-- AGGIUNGI QUI */
+}
+
+.statuto {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
   padding: 20px;
 }
 
