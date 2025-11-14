@@ -14,19 +14,17 @@ body {
 /* --- TEMA CTHULHU / VOID --- */
 body {
   font-family: "Trebuchet MS", sans-serif;
-
-  /* 🔥 sfondo a schermo intero */
-  background: url("../img/logo.png") no-repeat center center fixed;
-  background-size: cover;
-
-  /* overlay violaceo per il tema Void */
-  position: relative;
-  color: #e6d6ff;
   margin: 0;
   padding: 0;
+  min-height: 100vh;        /* pagina almeno 100% altezza */
+  display: flex;            /* layout verticale */
+  flex-direction: column;   /* prima header, poi main, poi footer */
+  color: #e6d6ff;
   text-align: center;
-}
 
+  background: url("../img/logo.png") no-repeat center center fixed;
+  background-size: cover;
+}
 
 
 /* CONTENITORE CENTRATO */
