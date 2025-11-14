@@ -1,12 +1,6 @@
 /* --- TEMA CTHULHU / VOID --- */
 body {
-  font-family: "Trebuchet MS", sans-serif;
-  background: radial-gradient(circle at 50% 20%, #2b0036, #0a0010 60%, #050008 100%);
-  color: #e6d6ff;
-  margin: 0;
-  padding: 0;
-  text-shadow: 0 0 4px #000;
-  text-align: center;
+  background: red !important;
 }
 
 /* CONTENITORE CENTRATO */
