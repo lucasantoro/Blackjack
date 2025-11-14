@@ -194,6 +194,10 @@ h2 {
   background-size: cover;
 }
 
+.mindbound-bg {
+  background: url("../img/mindbound_logo.png") no-repeat center center fixed;
+  background-size: cover;
+}
 
 /* STATUTO */
 .statuto h2 {
