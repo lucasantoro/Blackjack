@@ -101,7 +101,7 @@ nav ul li a:hover {
   border-radius: 20px;
   overflow: hidden;
 
-  background: url("img/il-tuo-sfondo.jpg") center center / cover no-repeat;
+  background: url("img/logo.jpg") center center / cover no-repeat;
   box-shadow: 0 0 20px rgba(90, 20, 140, 0.5);
 
   display: flex;
