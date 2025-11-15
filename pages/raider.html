@@ -59,5 +59,23 @@ una vera avventura condivisa.
 <p>&copy; 2025 Delirium Tremens</p>
 </footer>
 
+<!-- SCRIPT TRANSIZIONE PAGINA -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.body.classList.add("page-loaded");
+});
+
+document.querySelectorAll("a").forEach(link => {
+  if (link.hostname === window.location.hostname) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      const href = this.getAttribute("href");
+      document.body.classList.remove("page-loaded");
+      setTimeout(() => { window.location.href = href; }, 300);
+    });
+  }
+});
+</script>
+
 </body>
 </html>

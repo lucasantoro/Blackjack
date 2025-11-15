@@ -6,26 +6,6 @@
 <link rel="stylesheet" href="../../css/style.css">
 </head>
 
-<script>
-// Quando la pagina ha finito di caricare → fade-in
-document.addEventListener("DOMContentLoaded", function () {
-  document.body.classList.add("page-loaded");
-});
-
-// Quando clicchi un link interno → fade-out prima di cambiare pagina
-document.querySelectorAll("a").forEach(link => {
-  if (link.hostname === window.location.hostname) {
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
-      const href = this.getAttribute("href");
-      document.body.classList.remove("page-loaded");
-      setTimeout(() => { window.location.href = href; }, 300);
-    });
-  }
-});
-</script>
-
-
 <body class="page-transition abyss-bg">
 
 <header>
@@ -87,6 +67,24 @@ L’Abyss Chosen è il team che apre la strada, affronta il contenuto al suo mas
 <footer>
 <p>&copy; 2025 Delirium Tremens</p>
 </footer>
+
+<!-- SCRIPT TRANSIZIONE PAGINA -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.body.classList.add("page-loaded");
+});
+
+document.querySelectorAll("a").forEach(link => {
+  if (link.hostname === window.location.hostname) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      const href = this.getAttribute("href");
+      document.body.classList.remove("page-loaded");
+      setTimeout(() => { window.location.href = href; }, 300);
+    });
+  }
+});
+</script>
 
 </body>
 </html>
