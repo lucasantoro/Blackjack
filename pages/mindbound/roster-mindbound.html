@@ -67,13 +67,14 @@ document.querySelectorAll("a").forEach(link => {
 <script>
 // LISTA DEI FILE MEMBRO
 const members = [
-  "odetta.html"
+  "odetta.html",
+  "aqualara.html"
 ];
 
 const container = document.getElementById("roster-container");
 
 members.forEach(file => {
-  fetch(`../members/${file}`)
+  fetch(`../../members/${file}`)
     .then(response => response.text())
     .then(html => {
       container.innerHTML += html;
