@@ -33,7 +33,7 @@ main {
   margin: 0 auto;
   text-align: center;
   padding: 20px;
-  flex: 1;     /* <-- AGGIUNGI QUI */
+  flex: 1;
 }
 
 .statuto {
