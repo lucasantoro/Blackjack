@@ -199,9 +199,10 @@ async function loadProgress() {
     return {
       name: r.name,
       slug: r.slug,
-      heroic: p.heroic_bosses_killed,
-      mythic: p.mythic_bosses_killed,
-      total: p.total_bosses
+      normal: p.normal_bosses_killed ?? 0,
+      heroic: p.heroic_bosses_killed ?? 0,
+      mythic: p.mythic_bosses_killed ?? 0,
+      total: p.total_bosses ?? 0
     };
   });
 
@@ -238,10 +239,10 @@ function initChart() {
 
   chart = new Chart(ctx, {
     type: "bar",
-    data: {
-      labels: ["Heroic", "Mythic"],
-      datasets: [{
-        data: [raid.heroic, raid.mythic],
+  data: {
+    labels: ["Normal", "Heroic", "Mythic"],
+    datasets: [{
+      data: [raid.normal, raid.heroic, raid.mythic],
         backgroundColor: ["#8c43ffcc", "#e040ffcc"],
         borderColor: ["#a776ff", "#ff74d4"],
         borderWidth: 2,
@@ -277,9 +278,10 @@ function changeRaid(dir) {
 
   document.getElementById("raidTitle").textContent = r.name;
   document.getElementById("raidSummary").textContent =
-    `Progress: ${r.mythic} / ${r.total}`;
+  `${r.normal}/${r.total} N • ${r.heroic}/${r.total} HC • ${r.mythic}/${r.total} M`;
 
-  chart.data.datasets[0].data = [r.heroic, r.mythic];
+
+  chart.data.datasets[0].data = [r.normal, r.heroic, r.mythic];
   chart.update();
 }
 
