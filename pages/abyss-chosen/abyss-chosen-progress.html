@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Abyss Chosen – Progress</title>
 <link rel="stylesheet" href="../../css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="page-transition abyss-bg">
@@ -30,44 +31,46 @@
   </ul>
 </nav>
 
-<main class="panel">
+<main class="panel progress-panel">
 
-<h2>Stato del Tier</h2>
+  <!-- PARTE 1: STATO DEL TIER -->
+  <section class="progress-tier">
+    <h2>Stato del Tier</h2>
+    <p>
+      Gli <strong>Abyss Chosen</strong> affrontano i raid dell’espansione con approccio tecnico e organizzato.
+      Qui trovi lo stato attuale del progress nei vari raid.
+    </p>
+    <ul>
+      <li><strong>Liberation of Undermine:</strong> HC 8/8 – Mythic 3/8</li>
+      <li><strong>Manuforge Omega:</strong> HC 6/7 – Mythic 1/7</li>
+      <li><strong>Nerub-ar Palace:</strong> HC 9/9 – Mythic 0/9</li>
+    </ul>
+  </section>
 
-<table class="progress-table">
-  <tr>
-    <th>Boss</th><th>HC</th><th>Mythic</th><th>Data Kill</th>
-  </tr>
+  <!-- PARTE 2: GRAFICO + FRECCE -->
+  <section class="progress-chart-section">
+    <h2 id="raidTitle">Liberation of Undermine</h2>
 
-  <tr><td>Gnarlroot</td><td>✔️</td><td>✔️</td><td>14/01/2025</td></tr>
-  <tr><td>Igira the Cruel</td><td>✔️</td><td>✔️</td><td>14/01/2025</td></tr>
-  <tr><td>Volcoross</td><td>✔️</td><td>⛔</td><td>15/01/2025</td></tr>
-  <tr><td>Larodar</td><td>✔️</td><td>⛔</td><td>-</td></tr>
-  <tr><td>Council of Dreams</td><td>✔️</td><td>⛔</td><td>-</td></tr>
-  <tr><td>Nymue</td><td>✔️</td><td>⛔</td><td>-</td></tr>
-  <tr><td>Smolderon</td><td>✔️</td><td>⛔</td><td>-</td></tr>
-  <tr><td>Tindral</td><td>✔️</td><td>⛔</td><td>-</td></tr>
-  <tr><td>Fyrakk</td><td>✔️</td><td>⛔</td><td>-</td></tr>
-</table>
+    <div class="chart-wrapper">
+      <button class="chart-nav prev" type="button">◀</button>
+      <canvas id="progressChart" width="400" height="220"></canvas>
+      <button class="chart-nav next" type="button">▶</button>
+    </div>
+  </section>
 
-<h2>Progress Totale</h2>
-<ul>
-  <li><strong>Heroic:</strong> 9/9</li>
-  <li><strong>Mythic:</strong> 2/9</li>
-</ul>
-
-<h2>Timeline Kill</h2>
-<ul class="timeline">
-  <li>14/01/2025 — Gnarlroot Mythic Kill</li>
-  <li>14/01/2025 — Igira Mythic Kill</li>
-  <li>15/01/2025 — Volcoross HC Kill</li>
-</ul>
-
-<a href="https://www.warcraftlogs.com/" target="_blank" class="apply-button">
-  Apri i nostri Warcraft Logs
-</a>
+  <!-- PARTE 3: BOTTONE LOGS -->
+  <section class="progress-logs">
+    <h2>Warcraft Logs</h2>
+    <p>
+      Vuoi vedere i dettagli dei pull, dei log e delle performance singole?
+    </p>
+    <a href="https://www.warcraftlogs.com/" target="_blank" class="apply-button">
+      Apri i Logs degli Abyss Chosen
+    </a>
+  </section>
 
 </main>
+
 
 <footer>
 <p>&copy; 2025 Delirium Tremens</p>
@@ -90,6 +93,111 @@ document.querySelectorAll("a").forEach(link => {
   }
 });
 </script>
+
+<script>
+// DATI DEI RAID PER IL GRAFICO
+const raids = [
+  {
+    name: "Liberation of Undermine",
+    heroicKilled: 8,
+    heroicTotal: 8,
+    mythicKilled: 3,
+    mythicTotal: 8
+  },
+  {
+    name: "Manuforge Omega",
+    heroicKilled: 6,
+    heroicTotal: 7,
+    mythicKilled: 1,
+    mythicTotal: 7
+  },
+  {
+    name: "Nerub-ar Palace",
+    heroicKilled: 9,
+    heroicTotal: 9,
+    mythicKilled: 0,
+    mythicTotal: 9
+  }
+];
+
+let currentRaidIndex = 0;
+
+const raidTitle = document.getElementById("raidTitle");
+const ctx = document.getElementById("progressChart").getContext("2d");
+
+// Crea il grafico iniziale
+let progressChart = new Chart(ctx, {
+  type: "bar",
+  data: {
+    labels: ["Heroic", "Mythic"],
+    datasets: [{
+      label: "Boss uccisi",
+      data: [raids[0].heroicKilled, raids[0].mythicKilled],
+      backgroundColor: [
+        "rgba(120, 50, 200, 0.8)",
+        "rgba(200, 40, 140, 0.8)"
+      ],
+      borderColor: [
+        "rgba(120, 50, 200, 1)",
+        "rgba(200, 40, 140, 1)"
+      ],
+      borderWidth: 2,
+      borderRadius: 6
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: { color: "#e6d6ff", stepSize: 1 }
+      },
+      x: {
+        ticks: { color: "#e6d6ff" }
+      }
+    },
+    plugins: {
+      legend: {
+        labels: { color: "#e6d6ff" }
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            const raid = raids[currentRaidIndex];
+            if (context.label === "Heroic") {
+              return `${context.parsed.y}/${raid.heroicTotal} HC`;
+            } else {
+              return `${context.parsed.y}/${raid.mythicTotal} Mythic`;
+            }
+          }
+        }
+      }
+    }
+  }
+});
+
+// Aggiorna il grafico quando cambiamo raid
+function updateChart() {
+  const raid = raids[currentRaidIndex];
+  raidTitle.textContent = raid.name;
+  progressChart.data.datasets[0].data = [
+    raid.heroicKilled,
+    raid.mythicKilled
+  ];
+  progressChart.update();
+}
+
+// Gestione frecce
+document.querySelector(".chart-nav.prev").addEventListener("click", () => {
+  currentRaidIndex = (currentRaidIndex - 1 + raids.length) % raids.length;
+  updateChart();
+});
+
+document.querySelector(".chart-nav.next").addEventListener("click", () => {
+  currentRaidIndex = (currentRaidIndex + 1) % raids.length;
+  updateChart();
+});
+</script>
+
 
 </body>
 </html>

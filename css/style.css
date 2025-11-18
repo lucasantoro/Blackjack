@@ -321,6 +321,64 @@ h2 {
   box-shadow: 0 0 18px rgba(180,80,255,0.9);
 }
 
+.progress-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Parte 1: stato tier */
+.progress-tier ul {
+  text-align: left;
+  margin: 0 auto;
+  display: inline-block;
+}
+
+/* Parte 2: grafico */
+.progress-chart-section {
+  text-align: center;
+}
+
+.chart-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.chart-wrapper canvas {
+  max-width: 600px;
+  width: 100%;
+  background: rgba(30, 0, 45, 0.5);
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(90, 20, 140, 0.4);
+}
+
+.chart-nav {
+  background: rgba(50, 0, 80, 0.8);
+  border: none;
+  color: #e6d6ff;
+  font-size: 1.6rem;
+  padding: 8px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(150, 60, 255, 0.6);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.chart-nav:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 16px rgba(200, 100, 255, 0.9);
+}
+
+/* Parte 3: logs */
+.progress-logs {
+  text-align: center;
+}
+
+
 
 
 /* FOOTER */
