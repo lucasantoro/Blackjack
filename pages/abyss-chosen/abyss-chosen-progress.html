@@ -31,53 +31,120 @@
   </ul>
 </nav>
 
+
+
 <main class="panel progress-panel">
 
-  <!-- PARTE 1: STATO DEL TIER -->
-  <section class="progress-tier">
-    <h2>Stato del Tier</h2>
-    <p>
-      Gli <strong>Abyss Chosen</strong> affrontano i raid dell’espansione con approccio tecnico e organizzato.
-      Qui trovi lo stato attuale del progress nei vari raid.
-    </p>
-    <ul>
-      <li><strong>Liberation of Undermine:</strong> HC 8/8 – Mythic 3/8</li>
-      <li><strong>Manuforge Omega:</strong> HC 6/7 – Mythic 1/7</li>
-      <li><strong>Nerub-ar Palace:</strong> HC 9/9 – Mythic 0/9</li>
-    </ul>
-  </section>
 
-  <!-- PARTE 2: GRAFICO + FRECCE -->
-  <section class="progress-chart-section">
-    <h2 id="raidTitle">Liberation of Undermine</h2>
+<!-- ==========================
+        PARTE 1 — STATO TIER
+=========================== -->
+<section class="progress-tier">
+  <h2>Stato del Tier</h2>
+  <p>
+    Gli <strong>Abyss Chosen</strong> affrontano i raid dell’espansione con un approccio
+    tecnico, metodico e orientato al risultato.  
+    Qui trovi l’overview generale del progress attuale.
+  </p>
 
-    <div class="chart-wrapper">
-      <button class="chart-nav prev" type="button">◀</button>
-      <canvas id="progressChart" width="400" height="220"></canvas>
-      <button class="chart-nav next" type="button">▶</button>
+  <ul>
+    <li><strong>Liberation of Undermine:</strong> HC 8/8 – Mythic 3/8</li>
+    <li><strong>Manuforge Omega:</strong> HC 6/7 – Mythic 1/7</li>
+    <li><strong>Nerub-ar Palace:</strong> HC 9/9 – Mythic 0/9</li>
+  </ul>
+</section>
+
+
+
+<!-- ==========================
+     PARTE 1.5 — PROGRESS STYLE
+          GUILD OF WOW
+=========================== -->
+
+<section class="guildwow-progress">
+
+  <h2>Progress Dettagliato</h2>
+
+  <div class="raid-progress-block" id="raid-undermine">
+    <h3>Liberation of Undermine</h3>
+
+    <div class="progress-row">
+      <div class="difficulty">NORMAL</div>
+      <div class="progress-status" id="undermine-normal"></div>
+      <div class="rank world"><span id="undermine-normal-world"></span></div>
+      <div class="rank region"><span id="undermine-normal-region"></span></div>
+      <div class="rank realm"><span id="undermine-normal-realm"></span></div>
     </div>
-  </section>
 
-  <!-- PARTE 3: BOTTONE LOGS -->
-  <section class="progress-logs">
-    <h2>Warcraft Logs</h2>
-    <p>
-      Vuoi vedere i dettagli dei pull, dei log e delle performance singole?
-    </p>
-    <a href="https://www.warcraftlogs.com/" target="_blank" class="apply-button">
-      Apri i Logs degli Abyss Chosen
-    </a>
-  </section>
+    <div class="progress-row">
+      <div class="difficulty">HEROIC</div>
+      <div class="progress-status" id="undermine-heroic"></div>
+      <div class="rank world"><span id="undermine-heroic-world"></span></div>
+      <div class="rank region"><span id="undermine-heroic-region"></span></div>
+      <div class="rank realm"><span id="undermine-heroic-realm"></span></div>
+    </div>
+
+    <div class="progress-row">
+      <div class="difficulty">MYTHIC</div>
+      <div class="progress-status" id="undermine-mythic"></div>
+      <div class="rank world"><span id="undermine-mythic-world"></span></div>
+      <div class="rank region"><span id="undermine-mythic-region"></span></div>
+      <div class="rank realm"><span id="undermine-mythic-realm"></span></div>
+    </div>
+  </div>
+
+</section>
+
+
+
+
+<!-- ==========================
+        PARTE 2 — GRAFICO
+=========================== -->
+<section class="progress-chart-section">
+
+  <h2 id="raidTitle">Liberation of Undermine</h2>
+
+  <div class="chart-wrapper">
+    <button class="chart-nav prev" type="button">◀</button>
+    <canvas id="progressChart" width="400" height="220"></canvas>
+    <button class="chart-nav next" type="button">▶</button>
+  </div>
+
+</section>
+
+
+
+<!-- ==========================
+       PARTE 3 — LOGS
+=========================== -->
+<section class="progress-logs">
+  <h2>Warcraft Logs</h2>
+  <p>Analizza fight, performance, strategie e miglioramenti del team.</p>
+
+  <a href="https://www.warcraftlogs.com/" target="_blank" class="apply-button">
+    Apri i Logs degli Abyss Chosen
+  </a>
+</section>
+
 
 </main>
+
+
 
 
 <footer>
 <p>&copy; 2025 Delirium Tremens</p>
 </footer>
 
+
+
+
+
+<!-- ==========================
+       SCRIPT FADE IN/OUT
+=========================== -->
 <script>
-// Fade in/out transizione
 document.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("page-loaded");
 });
@@ -94,109 +161,68 @@ document.querySelectorAll("a").forEach(link => {
 });
 </script>
 
+
+
+
+
+<!-- ==========================
+        SCRIPT DEI GRAFICI
+=========================== -->
 <script>
-// DATI DEI RAID PER IL GRAFICO
-const raids = [
-  {
-    name: "Liberation of Undermine",
-    heroicKilled: 8,
-    heroicTotal: 8,
-    mythicKilled: 3,
-    mythicTotal: 8
-  },
-  {
-    name: "Manuforge Omega",
-    heroicKilled: 6,
-    heroicTotal: 7,
-    mythicKilled: 1,
-    mythicTotal: 7
-  },
-  {
-    name: "Nerub-ar Palace",
-    heroicKilled: 9,
-    heroicTotal: 9,
-    mythicKilled: 0,
-    mythicTotal: 9
-  }
-];
+// CONFIGURA QUI LA TUA GILDA
+const region = "eu";
+const realm = "nemesis";
+const guild = "DeliriumTremens";
 
-let currentRaidIndex = 0;
+// RAID DA IMPORTARE (slug Raider.IO)
+const raidAPI = {
+  undermine: "liberation-of-undermine",
+  manuforge: "manuforge-omega",
+  nerubar: "nerubar-palace"
+};
 
-const raidTitle = document.getElementById("raidTitle");
-const ctx = document.getElementById("progressChart").getContext("2d");
+// FUNZIONE PRINCIPALE
+async function loadRaidProgress(raidKey, prefix) {
+  const url = `https://raider.io/api/v1/guilds/profile?region=${region}&realm=${realm}&name=${encodeURIComponent(guild)}&fields=raid_rankings`;
 
-// Crea il grafico iniziale
-let progressChart = new Chart(ctx, {
-  type: "bar",
-  data: {
-    labels: ["Heroic", "Mythic"],
-    datasets: [{
-      label: "Boss uccisi",
-      data: [raids[0].heroicKilled, raids[0].mythicKilled],
-      backgroundColor: [
-        "rgba(120, 50, 200, 0.8)",
-        "rgba(200, 40, 140, 0.8)"
-      ],
-      borderColor: [
-        "rgba(120, 50, 200, 1)",
-        "rgba(200, 40, 140, 1)"
-      ],
-      borderWidth: 2,
-      borderRadius: 6
-    }]
-  },
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true,
-        ticks: { color: "#e6d6ff", stepSize: 1 }
-      },
-      x: {
-        ticks: { color: "#e6d6ff" }
-      }
-    },
-    plugins: {
-      legend: {
-        labels: { color: "#e6d6ff" }
-      },
-      tooltip: {
-        callbacks: {
-          label: function(context) {
-            const raid = raids[currentRaidIndex];
-            if (context.label === "Heroic") {
-              return `${context.parsed.y}/${raid.heroicTotal} HC`;
-            } else {
-              return `${context.parsed.y}/${raid.mythicTotal} Mythic`;
-            }
-          }
-        }
-      }
-    }
-  }
-});
+  const response = await fetch(url);
+  const data = await response.json();
 
-// Aggiorna il grafico quando cambiamo raid
-function updateChart() {
-  const raid = raids[currentRaidIndex];
-  raidTitle.textContent = raid.name;
-  progressChart.data.datasets[0].data = [
-    raid.heroicKilled,
-    raid.mythicKilled
-  ];
-  progressChart.update();
+  const raid = data.raid_rankings[raidAPI[raidKey]];
+  if (!raid) return;
+
+  // LIVELLI
+  const difficulties = ["normal", "heroic", "mythic"];
+
+  difficulties.forEach(diff => {
+    
+    // Progress basato su ranking progress (boss kill)
+    const killed = raid[diff]?.progress_bosses_killed ?? 0;
+    const total = raid[diff]?.total_bosses ?? 0;
+
+    // Rank
+    const world = raid[diff]?.world ?? "-";
+    const region = raid[diff]?.region ?? "-";
+    const realm = raid[diff]?.realm ?? "-";
+
+    // FILL HTML
+    document.getElementById(`${prefix}-${diff}`).textContent = `${killed} / ${total}`;
+    document.getElementById(`${prefix}-${diff}-world`).textContent = `World: ${world}`;
+    document.getElementById(`${prefix}-${diff}-region`).textContent = `Region: ${region}`;
+    document.getElementById(`${prefix}-${diff}-realm`).textContent = `Realm: ${realm}`;
+  });
 }
 
-// Gestione frecce
-document.querySelector(".chart-nav.prev").addEventListener("click", () => {
-  currentRaidIndex = (currentRaidIndex - 1 + raids.length) % raids.length;
-  updateChart();
-});
+// CARICA I RAID CHE VUOI
+loadRaidProgress("undermine", "undermine");
+// loadRaidProgress("manuforge", "manuforge");
+// loadRaidProgress("nerubar", "nerubar");
 
-document.querySelector(".chart-nav.next").addEventListener("click", () => {
-  currentRaidIndex = (currentRaidIndex + 1) % raids.length;
-  updateChart();
-});
-</script>
+</script>;
+
+
+
+
 
 
 </body>
