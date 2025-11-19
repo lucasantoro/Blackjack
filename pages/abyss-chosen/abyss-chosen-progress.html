@@ -179,6 +179,9 @@ async function fetchLastSession() {
 // RENDER FULL PROGRESS
 // ================================
 function renderFullChart(full) {
+  document.getElementById("loaderFull").classList.add("hidden");
+  document.getElementById("fullProgressChart").classList.remove("hidden");
+
   const bossSet = new Set();
 
   Object.values(full).forEach(diff => {
@@ -213,18 +216,44 @@ function renderFullChart(full) {
   });
 }
 
+
 // ================================
 // RENDER LAST SESSION
 // ================================
 function renderLastChart(last) {
+
+  // Nasconde il loader e mostra il canvas
+  document.getElementById("loaderLast").classList.add("hidden");
+  const canvas = document.getElementById("lastSessionChart");
+  canvas.classList.remove("hidden");
+
   const bosses = Object.keys(last.bosses || {});
+
+  if (bosses.length === 0) {
+    canvas.outerHTML = "<p style='color:white;text-align:center;'>Nessun dato per l'ultimo raid.</p>";
+    return;
+  }
 
   const pulls = bosses.map(b => last.bosses[b].pulls);
   const wipes = bosses.map(b => last.bosses[b].wipes);
   const kills = bosses.map(b => last.bosses[b].kills);
-  const bestPct = bosses.map(b => last.bosses[b].bestPercentage ?? null);
+  const bestPct = bosses.map(b => last.bosses[b].bestPercentage ?? 100);
 
-  const ctx = document.getElementById("lastSessionChart").getContext("2d");
+  // deduce the actual difficulty played
+  const diffs = new Set();
+  bosses.forEach(b => last.bosses[b].difficultiesSeen?.forEach(d => diffs.add(d)));
+
+  const diffName =
+    diffs.has(5) ? "Mythic" :
+    diffs.has(4) ? "Heroic" :
+    diffs.has(3) ? "Normal" :
+    "N/A";
+
+  // update title dynamically
+  document.querySelector("section.current-progress:nth-of-type(2) h2").textContent =
+    `Ultima Sessione (${diffName})`;
+
+  const ctx = canvas.getContext("2d");
 
   new Chart(ctx, {
     data: {
@@ -254,6 +283,8 @@ function renderLastChart(last) {
           data: bestPct,
           borderColor: "#ff005d",
           backgroundColor: "#ff005d",
+          pointRadius: 4,
+          pointHoverRadius: 6,
           tension: 0.3,
           yAxisID: "y1",
         }
@@ -274,7 +305,7 @@ function renderLastChart(last) {
           position: "right",
           beginAtZero: true,
           max: 100,
-          title: { display: true, text: "Best %", color: "#ff005d" },
+          title: { display: true, text: "Best %", color: "#ff69a6" },
           ticks: { color: "#ff69a6" },
           grid: { drawOnChartArea: false }
         },
@@ -288,6 +319,7 @@ function renderLastChart(last) {
     }
   });
 }
+
 
 
 // ================================
