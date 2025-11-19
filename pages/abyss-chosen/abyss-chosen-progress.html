@@ -183,27 +183,77 @@ function renderFullChart(full) {
 // ================================
 function renderLastChart(last) {
   const bosses = Object.keys(last.bosses || {});
-  const percentages = bosses.map(b => last.bosses[b].bestPercentage ?? 0);
 
-  new Chart(document.getElementById("lastSessionChart"), {
-    type: "bar",
+  const pulls = bosses.map(b => last.bosses[b].pulls);
+  const wipes = bosses.map(b => last.bosses[b].wipes);
+  const kills = bosses.map(b => last.bosses[b].kills);
+  const bestPct = bosses.map(b => last.bosses[b].bestPercentage ?? null);
+
+  const ctx = document.getElementById("lastSessionChart").getContext("2d");
+
+  new Chart(ctx, {
     data: {
       labels: bosses,
-      datasets: [{
-        label: "Best % (0 = kill)",
-        data: percentages,
-        backgroundColor: "#29B6F6"
-      }]
+      datasets: [
+        {
+          type: "bar",
+          label: "Pulls",
+          data: pulls,
+          backgroundColor: "rgba(41,150,246,0.7)"
+        },
+        {
+          type: "bar",
+          label: "Wipes",
+          data: wipes,
+          backgroundColor: "rgba(255,90,0,0.7)"
+        },
+        {
+          type: "bar",
+          label: "Kills",
+          data: kills,
+          backgroundColor: "rgba(0,200,70,0.8)"
+        },
+        {
+          type: "line",
+          label: "Best % (0 = kill)",
+          data: bestPct,
+          borderColor: "#ff005d",
+          backgroundColor: "#ff005d",
+          tension: 0.3,
+          yAxisID: "y1",
+        }
+      ]
     },
     options: {
+      responsive: true,
       scales: {
-        y: { ticks: { color: "#fff" } },
-        x: { ticks: { color: "#fff" } }
+        y: {
+          type: "linear",
+          position: "left",
+          beginAtZero: true,
+          title: { display: true, text: "Pulls / Wipes / Kills", color: "#fff" },
+          ticks: { color: "#fff" }
+        },
+        y1: {
+          type: "linear",
+          position: "right",
+          beginAtZero: true,
+          max: 100,
+          title: { display: true, text: "Best %", color: "#ff005d" },
+          ticks: { color: "#ff69a6" },
+          grid: { drawOnChartArea: false }
+        },
+        x: {
+          ticks: { color: "#fff" }
+        }
       },
-      plugins: { legend: { labels: { color: "#fff" } } }
+      plugins: {
+        legend: { labels: { color: "#fff" } }
+      }
     }
   });
 }
+
 
 // ================================
 // LOAD EVERYTHING
