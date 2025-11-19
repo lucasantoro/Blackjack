@@ -6,6 +6,33 @@
 <link rel="stylesheet" href="../../css/style.css">
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+.chart-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 180px;
+  width: 100%;
+}
+
+.loader {
+  border: 6px solid rgba(255,255,255,0.2);
+  border-top: 6px solid #fff;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.hidden {
+  display: none !important;
+}
+</style>
+
 </head>
 
 <body class="page-transition abyss-bg">
@@ -41,8 +68,12 @@
     <h2>Progress Completo</h2>
 
     <div class="chart-wrapper">
-      <canvas id="fullProgressChart" height="200"></canvas>
+      <div id="loaderFull" class="chart-loader">
+        <div class="loader"></div>
+      </div>
+      <canvas id="fullProgressChart" class="hidden" height="200"></canvas>
     </div>
+
 
     <p class="raid-summary">
       Questo grafico mostra lo stato reale del progress in Normal, Heroic e Mythic.
@@ -56,8 +87,12 @@
     <h2>Ultima Sessione (Mythic)</h2>
 
     <div class="chart-wrapper">
-      <canvas id="lastSessionChart" height="200"></canvas>
+      <div id="loaderLast" class="chart-loader">
+        <div class="loader"></div>
+      </div>
+      <canvas id="lastSessionChart" class="hidden" height="200"></canvas>
     </div>
+
 
     <p class="raid-summary">
       Questo grafico mostra solo ciò che è stato fatto nell’ultimo raid registrato.
