@@ -4,13 +4,132 @@
 <meta charset="UTF-8">
 <title>Delirium Tremens - Gilda WoW</title>
 <link rel="stylesheet" href="css/style.css">
-</head>
+<style>
+/* --- HERO --- */
+.hero {
+  height: 60vh;
+  background: url('img/hero-bg.jpg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+}
+.hero-content {
+  position: relative;
+  color: #fff;
+  text-align: center;
+  z-index: 2;
+}
+.hero h2 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  opacity: 0;
+  transform: translateY(25px);
+  animation: fadeUp .9s ease forwards;
+}
+.hero p {
+  font-size: 1.3rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 1.3s ease forwards;
+}
 
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- SECTION TITLE --- */
+section h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 2rem;
+  color: #fff;
+}
+
+/* --- GRID CARDS --- */
+.grid-cards {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin: 40px auto;
+  width: 90%;
+}
+.card {
+  background: rgba(20,20,20,0.8);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 25px;
+  border-radius: 12px;
+  color: #ddd;
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transform: scale(0.96);
+  animation: fadeZoom 0.8s ease forwards;
+}
+@keyframes fadeZoom { to { opacity:1; transform:scale(1);} }
+
+/* --- RAID TEAMS --- */
+.raid-teams {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 50px;
+}
+.team-card {
+  width: 420px;
+  padding: 30px;
+  border-radius: 14px;
+  background: rgba(15,15,15,0.75);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #eee;
+  backdrop-filter: blur(4px);
+  animation: slideUp .9s ease forwards;
+  opacity: 0;
+  transform: translateY(25px);
+}
+@keyframes slideUp { to {opacity:1; transform:translateY(0);} }
+
+.team-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+  color: #fff;
+}
+.team-card p { line-height: 1.5; }
+.team-btn {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 10px 18px;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  color: #fff;
+  transition: .3s;
+}
+.team-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Color Identity */
+.mindbound { box-shadow: 0 0 15px rgba(120,120,255,0.35); }
+.abyss { box-shadow: 0 0 15px rgba(255,80,80,0.35); }
+
+body { background:#0b0b0b; color:#ccc; font-family:Arial, sans-serif; }
+header nav ul { display:flex; gap:20px; list-style:none; }
+header nav a { color:white; }
+footer { text-align:center; padding:40px 0; color:#777; }
+</style>
+</head>
 <body>
+
 <header>
 <h1>Delirium Tremens</h1>
 <p class="subtitle">Dove la sanità mentale va in cooldown</p>
-
 <nav>
     <ul>
         <li><a href="index.html">Home</a></li>
@@ -22,94 +141,74 @@
 </nav>
 </header>
 
-
 <main>
+
 <section class="hero">
-<h2>Benvenuti nei Delirium Tremens</h2>
+  <div class="hero-content">
+    <h2>Benvenuti nei Delirium Tremens</h2>
+    <p>Dove mente, caos e divertimento convivono in perfetta armonia</p>
+  </div>
 </section>
 
-
-<section class="panel">
+<section>
 <h2>Chi siamo</h2>
-<p class="description-long">
-Siamo i Delirium Tremens, una community italiana nata per unire giocatori che vogliono vivere World of Warcraft con passione, serenità e un pizzico di follia controllata.
-Non ci piace definirci “solo una gilda”: siamo un gruppo di persone differenti, con vite diverse, età diverse, modi diversi di giocare… ma che insieme condividono una cosa fondamentale:
+<div class="grid-cards">
+  <div class="card">
+    <h3>La nostra community</h3>
+    <p>
+    Siamo una gilda italiana che vive World of Warcraft con passione, maturità e un pizzico di follia controllata.
+    Non siamo solo un gruppo di giocatori: siamo un ambiente dove ci si supporta, si cresce e si ride insieme.
+    </p>
+  </div>
 
-ci divertiamo, facciamo progress, e lo facciamo in buona compagnia.
+  <div class="card">
+    <h3>Due anime, un'unica identità</h3>
+    <p>
+    Nei Delirium Tremens convivono due percorsi: quello dei raid team e quello degli Hollow Soul, la nostra anima sociale.
+    Chiunque può trovare il proprio spazio, che sia nel progress, nelle M+, nelle chiacchiere su Discord o nella vita di gilda quotidiana.
+    </p>
+  </div>
 
-Da noi nessuno è un numero.
-Che tu sia un Raider, un Hollow Soul, un novellino o un veterano, fai parte di un ambiente che dà valore alle persone prima dei personaggi.
-
-La nostra filosofia è semplice:
-
-giocare bene, ma con leggerezza
-
-migliorare, senza trasformare il gioco in lavoro
-
-creare un ambiente sicuro, inclusivo e maturo
-
-ridere anche quando i boss non muoiono
-
-supportarsi a vicenda, dentro e fuori dal raid
-
-Nei Delirium Tremens vivono due anime:<br><br>
-
-<strong> 🜂 I Raid Team </strong><br>
-
-Abyss Chosen e MindBound, i nostri gruppi di progress, impegnati, organizzati e ben strutturati.
-Raidiamo con disciplina, ma senza dimenticare che siamo qui per divertirci.<br><br>
-
-<strong>🜁 Gli Hollow Soul</strong><br>
-
-Il cuore sociale della gilda: giocatori che non raidano, fanno M+ a ripetizione, chiacchierano su Discord, creano meme, aiutano i nuovi e tengono viva l’energia della community.<br>
-Senza di loro non saremmo ciò che siamo.<br><br>
-
-Siamo una gilda che cresce ogni giorno: non solo nei numeri, ma nelle relazioni, nella complicità e nella voglia di stare insieme.<br>
-Qui costruisci ricordi, amicizie, risate fino a tarda notte, e progress che hanno un sapore diverso — perché condivisi con persone con cui stai bene.<br>
-
-World of Warcraft è il nostro campo di gioco.<br>
-La nostra vera forza, però, è la community.<br>
-
-Benvenuto nei Delirium Tremens.<br>
-Dove mente, caos e divertimento convivono in perfetta armonia.
-
-
-</p>
+  <div class="card">
+    <h3>I nostri valori</h3>
+    <p>
+    Rispetto, inclusività, disciplina senza rigidità, divertimento senza tossicità.
+    Giochiamo per migliorare, ma non dimentichiamo mai che questo è un gioco. E che le persone vengono prima dei personaggi.
+    </p>
+  </div>
+</div>
 </section>
 
+<section>
+<h2>I Nostri Raid Team</h2>
+<div class="raid-teams">
 
-<section class="panel">
-<h2>News & Aggiornamenti</h2>
-    <ul>
-        <li>Progress:<strong>Placeholder Tier</strong></li>
-        <li>Eventi settimanali pianificati</li>
-        <li>Reclutamento attualmente aperto a varie classi</li>
-</ul>
+  <div class="team-card mindbound">
+    <h3>Mindbound</h3>
+    <p>
+    Un team che condivide gli stessi obiettivi degli Abyss Chosen – affrontare l'endgame al massimo livello – ma con un clima più rilassato,
+    pensato anche per chi non ha molto tempo a disposizione. Un ambiente inclusivo, sereno e orientato alla crescita continua.
+    </p>
+    <a href="pages/raider.html" class="team-btn">Scopri il team<\/a>
+  <\/div>
+
+  <div class="team-card abyss">
+    <h3>Abyss Chosen</h3>
+    <p>
+    Il nostro gruppo più rapido e strutturato, dedicato a raggiungere gli stessi traguardi dei Mindbound ma con un ritmo più celere,
+    focalizzato sull'ottimizzazione del tempo e dei risultati senza sacrificare la qualità dell'ambiente.
+    </p>
+    <a href="pages/raider.html" class="team-btn">Scopri il team<\/a>
+  <\/div>
+
+</div>
 </section>
+
 </main>
-
 
 <footer>
 <p>&copy; 2025 Delirium Tremens – Sito ufficiale</p>
 </footer>
-
-<!-- SCRIPT TRANSIZIONE PAGINA -->
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  document.body.classList.add("page-loaded");
-});
-
-document.querySelectorAll("a").forEach(link => {
-  if (link.hostname === window.location.hostname) {
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
-      const href = this.getAttribute("href");
-      document.body.classList.remove("page-loaded");
-      setTimeout(() => { window.location.href = href; }, 300);
-    });
-  }
-});
-</script>
 
 </body>
 </html>
