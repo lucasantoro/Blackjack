@@ -5,17 +5,15 @@
 <title>Delirium Tremens - Gilda WoW</title>
 <link rel="stylesheet" href="css/style.css">
 <style>
-
 /* ---------------------- HERO ---------------------- */
 .hero {
-  min-height: 120vh;
+  min-height: 180vh;
   padding-top: 80px;
-  padding-bottom: 100px;
+  padding-bottom: 120px;
   background: url('img/logo.png') center/contain no-repeat;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .hero::after {
@@ -53,23 +51,21 @@
   animation: fadeUp 1.3s ease forwards;
 }
 
-/* Fade anim */
 @keyframes fadeUp {
   to { opacity: 1; transform: translateY(0); }
 }
 
-
 /* ---------------------- GRID CARDS ---------------------- */
-.grid-cards {
+.hero-cards {
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 20px;
   display: grid;
   gap: 30px;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  width: 100%;
-  max-width: 1100px;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-.card {
+.card, .team-card {
   background: rgba(20,20,20,0.8);
   border: 1px solid rgba(255,255,255,0.1);
   padding: 25px;
@@ -84,8 +80,8 @@
   transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
 }
 
-/* Sheen effect */
-.card::before {
+/* Sheen */
+.card::before, .team-card::before {
   content: "";
   position: absolute;
   top: -100%;
@@ -101,11 +97,13 @@
   transform: rotate(25deg);
   transition: .8s;
 }
-.card:hover::before {
+
+.card:hover::before, .team-card:hover::before {
   top: -50%;
   left: 120%;
 }
-.card:hover {
+
+.card:hover, .team-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 0 22px rgba(180,0,255,0.35);
   border-color: rgba(180,0,255,0.45);
@@ -113,62 +111,7 @@
 
 @keyframes fadeZoom { to { opacity:1; transform:scale(1);} }
 
-
-/* ---------------------- RAID TEAMS ---------------------- */
-.raid-teams {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 40px;
-  margin-top: 50px;
-}
-
-.team-card {
-  width: 420px;
-  padding: 30px;
-  border-radius: 14px;
-  background: rgba(15,15,15,0.75);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: #eee;
-  backdrop-filter: blur(4px);
-  opacity: 0;
-  position: relative;
-  overflow: hidden;
-  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
-}
-
-.team-card.mindbound {
-  animation: slideRight .8s ease forwards;
-}
-
-.team-card.abyss {
-  animation: slideLeft .8s ease forwards;
-}
-
-/* team sheen */
-.team-card::before {
-  content: "";
-  position: absolute;
-  top: -100%;
-  left: -100%;
-  width: 50%;
-  height: 300%;
-  background: linear-gradient(
-    120deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.15) 50%,
-    rgba(255,255,255,0) 100%
-  );
-  transform: rotate(25deg);
-  transition: .8s;
-}
-
-.team-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 0 25px rgba(255,255,255,0.15);
-  border-color: rgba(255,255,255,0.4);
-}
-
+/* ---------------------- TEAM CARDS COLOR IDENTITY ---------------------- */
 .mindbound:hover {
   box-shadow: 0 0 25px rgba(120,120,255,0.55);
 }
@@ -177,40 +120,7 @@
   box-shadow: 0 0 25px rgba(255,80,80,0.55);
 }
 
-@keyframes slideLeft {
-  from { opacity:0; transform:translateX(-25px); }
-  to   { opacity:1; transform:translateX(0); }
-}
-
-@keyframes slideRight {
-  from { opacity:0; transform:translateX(25px); }
-  to   { opacity:1; transform:translateX(0); }
-}
-
-.team-card h3 {
-  font-size: 1.8rem;
-  margin-bottom: 12px;
-  color: #fff;
-}
-
-.team-card p { line-height: 1.5; }
-
-.team-btn {
-  display: inline-block;
-  margin-top: 18px;
-  padding: 10px 18px;
-  border: 1px solid #fff;
-  border-radius: 8px;
-  color: #fff;
-  transition: .3s;
-}
-.team-btn:hover {
-  background: #fff;
-  color: #000;
-}
-
 /* ---------------------- HEADER ---------------------- */
-
 header {
   display: flex;
   justify-content: center;
@@ -233,7 +143,6 @@ header nav a {
 }
 
 /* ---------------------- GENERAL ---------------------- */
-
 body { background:#0b0b0b; color:#ccc; font-family:Arial, sans-serif; }
 footer { text-align:center; padding:40px 0; color:#777; }
 
@@ -255,14 +164,14 @@ footer { text-align:center; padding:40px 0; color:#777; }
 
 <main>
 
-<!-- HERO + CHI SIAMO -->
+<!-- HERO CON TUTTE LE CARD -->
 <section class="hero">
   <div class="hero-content">
 
     <h2>Benvenuti nei Delirium Tremens</h2>
     <p>Dove la sanità mentale va in cooldown</p>
 
-    <div class="grid-cards">
+    <div class="hero-cards">
 
       <div class="card">
         <h3>La nostra community</h3>
@@ -288,36 +197,27 @@ footer { text-align:center; padding:40px 0; color:#777; }
         </p>
       </div>
 
+      <div class="team-card abyss">
+        <h3>Abyss Chosen</h3>
+        <p>
+        Il nostro gruppo più rapido e strutturato, dedicato a raggiungere gli stessi traguardi dei Mindbound ma con un ritmo più celere,
+        focalizzato sull'ottimizzazione del tempo e dei risultati.
+        </p>
+        <a href="pages/raider.html" class="team-btn">Scopri il team</a>
+      </div>
+
+      <div class="team-card mindbound">
+        <h3>Mindbound</h3>
+        <p>
+        Un team che condivide gli stessi obiettivi degli Abyss Chosen – affrontare l'endgame al massimo livello – ma con un clima più rilassato,
+        pensato anche per chi non ha molto tempo a disposizione.
+        </p>
+        <a href="pages/raider.html" class="team-btn">Scopri il team</a>
+      </div>
+
     </div>
 
   </div>
-</section>
-
-
-<!-- RAID TEAMS -->
-<section>
-<h2>I Nostri Raid Team</h2>
-<div class="raid-teams">
-
-  <div class="team-card mindbound">
-    <h3>Mindbound</h3>
-    <p>
-    Un team che condivide gli stessi obiettivi degli Abyss Chosen – affrontare l'endgame al massimo livello – ma con un clima più rilassato,
-    pensato anche per chi non ha molto tempo a disposizione. Un ambiente inclusivo, sereno e orientato alla crescita continua.
-    </p>
-    <a href="pages/raider.html" class="team-btn">Scopri il team</a>
-  </div>
-
-  <div class="team-card abyss">
-    <h3>Abyss Chosen</h3>
-    <p>
-    Il nostro gruppo più rapido e strutturato, dedicato a raggiungere gli stessi traguardi dei Mindbound ma con un ritmo più celere,
-    focalizzato sull'ottimizzazione del tempo e dei risultati senza sacrificare la qualità dell'ambiente.
-    </p>
-    <a href="pages/raider.html" class="team-btn">Scopri il team</a>
-  </div>
-
-</div>
 </section>
 
 </main>
