@@ -65,19 +65,7 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-.card, .team-card {
-  background: rgba(20,20,20,0.8);
-  border: 1px solid rgba(255,255,255,0.1);
-  padding: 25px;
-  border-radius: 12px;
-  color: #ddd;
-  backdrop-filter: blur(4px);
-  opacity: 0;
-  transform: scale(0.96);
-  animation: fadeZoom 0.8s ease forwards;
-  position: relative;
-  overflow: hidden;
-  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+.card, .team-card { width:350px; margin:auto; padding:25px; border-radius:12px; background:rgba(20,20,20,0.8); border:1px solid rgba(255,255,255,0.1); color:#ddd; backdrop-filter:blur(4px); opacity:0; position:relative; overflow:hidden; transform:scale(0.96); animation:fadeZoom .8s ease forwards; transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
 }
 
 /* Sheen */
@@ -174,7 +162,7 @@ footer { text-align:center; padding:40px 0; color:#777; }
     <div class="hero-cards">
 
       <!-- TITOLO CHI SIAMO -->
-      <h2>Chi siamo</h2>
+      <h2 style="grid-column:1/-1; margin-bottom:5px; font-size:1.6rem; opacity:0.9;">Chi siamo</h2>
 
       <div class="card">
         <h3>La nostra community</h3>
@@ -201,26 +189,26 @@ footer { text-align:center; padding:40px 0; color:#777; }
       </div>
 
             <!-- TITOLO RAID TEAM -->
-      <h2>I Nostri Raid Team</h2>
-        <div class="raid-teams">
-          <div class="team-card mindbound">
-            <h3>Mindbound</h3>
-            <p>
-            Un team che condivide gli stessi obiettivi degli Abyss Chosen – affrontare l'endgame al massimo livello – ma con un clima più rilassato,
-            pensato anche per chi non ha molto tempo a disposizione.
-            </p>
-            <a href="pages/raider.html" class="team-btn">Scopri il team</a>
-          </div>
+      <h2 style="grid-column:1/-1; margin-top:10px; margin-bottom:5px; font-size:1.6rem; opacity:0.9;">I Nostri Raid Team</h2>
 
-          <div class="team-card abyss">
-            <h3>Abyss Chosen</h3>
-            <p>
-            Il nostro gruppo più rapido e strutturato, dedicato a raggiungere gli stessi traguardi dei Mindbound ma con un ritmo più celere,
-            focalizzato sull'ottimizzazione del tempo e dei risultati.
-            </p>
-            <a href="pages/raider.html" class="team-btn">Scopri il team</a>
-          </div>
+      <div class="team-card mindbound">
+        <h3>Mindbound</h3>
+        <p>
+        Un team che condivide gli stessi obiettivi degli Abyss Chosen – affrontare l'endgame al massimo livello – ma con un clima più rilassato,
+        pensato anche per chi non ha molto tempo a disposizione.
+        </p>
+        <a href="pages/raider.html" class="team-btn">Scopri il team</a>
       </div>
+
+      <div class="team-card abyss">
+        <h3>Abyss Chosen</h3>
+        <p>
+        Il nostro gruppo più rapido e strutturato, dedicato a raggiungere gli stessi traguardi dei Mindbound ma con un ritmo più celere,
+        focalizzato sull'ottimizzazione del tempo e dei risultati.
+        </p>
+        <a href="pages/raider.html" class="team-btn">Scopri il team</a>
+      </div>
+
     </div>
 
   </div>
