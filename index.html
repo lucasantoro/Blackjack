@@ -7,19 +7,30 @@
 <style>
 /* --- HERO --- */
 .hero {
-  height: 60vh;
-  background: url('img/logo.png') center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 80vh; /* più alta */
+  background: url('img/logo.png') center/contain no-repeat; /* contain per vedere tutto il logo */
+  background-color: #0b0b0b; /* colore dietro al logo */
+  background-blend-mode: normal;
   position: relative;
 }
+
+/* rimuovi il dark overlay o rendilo più leggero */
 .hero::after {
+  background: rgba(0,0,0,0.35);
+}
+
+/* aggiungi un fade verso il basso */
+.hero::before {
   content: "";
   position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #0b0b0b 100%);
+  z-index: 3;
 }
+
 .hero-content {
   position: relative;
   color: #fff;
@@ -194,6 +205,27 @@ section h2 {
   background: #fff;
   color: #000;
 }
+
+header {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+header nav ul {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+header nav a {
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+
 
 /* Color Identity */
 .mindbound { box-shadow: 0 0 15px rgba(120,120,255,0.35); }
