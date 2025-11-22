@@ -391,68 +391,31 @@ document.querySelectorAll("a").forEach(link => {
 
 <!-- STATS RAIDER.IO via WORKER -->
 <script>
-  // Worker che fa da proxy a Raider.IO (guilds/profile + members)
-  const WORKER_RIO = "https://broad-block-f85c.lucasantoro2905.workers.dev/rio-search";
+async function loadHollowSoulStats() {
+  const elChars  = document.getElementById("stat-characters");
+  const elActive = document.getElementById("stat-active");
+  const elAvg    = document.getElementById("stat-avg-score");
+  const note     = document.getElementById("stats-note");
 
-  function safeNumber(n) {
-    return (typeof n === "number" && !isNaN(n)) ? n : 0;
+  try {
+    const res = await fetch("https://broad-block-f85c.lucasantoro2905.workers.dev/rio-search");
+    const data = await res.json();
+
+    elChars.textContent  = data.totalCharacters ?? "–";
+    elActive.textContent = data.activePlayersLast30 ?? "–";
+    elAvg.textContent    = data.avgScoreTop10 ?? "–";
+
+    note.textContent =
+      "Statistiche ottenute da Raider.IO via Worker, basate su giocatori unici (deduplicati).";
+
+  } catch (err) {
+    console.error("Errore caricando stats Hollow Soul:", err);
+    elChars.textContent = elActive.textContent = elAvg.textContent = "–";
+    note.textContent = "Impossibile caricare le statistiche al momento.";
   }
+}
 
-  async function loadHollowSoulStats() {
-    const elChars  = document.getElementById("stat-characters");
-    const elActive = document.getElementById("stat-active");
-    const elAvg    = document.getElementById("stat-avg-score");
-    const note     = document.getElementById("stats-note");
-
-    try {
-      const res = await fetch(WORKER_RIO);
-      const data = await res.json();
-
-      // il worker deve restituire qualcosa tipo: { members: [ { character: {...} }, ... ] }
-      const members = data?.members || [];
-
-      /* 1) PERSONAGGI IN GILDA */
-      elChars.textContent = members.length;
-
-      /* 2) ATTIVI (last_crawled_at ultimi 30 giorni) */
-      const now = Date.now();
-      const DAY_MS = 24 * 60 * 60 * 1000;
-
-      const active = members.filter(m => {
-        const tStr = m.character?.last_crawled_at;
-        if (!tStr) return false;
-        const time = new Date(tStr).getTime();
-        return (now - time) <= 30 * DAY_MS;
-      });
-
-      elActive.textContent = active.length;
-
-      /* 3) MEDIA PUNTEGGIO TOP 10 (mythic_plus_scores.all) */
-      const scored = members
-        .map(m => safeNumber(m.character?.mythic_plus_scores?.all))
-        .filter(v => v > 0)
-        .sort((a,b) => b - a)
-        .slice(0, 10);
-
-      const avg = scored.length
-        ? Math.round(scored.reduce((s, v) => s + v, 0) / scored.length)
-        : 0;
-
-      elAvg.textContent = avg || "–";
-
-      note.textContent =
-        "Statistiche ottenute tramite Raider.IO (guild profile + members).";
-
-    } catch (err) {
-      console.error("Errore caricando le statistiche Hollow Soul:", err);
-      elChars.textContent  = "–";
-      elActive.textContent = "–";
-      elAvg.textContent    = "–";
-      note.textContent = "Impossibile caricare le statistiche al momento.";
-    }
-  }
-
-  loadHollowSoulStats();
+loadHollowSoulStats();
 </script>
 
 </body>
