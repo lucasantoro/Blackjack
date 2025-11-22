@@ -317,16 +317,6 @@
   </nav>
 </header>
 
-<section class="hero">
-  <div class="hero-content">
-    <h2>Progress MindBound</h2>
-    <p>
-      Una panoramica chiara del cammino del raid team MindBound nel tier attuale:
-      boss sconfitti, progress in corso e risultati dell’ultima sessione.
-    </p>
-  </div>
-</section>
-
 <div class="bg-container">
   <main class="panel">
 
@@ -378,7 +368,19 @@
         Caricamento dati dell'ultima sessione...
       </div>
 
-      <div style="text-align:center; margin-bottom: 25px;">
+      <div class="timeline-container" id="last-session-timeline">
+        <!-- Card dei boss generate via JS -->
+      </div>
+    </div>
+
+    <!-- LINK LOGS GENERALE (ora con bottone ultimo report) -->
+    <div class="widget-full" style="margin-top: 40px;">
+      <h2 class="section-title">Warcraft Logs</h2>
+      <p class="section-subtitle">
+        Per analisi dettagliate dell’ultima serata MindBound puoi aprire direttamente
+        il report completo su Warcraft Logs.
+      </p>
+      <div style="text-align:center; margin-top: 15px;">
         <a
           id="last-session-report-link"
           href="#"
@@ -387,26 +389,6 @@
           style="display:none;"
         >
           Apri il report dell’ultima sessione
-        </a>
-      </div>
-
-      <div class="timeline-container" id="last-session-timeline">
-        <!-- Card dei boss generate via JS -->
-      </div>
-    </div>
-
-    <!-- LINK LOGS GENERALE (separato) -->
-    <div class="widget-full" style="margin-top: 40px;">
-      <h2 class="section-title">Warcraft Logs</h2>
-      <p class="section-subtitle">
-        Per analisi dettagliate di fight, log e replay, puoi consultare i report completi
-        del team MindBound su Warcraft Logs.
-      </p>
-      <div style="text-align:center; margin-top: 15px;">
-        <a href="https://www.warcraftlogs.com/guild/eu/nemesis/DeliriumTremens"
-           target="_blank"
-           class="apply-button">
-          Apri i Warcraft Logs
         </a>
       </div>
     </div>
@@ -524,7 +506,7 @@ function renderLastSessionTimeline(last) {
   const titleEl = document.getElementById("last-session-title");
   titleEl.textContent = `Ultima sessione raid (${diffName})`;
 
-  // Link al report completo
+  // Link al report completo (ora nel blocco in fondo)
   const linkEl = document.getElementById("last-session-report-link");
   if (linkEl && last.latestReport && last.latestReport.code) {
     linkEl.href = `https://www.warcraftlogs.com/reports/${last.latestReport.code}`;
