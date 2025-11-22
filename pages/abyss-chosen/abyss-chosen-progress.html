@@ -2,220 +2,334 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Abyss Chosen – Progress</title>
+  <title>MindBound – Progress</title>
   <link rel="stylesheet" href="../../css/style.css">
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-<style>
-/* BASE IDENTICA A MINDBOUND PROGRESS */
-body {
-  background: #0b0b0b;
-  color: #ccc;
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
+  <style>
+    body {
+      background: #0b0b0b;
+      color: #ccc;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
 
-/* HEADER */
-header {
-  display: flex;
-  justify-content: center;
-  padding: 20px 0 10px;
-}
-.mainnav ul {
-  list-style: none;
-  display: flex;
-  gap: 25px;
-  padding: 0;
-  margin: 0;
-}
-.mainnav a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.05rem;
-  transition: .3s;
-}
-.mainnav a:hover,
-.mainnav a.active {
-  color: #ff5050;
-  text-shadow: 0 0 8px #ff5050;
-}
+    /* HEADER COERENTE CON SITO */
+    header {
+      display: flex;
+      justify-content: center;
+      padding: 20px 0 10px;
+    }
+    .mainnav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      padding: 0;
+      margin: 0;
+    }
+    .mainnav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.05rem;
+      transition: .3s;
+    }
+    .mainnav a:hover,
+    .mainnav a.active {
+      color: #ff5050;
+      text-shadow: 0 0 8px #ff5050;
+    }
 
-/* SUBNAV */
-.subnav {
-  margin-top: 20px;
-  background: rgba(20,20,20,0.8);
-  padding: 12px 0;
-  text-align: center;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  backdrop-filter: blur(4px);
-}
-.subnav ul {
-  display: flex;
-  gap: 40px;
-  justify-content: center;
-  padding: 0;
-  list-style: none;
-}
-.subnav a {
-  color: #fff;
-  text-decoration: none;
-  transition: .3s;
-}
-.subnav a.active,
-.subnav a:hover {
-  color: #ff5050;
-  text-shadow: 0 0 8px #ff5050;
-}
+    /* SUBNAV TEAM MINDBOUND (uguale struttura a Abyss) */
+    .subnav {
+      margin-top: 20px;
+      background: rgba(20,20,20,0.8);
+      padding: 12px 0;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(4px);
+    }
+    .subnav ul {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      padding: 0;
+      list-style: none;
+      margin: 0;
+    }
+    .subnav a {
+      color: #fff;
+      text-decoration: none;
+      transition: .3s;
+    }
+    .subnav a.active,
+    .subnav a:hover {
+      color: #8892ff;
+      text-shadow: 0 0 8px #8892ff;
+    }
 
-/* HERO */
-.hero {
-  padding: 80px 20px 50px;
-  background: none;
-  text-align: center;
-}
-.hero h2 {
-  font-size: 3rem;
-  color: #fff;
-  opacity: 0;
-  transform: translateY(25px);
-  animation: fadeUp .9s ease forwards;
-}
-.hero p {
-  max-width: 720px;
-  margin: 0 auto;
-  font-size: 1.3rem;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 1.3s ease forwards;
-}
-@keyframes fadeUp {
-  to { opacity: 1; transform: translateY(0); }
-}
+    /* HERO COME HOME */
+    .hero {
+      padding: 80px 20px 50px;
+      background: none;
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .hero h2 {
+      font-size: 3rem;
+      color: #fff;
+      margin-bottom: 12px;
+      opacity: 0;
+      transform: translateY(25px);
+      animation: fadeUp .9s ease forwards;
+    }
+    .hero p {
+      font-size: 1.3rem;
+      opacity: 0;
+      max-width: 720px;
+      margin: 0 auto;
+      transform: translateY(20px);
+      animation: fadeUp 1.3s ease forwards;
+    }
 
-/* BACKGROUND */
-.bg-container {
-  position: relative;
-  background: url('../../img/abysschosen_logo.png') center/cover no-repeat;
-  padding: 60px 0 80px;
-}
-.bg-container::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-  backdrop-filter: blur(2px);
-}
-.bg-container > * { position: relative; z-index: 2; }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-/* CONTENT */
-main.panel {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-.section-title {
-  text-align: center;
-  color: #fff;
-  font-size: 2rem;
-  margin: 20px 0 10px;
-}
-.section-subtitle {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto 25px;
-  color: #ddd;
-}
+    /* SFONDO CON LOGO MINDBOUND */
+    .bg-container {
+      position: relative;
+      background: url('../../img/mindbound_logo.png') center/cover no-repeat;
+      padding: 60px 0 80px;
+    }
+    .bg-container::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(2px);
+    }
+    .bg-container > * {
+      position: relative;
+      z-index: 2;
+    }
 
-/* GRID CARD IDENTICA */
-.widgets-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 30px;
-  margin: 35px 0 10px;
-}
-.widget-card {
-  background: rgba(15,15,15,0.8);
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.15);
-  padding: 18px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 0 18px rgba(255,80,80,0.35);
-  opacity: 0;
-  animation: fadeZoom .7s ease forwards;
-}
-.widget-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 25px rgba(255,80,80,0.6);
-  border-color: rgba(255,80,80,0.45);
-}
-@keyframes fadeZoom { to { opacity:1; transform:scale(1);} }
+    main.panel {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
-/* PROGRESS CONTENT */
-.progress-content {
-  background: rgba(5,5,5,0.6);
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.1);
-}
+    h2.section-title {
+      text-align: center;
+      color: #fff;
+      font-size: 2rem;
+      margin: 20px 0 10px;
+    }
+    p.section-subtitle {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 25px;
+      color: #ddd;
+      font-size: 1rem;
+    }
 
-/* BOSS TAGS */
-.boss-list {
-  margin-top: 8px;
-  font-size: 0.9rem;
-  color: #ccc;
-}
-.boss-list span {
-  margin-right: 8px;
-  padding: 4px 6px;
-  border-radius: 6px;
-}
-.boss-killed {
-  color: #9fffba;
-  border: 1px solid rgba(80,255,120,0.4);
-}
-.boss-progress {
-  color: #ffeab4;
-  border: 1px solid rgba(255,200,80,0.4);
-}
+    /* GRID CARD (PANORAMICA) */
+    .widgets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      margin: 35px 0 10px;
+    }
 
-/* TIMELINE */
-.session-summary-card {
-  background: rgba(15,15,15,0.85);
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 0 25px rgba(255,80,80,0.4);
-  border: 1px solid rgba(255,255,255,0.15);
-}
-.timeline-container {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
-.timeline-card {
-  background: rgba(25,25,25,0.85);
-  padding: 20px;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 0 20px rgba(255,80,80,0.25);
-}
-.timeline-card.kill {
-  border-color: rgba(80,255,120,0.4);
-  box-shadow: 0 0 25px rgba(80,255,120,0.4);
-}
-.timeline-card.progress {
-  border-color: rgba(255,180,60,0.35);
-  box-shadow: 0 0 25px rgba(255,180,60,0.35);
-}
+    .widget-card {
+      background: rgba(15,15,15,0.8);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 18px 18px 16px;
+      box-shadow: 0 0 18px rgba(120,120,255,0.35);
+      backdrop-filter: blur(4px);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: scale(0.97);
+      animation: fadeZoom .7s ease forwards;
+    }
 
-footer {
-  text-align:center;
-  padding:40px 0;
-  color:#777;
-}
-</style>
+    .widget-card::before {
+      content: "";
+      position: absolute;
+      top: -120%;
+      left: -120%;
+      width: 60%;
+      height: 320%;
+      background: linear-gradient(
+        120deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.16) 50%,
+        rgba(255,255,255,0) 100%
+      );
+      transform: rotate(25deg);
+      transition: .8s;
+    }
+    .widget-card:hover::before {
+      top: -40%;
+      left: 130%;
+    }
+
+    .widget-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 25px rgba(120,120,255,0.6);
+      border-color: rgba(120,120,255,0.45);
+    }
+
+    .widget-title {
+      font-size: 1.2rem;
+      color: #fff;
+      margin: 0 0 6px;
+    }
+    .widget-desc {
+      font-size: 0.95rem;
+      color: #ddd;
+      margin: 0 0 10px;
+    }
+
+    .progress-content {
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 10px 12px;
+      background: rgba(5,5,5,0.6);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      min-height: 140px;
+    }
+
+    .progress-line {
+      margin: 4px 0;
+    }
+
+    .boss-list {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    .boss-list span {
+      display: inline-block;
+      margin-right: 8px;
+      margin-bottom: 4px;
+      padding: 3px 6px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.04);
+    }
+    .boss-killed {
+      color: #9fffba;
+      border: 1px solid rgba(80,255,120,0.4);
+    }
+    .boss-progress {
+      color: #ffeab4;
+      border: 1px solid rgba(255,200,80,0.4);
+    }
+
+    @keyframes fadeZoom {
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* ULTIMA SESSIONE – TIMELINE */
+    .widget-full {
+      margin-top: 40px;
+    }
+
+    .session-summary-card {
+      background: rgba(15,15,15,0.85);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 0 25px rgba(120,120,255,0.4);
+      backdrop-filter: blur(4px);
+      margin-bottom: 25px;
+      color: #eee;
+      animation: fadeZoom .7s ease forwards;
+    }
+
+    .timeline-container {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      margin-top: 10px;
+    }
+
+    .timeline-card {
+      background: rgba(20,20,20,0.85);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(120,120,255,0.25);
+      backdrop-filter: blur(4px);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeUp .8s ease forwards;
+    }
+
+    .timeline-card.kill {
+      border-color: rgba(80,255,120,0.4);
+      box-shadow: 0 0 25px rgba(80,255,120,0.4);
+    }
+
+    .timeline-card.progress {
+      border-color: rgba(255,180,60,0.35);
+      box-shadow: 0 0 25px rgba(255,180,60,0.35);
+    }
+
+    .timeline-card::before {
+      content: "";
+      position: absolute;
+      top: -120%;
+      left: -120%;
+      width: 60%;
+      height: 320%;
+      background: linear-gradient(
+        120deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.14) 50%,
+        rgba(255,255,255,0) 100%
+      );
+      transform: rotate(25deg);
+      transition: .8s;
+    }
+
+    .timeline-card:hover::before {
+      top: -40%;
+      left: 130%;
+    }
+
+    .timeline-title {
+      color: #fff;
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+    }
+
+    .timeline-info {
+      color: #ddd;
+      margin: 4px 0;
+    }
+
+    .timeline-info strong {
+      color: #fff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      color: #777;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 
 <body class="page-transition">
@@ -232,7 +346,7 @@ footer {
   </nav>
 </header>
 
-<!-- SUBNAV -->
+<!-- SUBNAV MINDBOUND -->
 <nav class="subnav">
   <ul>
     <li><a href="abyss-chosen.html">Home Team</a></li>
@@ -245,63 +359,77 @@ footer {
 <div class="bg-container">
   <main class="panel">
 
+    <!-- PANORAMICA PER DIFFICOLTÀ -->
     <h2 class="section-title">Panoramica per difficoltà</h2>
     <p class="section-subtitle">
-      Stato del progress in Normal, Heroic e Mythic del team Abyss Chosen.
+      Stato del raid per Normal, Heroic e Mythic: quanti boss sono stati sconfitti,
+      quali sono ancora in progress e qual &egrave; stato il miglior pull.
     </p>
 
     <div class="widgets-grid">
+      <!-- NORMAL -->
       <div class="widget-card">
         <h3 class="widget-title">Normal</h3>
-        <p class="widget-desc">Progress in Normal.</p>
-        <div class="progress-content" id="card-normal">Caricamento...</div>
+        <p class="widget-desc">Progress del team in difficolt&agrave; Normal.</p>
+        <div class="progress-content" id="card-normal">
+          Caricamento...
+        </div>
       </div>
 
+      <!-- HEROIC -->
       <div class="widget-card">
         <h3 class="widget-title">Heroic</h3>
-        <p class="widget-desc">Progress in Heroic.</p>
-        <div class="progress-content" id="card-heroic">Caricamento...</div>
+        <p class="widget-desc">Stato dell'avanzamento in Heroic.</p>
+        <div class="progress-content" id="card-heroic">
+          Caricamento...
+        </div>
       </div>
 
+      <!-- MYTHIC -->
       <div class="widget-card">
         <h3 class="widget-title">Mythic</h3>
-        <p class="widget-desc">Il livello più alto di progress.</p>
-        <div class="progress-content" id="card-mythic">Caricamento...</div>
+        <p class="widget-desc">La punta del progress del team, in Mythic.</p>
+        <div class="progress-content" id="card-mythic">
+          Caricamento...
+        </div>
       </div>
     </div>
 
-    <!-- ULTIMA SESSIONE -->
-    <h2 class="section-title" id="last-session-title">Ultima sessione raid</h2>
-    <p class="section-subtitle">Riepilogo di pull, wipe, kill e progress dell’ultima serata.</p>
+    <!-- ULTIMA SESSIONE – TIMELINE -->
+    <div class="widget-full">
+      <h2 class="section-title" id="last-session-title">Ultima sessione raid</h2>
+      <p class="section-subtitle">
+        Resoconto completo dei boss affrontati nell’ultima serata Abyss Chosen:
+        pull, kill, progress e migliori percentuali.
+      </p>
 
-    <div class="session-summary-card" id="last-session-summary">
-      Caricamento dati dell'ultima sessione...
+      <div class="session-summary-card" id="last-session-summary">
+        Caricamento dati dell'ultima sessione...
+      </div>
+
+      <div class="timeline-container" id="last-session-timeline">
+        <!-- Card dei boss generate via JS -->
+      </div>
     </div>
 
-    <div class="timeline-container" id="last-session-timeline"></div>
-
-    <!-- REPORT BUTTON -->
-    <div style="text-align:center; margin-top:35px;">
-      <a id="last-session-report-link"
-         href="#"
-         target="_blank"
-         class="apply-button"
-         style="display:none;">
-         Apri il report dell’ultima sessione
-      </a>
-    </div>
-
-    <!-- LOGS GENERALI -->
-    <h2 class="section-title">Warcraft Logs</h2>
-    <p class="section-subtitle">
-      Accedi alla pagina dei log per analisi approfondite.
-    </p>
-    <div style="text-align:center; margin-top: 15px;">
-      <a href="https://www.warcraftlogs.com/guild/eu/nemesis/DeliriumTremens"
-         target="_blank"
-         class="apply-button">
-        Apri i Warcraft Logs
-      </a>
+    <!-- LINK LOGS GENERALE (ora con bottone ultimo report) -->
+    <div class="widget-full" style="margin-top: 40px;">
+      <h2 class="section-title">Warcraft Logs</h2>
+      <p class="section-subtitle">
+        Per analisi dettagliate dell’ultima serata MindBound puoi aprire direttamente
+        il report completo su Warcraft Logs.
+      </p>
+      <div style="text-align:center; margin-top: 15px;">
+        <a
+          id="last-session-report-link"
+          href="#"
+          target="_blank"
+          class="apply-button"
+          style="display:none;"
+        >
+          Apri il report dell’ultima sessione
+        </a>
+      </div>
     </div>
 
   </main>
@@ -311,33 +439,36 @@ footer {
   <p>&copy; 2025 Delirium Tremens</p>
 </footer>
 
+<!-- TRANSIZIONE PAGINE -->
 <script>
-/* TRANSIZIONE */
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
   document.body.classList.add("page-loaded");
 });
+
 document.querySelectorAll("a").forEach(link => {
   if (link.hostname === window.location.hostname) {
-    link.addEventListener("click", function(e){
+    link.addEventListener("click", function (e) {
       e.preventDefault();
       const href = this.getAttribute("href");
       document.body.classList.remove("page-loaded");
-      setTimeout(()=>{ window.location.href = href; }, 300);
+      setTimeout(() => { window.location.href = href; }, 300);
     });
   }
 });
 </script>
 
-<!-- WORKERS ABYSS -->
+<!-- URL WORKERS (MindBound) -->
 <script>
-const WORKER_FULL = "https://red-snowflake-a386.lucasantoro2905.workers.dev";
-const WORKER_LAST = "https://wild-mode-1b45.lucasantoro2905.workers.dev";
+  const WORKER_FULL = "https://red-snowflake-a386.lucasantoro2905.workers.dev";
+  const WORKER_LAST = "https://wild-mode-1b45.lucasantoro2905.workers.dev";
 </script>
 
-<!-- LOGICA (identica a MindBound) -->
+<!-- LOGICA PROGRESS (CARD + ULTIMA SESSIONE TIMELINE) -->
 <script>
-async function loadDifficulty(diff, id){
-  const el = document.getElementById(id);
+async function loadDifficulty(diff, elementId) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+
   try {
     const res = await fetch(`${WORKER_FULL}/progress-full?difficulty=${diff}`);
     const data = await res.json();
@@ -346,100 +477,138 @@ async function loadDifficulty(diff, id){
     const total = bosses.length;
 
     const killed = bosses.filter(b => data.bosses[b].kills > 0);
-    const prog = bosses.filter(
+    const inProgress = bosses.filter(
       b => data.bosses[b].kills === 0 &&
            data.bosses[b].bestPercentage !== null &&
            data.bosses[b].bestPercentage < 100
     );
 
     let html = `
-      <div><strong>Boss sconfitti:</strong> ${killed.length} / ${total}</div>
-      <div><strong>Boss in progress:</strong> ${prog.length}</div>
+      <div class="progress-line"><strong>Boss sconfitti:</strong> ${killed.length} / ${total}</div>
+      <div class="progress-line"><strong>Boss in progress:</strong> ${inProgress.length}</div>
     `;
 
-    const best = prog.map(b => data.bosses[b].bestPercentage);
-    html += `<div><strong>Miglior pull:</strong> ${
-      best.length ? Math.min(...best) + "%" : "–"
-    }</div>`;
+    const bestPulls = inProgress.map(b => data.bosses[b].bestPercentage);
+    const bestOverall = bestPulls.length > 0 ? Math.min(...bestPulls) : null;
+    html += `<div class="progress-line"><strong>Miglior pull:</strong> ${bestOverall !== null ? bestOverall + "%" : "–"}</div>`;
 
     html += `<div class="boss-list">`;
-    killed.forEach(b => html += `<span class="boss-killed">${b}</span>`);
-    prog.forEach(b => html += `<span class="boss-progress">${b} (${data.bosses[b].bestPercentage}%)</span>`);
+    killed.forEach(b => {
+      html += `<span class="boss-killed">${b}</span>`;
+    });
+    inProgress.forEach(b => {
+      html += `<span class="boss-progress">${b} (${data.bosses[b].bestPercentage}%)</span>`;
+    });
     html += `</div>`;
 
     el.innerHTML = html;
 
-  } catch(e) {
-    el.textContent = "Errore nel caricamento.";
+  } catch (err) {
+    console.error("Errore caricamento progress", diff, err);
+    el.textContent = "Errore nel caricamento dei dati.";
   }
 }
 
-async function fetchLast(){
-  const r = await fetch(`${WORKER_LAST}/progress-last`);
-  return r.json();
+async function fetchLastSession() {
+  const res = await fetch(`${WORKER_LAST}/progress-last`);
+  return res.json();
 }
 
-function formatDuration(ms){
-  if(!ms) return "N/D";
-  const h = Math.floor(ms/3600000);
-  const m = Math.floor((ms%3600000)/60000);
-  return `${h>0 ? h+"h " : ""}${m}m`;
+function formatDuration(ms) {
+  if (!ms || ms <= 0) return "N/D";
+  const h = Math.floor(ms / 3600000);
+  const m = Math.floor((ms % 3600000) / 60000);
+  return `${h > 0 ? h + "h " : ""}${m}m`;
 }
 
-function renderLast(last){
+function renderLastSessionTimeline(last) {
   const timeline = document.getElementById("last-session-timeline");
   const summary = document.getElementById("last-session-summary");
-  const link = document.getElementById("last-session-report-link");
 
   const bosses = Object.values(last.bosses || {});
-  if(!bosses.length){
-    summary.innerHTML = "Nessun dato disponibile.";
+  if (bosses.length === 0) {
+    summary.innerHTML = "Nessun dato trovato per l'ultimo raid.";
+    timeline.innerHTML = "";
     return;
   }
 
-  if(last.latestReport?.code){
-    link.href = `https://www.warcraftlogs.com/reports/${last.latestReport.code}`;
-    link.style.display = "inline-block";
+  // Difficulty auto
+  const diffs = new Set();
+  bosses.forEach(b => b.difficultiesSeen?.forEach(d => diffs.add(d)));
+
+  const diffName =
+    diffs.has(5) ? "Mythic" :
+    diffs.has(4) ? "Heroic" :
+    diffs.has(3) ? "Normal" :
+    "N/A";
+
+  const titleEl = document.getElementById("last-session-title");
+  titleEl.textContent = `Ultima sessione raid (${diffName})`;
+
+  // Link al report completo
+  const linkEl = document.getElementById("last-session-report-link");
+  if (linkEl && last.latestReport && last.latestReport.code) {
+    linkEl.href = `https://www.warcraftlogs.com/reports/${last.latestReport.code}`;
+    linkEl.style.display = "inline-block";
   }
 
-  const pulls = bosses.reduce((s,b)=>s+b.pulls,0);
-  const wipes = bosses.reduce((s,b)=>s+b.wipes,0);
-  const kills = bosses.reduce((s,b)=>s+b.kills,0);
+  // SUMMARY
+  const pullsTotal = bosses.reduce((sum, b) => sum + b.pulls, 0);
+  const wipesTotal = bosses.reduce((sum, b) => sum + b.wipes, 0);
+  const killsTotal = bosses.reduce((sum, b) => sum + b.kills, 0);
+
+  const sessionStart = last.latestReport?.startTime || null;
+  const sessionEnd   = last.latestReport?.endTime || null;
+  const durationMs   = (sessionStart && sessionEnd) ? (sessionEnd - sessionStart) : null;
 
   summary.innerHTML = `
     <strong>Boss affrontati:</strong> ${bosses.length}<br>
-    <strong>Pull totali:</strong> ${pulls}<br>
-    <strong>Wipe totali:</strong> ${wipes}<br>
-    <strong>Kill totali:</strong> ${kills}<br>
-    <strong>Durata sessione:</strong> ${
-      formatDuration(last.latestReport.endTime - last.latestReport.startTime)
-    }
+    <strong>Pull totali:</strong> ${pullsTotal}<br>
+    <strong>Wipe totali:</strong> ${wipesTotal}<br>
+    <strong>Kill totali:</strong> ${killsTotal}<br>
+    <strong>Durata sessione:</strong> ${formatDuration(durationMs)}
   `;
 
-  bosses.sort((a,b)=>a.bossName.localeCompare(b.bossName));
+  // TIMELINE (per ora in ordine alfabetico)
+  bosses.sort((a, b) => a.bossName.localeCompare(b.bossName));
+
   timeline.innerHTML = "";
 
-  bosses.forEach(b=>{
+  bosses.forEach(b => {
+    const isKill = b.kills > 0;
+    const bestPct = b.bestPercentage ?? "—";
+
     const card = document.createElement("div");
-    card.className = "timeline-card " + (b.kills>0 ? "kill" : "progress");
+    card.className = "timeline-card " + (isKill ? "kill" : "progress");
+
     card.innerHTML = `
       <div class="timeline-title">${b.bossName}</div>
-      <div class="timeline-info"><strong>Esito:</strong> ${b.kills>0?"Kill ✔️":"Progress"}</div>
+      <div class="timeline-info"><strong>Esito:</strong> ${isKill ? "Kill ✔️" : "Progress"}</div>
       <div class="timeline-info"><strong>Pulls:</strong> ${b.pulls}</div>
       <div class="timeline-info"><strong>Wipes:</strong> ${b.wipes}</div>
-      <div class="timeline-info"><strong>Best %:</strong> ${b.bestPercentage ?? "—"}%</div>
+      <div class="timeline-info"><strong>Best %:</strong> ${bestPct !== "—" ? bestPct + "%" : "—"}</div>
     `;
+
     timeline.appendChild(card);
   });
 }
 
-(async()=>{
+(async () => {
+  // Panoramica per difficoltà
   loadDifficulty("normal", "card-normal");
   loadDifficulty("heroic", "card-heroic");
   loadDifficulty("mythic", "card-mythic");
 
-  const last = await fetchLast();
-  renderLast(last);
+  // Ultima sessione
+  try {
+    const last = await fetchLastSession();
+    console.log("Last session (Abyss Chosen):", last);
+    renderLastSessionTimeline(last);
+  } catch (err) {
+    console.error("Errore nel caricamento dell'ultima sessione", err);
+    const summary = document.getElementById("last-session-summary");
+    summary.innerHTML = "Errore nel caricamento dell'ultima sessione.";
+  }
 })();
 </script>
 
