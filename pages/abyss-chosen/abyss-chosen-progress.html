@@ -298,8 +298,15 @@
   // =====================
   const CLIENT_ID = "a06a1bd0-f307-4305-af0f-7bb4d82de802";
   const CLIENT_SECRET = "e7oB3YOOkWdMWIEMMxsJKvlp3yso9hVVXWdZxJiX";
-  const GUILD_ID = 802526; // ID gilda su Warcraft Logs
-  const ZONE_ID = 44;      // ID raid tier
+
+  // ATTENZIONE: questo NON è il "guild=802526" degli embed.
+  // Il GraphQL di solito lavora per nome/regione/server.
+  // Ti lascio entrambe le versioni: per ID (commentata) e per nome/slug.
+  const GUILD_NAME = "Delirium Tremens";   // <-- metti nome esatto come su WCL
+  const SERVER_SLUG = "pozzo-delleternità"; // <-- tipo 'pozzo-delleternita' / 'draenor' ecc.
+  const SERVER_REGION = "EU";              // 'EU', 'US', ecc.
+
+  const ZONE_ID = 44; // Tier attuale
 
   // Difficulties: 3 = Normal, 4 = Heroic, 5 = Mythic
   const DIFFS = [
@@ -320,7 +327,7 @@
 
     if (!res.ok) {
       console.error("Errore ottenendo il token:", res.status, res.statusText);
-      throw new Error("Impossibile ottenere il token dalle API Warcraft Logs.");
+      throw new Error("Impossibile ottenere il token dalle API WCL.");
     }
 
     const data = await res.json();
@@ -331,9 +338,9 @@
   // QUERY GRAPHQL
   // =====================
   const QUERY = `
-    query ($guildId: Int!, $zoneId: Int!, $difficulty: Int!) {
+    query ($guildName: String!, $serverSlug: String!, $serverRegion: String!, $zoneId: Int!, $difficulty: Int!) {
       guildData {
-        guild(id: $guildId) {
+        guild(name: $guildName, serverSlug: $serverSlug, serverRegion: $serverRegion) {
           zoneRankings(zoneID: $zoneId, difficulty: $difficulty) {
             rankings {
               encounter {
@@ -360,20 +367,38 @@
       body: JSON.stringify({
         query: QUERY,
         variables: {
-          guildId: GUILD_ID,
+          guildName: GUILD_NAME,
+          serverSlug: SERVER_SLUG,
+          serverRegion: SERVER_REGION,
           zoneId: ZONE_ID,
           difficulty: difficulty
         }
       })
     });
 
-    if (!res.ok) {
-      console.error("Errore API GraphQL:", res.status, res.statusText);
-      throw new Error("Errore richiedendo i dati al servizio GraphQL.");
+    const json = await res.json();
+
+    // DEBUG: vedi in console esattamente cosa torna l'API
+    console.log("Risposta WCL difficulty", difficulty, json);
+
+    // Se ci sono errori GraphQL, niente data
+    if (json.errors) {
+      console.error("Errori GraphQL:", json.errors);
+      throw new Error("Errore GraphQL WCL");
     }
 
-    const json = await res.json();
-    return json.data.guildData.guild.zoneRankings.rankings;
+    if (!json.data || !json.data.guildData || !json.data.guildData.guild) {
+      console.error("Struttura dati inattesa dalla API:", json);
+      throw new Error("Dati gilda non disponibili (controlla nome/server/region).");
+    }
+
+    const zoneRankings = json.data.guildData.guild.zoneRankings;
+    if (!zoneRankings || !zoneRankings.rankings) {
+      console.error("zoneRankings mancante:", json);
+      throw new Error("Nessun ranking disponibile per questo tier/difficoltà.");
+    }
+
+    return zoneRankings.rankings;
   }
 
   // =====================
@@ -392,7 +417,6 @@
     const killed = bosses.filter(b => b.totalKills > 0);
     const inProgress = bosses.filter(b => b.totalKills === 0 && b.bestPercentage !== null && b.bestPercentage < 100);
 
-    // miglior percentuale di tutti i boss (tra quelli non killati)
     const bestPulls = inProgress.map(b => b.bestPercentage);
     const bestOverall = bestPulls.length > 0 ? Math.min(...bestPulls) : null;
 
@@ -401,7 +425,6 @@
     html += `<div class="progress-line"><strong>Boss in progress:</strong> ${inProgress.length}</div>`;
     html += `<div class="progress-line"><strong>Miglior pull attuale:</strong> ${bestOverall !== null ? bestOverall + "%" : "–"}</div>`;
 
-    // elenco breve dei boss (kill vs progress)
     html += `<div class="boss-list">`;
     killed.forEach(b => {
       html += `<span class="boss-killed">${b.encounter.name}</span>`;
@@ -422,18 +445,20 @@
       const token = await getToken();
 
       for (const { diff, elementId } of DIFFS) {
+        const el = document.getElementById(elementId);
+        if (el) el.textContent = "Caricamento dati da Warcraft Logs...";
+
         try {
           const bosses = await fetchProgress(token, diff);
           renderDifficulty(elementId, bosses);
         } catch (err) {
-          console.error(err);
-          const el = document.getElementById(elementId);
+          console.error("Errore per difficoltà", diff, err);
           if (el) el.textContent = "Errore nel caricamento dei dati per questa difficolt\u00E0.";
         }
       }
 
     } catch (err) {
-      console.error(err);
+      console.error("Errore generale init()", err);
       DIFFS.forEach(({ elementId }) => {
         const el = document.getElementById(elementId);
         if (el) el.textContent = "Impossibile connettersi alle API Warcraft Logs.";
@@ -441,6 +466,7 @@
     }
   })();
 </script>
+
 
 </body>
 </html>
