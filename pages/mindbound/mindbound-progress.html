@@ -40,6 +40,35 @@
       text-shadow: 0 0 8px #ff5050;
     }
 
+    /* SUBNAV TEAM MINDBOUND (uguale struttura a Abyss) */
+    .subnav {
+      margin-top: 20px;
+      background: rgba(20,20,20,0.8);
+      padding: 12px 0;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(4px);
+    }
+    .subnav ul {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      padding: 0;
+      list-style: none;
+      margin: 0;
+    }
+    .subnav a {
+      color: #fff;
+      text-decoration: none;
+      transition: .3s;
+    }
+    .subnav a.active,
+    .subnav a:hover {
+      color: #8892ff;
+      text-shadow: 0 0 8px #8892ff;
+    }
+
     /* HERO COME HOME */
     .hero {
       padding: 80px 20px 50px;
@@ -317,6 +346,26 @@
   </nav>
 </header>
 
+<!-- SUBNAV MINDBOUND -->
+<nav class="subnav">
+  <ul>
+    <li><a href="../mindbound/mindbound.html">Home Team</a></li>
+    <li><a href="../mindbound/roster-mindbound.html">Roster</a></li>
+    <li><a href="../mindbound/mindbound-news.html">News</a></li>
+    <li><a href="../mindbound/mindbound-progress.html" class="active">Progress</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <h2>Progress MindBound</h2>
+    <p>
+      Una panoramica chiara del cammino del raid team MindBound nel tier attuale:
+      boss sconfitti, progress in corso e risultati dell’ultima sessione.
+    </p>
+  </div>
+</section>
+
 <div class="bg-container">
   <main class="panel">
 
@@ -418,10 +467,10 @@ document.querySelectorAll("a").forEach(link => {
 });
 </script>
 
-<!-- URL WORKERS (sostituisci con quelli MindBound se diversi) -->
+<!-- URL WORKERS (MindBound) -->
 <script>
-  const WORKER_FULL = "https://red-snowflake-a386.lucasantoro2905.workers.dev";   // TODO: worker FULL MindBound
-  const WORKER_LAST = "https://wild-mode-1b45.lucasantoro2905.workers.dev";       // TODO: worker LAST MindBound
+  const WORKER_FULL = "https://red-snowflake-a386.lucasantoro2905.workers.dev";
+  const WORKER_LAST = "https://wild-mode-1b45.lucasantoro2905.workers.dev";
 </script>
 
 <!-- LOGICA PROGRESS (CARD + ULTIMA SESSIONE TIMELINE) -->
@@ -506,7 +555,7 @@ function renderLastSessionTimeline(last) {
   const titleEl = document.getElementById("last-session-title");
   titleEl.textContent = `Ultima sessione raid (${diffName})`;
 
-  // Link al report completo (ora nel blocco in fondo)
+  // Link al report completo
   const linkEl = document.getElementById("last-session-report-link");
   if (linkEl && last.latestReport && last.latestReport.code) {
     linkEl.href = `https://www.warcraftlogs.com/reports/${last.latestReport.code}`;
