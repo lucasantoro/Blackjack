@@ -325,7 +325,7 @@
       </div>
     </section>
 
-    <!-- STATISTICHE DA RAIDER.IO -->
+    <!-- STATISTICHE DA RAIDER.IO (via WORKER) -->
     <section>
       <h2 class="section-title">Numeri della nostra community</h2>
       <p class="section-subtitle">
@@ -346,7 +346,7 @@
           <div class="stat-label">Giocatori attivi (30 giorni)</div>
           <div class="stat-value" id="stat-active">–</div>
           <div class="stat-hint">
-            Player che hanno completato almeno una Mythic+ nell’ultimo mese.
+            Giocatori con attivit&agrave; recente registrata negli ultimi 30 giorni.
           </div>
         </div>
 
@@ -354,7 +354,7 @@
           <div class="stat-label">Punteggio medio M+ (Top 10)</div>
           <div class="stat-value" id="stat-avg-score">–</div>
           <div class="stat-hint">
-            Media del punteggio Mythic+ dei 10 giocatori pi&ugrave; attivi.
+            Media del punteggio Mythic+ dei 10 personaggi pi&ugrave; attivi in gilda.
           </div>
         </div>
       </div>
@@ -389,47 +389,47 @@ document.querySelectorAll("a").forEach(link => {
 });
 </script>
 
-<!-- STATS RAIDER.IO (esempio, da adattare alla tua gilda se serve) -->
+<!-- STATS RAIDER.IO via WORKER -->
 <script>
-  const RIO_SEARCH_API =
-    "https://raider.io/api/v1/characters/search" +
-    "?region=eu&realm=nemesis&guild=Delirium%20Tremens";
+  // Worker che fa da proxy a Raider.IO (guilds/profile + members)
+  const WORKER_RIO = "https://broad-block-f85c.lucasantoro2905.workers.dev/rio-search";
 
   function safeNumber(n) {
-    return typeof n === "number" && !isNaN(n) ? n : 0;
+    return (typeof n === "number" && !isNaN(n)) ? n : 0;
   }
 
   async function loadHollowSoulStats() {
     const elChars  = document.getElementById("stat-characters");
     const elActive = document.getElementById("stat-active");
     const elAvg    = document.getElementById("stat-avg-score");
-
-    const note = document.getElementById("stats-note");
+    const note     = document.getElementById("stats-note");
 
     try {
-      const res = await fetch(RIO_SEARCH_API);
+      const res = await fetch(WORKER_RIO);
       const data = await res.json();
 
-      const chars = data?.characters || [];
+      // il worker deve restituire qualcosa tipo: { members: [ { character: {...} }, ... ] }
+      const members = data?.members || [];
 
       /* 1) PERSONAGGI IN GILDA */
-      elChars.textContent = chars.length;
+      elChars.textContent = members.length;
 
-      /* 2) ATTIVI (crawlati negli ultimi 30 giorni) */
+      /* 2) ATTIVI (last_crawled_at ultimi 30 giorni) */
       const now = Date.now();
       const DAY_MS = 24 * 60 * 60 * 1000;
 
-      const active = chars.filter(c => {
-        if (!c.last_crawled_at) return false;
-        const time = new Date(c.last_crawled_at).getTime();
+      const active = members.filter(m => {
+        const tStr = m.character?.last_crawled_at;
+        if (!tStr) return false;
+        const time = new Date(tStr).getTime();
         return (now - time) <= 30 * DAY_MS;
       });
 
       elActive.textContent = active.length;
 
-      /* 3) MEDIA PUNTEGGIO TOP 10 */
-      const scored = chars
-        .map(c => safeNumber(c.mythic_plus_scores?.all))
+      /* 3) MEDIA PUNTEGGIO TOP 10 (mythic_plus_scores.all) */
+      const scored = members
+        .map(m => safeNumber(m.character?.mythic_plus_scores?.all))
         .filter(v => v > 0)
         .sort((a,b) => b - a)
         .slice(0, 10);
@@ -441,7 +441,7 @@ document.querySelectorAll("a").forEach(link => {
       elAvg.textContent = avg || "–";
 
       note.textContent =
-        "Statistiche ottenute tramite Raider.IO (Character Search).";
+        "Statistiche ottenute tramite Raider.IO (guild profile + members).";
 
     } catch (err) {
       console.error("Errore caricando le statistiche Hollow Soul:", err);
@@ -454,7 +454,6 @@ document.querySelectorAll("a").forEach(link => {
 
   loadHollowSoulStats();
 </script>
-
 
 </body>
 </html>
