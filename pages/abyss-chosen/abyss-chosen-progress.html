@@ -7,330 +7,329 @@
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
   <style>
-    body {
-      background: #0b0b0b;
-      color: #ccc;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+  body {
+    background: #0b0b0b;
+    color: #ccc;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
 
-    /* HEADER COERENTE CON SITO */
-    header {
-      display: flex;
-      justify-content: center;
-      padding: 20px 0 10px;
-    }
-    .mainnav ul {
-      list-style: none;
-      display: flex;
-      gap: 25px;
-      padding: 0;
-      margin: 0;
-    }
-    .mainnav a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 1.05rem;
-      transition: .3s;
-    }
-    .mainnav a:hover,
-    .mainnav a.active {
-      color: #ff5050;
-      text-shadow: 0 0 8px #ff5050;
-    }
+  /* HEADER COERENTE CON SITO */
+  header {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0 10px;
+  }
+  .mainnav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    padding: 0;
+    margin: 0;
+  }
+  .mainnav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.05rem;
+    transition: .3s;
+  }
+  .mainnav a:hover,
+  .mainnav a.active {
+    color: #ff5050;
+    text-shadow: 0 0 8px #ff5050;
+  }
 
-    /* SUBNAV TEAM MINDBOUND (uguale struttura a Abyss) */
-    .subnav {
-      margin-top: 20px;
-      background: rgba(20,20,20,0.8);
-      padding: 12px 0;
-      text-align: center;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      backdrop-filter: blur(4px);
-    }
-    .subnav ul {
-      display: flex;
-      gap: 40px;
-      justify-content: center;
-      padding: 0;
-      list-style: none;
-      margin: 0;
-    }
-    .subnav a {
-      color: #fff;
-      text-decoration: none;
-      transition: .3s;
-    }
-    .subnav a.active,
-    .subnav a:hover {
-      color: #8892ff;
-      text-shadow: 0 0 8px #8892ff;
-    }
+  /* SUBNAV TEAM ABYSS (rosso) */
+  .subnav {
+    margin-top: 20px;
+    background: rgba(20,20,20,0.8);
+    padding: 12px 0;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(4px);
+  }
+  .subnav ul {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+  }
+  .subnav a {
+    color: #fff;
+    text-decoration: none;
+    transition: .3s;
+  }
+  .subnav a.active,
+  .subnav a:hover {
+    color: #ff5050;
+    text-shadow: 0 0 8px #ff5050;
+  }
 
-    /* HERO COME HOME */
-    .hero {
-      padding: 80px 20px 50px;
-      background: none;
-      height: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-    .hero h2 {
-      font-size: 3rem;
-      color: #fff;
-      margin-bottom: 12px;
-      opacity: 0;
-      transform: translateY(25px);
-      animation: fadeUp .9s ease forwards;
-    }
-    .hero p {
-      font-size: 1.3rem;
-      opacity: 0;
-      max-width: 720px;
-      margin: 0 auto;
-      transform: translateY(20px);
-      animation: fadeUp 1.3s ease forwards;
-    }
+  /* HERO COME HOME */
+  .hero {
+    padding: 80px 20px 50px;
+    background: none;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .hero h2 {
+    font-size: 3rem;
+    color: #fff;
+    margin-bottom: 12px;
+    opacity: 0;
+    transform: translateY(25px);
+    animation: fadeUp .9s ease forwards;
+  }
+  .hero p {
+    font-size: 1.3rem;
+    opacity: 0;
+    max-width: 720px;
+    margin: 0 auto;
+    transform: translateY(20px);
+    animation: fadeUp 1.3s ease forwards;
+  }
 
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-    /* SFONDO CON LOGO MINDBOUND */
-    .bg-container {
-      position: relative;
-      background: url('../../img/mindbound_logo.png') center/cover no-repeat;
-      padding: 60px 0 80px;
-    }
-    .bg-container::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      backdrop-filter: blur(2px);
-    }
-    .bg-container > * {
-      position: relative;
-      z-index: 2;
-    }
+  /* SFONDO CON LOGO ABYSS CHOSEN */
+  .bg-container {
+    position: relative;
+    background: url('../../img/abyss_logo.png') center/cover no-repeat;
+    padding: 60px 0 80px;
+  }
+  .bg-container::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(2px);
+  }
+  .bg-container > * {
+    position: relative;
+    z-index: 2;
+  }
 
-    main.panel {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
+  main.panel {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
 
-    h2.section-title {
-      text-align: center;
-      color: #fff;
-      font-size: 2rem;
-      margin: 20px 0 10px;
-    }
-    p.section-subtitle {
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto 25px;
-      color: #ddd;
-      font-size: 1rem;
-    }
+  h2.section-title {
+    text-align: center;
+    color: #fff;
+    font-size: 2rem;
+    margin: 20px 0 10px;
+  }
+  p.section-subtitle {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 25px;
+    color: #ddd;
+    font-size: 1rem;
+  }
 
-    /* GRID CARD (PANORAMICA) */
-    .widgets-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
-      margin: 35px 0 10px;
-    }
+  /* GRID CARD (PANORAMICA) */
+  .widgets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin: 35px 0 10px;
+  }
 
-    .widget-card {
-      background: rgba(15,15,15,0.8);
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 18px 18px 16px;
-      box-shadow: 0 0 18px rgba(120,120,255,0.35);
-      backdrop-filter: blur(4px);
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: scale(0.97);
-      animation: fadeZoom .7s ease forwards;
-    }
+  .widget-card {
+    background: rgba(15,15,15,0.8);
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 18px 18px 16px;
+    box-shadow: 0 0 18px rgba(255,80,80,0.35);
+    backdrop-filter: blur(4px);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: scale(0.97);
+    animation: fadeZoom .7s ease forwards;
+  }
 
-    .widget-card::before {
-      content: "";
-      position: absolute;
-      top: -120%;
-      left: -120%;
-      width: 60%;
-      height: 320%;
-      background: linear-gradient(
-        120deg,
-        rgba(255,255,255,0) 0%,
-        rgba(255,255,255,0.16) 50%,
-        rgba(255,255,255,0) 100%
-      );
-      transform: rotate(25deg);
-      transition: .8s;
-    }
-    .widget-card:hover::before {
-      top: -40%;
-      left: 130%;
-    }
+  .widget-card::before {
+    content: "";
+    position: absolute;
+    top: -120%;
+    left: -120%;
+    width: 60%;
+    height: 320%;
+    background: linear-gradient(
+      120deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0.16) 50%,
+      rgba(255,255,255,0) 100%
+    );
+    transform: rotate(25deg);
+    transition: .8s;
+  }
+  .widget-card:hover::before {
+    top: -40%;
+    left: 130%;
+  }
 
-    .widget-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 0 25px rgba(120,120,255,0.6);
-      border-color: rgba(120,120,255,0.45);
-    }
+  .widget-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 25px rgba(255,80,80,0.6);
+    border-color: rgba(255,80,80,0.45);
+  }
 
-    .widget-title {
-      font-size: 1.2rem;
-      color: #fff;
-      margin: 0 0 6px;
-    }
-    .widget-desc {
-      font-size: 0.95rem;
-      color: #ddd;
-      margin: 0 0 10px;
-    }
+  .widget-title {
+    font-size: 1.2rem;
+    color: #fff;
+    margin: 0 0 6px;
+  }
+  .widget-desc {
+    font-size: 0.95rem;
+    color: #ddd;
+    margin: 0 0 10px;
+  }
 
-    .progress-content {
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 10px 12px;
-      background: rgba(5,5,5,0.6);
-      font-size: 0.95rem;
-      line-height: 1.5;
-      min-height: 140px;
-    }
+  .progress-content {
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 10px 12px;
+    background: rgba(5,5,5,0.6);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    min-height: 140px;
+  }
 
-    .progress-line {
-      margin: 4px 0;
-    }
+  .progress-line {
+    margin: 4px 0;
+  }
 
-    .boss-list {
-      margin-top: 8px;
-      font-size: 0.9rem;
-      color: #ccc;
-    }
-    .boss-list span {
-      display: inline-block;
-      margin-right: 8px;
-      margin-bottom: 4px;
-      padding: 3px 6px;
-      border-radius: 6px;
-      background: rgba(255,255,255,0.04);
-    }
-    .boss-killed {
-      color: #9fffba;
-      border: 1px solid rgba(80,255,120,0.4);
-    }
-    .boss-progress {
-      color: #ffeab4;
-      border: 1px solid rgba(255,200,80,0.4);
-    }
+  .boss-list {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+  .boss-list span {
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: 4px;
+    padding: 3px 6px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.04);
+  }
+  .boss-killed {
+    color: #9fffba;
+    border: 1px solid rgba(80,255,120,0.4);
+  }
+  .boss-progress {
+    color: #ffeab4;
+    border: 1px solid rgba(255,200,80,0.4);
+  }
 
-    @keyframes fadeZoom {
-      to { opacity: 1; transform: scale(1); }
-    }
+  @keyframes fadeZoom {
+    to { opacity: 1; transform: scale(1); }
+  }
 
-    /* ULTIMA SESSIONE – TIMELINE */
-    .widget-full {
-      margin-top: 40px;
-    }
+  /* ULTIMA SESSIONE – TIMELINE */
+  .widget-full {
+    margin-top: 40px;
+  }
 
-    .session-summary-card {
-      background: rgba(15,15,15,0.85);
-      border-radius: 16px;
-      padding: 20px;
-      border: 1px solid rgba(255,255,255,0.15);
-      box-shadow: 0 0 25px rgba(120,120,255,0.4);
-      backdrop-filter: blur(4px);
-      margin-bottom: 25px;
-      color: #eee;
-      animation: fadeZoom .7s ease forwards;
-    }
+  .session-summary-card {
+    background: rgba(15,15,15,0.85);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 0 25px rgba(255,80,80,0.4);
+    backdrop-filter: blur(4px);
+    margin-bottom: 25px;
+    color: #eee;
+    animation: fadeZoom .7s ease forwards;
+  }
 
-    .timeline-container {
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-      margin-top: 10px;
-    }
+  .timeline-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 10px;
+  }
 
-    .timeline-card {
-      background: rgba(20,20,20,0.85);
-      border: 1px solid rgba(255,255,255,0.12);
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(120,120,255,0.25);
-      backdrop-filter: blur(4px);
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(10px);
-      animation: fadeUp .8s ease forwards;
-    }
+  .timeline-card {
+    background: rgba(20,20,20,0.85);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(255,80,80,0.25);
+    backdrop-filter: blur(4px);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeUp .8s ease forwards;
+  }
 
-    .timeline-card.kill {
-      border-color: rgba(80,255,120,0.4);
-      box-shadow: 0 0 25px rgba(80,255,120,0.4);
-    }
+  .timeline-card.kill {
+    border-color: rgba(80,255,120,0.4);
+    box-shadow: 0 0 25px rgba(80,255,120,0.4);
+  }
 
-    .timeline-card.progress {
-      border-color: rgba(255,180,60,0.35);
-      box-shadow: 0 0 25px rgba(255,180,60,0.35);
-    }
+  .timeline-card.progress {
+    border-color: rgba(255,80,80,0.45);
+    box-shadow: 0 0 25px rgba(255,80,80,0.5);
+  }
 
-    .timeline-card::before {
-      content: "";
-      position: absolute;
-      top: -120%;
-      left: -120%;
-      width: 60%;
-      height: 320%;
-      background: linear-gradient(
-        120deg,
-        rgba(255,255,255,0) 0%,
-        rgba(255,255,255,0.14) 50%,
-        rgba(255,255,255,0) 100%
-      );
-      transform: rotate(25deg);
-      transition: .8s;
-    }
+  .timeline-card::before {
+    content: "";
+    position: absolute;
+    top: -120%;
+    left: -120%;
+    width: 60%;
+    height: 320%;
+    background: linear-gradient(
+      120deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0.14) 50%,
+      rgba(255,255,255,0) 100%
+    );
+    transform: rotate(25deg);
+    transition: .8s;
+  }
 
-    .timeline-card:hover::before {
-      top: -40%;
-      left: 130%;
-    }
+  .timeline-card:hover::before {
+    top: -40%;
+    left: 130%;
+  }
 
-    .timeline-title {
-      color: #fff;
-      font-size: 1.4rem;
-      margin-bottom: 6px;
-    }
+  .timeline-title {
+    color: #fff;
+    font-size: 1.4rem;
+    margin-bottom: 6px;
+  }
 
-    .timeline-info {
-      color: #ddd;
-      margin: 4px 0;
-    }
+  .timeline-info {
+    color: #ddd;
+    margin: 4px 0;
+  }
 
-    .timeline-info strong {
-      color: #fff;
-    }
+  .timeline-info strong {
+    color: #fff;
+  }
 
-    footer {
-      text-align: center;
-      padding: 40px 0;
-      color: #777;
-      margin-top: 40px;
-    }
-  </style>
-</head>
+  footer {
+    text-align: center;
+    padding: 40px 0;
+    color: #777;
+    margin-top: 40px;
+  }
+</style>
 
 <body class="page-transition">
 
