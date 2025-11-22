@@ -391,11 +391,9 @@ document.querySelectorAll("a").forEach(link => {
 
 <!-- STATS RAIDER.IO (esempio, da adattare alla tua gilda se serve) -->
 <script>
-  // Sostituisci region/realm/name con i dati esatti della gilda se diverso
-  const RAIDER_GUILD_API =
-    "https://raider.io/api/v1/guilds/profile" +
-    "?region=eu&realm=nemesis&name=Delirium%20Tremens" +
-    "&fields=mythic_plus_roster";
+  const RIO_SEARCH_API =
+    "https://raider.io/api/v1/characters/search" +
+    "?region=eu&realm=nemesis&guild=Delirium%20Tremens";
 
   function safeNumber(n) {
     return typeof n === "number" && !isNaN(n) ? n : 0;
@@ -405,69 +403,58 @@ document.querySelectorAll("a").forEach(link => {
     const elChars  = document.getElementById("stat-characters");
     const elActive = document.getElementById("stat-active");
     const elAvg    = document.getElementById("stat-avg-score");
-    const note     = document.getElementById("stats-note");
+
+    const note = document.getElementById("stats-note");
 
     try {
-      const res = await fetch(RAIDER_GUILD_API);
-      if (!res.ok) throw new Error("HTTP " + res.status);
-
+      const res = await fetch(RIO_SEARCH_API);
       const data = await res.json();
 
-      // La struttura reale potrebbe variare leggermente: adatta se necessario
-      const roster = data.mythic_plus_roster || data.roster || [];
+      const chars = data?.characters || [];
 
-      // 1) Personaggi totali
-      const totalChars = roster.length;
+      /* 1) PERSONAGGI IN GILDA */
+      elChars.textContent = chars.length;
 
-      // 2) Giocatori attivi negli ultimi 30 giorni
+      /* 2) ATTIVI (crawlati negli ultimi 30 giorni) */
       const now = Date.now();
       const DAY_MS = 24 * 60 * 60 * 1000;
 
-      const active = roster.filter(member => {
-        const runs = member.mythic_plus_recent_runs || [];
-        if (!runs.length) return false;
-        const lastRun = runs[0];
-        if (!lastRun.completed_at) return false;
-        const completedAt = new Date(lastRun.completed_at).getTime();
-        return (now - completedAt) <= 30 * DAY_MS;
+      const active = chars.filter(c => {
+        if (!c.last_crawled_at) return false;
+        const time = new Date(c.last_crawled_at).getTime();
+        return (now - time) <= 30 * DAY_MS;
       });
 
-      // 3) Punteggio medio dei top 10
-      const byScore = roster
-        .map(m => ({
-          name: m.character?.name || "",
-          score: safeNumber(m.mythic_plus_scores?.all || m.mythic_plus_scores?.all_score)
-        }))
-        .filter(m => m.score > 0)
-        .sort((a,b) => b.score - a.score)
+      elActive.textContent = active.length;
+
+      /* 3) MEDIA PUNTEGGIO TOP 10 */
+      const scored = chars
+        .map(c => safeNumber(c.mythic_plus_scores?.all))
+        .filter(v => v > 0)
+        .sort((a,b) => b - a)
         .slice(0, 10);
 
-      const avgScore = byScore.length
-        ? Math.round(byScore.reduce((sum, m) => sum + m.score, 0) / byScore.length)
+      const avg = scored.length
+        ? Math.round(scored.reduce((s, v) => s + v, 0) / scored.length)
         : 0;
 
-      // Output
-      elChars.textContent  = totalChars || "0";
-      elActive.textContent = active.length || "0";
-      elAvg.textContent    = avgScore ? avgScore : "–";
+      elAvg.textContent = avg || "–";
 
       note.textContent =
-        "Dati calcolati automaticamente da Raider.IO (roster M+): i valori possono variare in base agli aggiornamenti del sito.";
+        "Statistiche ottenute tramite Raider.IO (Character Search).";
 
     } catch (err) {
-      console.error("Errore caricando le statistiche Raider.IO per Hollow Soul:", err);
-      if (elChars)  elChars.textContent  = "–";
-      if (elActive) elActive.textContent = "–";
-      if (elAvg)    elAvg.textContent    = "–";
-      if (note) {
-        note.textContent =
-          "Impossibile caricare le statistiche da Raider.IO in questo momento.";
-      }
+      console.error("Errore caricando le statistiche Hollow Soul:", err);
+      elChars.textContent  = "–";
+      elActive.textContent = "–";
+      elAvg.textContent    = "–";
+      note.textContent = "Impossibile caricare le statistiche al momento.";
     }
   }
 
   loadHollowSoulStats();
 </script>
+
 
 </body>
 </html>
