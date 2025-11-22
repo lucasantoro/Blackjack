@@ -4,7 +4,191 @@
 <meta charset="UTF-8">
 <title>Delirium Tremens – Raider</title>
 <link rel="stylesheet" href="../css/style.css">
+
+<style>
+
+/* --- RESET E BASE DELLA HOME --- */
+body {
+  background: #0b0b0b;
+  color: #ccc;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- HEADER COERENTE CON HOME --- */
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px 0 10px;
+}
+
+header h1 {
+  font-size: 2rem;
+  margin: 0;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.mainnav ul {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+  margin-top: 15px;
+  padding: 0;
+}
+.mainnav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: .3s;
+}
+.mainnav a:hover,
+.mainnav a.active {
+  color: #b86bff;
+}
+
+/* --- SUBNAV DEDICATA AI TEAM --- */
+.subnav {
+  margin-top: 20px;
+  background: rgba(20,20,20,0.8);
+  padding: 10px 0;
+  backdrop-filter: blur(4px);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.subnav ul {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  padding: 0;
+}
+.subnav a {
+  color: #fff;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.subnav a:hover {
+  color: #b86bff;
+  text-shadow: 0 0 8px #b86bff;
+}
+
+/* --- HERO INTRO COME HOME (senza bg) --- */
+.hero-raider {
+  padding: 60px 20px 40px;
+  text-align: center;
+}
+.hero-raider h2 {
+  font-size: 2.6rem;
+  color: #fff;
+  opacity: 0;
+  animation: fadeUp .9s ease forwards;
+}
+.hero-raider p {
+  opacity: 0;
+  max-width: 700px;
+  margin: 18px auto 0;
+  color: #ccc;
+  font-size: 1.2rem;
+  animation: fadeUp 1.3s ease forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- BACKGROUND UNICO COME HOME --- */
+.bg-container {
+  position: relative;
+  background: url('../img/logo.png') center/cover no-repeat;
+  padding: 60px 0;
+}
+.bg-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(2px);
+}
+.bg-container > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* --- TESTO LUNGO --- */
+.description-long {
+  max-width: 900px;
+  margin: 25px auto;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: #ddd;
+}
+
+/* --- CARD TEAM RIEPILOGATIVE (coerenti con home) --- */
+.team-overview {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 35px;
+  margin: 50px auto;
+  width: 90%;
+}
+
+.team-mini-card {
+  width: 360px;
+  padding: 25px;
+  border-radius: 12px;
+  background: rgba(20,20,20,0.85);
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(4px);
+  color: #eee;
+  transition: .35s ease;
+  opacity: 0;
+  animation: fadeZoom 0.8s ease forwards;
+  text-align: center;
+}
+.team-mini-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 20px rgba(180,0,255,0.35);
+  border-color: rgba(180,0,255,0.45);
+}
+.team-mini-card h3 {
+  color: #fff;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+.team-btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 18px;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  color: #fff;
+  transition: .3s;
+}
+.team-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+@keyframes fadeZoom { to { opacity:1; transform:scale(1);} }
+
+/* --- FOOTER --- */
+footer {
+  text-align: center;
+  padding: 40px 0;
+  color: #777;
+  margin-top: 60px;
+}
+
+</style>
 </head>
+
+
+
 
 <body class="page-transition">
 
@@ -21,7 +205,6 @@
   </nav>
 </header>
 
-<!-- NAVBAR SECONDARIA DEDICATA AI RAID TEAM -->
 <nav class="subnav">
   <ul>
     <li><a href="../pages/abyss-chosen/abyss-chosen.html">Abyss Chosen</a></li>
@@ -29,37 +212,70 @@
   </ul>
 </nav>
 
-<main class="panel">
-<h2>Chi sono i Raider</h2>
-<p class="description-long">
-I Raider dei Delirium Tremens rappresentano il cuore operativo della gilda:
-giocatori determinati, affidabili e organizzati, uniti dalla voglia di affrontare
-il raid con serietà, collaborazione e spirito di squadra. 
-Ogni membro partecipa con impegno, prepara la propria classe, studia le strategie
-e contribuisce al progresso del gruppo con un atteggiamento positivo e maturo.
-</p>
+<!-- HERO INTRO PULITO -->
+<section class="hero-raider">
+  <h2>I Raider dei Delirium Tremens</h2>
+  <p>
+    Il cuore operativo della gilda: disciplina, rispetto, collaborazione e voglia di crescere insieme.
+  </p>
+</section>
 
-<p class="description-long">
-I Raider sono divisi in due team distinti, entrambi fondamentali per la crescita
-e l’identità della gilda: <strong>Abyss Chosen</strong> e <strong>MindBound</strong>.
-Stessi valori, stessa disciplina, stessi obiettivi di alto livello — ma con stili
-di gioco differenti, per permettere a ogni giocatore di esprimersi nel modo più
-adatto alla propria personalità.
-</p>
+<!-- SFONDO UNICO CON LOGO -->
+<div class="bg-container">
 
-<p class="description-long">
-Entrare tra i Raider significa credere nel rispetto, nell’organizzazione,
-nell’aiuto reciproco e nella voglia di migliorare, insieme. È qui che il gioco diventa
-una vera avventura condivisa.
-</p>
+  <main class="panel">
+    <h2 style="text-align:center; color:#fff;">Chi sono i Raider</h2>
 
-</main>
+    <p class="description-long">
+      I Raider dei Delirium Tremens rappresentano il cuore operativo della gilda:
+      giocatori determinati, affidabili e organizzati, uniti dalla voglia di affrontare
+      il raid con serietà, collaborazione e spirito di squadra.
+    </p>
+
+    <p class="description-long">
+      Sono divisi in due team distinti, entrambi fondamentali per la crescita e
+      l’identità della gilda: <strong>Abyss Chosen</strong> e <strong>MindBound</strong>.
+    </p>
+
+    <p class="description-long">
+      Entrare tra i Raider significa credere nel rispetto, nell’organizzazione,
+      nell’aiuto reciproco e nella voglia di migliorare, insieme.
+    </p>
+
+    <!-- MINI CARD TEAM (come home, più compatte) -->
+    <div class="team-overview">
+
+      <div class="team-mini-card">
+        <h3>Abyss Chosen</h3>
+        <p>
+          Il team più rapido e orientato all'ottimizzazione, mantenendo comunque
+          un ambiente sereno e collaborativo.
+        </p>
+        <a href="../pages/abyss-chosen/abyss-chosen.html" class="team-btn">Vai al team</a>
+      </div>
+
+      <div class="team-mini-card">
+        <h3>MindBound</h3>
+        <p>
+          Un team con gli stessi obiettivi degli Abyss, ma con un ritmo più rilassato
+          e grande attenzione alla crescita personale.
+        </p>
+        <a href="../pages/mindbound/mindbound.html" class="team-btn">Vai al team</a>
+      </div>
+
+    </div>
+
+  </main>
+
+</div> <!-- fine bg-container -->
 
 <footer>
 <p>&copy; 2025 Delirium Tremens</p>
 </footer>
 
-<!-- SCRIPT TRANSIZIONE PAGINA -->
+
+
+<!-- TRANSIZIONE PAGINE -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   document.body.classList.add("page-loaded");
