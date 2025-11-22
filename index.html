@@ -5,14 +5,22 @@
 <title>Delirium Tremens - Gilda WoW</title>
 <link rel="stylesheet" href="css/style.css">
 <style>
-/* --- HERO --- */
+/* ===================== RESET HEADER ===================== */
+header nav ul,
+header nav a {
+  all: unset;
+  display: revert;
+}
+
+/* ===================== HERO ===================== */
 .hero {
-  height: 60vh;
-  background: url('img/logo.png') center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-height: 220vh;
+  padding-top: 80px;
+  padding-bottom: 150px;
+  background: url('img/logo.png') center/contain no-repeat;
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 .hero::after {
   content: "";
@@ -22,9 +30,15 @@
 }
 .hero-content {
   position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
   color: #fff;
   text-align: center;
-  z-index: 2;
 }
 .hero h2 {
   font-size: 3rem;
@@ -39,28 +53,21 @@
   transform: translateY(20px);
   animation: fadeUp 1.3s ease forwards;
 }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-@keyframes fadeUp {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* --- SECTION TITLE --- */
-section h2 {
-  text-align: center;
-  margin-bottom: 25px;
-  font-size: 2rem;
-  color: #fff;
-}
-
-/* --- GRID CARDS --- */
-.grid-cards {
+/* ===================== GRID CARDS ===================== */
+.hero-cards {
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 20px;
   display: grid;
-  gap: 30px;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  margin: 40px auto;
-  width: 90%;
+  gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  justify-items: center;
+  grid-auto-rows: auto;
 }
-.card {
+
+.card, .team-card {
   background: rgba(20,20,20,0.8);
   border: 1px solid rgba(255,255,255,0.1);
   padding: 25px;
@@ -73,134 +80,46 @@ section h2 {
   position: relative;
   overflow: hidden;
   transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  justify-self: center;
 }
+@keyframes fadeZoom { to { opacity:1; transform:scale(1);} }
 
-/* Sheen effect */
-.card::before {
+/* ===================== SHEEN EFFECT ===================== */
+.card::before, .team-card::before {
   content: "";
   position: absolute;
   top: -100%;
   left: -100%;
   width: 50%;
   height: 300%;
-  background: linear-gradient(
-    120deg,
-    rgba(180,0,255,0) 0%,
-    rgba(180,0,255,0.25) 50%,
-    rgba(180,0,255,0) 100%
-  );
+  background: linear-gradient(120deg, rgba(180,0,255,0) 0%, rgba(180,0,255,0.25) 50%, rgba(180,0,255,0) 100%);
   transform: rotate(25deg);
   transition: .8s;
 }
-
-.card:hover::before {
+.card:hover::before, .team-card:hover::before {
   top: -50%;
   left: 120%;
 }
-
-.card:hover {
+.card:hover, .team-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 0 22px rgba(180,0,255,0.35);
   border-color: rgba(180,0,255,0.45);
 }
-@keyframes fadeZoom { to { opacity:1; transform:scale(1);} }
 
-/* --- RAID TEAMS --- */
-.raid-teams {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 40px;
-  margin-top: 50px;
-}
-.team-card {
-  width: 420px;
-  padding: 30px;
-  border-radius: 14px;
-  background: rgba(15,15,15,0.75);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: #eee;
-  backdrop-filter: blur(4px);
-  opacity: 0;
-  position: relative;
-  overflow: hidden;
-  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
-}
-
-.team-card.abyss {
-  animation: slideLeft .8s ease forwards;
-}
-
-.team-card.mindbound {
-  animation: slideRight .8s ease forwards;
-}
-
-.team-card::before {
-  content: "";
-  position: absolute;
-  top: -100%;
-  left: -100%;
-  width: 50%;
-  height: 300%;
-  background: linear-gradient(
-    120deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.15) 50%,
-    rgba(255,255,255,0) 100%
-  );
-  transform: rotate(25deg);
-  transition: .8s;
-}
-
-.team-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 0 25px rgba(255,255,255,0.15);
-  border-color: rgba(255,255,255,0.4);
-}
-
+/* ===================== TEAM SPECIFIC GLOW ===================== */
 .mindbound:hover {
   box-shadow: 0 0 25px rgba(120,120,255,0.55);
 }
-
 .abyss:hover {
   box-shadow: 0 0 25px rgba(255,80,80,0.55);
 }
-@keyframes slideLeft {
-  from { opacity:0; transform:translateX(-25px); }
-  to   { opacity:1; transform:translateX(0); }
-}
 
-@keyframes slideRight {
-  from { opacity:0; transform:translateX(25px); }
-  to   { opacity:1; transform:translateX(0); }
-}
-
-.team-card h3 {
-  font-size: 1.8rem;
-  margin-bottom: 12px;
-  color: #fff;
-}
-.team-card p { line-height: 1.5; }
-.team-btn {
-  display: inline-block;
-  margin-top: 18px;
-  padding: 10px 18px;
-  border: 1px solid #fff;
-  border-radius: 8px;
-  color: #fff;
-  transition: .3s;
-}
-.team-btn:hover {
-  background: #fff;
-  color: #000;
-}
-
+/* ===================== HEADER ===================== */
 header {
   display: flex;
   justify-content: center;
   padding: 20px 0;
 }
-
 header nav ul {
   display: flex;
   gap: 30px;
@@ -209,28 +128,28 @@ header nav ul {
   align-items: center;
   width: 100%;
 }
-
 header nav a {
   font-size: 1.1rem;
   text-decoration: none;
+  color: white;
 }
 
-
-/* Color Identity */
-.mindbound { box-shadow: 0 0 15px rgba(120,120,255,0.35); }
-.abyss { box-shadow: 0 0 15px rgba(255,80,80,0.35); }
-
-body { background:#0b0b0b; color:#ccc; font-family:Arial, sans-serif; }
-header nav ul { display:flex; gap:20px; list-style:none; }
-header nav a { color:white; }
-footer { text-align:center; padding:40px 0; color:#777; }
+/* ===================== GENERAL ===================== */
+body {
+  background:#0b0b0b;
+  color:#ccc;
+  font-family:Arial, sans-serif;
+}
+footer {
+  text-align:center;
+  padding:40px 0;
+  color:#777;
+}
 </style>
 </head>
 <body>
 
 <header>
-<!-- <h1>Delirium Tremens</h1>
-<p class="subtitle">Dove la sanità mentale va in cooldown</p> -->
 <nav>
     <ul>
         <li><a href="index.html">Home</a></li>
@@ -244,6 +163,7 @@ footer { text-align:center; padding:40px 0; color:#777; }
 
 <main>
 
+<!-- HERO SOLO TITOLO -->
 <section class="hero">
   <div class="hero-content">
     <h2>Benvenuti nei Delirium Tremens</h2>
@@ -251,57 +171,42 @@ footer { text-align:center; padding:40px 0; color:#777; }
   </div>
 </section>
 
-<section>
+<!-- CHI SIAMO CON BACKGROUND LOGO -->
+<section style="background:url('img/logo.png') center/cover no-repeat; background-attachment:fixed; padding-top:40px; padding-bottom:40px;">
 <h2>Chi siamo</h2>
 <div class="grid-cards">
   <div class="card">
     <h3>La nostra community</h3>
-    <p>
-    Siamo una gilda italiana che vive World of Warcraft con passione, maturità e un pizzico di follia controllata.
-    Non siamo solo un gruppo di giocatori: siamo un ambiente dove ci si supporta, si cresce e si ride insieme.
-    </p>
+    <p>Siamo una gilda italiana che vive World of Warcraft con passione, maturità e un pizzico di follia controllata. Non siamo solo un gruppo di giocatori: siamo un ambiente dove ci si supporta, si cresce e si ride insieme.</p>
   </div>
 
   <div class="card">
     <h3>Due anime, un'unica identità</h3>
-    <p>
-    Nei Delirium Tremens convivono due percorsi: quello dei raid team e quello degli Hollow Soul, la nostra anima sociale.
-    Chiunque può trovare il proprio spazio, che sia nel progress, nelle M+, nelle chiacchiere su Discord o nella vita di gilda quotidiana.
-    </p>
+    <p>Nei Delirium Tremens convivono due percorsi: quello dei raid team e quello degli Hollow Soul, la nostra anima sociale. Chiunque può trovare il proprio spazio.</p>
   </div>
 
   <div class="card">
     <h3>I nostri valori</h3>
-    <p>
-    Rispetto, inclusività, disciplina senza rigidità, divertimento senza tossicità.
-    Giochiamo per migliorare, ma non dimentichiamo mai che questo è un gioco. E che le persone vengono prima dei personaggi.
-    </p>
+    <p>Rispetto, inclusività, disciplina senza rigidità, divertimento senza tossicità. Le persone vengono prima dei personaggi.</p>
   </div>
 </div>
 </section>
 
-<section>
+<!-- RAID TEAM CON BACKGROUND LOGO -->
+<section style="background:url('img/logo.png') center/cover no-repeat; background-attachment:fixed; padding-top:40px; padding-bottom:40px;">
 <h2>I Nostri Raid Team</h2>
 <div class="raid-teams">
-
   <div class="team-card mindbound">
     <h3>Mindbound</h3>
-    <p>
-    Un team che condivide gli stessi obiettivi degli Abyss Chosen – affrontare l'endgame al massimo livello – ma con un clima più rilassato,
-    pensato anche per chi non ha molto tempo a disposizione. Un ambiente inclusivo, sereno e orientato alla crescita continua.
-    </p>
+    <p>Un team che condivide gli stessi obiettivi degli Abyss Chosen – affrontare l'endgame al massimo livello – ma con un clima più rilassato.</p>
     <a href="pages/raider.html" class="team-btn">Scopri il team</a>
   </div>
 
   <div class="team-card abyss">
     <h3>Abyss Chosen</h3>
-    <p>
-    Il nostro gruppo più rapido e strutturato, dedicato a raggiungere gli stessi traguardi dei Mindbound ma con un ritmo più celere,
-    focalizzato sull'ottimizzazione del tempo e dei risultati senza sacrificare la qualità dell'ambiente.
-    </p>
+    <p>Il nostro gruppo più rapido e strutturato, dedicato a raggiungere gli stessi traguardi dei Mindbound ma con un ritmo più celere.</p>
     <a href="pages/raider.html" class="team-btn">Scopri il team</a>
   </div>
-
 </div>
 </section>
 
