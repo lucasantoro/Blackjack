@@ -5,6 +5,7 @@
   <title>Delirium Tremens – Progress</title>
   <link rel="stylesheet" href="../../css/style.css">
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     body {
@@ -45,6 +46,31 @@
     .mainnav a.active {
       color: #ff5050;
       /* text-shadow: 0 0 8px #b86bff; */
+    }
+
+    /* HERO INTRO */
+    .hero-progress {
+      padding: 50px 20px 30px;
+      text-align: center;
+    }
+    .hero-progress h2 {
+      font-size: 2.4rem;
+      color: #fff;
+      opacity: 0;
+      animation: fadeUp .9s ease forwards;
+    }
+    .hero-progress p {
+      opacity: 0;
+      max-width: 750px;
+      margin: 18px auto 0;
+      color: #ccc;
+      font-size: 1.1rem;
+      animation: fadeUp 1.3s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* SFONDO CON LOGO */
@@ -185,61 +211,23 @@
       to { opacity: 1; transform: scale(1); }
     }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
     /* SEZIONE ULTIMA SESSIONE */
     .widget-full {
       margin-top: 40px;
     }
 
-    /* ULTIMA SESSIONE – TIMELINE */
-    .session-summary-card {
-      background: rgba(15,15,15,0.85);
-      border-radius: 16px;
-      padding: 20px;
+    .chart-wrapper {
+      border-radius: 14px;
       border: 1px solid rgba(255,255,255,0.15);
-      box-shadow: 0 0 25px rgba(184,107,255,0.4);
-      backdrop-filter: blur(4px);
-      margin-bottom: 35px;
-      color: #eee;
-      animation: fadeZoom .7s ease forwards;
-    }
-
-    .timeline-container {
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-      margin-top: 25px;
-    }
-
-    .timeline-card {
-      background: rgba(20,20,20,0.85);
-      border: 1px solid rgba(255,255,255,0.12);
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(184,107,255,0.25);
+      padding: 16px;
+      background: rgba(15,15,15,0.8);
+      box-shadow: 0 0 18px rgba(184,107,255,0.35);
       backdrop-filter: blur(4px);
       position: relative;
       overflow: hidden;
-      opacity: 0;
-      transform: translateY(10px);
-      animation: fadeUp .8s ease forwards;
     }
 
-    .timeline-card.kill {
-      border-color: rgba(80,255,120,0.4);
-      box-shadow: 0 0 25px rgba(80,255,120,0.4);
-    }
-
-    .timeline-card.progress {
-      border-color: rgba(255,180,60,0.35);
-      box-shadow: 0 0 25px rgba(255,180,60,0.35);
-    }
-
-    .timeline-card::before {
+    .chart-wrapper::before {
       content: "";
       position: absolute;
       top: -120%;
@@ -249,31 +237,37 @@
       background: linear-gradient(
         120deg,
         rgba(255,255,255,0) 0%,
-        rgba(255,255,255,0.14) 50%,
+        rgba(255,255,255,0.16) 50%,
         rgba(255,255,255,0) 100%
       );
       transform: rotate(25deg);
       transition: .8s;
     }
-
-    .timeline-card:hover::before {
+    .chart-wrapper:hover::before {
       top: -40%;
       left: 130%;
     }
 
-    .timeline-title {
-      color: #fff;
-      font-size: 1.4rem;
-      margin-bottom: 6px;
+    .chart-loader {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 220px;
+    }
+    .loader {
+      border: 6px solid rgba(255,255,255,0.2);
+      border-top: 6px solid #fff;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
     }
 
-    .timeline-info {
-      color: #ddd;
-      margin: 4px 0;
-    }
-
-    .timeline-info strong {
-      color: #fff;
+    .hidden {
+      display: none !important;
     }
 
     footer {
@@ -337,19 +331,18 @@
       </div>
     </div>
 
-    <!-- ULTIMA SESSIONE – TIMELINE -->
+    <!-- ULTIMA SESSIONE -->
     <div class="widget-full">
       <h2 class="section-title" id="last-session-title">Ultima sessione raid</h2>
       <p class="section-subtitle">
-        Resoconto completo dei boss affrontati nell’ultimo raid: pull, kill, progress e migliori percentuali.
+        Riepilogo di ci&ograve; che &egrave; successo nell'ultimo raid: pull, wipe, kill e migliori percentuali sui boss affrontati.
       </p>
 
-      <div class="session-summary-card" id="last-session-summary">
-        Caricamento dati dell'ultima sessione...
-      </div>
-
-      <div class="timeline-container" id="last-session-timeline">
-        <!-- Card dei boss generate via JS -->
+      <div class="chart-wrapper">
+        <div id="loaderLast" class="chart-loader">
+          <div class="loader"></div>
+        </div>
+        <canvas id="lastSessionChart" class="hidden" height="220"></canvas>
       </div>
     </div>
 
@@ -400,7 +393,7 @@ document.querySelectorAll("a").forEach(link => {
   const WORKER_LAST = "https://wild-mode-1b45.lucasantoro2905.workers.dev";
 </script>
 
-<!-- LOGICA PROGRESS (CARD + ULTIMA SESSIONE TIMELINE) -->
+<!-- LOGICA PROGRESS (CARD + ULTIMA SESSIONE) -->
 <script>
 async function loadDifficulty(diff, elementId) {
   const el = document.getElementById(elementId);
@@ -415,9 +408,7 @@ async function loadDifficulty(diff, elementId) {
 
     const killed = bosses.filter(b => data.bosses[b].kills > 0);
     const inProgress = bosses.filter(
-      b => data.bosses[b].kills === 0 &&
-           data.bosses[b].bestPercentage !== null &&
-           data.bosses[b].bestPercentage < 100
+      b => data.bosses[b].kills === 0 && data.bosses[b].bestPercentage !== null && data.bosses[b].bestPercentage < 100
     );
 
     let html = `
@@ -451,27 +442,27 @@ async function fetchLastSession() {
   return res.json();
 }
 
-function formatDuration(ms) {
-  if (!ms || ms <= 0) return "N/D";
-  const h = Math.floor(ms / 3600000);
-  const m = Math.floor((ms % 3600000) / 60000);
-  return `${h > 0 ? h + "h " : ""}${m}m`;
-}
+function renderLastChart(last) {
+  const loader = document.getElementById("loaderLast");
+  const canvas = document.getElementById("lastSessionChart");
 
-function renderLastSessionTimeline(last) {
-  const timeline = document.getElementById("last-session-timeline");
-  const summary = document.getElementById("last-session-summary");
+  loader.classList.add("hidden");
+  canvas.classList.remove("hidden");
 
-  const bosses = Object.values(last.bosses || {});
+  const bosses = Object.keys(last.bosses || {});
+
   if (bosses.length === 0) {
-    summary.innerHTML = "Nessun dato trovato per l'ultimo raid.";
-    timeline.innerHTML = "";
+    canvas.outerHTML = "<p style='color:white;text-align:center;'>Nessun dato per l'ultimo raid.</p>";
     return;
   }
 
-  // Difficulty auto
+  const pulls = bosses.map(b => last.bosses[b].pulls);
+  const wipes = bosses.map(b => last.bosses[b].wipes);
+  const kills = bosses.map(b => last.bosses[b].kills);
+  const bestPct = bosses.map(b => last.bosses[b].bestPercentage ?? 100);
+
   const diffs = new Set();
-  bosses.forEach(b => b.difficultiesSeen?.forEach(d => diffs.add(d)));
+  bosses.forEach(b => last.bosses[b].difficultiesSeen?.forEach(d => diffs.add(d)));
 
   const diffName =
     diffs.has(5) ? "Mythic" :
@@ -479,47 +470,73 @@ function renderLastSessionTimeline(last) {
     diffs.has(3) ? "Normal" :
     "N/A";
 
-  document.getElementById("last-session-title").textContent =
-    `Ultima sessione raid (${diffName})`;
+  const titleEl = document.getElementById("last-session-title");
+  titleEl.textContent = `Ultima sessione raid (${diffName})`;
 
-  // SUMMARY
-  const pullsTotal = bosses.reduce((sum, b) => sum + b.pulls, 0);
-  const wipesTotal = bosses.reduce((sum, b) => sum + b.wipes, 0);
-  const killsTotal = bosses.reduce((sum, b) => sum + b.kills, 0);
+  const ctx = canvas.getContext("2d");
 
-  const sessionStart = last.latestReport?.startTime || null;
-  const sessionEnd   = last.latestReport?.endTime || null;
-  const durationMs   = (sessionStart && sessionEnd) ? (sessionEnd - sessionStart) : null;
-
-  summary.innerHTML = `
-    <strong>Boss affrontati:</strong> ${bosses.length}<br>
-    <strong>Pull totali:</strong> ${pullsTotal}<br>
-    <strong>Wipe totali:</strong> ${wipesTotal}<br>
-    <strong>Kill totali:</strong> ${killsTotal}<br>
-    <strong>Durata sessione:</strong> ${formatDuration(durationMs)}
-  `;
-
-  // TIMELINE (ordinata alfabeticamente, dato che non abbiamo timestamp per singolo boss)
-  bosses.sort((a, b) => a.bossName.localeCompare(b.bossName));
-
-  timeline.innerHTML = "";
-
-  bosses.forEach(b => {
-    const isKill = b.kills > 0;
-    const bestPct = b.bestPercentage ?? "—";
-
-    const card = document.createElement("div");
-    card.className = "timeline-card " + (isKill ? "kill" : "progress");
-
-    card.innerHTML = `
-      <div class="timeline-title">${b.bossName}</div>
-      <div class="timeline-info"><strong>Esito:</strong> ${isKill ? "Kill ✔️" : "Progress"}</div>
-      <div class="timeline-info"><strong>Pulls:</strong> ${b.pulls}</div>
-      <div class="timeline-info"><strong>Wipes:</strong> ${b.wipes}</div>
-      <div class="timeline-info"><strong>Best %:</strong> ${bestPct !== "—" ? bestPct + "%" : "—"}</div>
-    `;
-
-    timeline.appendChild(card);
+  new Chart(ctx, {
+    data: {
+      labels: bosses,
+      datasets: [
+        {
+          type: "bar",
+          label: "Pulls",
+          data: pulls,
+          backgroundColor: "rgba(41,150,246,0.7)"
+        },
+        {
+          type: "bar",
+          label: "Wipes",
+          data: wipes,
+          backgroundColor: "rgba(255,90,0,0.7)"
+        },
+        {
+          type: "bar",
+          label: "Kills",
+          data: kills,
+          backgroundColor: "rgba(0,200,70,0.8)"
+        },
+        {
+          type: "line",
+          label: "Best % (0 = kill)",
+          data: bestPct,
+          borderColor: "#ff66cc",
+          backgroundColor: "#ff66cc",
+          pointRadius: 4,
+          pointHoverRadius: 6,
+          tension: 0.3,
+          yAxisID: "y1"
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          type: "linear",
+          position: "left",
+          beginAtZero: true,
+          title: { display: true, text: "Pulls / Wipes / Kills", color: "#fff" },
+          ticks: { color: "#fff" }
+        },
+        y1: {
+          type: "linear",
+          position: "right",
+          beginAtZero: true,
+          max: 100,
+          title: { display: true, text: "Best %", color: "#ff66cc" },
+          ticks: { color: "#ff66cc" },
+          grid: { drawOnChartArea: false }
+        },
+        x: {
+          ticks: { color: "#fff" }
+        }
+      },
+      plugins: {
+        legend: { labels: { color: "#fff" } }
+      }
+    }
   });
 }
 
@@ -533,11 +550,11 @@ function renderLastSessionTimeline(last) {
   try {
     const last = await fetchLastSession();
     console.log("Last session:", last);
-    renderLastSessionTimeline(last);
+    renderLastChart(last);
   } catch (err) {
     console.error("Errore nel caricamento dell'ultima sessione", err);
-    const summary = document.getElementById("last-session-summary");
-    summary.innerHTML = "Errore nel caricamento dell'ultima sessione.";
+    const loader = document.getElementById("loaderLast");
+    loader.innerHTML = "<p style='color:white;'>Errore nel caricamento dell'ultima sessione.</p>";
   }
 })();
 </script>
