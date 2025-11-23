@@ -9,93 +9,96 @@
 <body class="page-transition">
 
 <header>
-<h1>Reclutamento</h1>
-<nav>
-  <ul>
-    <li><a href="../index.html">Home</a></li>
-    <li><a href="raider.html">Raider</a></li>
-    <li><a href="hollowsoul.html">Hollow Soul</a></li>
-    <li><a href="recruiting.html" class="active">Reclutamento</a></li>
-    <li><a href="statuto.html">Statuto</a></li>
-  </ul>
-</nav>
+  <nav class="mainnav">
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="raider.html">Raider</a></li>
+      <li><a href="hollowsoul.html">Hollow Soul</a></li>
+      <li><a href="recruiting.html" class="active">Reclutamento</a></li>
+      <li><a href="statuto.html">Statuto</a></li>
+    </ul>
+  </nav>
 </header>
 
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <h2>Reclutamento</h2>
+    <p>
+      Vuoi entrare nei Delirium Tremens?  
+      Compila il modulo e ti ricontatteremo direttamente su Discord.
+    </p>
+  </div>
+</section>
 
-<main class="recruit panel">
-<!--
-<h2>Classi richieste</h2>
-<ul>
-  <li>Tank – Chiuso</li>
-  <li>Healer – Chiuso</li>
-  <li>DPS – Alto bisogno</li>
-  <li>Range DPS – Aperto</li>
-</ul>
--->
+<!-- BG LOGO + OVERLAY -->
+<div class="bg-container bg-main-logo">
 
-<h2>Come candidarsi</h2>
-<p>Compila il modulo sottostante per inviare la tua candidatura. Ti risponderemo direttamente su Discord.</p>
+  <main class="panel recruit">
 
+    <h2 class="section-title">Come candidarsi</h2>
+    <p class="section-subtitle">
+      Inserisci i tuoi dati nel modulo qui sotto.  
+      Il nostro staff ti risponderà appena possibile.
+    </p>
 
-<!-- FORM DI CANDIDATURA -->
-<form id="applyForm" class="apply-form">
+    <!-- FORM -->
+    <form id="applyForm" class="apply-form">
 
-  <label>Discord</label>
-  <input type="text" name="Discord" placeholder="es: Odetti#1234" required>
+      <label>Discord</label>
+      <input type="text" name="Discord" placeholder="es: Odetti#1234" required>
 
-  <label>Nome del personaggio</label>
-  <input type="text" name="Personaggio" required>
+      <label>Nome del personaggio</label>
+      <input type="text" name="Personaggio" placeholder="Il tuo personaggio principale" required>
 
-  <label>Classe</label>
-  <select id="classSelect" name="Classe" required>
-    <option value="">Seleziona la classe…</option>
-    <option value="Death Knight">Death Knight</option>
-    <option value="Demon Hunter">Demon Hunter</option>
-    <option value="Druid">Druid</option>
-    <option value="Evoker">Evoker</option>
-    <option value="Hunter">Hunter</option>
-    <option value="Mage">Mage</option>
-    <option value="Monk">Monk</option>
-    <option value="Paladin">Paladin</option>
-    <option value="Priest">Priest</option>
-    <option value="Rogue">Rogue</option>
-    <option value="Shaman">Shaman</option>
-    <option value="Warlock">Warlock</option>
-    <option value="Warrior">Warrior</option>
-  </select>
+      <label>Classe</label>
+      <select id="classSelect" name="Classe" required>
+        <option value="">Seleziona la classe…</option>
+        <option>Death Knight</option>
+        <option>Demon Hunter</option>
+        <option>Druid</option>
+        <option>Evoker</option>
+        <option>Hunter</option>
+        <option>Mage</option>
+        <option>Monk</option>
+        <option>Paladin</option>
+        <option>Priest</option>
+        <option>Rogue</option>
+        <option>Shaman</option>
+        <option>Warlock</option>
+        <option>Warrior</option>
+      </select>
 
-  <label>Specializzazione</label>
-  <select id="specSelect" name="Spec" required>
-    <option value="">Seleziona prima una classe…</option>
-  </select>
+      <label>Specializzazione</label>
+      <select id="specSelect" name="Spec" required>
+        <option value="">Seleziona prima una classe…</option>
+      </select>
 
-  <label>Link a Raider.IO o Warcraft Logs</label>
-  <input type="text" name="Logs">
+      <label>Link a Raider.IO o Warcraft Logs</label>
+      <input type="text" name="Logs" placeholder="URL al tuo profilo (opzionale)">
 
-  <label>Disponibilità</label>
-  <textarea name="Disponibilità" required></textarea>
+      <label>Disponibilità</label>
+      <textarea name="Disponibilità" placeholder="Giorni/Orari disponibili per raid e attività" required></textarea>
 
-  <label>Perché vuoi unirti ai Delirium Tremens?</label>
-  <textarea name="Motivazione" required></textarea>
+      <label>Perché vuoi unirti ai Delirium Tremens?</label>
+      <textarea name="Motivazione" placeholder="Dicci qualcosa di te e delle tue aspettative" required></textarea>
 
-  <button type="submit" class="apply-button">Invia candidatura</button>
-</form>
+      <button type="submit" class="apply-button">Invia candidatura</button>
 
+    </form>
 
-</main>
-
+  </main>
+</div>
 
 <footer>
-<p>&copy; 2025 Delirium Tremens</p>
+  <p>&copy; 2025 Delirium Tremens</p>
 </footer>
 
-
-<!-- SCRIPT TRANSIZIONE PAGINA -->
+<!-- TRANSIZIONE PAGINE -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   document.body.classList.add("page-loaded");
 });
-
 document.querySelectorAll("a").forEach(link => {
   if (link.hostname === window.location.hostname) {
     link.addEventListener("click", function (e) {
@@ -108,8 +111,7 @@ document.querySelectorAll("a").forEach(link => {
 });
 </script>
 
-
-<!-- SCRIPT INVIO FORM AL WEBHOOK DISCORD -->
+<!-- INVIO FORM AL WEBHOOK DISCORD -->
 <script>
 document.getElementById("applyForm").addEventListener("submit", async function(e) {
   e.preventDefault();
@@ -133,8 +135,8 @@ document.getElementById("applyForm").addEventListener("submit", async function(e
 });
 </script>
 
+<!-- POPOLAMENTO SPEC IN BASE ALLA CLASSE -->
 <script>
-// Lista dinamica classi → spec
 const specByClass = {
   "Death Knight": ["Blood", "Frost", "Unholy"],
   "Demon Hunter": ["Havoc", "Vengeance"],
@@ -155,8 +157,8 @@ const classSelect = document.getElementById("classSelect");
 const specSelect = document.getElementById("specSelect");
 
 classSelect.addEventListener("change", () => {
-  const selectedClass = classSelect.value;
   specSelect.innerHTML = "";
+  const selectedClass = classSelect.value;
 
   if (!selectedClass) {
     specSelect.innerHTML = `<option value="">Seleziona prima una classe…</option>`;
@@ -164,14 +166,12 @@ classSelect.addEventListener("change", () => {
   }
 
   specByClass[selectedClass].forEach(spec => {
-    const option = document.createElement("option");
-    option.value = spec;
-    option.textContent = spec;
-    specSelect.appendChild(option);
+    const op = document.createElement("option");
+    op.value = op.textContent = spec;
+    specSelect.appendChild(op);
   });
 });
 </script>
-
 
 </body>
 </html>
