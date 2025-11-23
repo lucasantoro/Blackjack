@@ -1,139 +1,121 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <title>Abyss Chosen – Roster</title>
-  <link rel="stylesheet" href="../../css/style.css">
+<meta charset="UTF-8">
+<title>Abyss Chosen – Roster</title>
+<link rel="stylesheet" href="../../css/style.css">
 
-  <style>
-    /* Forza 2 colonne fisse per il roster */
-    .roster-grid {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 25px;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 35px;
-      margin-top: 30px;
-    }
+<style>
+/* GRID 2 COLONNE */
+.roster-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 25px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 35px;
+  margin-top: 30px;
+}
 
-    /* Card esterna specifica Abyss */
-    .member-card {
-      background: rgba(20,20,20,0.8);
-      border: 1px solid rgba(255,255,255,0.12);
-      padding: 22px;
-      border-radius: 14px;
-      color: #eee;
-      backdrop-filter: blur(4px);
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: scale(0.96);
-      animation: fadeZoom 0.8s forwards;
-      box-shadow: 0 0 18px rgba(255,60,60,0.35);
-    }
+/* CARD MEMBRO */
+.member-card {
+  background: rgba(20,20,20,0.8);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 22px;
+  border-radius: 14px;
+  color: #eee;
+  backdrop-filter: blur(4px);
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.96);
+  animation: fadeZoom 0.8s forwards;
+  box-shadow: 0 0 18px rgba(255,60,60,0.35);
+}
 
-    /* Annulla lo stile globale .member dentro alla card,
-       così usiamo solo lo stile Abyss */
-    .member-card .member {
-      background: transparent;
-      box-shadow: none;
-      padding: 0;
-      margin: 0;
-      border-radius: 0;
-    }
+/* Testo interno originale del membro */
+.member-card .member img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
 
-    .member-card img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 10px;
-    }
+.member-card .member h3 {
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
 
-    .member-card h3 {
-      color: #fff;
-      font-size: 1.4rem;
-      margin: 8px 0 4px;
-    }
+/* BAR INFO: class icon + role + rio */
+.member-info-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+}
 
-    .member-card .tagline {
-      margin-bottom: 10px;
-    }
+/* ICONA CLASSE */
+.class-icon {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
 
-    /* Barra meta finale: classe + ruolo + Raider.IO */
-    .member-meta {
-      margin-top: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+/* BADGE RUOLO (stessa altezza dell’icona classe) */
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #000;
+  white-space: nowrap;
+}
 
-    /* Icona classe */
-    .class-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 6px;
-      object-fit: cover;
-      border: 1px solid rgba(255,255,255,0.25);
-      background: rgba(0,0,0,0.3);
-    }
+.role-tank   { background: #3da4ff; }
+.role-healer { background: #5cff9e; }
+.role-dps    { background: #ff5050; }
 
-    /* Badge ruolo */
-    .role-badge {
-      padding: 5px 10px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      font-weight: bold;
-      color: #fff;
-      white-space: nowrap;
-    }
+/* PULSANTE RAIDER.IO PICCOLO (solo immagine) */
+.rio-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  transition: 0.25s;
+}
 
-    .role-tank   { background: #3da4ff; }
-    .role-healer { background: #38a169; }
-    .role-dps    { background: #e53e3e; }
+.rio-btn:hover {
+  background: rgba(255,255,255,0.20);
+  border-color: rgba(255,255,255,0.4);
+  transform: translateY(-2px);
+}
 
-    /* Bottone Raider.IO */
-    .rio-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 4px 8px;
-      background: rgba(255,255,255,0.10);
-      border: 1px solid rgba(255,255,255,0.20);
-      border-radius: 5px;
-      color: #eee;
-      font-size: 0.75rem;
-      text-decoration: none;
-      transition: 0.2s;
-    }
+.rio-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 
-    .rio-btn:hover {
-      background: rgba(255,255,255,0.18);
-      border-color: rgba(255,255,255,0.35);
-    }
+/* Animazioni */
+@keyframes fadeZoom {
+  to { opacity: 1; transform: scale(1); }
+}
+</style>
 
-    .rio-logo {
-      width: 14px;
-      height: 14px;
-      object-fit: contain;
-    }
-
-
-    /* Titolo pagina */
-    .page-title {
-      text-align: center;
-      font-size: 2.3rem;
-      color: #fff;
-      margin: 20px 0 30px;
-    }
-  </style>
 </head>
 
-<body class="page-transition">
+<body class="page-transition abyss-bg">
 
 <header>
-  <nav class="mainnav">
+  <nav>
     <ul>
       <li><a href="../../index.html">Home</a></li>
       <li><a href="../raider.html">Raider</a></li>
@@ -152,8 +134,7 @@
   </ul>
 </nav>
 
-<!-- sfondo con logo Abyss, overlay gestito da style.css -->
-<div class="bg-container bg-abyss-logo">
+<div class="bg-container">
   <main class="panel">
 
     <h2 class="page-title">Roster Abyss Chosen</h2>
@@ -164,101 +145,65 @@
 </div>
 
 <footer>
-  <p>&copy; 2025 Delirium Tremens</p>
+<p>&copy; 2025 Delirium Tremens</p>
 </footer>
 
 <script>
-  // Lista dei membri (file HTML in /members/)
-  const members = [
-    "odetta.html",
-    "aqualara.html"
-  ];
+// LISTA DEI MEMBRI ABYSS
+const members = [
+  "odetta.html",
+  "aqualara.html"
+];
 
-  // Mappa ruoli → classe badge
-  const roleClasses = {
-    "tank": "role-tank",
-    "healer": "role-healer",
-    "dps": "role-dps",
-    "melee": "role-dps",
-    "ranged": "role-dps"
-  };
+// MAP RUOLI
+const roleMap = {
+  "TANK": "role-tank",
+  "HEALER": "role-healer",
+  "DPS": "role-dps"
+};
 
-  // Icone delle classi (adatta i path alle tue immagini)
-  const classIcons = {
-    "Death Knight": "../../img/ClassIcon/ClassIcon_deathknight.png",
-    "Demon Hunter": "../../img/ClassIcon/ClassIcon_demonhunter.png",
-    "Druid":        "../../img/ClassIcon/ClassIcon_druid.png",
-    "Evoker":       "../../img/ClassIcon/ClassIcon_evoker.png",
-    "Hunter":       "../../img/ClassIcon/ClassIcon_hunter.png",
-    "Mage":         "../../img/ClassIcon/ClassIcon_mage.png",
-    "Monk":         "../../img/ClassIcon/ClassIcon_monk.png",
-    "Paladin":      "../../img/ClassIcon/ClassIcon_paladin.png",
-    "Priest":       "../../img/ClassIcon/ClassIcon_priest.png",
-    "Rogue":        "../../img/ClassIcon/ClassIcon_rogue.png",
-    "Shaman":       "../../img/ClassIcon/ClassIcon_shaman.png",
-    "Warlock":      "../../img/ClassIcon/ClassIcon_warlock.png",
-    "Warrior":      "../../img/ClassIcon/ClassIcon_warrior.png"
-  };
+// ICONA CLASSE
+function classIcon(name) {
+  return `../../img/classes/${name.toLowerCase().replace(" ", "")}.png`;
+}
 
-  // Logo Raider.IO
-  const rioLogo = "../../img/raiderio_logo.png";
+const container = document.getElementById("roster-container");
 
-  function enhanceMemberCard(card) {
-    const meta = card.querySelector(".member-meta");
-    if (!meta) return;
+members.forEach(file => {
+  fetch(`../../members/${file}`)
+    .then(res => res.text())
+    .then(html => {
 
-    const role = (meta.dataset.role || "dps").toLowerCase();
-    const className = meta.dataset.class || "";
-    const rioLink = meta.dataset.rio || "#";
+      // Estrazione attributi
+      const className = html.match(/data-class="([^"]+)"/)?.[1] ?? null;
+      const roleName  = html.match(/data-role="([^"]+)"/)?.[1]?.toUpperCase() ?? null;
+      const rioURL    = html.match(/data-rio="([^"]+)"/)?.[1] ?? null;
 
-    const badgeClass = roleClasses[role] || "role-dps";
-    const classIcon = classIcons[className] || "";
+      container.innerHTML += `
+        <div class="member-card">
+          ${html}
 
-    meta.innerHTML = `
-      ${classIcon ? `<img src="${classIcon}" class="class-icon" alt="${className}">` : ""}
-      <span class="role-badge ${badgeClass}">${role.toUpperCase()}</span>
-      <a href="${rioLink}" target="_blank" class="rio-btn">
-        <img src="${rioLogo}" class="rio-logo" alt="Raider.IO">
-        Raider.IO
-      </a>
-    `;
-  }
-
-  const container = document.getElementById("roster-container");
-
-  members.forEach(file => {
-    fetch(`../../members/${file}`)
-      .then(res => res.text())
-      .then(html => {
-        const wrapper = document.createElement("div");
-        wrapper.className = "member-card";
-        wrapper.innerHTML = html;
-
-        enhanceMemberCard(wrapper);
-
-        container.appendChild(wrapper);
-      })
-      .catch(err => {
-        console.error("Errore caricando membro:", file, err);
-      });
-  });
+          <div class="member-info-bar">
+            ${className ? `<img class="class-icon" src="${classIcon(className)}" alt="${className}">` : ""}
+            ${roleName ? `<span class="role-badge ${roleMap[roleName]}">${roleName}</span>` : ""}
+            ${rioURL ? `
+              <a href="${rioURL}" target="_blank" class="rio-btn">
+                <img src="../../img/raiderio.png" class="rio-logo" alt="RaiderIO">
+              </a>` : ""}
+          </div>
+        </div>
+      `;
+    })
+    .catch(err => {
+      console.error("Errore caricando membro:", file, err);
+    });
+});
 </script>
 
-<!-- Transizione pagina -->
 <script>
+// PAGE TRANSITION
 document.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("page-loaded");
-});
-
-document.querySelectorAll("a").forEach(link => {
-  if (link.hostname === window.location.hostname) {
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
-      const href = this.getAttribute("href");
-      document.body.classList.remove("page-loaded");
-      setTimeout(() => { window.location.href = href; }, 300);
-    });
-  }
 });
 </script>
 
