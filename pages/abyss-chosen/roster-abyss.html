@@ -6,106 +6,18 @@
 <link rel="stylesheet" href="../../css/style.css">
 
 <style>
-/* --- BASE SITE --- */
-body {
-  background: #0b0b0b;
-  color: #ccc;
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-/* HEADER */
-header {
-  display: flex;
-  justify-content: center;
-  padding: 20px 0 10px;
-}
-header nav ul {
-  display: flex;
-  gap: 25px;
-  list-style: none;
-  padding: 0;
-}
-header nav a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.05rem;
-  transition: 0.3s;
-}
-header nav a:hover,
-header nav a.active {
-  color: #ff5050;
-  text-shadow: 0 0 8px #ff5050;
-}
-
-/* SUBNAV */
-.subnav {
-  background: rgba(20,20,20,0.8);
-  padding: 12px 0;
-  backdrop-filter: blur(4px);
-  border-top: 1px solid rgba(255,255,255,0.12);
-  border-bottom: 1px solid rgba(255,255,255,0.12);
-}
-.subnav ul {
-  list-style: none;
-  display: flex;
-  gap: 40px;
-  justify-content: center;
-  padding: 0;
-}
-.subnav a {
-  color: #fff;
-  text-decoration: none;
-  transition: 0.3s;
-}
-.subnav a:hover,
-.subnav a.active {
-  color: #ff5050;
-  text-shadow: 0 0 8px #ff5050;
-}
-
-/* BACKGROUND LOGO */
-.bg-container {
-  position: relative;
-  background: url('../../img/abysschosen_logo.png') center/cover no-repeat;
-  padding: 60px 0 80px;
-}
-.bg-container::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-  backdrop-filter: blur(2px);
-}
-.bg-container > * {
-  position: relative;
-  z-index: 2;
-}
-
-/* TITLE */
-.page-title {
-  text-align: center;
-  font-size: 2.3rem;
-  color: #fff;
-  margin: 20px 0 30px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp .9s forwards;
-}
-
-/* GRID ROSTER */
+/* FORCE TWO COLUMNS */
 .roster-grid {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 25px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 35px;
   margin-top: 30px;
 }
 
-/* MEMBER CARD (Abyss Identity) */
+/* MEMBER CARD */
 .member-card {
   background: rgba(20,20,20,0.8);
   border: 1px solid rgba(255,255,255,0.12);
@@ -121,62 +33,61 @@ header nav a.active {
   box-shadow: 0 0 18px rgba(255,60,60,0.35);
 }
 
-/* Sheen effect (rosso inferno) */
-.member-card::before {
-  content: "";
-  position: absolute;
-  top: -100%;
-  left: -100%;
-  width: 50%;
-  height: 300%;
-  background: linear-gradient(
-    120deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,60,60,0.25) 50%,
-    rgba(255,255,255,0) 100%
-  );
-  transform: rotate(25deg);
-  transition: .8s;
-}
-.member-card:hover::before {
-  top: -40%;
-  left: 130%;
+/* CLASS HEADER */
+.member-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
-/* Hover effects Abyss */
-.member-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(255,60,60,0.45);
-  box-shadow: 0 0 25px rgba(255,60,60,0.6);
+.class-icon {
+  width: 42px;
+  height: 42px;
 }
 
-/* TEXT INSIDE CARD */
+/* NAME */
 .member-card h3 {
   color: #fff;
   font-size: 1.4rem;
-  margin-bottom: 10px;
-}
-.member-card p {
-  line-height: 1.45;
-  margin: 6px 0;
+  margin: 0;
 }
 
-/* Animations */
-@keyframes fadeZoom {
-  to { opacity: 1; transform: scale(1); }
-}
-@keyframes fadeUp {
-  to { opacity: 1; transform: translateY(0); }
+/* ROLE BADGE */
+.role-badge {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #000;
 }
 
-/* FOOTER */
-footer {
-  text-align: center;
-  padding: 45px 0;
-  color: #777;
-  margin-top: 60px;
+/* Role colors */
+.role-tank { background: #3da4ff; }
+.role-healer { background: #5cff9e; }
+.role-dps { background: #ff5050; }
+
+/* RaiderIO button */
+.rio-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #ff5050;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  box-shadow: 0 0 12px rgba(255,80,80,0.6);
+  transition: .25s;
+}
+.rio-btn:hover {
+  background: #ff6f6f;
+  box-shadow: 0 0 18px rgba(255,120,120,0.9);
 }
 </style>
+
 </head>
 
 <body class="page-transition abyss-bg">
@@ -197,7 +108,6 @@ footer {
   <ul>
     <li><a href="../abyss-chosen/abyss-chosen.html">Home Team</a></li>
     <li><a href="../abyss-chosen/roster-abyss.html" class="active">Roster</a></li>
-    <!-- <li><a href="../abyss-chosen/abyss-chosen-news.html">News</a></li> -->
     <li><a href="../abyss-chosen/abyss-chosen-progress.html">Progress</a></li>
   </ul>
 </nav>
@@ -207,9 +117,7 @@ footer {
 
     <h2 class="page-title">Roster Abyss Chosen</h2>
 
-    <div class="roster-grid" id="roster-container">
-      <!-- caricamento membri -->
-    </div>
+    <div class="roster-grid" id="roster-container"></div>
 
   </main>
 </div>
@@ -225,32 +133,51 @@ const members = [
   "aqualara.html"
 ];
 
+// MAP RUOLI
+const roleMap = {
+  "TANK": "role-tank",
+  "HEALER": "role-healer",
+  "DPS": "role-dps"
+};
+
+// ICONA CLASSI
+function classIcon(name) {
+  return `../../img/classes/${name.toLowerCase().replace(" ", "")}.png`;
+}
+
 const container = document.getElementById("roster-container");
 
 members.forEach(file => {
   fetch(`../../members/${file}`)
     .then(res => res.text())
     .then(html => {
-      container.innerHTML += `<div class="member-card">${html}</div>`;
+
+      // ESTRAZIONE METADATI
+      const className = html.match(/data-class="([^"]+)"/)?.[1] ?? null;
+      const roleName  = html.match(/data-role="([^"]+)"/)?.[1]?.toUpperCase() ?? null;
+      const rioURL    = html.match(/data-rio="([^"]+)"/)?.[1] ?? null;
+
+      container.innerHTML += `
+        <div class="member-card">
+
+          <div class="member-header">
+            ${className ? `<img class="class-icon" src="${classIcon(className)}">` : ""}
+            <div>
+              ${html}
+              ${roleName ? `<span class="role-badge ${roleMap[roleName]}">${roleName}</span>` : ""}
+            </div>
+          </div>
+
+          ${rioURL ? `<a href="${rioURL}" target="_blank" class="rio-btn">Profilo Raider.IO</a>` : ""}
+        </div>`;
     });
 });
 </script>
 
-<!-- PAGE TRANSITION -->
 <script>
+// PAGE TRANSITION
 document.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("page-loaded");
-});
-
-document.querySelectorAll("a").forEach(link => {
-  if (link.hostname === window.location.hostname) {
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
-      const href = this.getAttribute("href");
-      document.body.classList.remove("page-loaded");
-      setTimeout(() => { window.location.href = href; }, 300);
-    });
-  }
 });
 </script>
 
