@@ -249,7 +249,7 @@ header nav a.active {
   background: url('img/logo.png') center/cover no-repeat;
 }
 .bg-main-logo-home {
-  background: url('../img/logo.png') center/cover no-repeat;  /* per index.html */
+  background: url('img/logo.png') center/cover no-repeat;  /* per index.html */
 }
 .bg-abyss-logo {
   background: url('../img/abysschosen_logo.png') center/cover no-repeat;
