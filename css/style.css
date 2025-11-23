@@ -1,6 +1,5 @@
 /* =========================================================
    BASE GLOBALE
-   - Tema scuro neutro comune a tutte le pagine
    ========================================================= */
 
 *,
@@ -9,7 +8,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
 }
@@ -21,7 +21,7 @@ body {
   min-height: 100vh;
 }
 
-/* Layout principale: il main prende lo spazio, footer in fondo */
+/* Layout principale: il main centrale */
 main {
   max-width: 1100px;
   margin: 0 auto;
@@ -41,15 +41,18 @@ main {
 
 /* =========================================================
    TIPOGRAFIA
-   - Titoli bianchi ovunque
    ========================================================= */
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   color: #fff;
   margin-top: 0;
 }
 
-/* Titoli di sezione generici (es: "Chi siamo", "Cosa facciamo") */
+/* Titolo di sezione generico */
 .section-title {
   text-align: center;
   font-size: 2rem;
@@ -75,7 +78,7 @@ h1, h2, h3, h4, h5 {
   text-align: justify;
 }
 
-/* Variante per pagine tipo statuto / testi lunghi */
+/* Varianti per pagine con molto testo (statuto, recruit, ecc.) */
 .statuto,
 .recruit {
   max-width: 1100px;
@@ -94,7 +97,6 @@ a:hover {
 
 /* =========================================================
    HEADER & NAVBAR PRINCIPALE
-   - Uguale per tutte le pagine
    ========================================================= */
 
 header {
@@ -103,7 +105,7 @@ header {
   padding: 20px 0 10px;
 }
 
-/* Navbar principale (classe .mainnav nella maggior parte delle pagine) */
+/* Navbar principale (classe .mainnav) */
 .mainnav ul {
   list-style: none;
   display: flex;
@@ -125,7 +127,7 @@ header {
   text-shadow: 0 0 8px #ff5050;
 }
 
-/* Fallback per pagine che usano header nav senza .mainnav */
+/* Fallback per header nav senza .mainnav */
 header nav ul {
   list-style: none;
   display: flex;
@@ -152,11 +154,11 @@ header nav a.active {
 
 .subnav {
   margin-top: 20px;
-  background: rgba(20,20,20,0.8);
+  background: rgba(20, 20, 20, 0.8);
   padding: 12px 0;
   text-align: center;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(4px);
 }
 
@@ -182,12 +184,12 @@ header nav a.active {
 }
 
 /* =========================================================
-   HERO (intestazione pagina) – STILE UNIFORME
+   HERO (intestazione pagina)
    ========================================================= */
 
 .hero {
   padding: 80px 20px 50px;
-  background: none;             /* niente immagine, solo testo */
+  background: none;
   height: auto;
   display: flex;
   align-items: center;
@@ -202,6 +204,16 @@ header nav a.active {
   z-index: 2;
 }
 
+/* Hero principale (index usa h1) */
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  opacity: 0;
+  transform: translateY(25px);
+  animation: fadeUp 0.9s ease forwards;
+}
+
+/* Se altre pagine usano h2 nella hero */
 .hero h2 {
   font-size: 3rem;
   margin-bottom: 10px;
@@ -210,6 +222,7 @@ header nav a.active {
   animation: fadeUp 0.9s ease forwards;
 }
 
+/* Sottotitolo della hero */
 .hero p {
   font-size: 1.3rem;
   opacity: 0;
@@ -219,12 +232,44 @@ header nav a.active {
   animation: fadeUp 1.3s ease forwards;
 }
 
+/* Tagline sopra il titolo (index) */
+.hero-tagline {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #ffb0b0;
+  margin-bottom: 6px;
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeUp 0.8s ease forwards;
+}
+
+/* CTA della hero */
+.hero-cta {
+  margin-top: 22px;
+}
+.hero-cta a {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 999px;
+  background: #ff5050;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 0 12px rgba(255, 80, 80, 0.6);
+  transition: 0.3s;
+}
+.hero-cta a:hover {
+  background: #ff7373;
+  box-shadow: 0 0 18px rgba(255, 120, 120, 0.9);
+}
+
 /* =========================================================
    BACKGROUND UNICO PER CONTENUTI (logo in fade)
-   - Usa .bg-container + una classe specifica per il logo
    ========================================================= */
+
 .bg-container {
-  position: relative;      /* Fix fondamentale */
+  position: relative;       /* necessario per l'overlay */
   padding: 60px 0 80px;
   z-index: 0;
 }
@@ -233,40 +278,32 @@ header nav a.active {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(2px);
   z-index: 1;
 }
 
-/* Tutti i contenuti sopravvissuti devono stare sopra l’overlay */
+/* Tutto il contenuto dentro resta sopra l'overlay */
 .bg-container * {
   position: relative;
   z-index: 2;
 }
 
-
-/* Varianti di background: applicare AL DIV insieme a .bg-container:
-   <div class="bg-container bg-main-logo"> ... */
-.bg-main-logo {
-  background: url('../img/logo.png') center/cover no-repeat;
-}
+/* Varianti di background (stesso CSS per tutte le pagine, path relativo da /css/) */
+.bg-main-logo,
 .bg-main-logo-home {
-  background: url('../img/logo.png') center/cover no-repeat;  /* per index.html */
-}
-.bg-abyss-logo {
-  background: url('../img/abysschosen_logo.png') center/cover no-repeat;
-}
-.bg-abyss-logo-deep {
-  background: url('../../img/abysschosen_logo.png') center/cover no-repeat;
-}
-.bg-mindbound-logo {
-  background: url('../img/mindbound_logo.png') center/cover no-repeat;
-}
-.bg-mindbound-logo-deep {
-  background: url('../../img/mindbound_logo.png') center/cover no-repeat;
+  background: url("../img/logo.png") center/cover no-repeat;
 }
 
-/* Vecchie classi di background su body (se ancora usate da qualche pagina) */
+.bg-abyss-logo {
+  background: url("../img/abysschosen_logo.png") center/cover no-repeat;
+}
+
+.bg-mindbound-logo {
+  background: url("../img/mindbound_logo.png") center/cover no-repeat;
+}
+
+/* Vecchie classi di background sul body, se ancora presenti */
 .abyss-bg {
   background: url("../img/abysschosen_logo.png") no-repeat center center fixed;
   background-size: cover;
@@ -291,8 +328,8 @@ header nav a.active {
 
 /* Card base riutilizzabile */
 .card {
-  background: rgba(20,20,20,0.8);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(20, 20, 20, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 25px;
   border-radius: 12px;
   color: #ddd;
@@ -315,9 +352,9 @@ header nav a.active {
   height: 300%;
   background: linear-gradient(
     120deg,
-    rgba(180,0,255,0) 0%,
-    rgba(180,0,255,0.25) 50%,
-    rgba(180,0,255,0) 100%
+    rgba(180, 0, 255, 0) 0%,
+    rgba(180, 0, 255, 0.25) 50%,
+    rgba(180, 0, 255, 0) 100%
   );
   transform: rotate(25deg);
   transition: 0.8s;
@@ -330,8 +367,8 @@ header nav a.active {
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 0 22px rgba(180,0,255,0.35);
-  border-color: rgba(180,0,255,0.45);
+  box-shadow: 0 0 22px rgba(180, 0, 255, 0.35);
+  border-color: rgba(180, 0, 255, 0.45);
 }
 
 .card h3 {
@@ -374,8 +411,8 @@ header nav a.active {
   width: 420px;
   padding: 30px;
   border-radius: 14px;
-  background: rgba(15,15,15,0.75);
-  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(15, 15, 15, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: #eee;
   backdrop-filter: blur(4px);
   opacity: 0;
@@ -394,9 +431,9 @@ header nav a.active {
   height: 300%;
   background: linear-gradient(
     120deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.15) 50%,
-    rgba(255,255,255,0) 100%
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0) 100%
   );
   transform: rotate(25deg);
   transition: 0.8s;
@@ -409,23 +446,23 @@ header nav a.active {
 /* Animazioni ingresso (sinistra / destra) */
 .team-card.abyss {
   animation: slideLeft 0.8s ease forwards;
-  box-shadow: 0 0 15px rgba(255,80,80,0.35);
+  box-shadow: 0 0 15px rgba(255, 80, 80, 0.35);
 }
 .team-card.mindbound {
   animation: slideRight 0.8s ease forwards;
-  box-shadow: 0 0 15px rgba(120,120,255,0.35);
+  box-shadow: 0 0 15px rgba(120, 120, 255, 0.35);
 }
 
 /* Hover glow differenziato */
 .team-card:hover {
   transform: translateY(-8px);
-  border-color: rgba(255,255,255,0.4);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 .mindbound:hover {
-  box-shadow: 0 0 25px rgba(120,120,255,0.55);
+  box-shadow: 0 0 25px rgba(120, 120, 255, 0.55);
 }
 .abyss:hover {
-  box-shadow: 0 0 25px rgba(255,80,80,0.55);
+  box-shadow: 0 0 25px rgba(255, 80, 80, 0.55);
 }
 
 .team-card h3 {
@@ -450,7 +487,7 @@ header nav a.active {
   margin: 0 auto;
 }
 
-/* Card membro, inclusi file members/*.html */
+/* Card membro (file in /members) */
 .member {
   background: rgba(20, 0, 35, 0.7);
   padding: 20px;
@@ -478,14 +515,14 @@ header nav a.active {
   margin: 8px 0 6px;
 }
 
-/* Sottotitolo membro (es. “Healer, shot-caller”) */
+/* Sottotitolo membro */
 .tagline {
   font-style: italic;
   color: #d38aff;
   margin-bottom: 10px;
 }
 
-/* Testo breve nelle card membro */
+/* Testo nella card membro */
 .member .description-long {
   color: #f0e3ff;
   font-size: 0.95rem;
@@ -519,16 +556,16 @@ header nav a.active {
   margin-top: 4px;
   border-radius: 8px;
   border: none;
-  background: rgba(60,0,90,0.35);
+  background: rgba(60, 0, 90, 0.35);
   color: #fff;
-  box-shadow: 0 0 8px rgba(90,30,150,0.4) inset;
+  box-shadow: 0 0 8px rgba(90, 30, 150, 0.4) inset;
 }
 
 .apply-form textarea {
   min-height: 120px;
 }
 
-/* Pulsante principale (recruiting, apri logs, apri report, ecc.) */
+/* Pulsante principale (recruiting, apri logs, ecc.) */
 .apply-button {
   margin-top: 20px;
   padding: 12px 24px;
@@ -538,19 +575,17 @@ header nav a.active {
   border-radius: 8px;
   font-size: 1.05rem;
   cursor: pointer;
-  box-shadow: 0 0 12px rgba(140,60,255,0.6);
+  box-shadow: 0 0 12px rgba(140, 60, 255, 0.6);
   transition: 0.3s;
   display: inline-block;
 }
-
 .apply-button:hover {
   background: #9a4cff;
-  box-shadow: 0 0 18px rgba(180,80,255,0.9);
+  box-shadow: 0 0 18px rgba(180, 80, 255, 0.9);
 }
 
 /* =========================================================
-   PROGRESS (PANORAMICA PER DIFFICOLTÀ)
-   - usato da: Delirium Tremens Progress, Abyss, MindBound
+   PROGRESS (Normal / Heroic / Mythic)
    ========================================================= */
 
 .progress-panel {
@@ -569,11 +604,11 @@ header nav a.active {
 
 /* Card di progress individuale */
 .widget-card {
-  background: rgba(15,15,15,0.8);
+  background: rgba(15, 15, 15, 0.8);
   border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 18px 18px 16px;
-  box-shadow: 0 0 18px rgba(184,107,255,0.35);
+  box-shadow: 0 0 18px rgba(184, 107, 255, 0.35);
   backdrop-filter: blur(4px);
   position: relative;
   overflow: hidden;
@@ -592,9 +627,9 @@ header nav a.active {
   height: 320%;
   background: linear-gradient(
     120deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.16) 50%,
-    rgba(255,255,255,0) 100%
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.16) 50%,
+    rgba(255, 255, 255, 0) 100%
   );
   transform: rotate(25deg);
   transition: 0.8s;
@@ -606,11 +641,11 @@ header nav a.active {
 
 .widget-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 0 25px rgba(184,107,255,0.6);
-  border-color: rgba(184,107,255,0.45);
+  box-shadow: 0 0 25px rgba(184, 107, 255, 0.6);
+  border-color: rgba(184, 107, 255, 0.45);
 }
 
-/* Titolo e descrizione della singola card di progress */
+/* Titolo e descrizione singola card progress */
 .widget-title {
   font-size: 1.2rem;
   color: #fff;
@@ -622,12 +657,12 @@ header nav a.active {
   margin: 0 0 10px;
 }
 
-/* Contenuto testuale con dati (boss sconfitti, in progress etc.) */
+/* Contenuto con i dati (boss sconfitti, ecc.) */
 .progress-content {
   border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 10px 12px;
-  background: rgba(5,5,5,0.6);
+  background: rgba(5, 5, 5, 0.6);
   font-size: 0.95rem;
   line-height: 1.5;
   min-height: 140px;
@@ -637,7 +672,7 @@ header nav a.active {
   margin: 4px 0;
 }
 
-/* Lista dei boss in fondo alla card */
+/* Lista boss in fondo alla card */
 .boss-list {
   margin-top: 8px;
   font-size: 0.9rem;
@@ -649,32 +684,32 @@ header nav a.active {
   margin-bottom: 4px;
   padding: 3px 6px;
   border-radius: 6px;
-  background: rgba(255,255,255,0.04);
+  background: rgba(255, 255, 255, 0.04);
 }
 .boss-killed {
   color: #9fffba;
-  border: 1px solid rgba(80,255,120,0.4);
+  border: 1px solid rgba(80, 255, 120, 0.4);
 }
 .boss-progress {
   color: #ffeab4;
-  border: 1px solid rgba(255,200,80,0.4);
+  border: 1px solid rgba(255, 200, 80, 0.4);
 }
 
-/* Contenitori “full width” usati per blocchi grandi (timeline, logs, ecc.) */
+/* Contenitori larghi per timeline, logs, ecc. */
 .widget-full {
   margin-top: 40px;
 }
 
 /* =========================================================
-   ULTIMA SESSIONE – TIMELINE (Abyss / MindBound Progress)
+   ULTIMA SESSIONE – TIMELINE
    ========================================================= */
 
 .session-summary-card {
-  background: rgba(15,15,15,0.85);
+  background: rgba(15, 15, 15, 0.85);
   border-radius: 16px;
   padding: 20px;
-  border: 1px solid rgba(255,255,255,0.15);
-  box-shadow: 0 0 25px rgba(184,107,255,0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 25px rgba(184, 107, 255, 0.4);
   backdrop-filter: blur(4px);
   margin-bottom: 25px;
   color: #eee;
@@ -688,13 +723,13 @@ header nav a.active {
   margin-top: 10px;
 }
 
-/* Card singola boss nell’ultima sessione */
+/* Card singola boss */
 .timeline-card {
-  background: rgba(20,20,20,0.85);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(20, 20, 20, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 20px;
   border-radius: 16px;
-  box-shadow: 0 0 20px rgba(184,107,255,0.25);
+  box-shadow: 0 0 20px rgba(184, 107, 255, 0.25);
   backdrop-filter: blur(4px);
   position: relative;
   overflow: hidden;
@@ -703,14 +738,14 @@ header nav a.active {
   animation: fadeUp 0.8s ease forwards;
 }
 
-/* Glow differenziato: kill / solo progress */
+/* Glow kill / progress */
 .timeline-card.kill {
-  border-color: rgba(80,255,120,0.4);
-  box-shadow: 0 0 25px rgba(80,255,120,0.4);
+  border-color: rgba(80, 255, 120, 0.4);
+  box-shadow: 0 0 25px rgba(80, 255, 120, 0.4);
 }
 .timeline-card.progress {
-  border-color: rgba(255,180,60,0.35);
-  box-shadow: 0 0 25px rgba(255,180,60,0.35);
+  border-color: rgba(255, 180, 60, 0.35);
+  box-shadow: 0 0 25px rgba(255, 180, 60, 0.35);
 }
 
 /* Sheen */
@@ -723,9 +758,9 @@ header nav a.active {
   height: 320%;
   background: linear-gradient(
     120deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.14) 50%,
-    rgba(255,255,255,0) 100%
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.14) 50%,
+    rgba(255, 255, 255, 0) 100%
   );
   transform: rotate(25deg);
   transition: 0.8s;
@@ -749,7 +784,7 @@ header nav a.active {
   color: #fff;
 }
 
-/* Loader circolare generico (se lo usi ancora) */
+/* Loader circolare (se usato) */
 .chart-loader {
   display: flex;
   justify-content: center;
@@ -757,7 +792,7 @@ header nav a.active {
   height: 220px;
 }
 .loader {
-  border: 6px solid rgba(255,255,255,0.2);
+  border: 6px solid rgba(255, 255, 255, 0.2);
   border-top: 6px solid #fff;
   border-radius: 50%;
   width: 45px;
@@ -770,7 +805,7 @@ header nav a.active {
 }
 
 /* =========================================================
-   STATISTICHE HOLLOW SOUL (raider.io) – CARD STATS
+   STATISTICHE HOLLOW SOUL (raider.io)
    ========================================================= */
 
 .stats-grid {
@@ -782,11 +817,11 @@ header nav a.active {
 }
 
 .stat-card {
-  background: rgba(15,15,25,0.9);
+  background: rgba(15, 15, 25, 0.9);
   border-radius: 14px;
   padding: 20px 22px;
-  border: 1px solid rgba(180,180,255,0.25);
-  box-shadow: 0 0 20px rgba(120,120,255,0.4);
+  border: 1px solid rgba(180, 180, 255, 0.25);
+  box-shadow: 0 0 20px rgba(120, 120, 255, 0.4);
   backdrop-filter: blur(5px);
 }
 
@@ -822,32 +857,57 @@ header nav a.active {
    ========================================================= */
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeZoom {
-  from { opacity: 0; transform: scale(0.96); }
-  to   { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes slideLeft {
-  from { opacity: 0; transform: translateX(-25px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes slideRight {
-  from { opacity: 0; transform: translateX(25px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes spin {
-  100% { transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* =========================================================
    TRANSIZIONE PAGINA (fade-in / fade-out)
-   - usata da tutti gli script che aggiungono .page-loaded
    ========================================================= */
 
 .page-transition {
