@@ -238,7 +238,7 @@ header nav a.active {
   backdrop-filter: blur(2px);
 }
 
-.bg-container > * {
+.bg-container * {
   position: relative;
   z-index: 2;
 }
