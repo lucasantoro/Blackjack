@@ -5,6 +5,120 @@
   <title>MindBound – Progress</title>
   <link rel="stylesheet" href="../../css/style.css">
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+  <style>
+    /* SFONDO CON LOGO MINDBOUND (usiamo la classe globale) */
+    .bg-container.bg-mindbound-logo {
+      background: url("../../img/mindbound_logo.png") center/cover no-repeat;
+    }
+
+    /* ================================
+       TIMELINE ULTIMA SESSIONE – STILE A
+       ================================ */
+
+    /* Contenitore della timeline (usa già display:flex da style.css) */
+    #last-session-timeline {
+      position: relative;
+      margin-top: 20px;
+      padding-left: 26px; /* spazio per la linea e i pallini */
+    }
+
+    /* Linea verticale */
+    #last-session-timeline::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    /* Singolo step boss */
+    .timeline-step {
+      position: relative;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    /* Pallino sulla linea */
+    .timeline-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      background: #151515;
+      margin-top: 3px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Colori per kill / progress */
+    .timeline-step.kill  .timeline-dot {
+      border-color: #4dff93;
+      background: #102518;
+      box-shadow: 0 0 10px rgba(77, 255, 147, 0.5);
+    }
+    .timeline-step.progress .timeline-dot {
+      border-color: #ffcc66;
+      background: #2a1d0f;
+      box-shadow: 0 0 10px rgba(255, 204, 102, 0.45);
+    }
+
+    /* Box contenuto a destra del pallino */
+    .timeline-content {
+      flex: 1;
+      background: rgba(15, 15, 15, 0.9);
+      border-radius: 10px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 0 14px rgba(120, 120, 255, 0.35);
+    }
+
+    .timeline-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .timeline-boss {
+      font-weight: bold;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .timeline-result {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    .timeline-step.kill .timeline-result {
+      background: rgba(77, 255, 147, 0.12);
+      color: #92ffb7;
+      border: 1px solid rgba(77, 255, 147, 0.7);
+    }
+
+    .timeline-step.progress .timeline-result {
+      background: rgba(255, 204, 102, 0.12);
+      color: #ffd588;
+      border: 1px solid rgba(255, 204, 102, 0.7);
+    }
+
+    .timeline-meta {
+      font-size: 0.85rem;
+      color: #ccc;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 2px;
+    }
+  </style>
 </head>
 
 <body class="page-transition">
@@ -31,22 +145,11 @@
   </ul>
 </nav>
 
-<!-- HERO COME LE ALTRE PAGINE -->
-<section class="hero">
-  <div class="hero-content">
-    <h2>MindBound – Progress raid</h2>
-    <p>
-      Stato aggiornato del team MindBound: avanzamento per difficolt&agrave;, ultimi boss affrontati e report dell’ultima sessione.
-    </p>
-  </div>
-</section>
-
-<!-- SFONDO CON LOGO MINDBOUND -->
 <div class="bg-container bg-mindbound-logo">
   <main class="panel">
 
     <!-- PANORAMICA PER DIFFICOLTÀ -->
-    <h2 class="section-title">Panoramica per difficolt&agrave;</h2>
+    <h2 class="section-title">Panoramica per difficoltà</h2>
     <p class="section-subtitle">
       Stato del raid per Normal, Heroic e Mythic: quanti boss sono stati sconfitti,
       quali sono ancora in progress e qual &egrave; stato il miglior pull.
@@ -81,7 +184,7 @@
       </div>
     </div>
 
-    <!-- ULTIMA SESSIONE – TIMELINE -->
+    <!-- ULTIMA SESSIONE – TIMELINE COMPATTA -->
     <div class="widget-full">
       <h2 class="section-title" id="last-session-title">Ultima sessione raid</h2>
       <p class="section-subtitle">
@@ -94,7 +197,7 @@
       </div>
 
       <div class="timeline-container" id="last-session-timeline">
-        <!-- Card dei boss generate via JS -->
+        <!-- Step dei boss generati via JS -->
       </div>
     </div>
 
@@ -164,10 +267,9 @@ async function loadDifficulty(diff, elementId) {
 
     const killed = bosses.filter(b => data.bosses[b].kills > 0);
     const inProgress = bosses.filter(
-      b =>
-        data.bosses[b].kills === 0 &&
-        data.bosses[b].bestPercentage !== null &&
-        data.bosses[b].bestPercentage < 100
+      b => data.bosses[b].kills === 0 &&
+           data.bosses[b].bestPercentage !== null &&
+           data.bosses[b].bestPercentage < 100
     );
 
     let html = `
@@ -177,9 +279,7 @@ async function loadDifficulty(diff, elementId) {
 
     const bestPulls = inProgress.map(b => data.bosses[b].bestPercentage);
     const bestOverall = bestPulls.length > 0 ? Math.min(...bestPulls) : null;
-    html += `<div class="progress-line"><strong>Miglior pull:</strong> ${
-      bestOverall !== null ? bestOverall + "%" : "–"
-    }</div>`;
+    html += `<div class="progress-line"><strong>Miglior pull:</strong> ${bestOverall !== null ? bestOverall + "%" : "–"}</div>`;
 
     html += `<div class="boss-list">`;
     killed.forEach(b => {
@@ -191,6 +291,7 @@ async function loadDifficulty(diff, elementId) {
     html += `</div>`;
 
     el.innerHTML = html;
+
   } catch (err) {
     console.error("Errore caricamento progress", diff, err);
     el.textContent = "Errore nel caricamento dei dati.";
@@ -220,6 +321,7 @@ function renderLastSessionTimeline(last) {
     return;
   }
 
+  // Difficulty auto
   const diffs = new Set();
   bosses.forEach(b => b.difficultiesSeen?.forEach(d => diffs.add(d)));
 
@@ -232,12 +334,14 @@ function renderLastSessionTimeline(last) {
   const titleEl = document.getElementById("last-session-title");
   titleEl.textContent = `Ultima sessione raid (${diffName})`;
 
+  // Link al report completo
   const linkEl = document.getElementById("last-session-report-link");
   if (linkEl && last.latestReport && last.latestReport.code) {
     linkEl.href = `https://www.warcraftlogs.com/reports/${last.latestReport.code}`;
     linkEl.style.display = "inline-block";
   }
 
+  // SUMMARY
   const pullsTotal = bosses.reduce((sum, b) => sum + b.pulls, 0);
   const wipesTotal = bosses.reduce((sum, b) => sum + b.wipes, 0);
   const killsTotal = bosses.reduce((sum, b) => sum + b.kills, 0);
@@ -254,33 +358,46 @@ function renderLastSessionTimeline(last) {
     <strong>Durata sessione:</strong> ${formatDuration(durationMs)}
   `;
 
+  // TIMELINE ORDINATA PER NOME BOSS (puoi cambiare in ordine cronologico se hai timestamp)
   bosses.sort((a, b) => a.bossName.localeCompare(b.bossName));
+
   timeline.innerHTML = "";
 
   bosses.forEach(b => {
     const isKill = b.kills > 0;
     const bestPct = b.bestPercentage ?? "—";
 
-    const card = document.createElement("div");
-    card.className = "timeline-card " + (isKill ? "kill" : "progress");
+    const step = document.createElement("div");
+    step.className = "timeline-step " + (isKill ? "kill" : "progress");
 
-    card.innerHTML = `
-      <div class="timeline-title">${b.bossName}</div>
-      <div class="timeline-info"><strong>Esito:</strong> ${isKill ? "Kill ✔️" : "Progress"}</div>
-      <div class="timeline-info"><strong>Pulls:</strong> ${b.pulls}</div>
-      <div class="timeline-info"><strong>Wipes:</strong> ${b.wipes}</div>
-      <div class="timeline-info"><strong>Best %:</strong> ${bestPct !== "—" ? bestPct + "%" : "—"}</div>
+    step.innerHTML = `
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <div class="timeline-row">
+          <span class="timeline-boss">${b.bossName}</span>
+          <span class="timeline-result">
+            ${isKill ? "Kill ✔️" : "Progress"}
+          </span>
+        </div>
+        <div class="timeline-meta">
+          <span><strong>Pulls:</strong> ${b.pulls}</span>
+          <span><strong>Wipe:</strong> ${b.wipes}</span>
+          <span><strong>Best %:</strong> ${bestPct !== "—" ? bestPct + "%" : "—"}</span>
+        </div>
+      </div>
     `;
 
-    timeline.appendChild(card);
+    timeline.appendChild(step);
   });
 }
 
 (async () => {
+  // Panoramica per difficoltà
   loadDifficulty("normal", "card-normal");
   loadDifficulty("heroic", "card-heroic");
   loadDifficulty("mythic", "card-mythic");
 
+  // Ultima sessione
   try {
     const last = await fetchLastSession();
     console.log("Last session (MindBound):", last);
