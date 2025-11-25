@@ -984,6 +984,92 @@ header nav a.active {
   color:#ddd; font-size:.9rem;
 }
 
+/* =========================================================
+   TIMELINE A PALLINI – STILE MINDBOUND
+   ========================================================= */
+
+.dot-timeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 25px;
+}
+
+.dot-row {
+  background: rgba(20,20,30,0.75);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 18px 20px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 18px rgba(120,120,255,0.25);
+  transition: .25s;
+}
+
+.dot-row:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 22px rgba(150,150,255,0.45);
+}
+
+.dot-boss-name {
+  font-size: 1.25rem;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.dot-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(0,0,0,0.4);
+  transition: transform .2s;
+}
+
+.dot:hover {
+  transform: scale(1.25);
+}
+
+.dot-kill {
+  background: #4dff8a;
+  border: 1px solid #2ecc71;
+  box-shadow: 0 0 10px rgba(80,255,120,0.55);
+}
+
+.dot-wipe {
+  background: #ff4d4d;
+  border: 1px solid #ff6b6b;
+  box-shadow: 0 0 10px rgba(255,80,80,0.55);
+}
+
+.dot-progress {
+  background: #ffd86b;
+  border: 1px solid #ffcc4d;
+  box-shadow: 0 0 10px rgba(255,200,80,0.55);
+}
+
+.dot:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: -42px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(20,20,20,0.9);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
 
 /* =========================================================
    ANIMAZIONI GLOBALI

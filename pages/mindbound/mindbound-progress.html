@@ -5,6 +5,103 @@
   <title>MindBound – Progress</title>
   <link rel="stylesheet" href="../../css/style.css">
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+  <style>
+    /* HERO */
+    .hero {
+      padding: 80px 20px 50px;
+      background: none;
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .hero h2 {
+      font-size: 3rem;
+      color: #fff;
+      margin-bottom: 12px;
+      opacity: 0;
+      transform: translateY(25px);
+      animation: fadeUp .9s ease forwards;
+    }
+    .hero p {
+      font-size: 1.3rem;
+      opacity: 0;
+      max-width: 720px;
+      margin: 0 auto;
+      transform: translateY(20px);
+      animation: fadeUp 1.3s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* BG LOGO */
+    .bg-container {
+      position: relative;
+      background: url('../../img/mindbound_logo.png') center/cover no-repeat;
+      padding: 60px 0 80px;
+    }
+    .bg-container::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(2px);
+    }
+    .bg-container > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    main.panel {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    h2.section-title {
+      text-align: center;
+      color: #fff;
+      font-size: 2rem;
+      margin: 20px 0 10px;
+    }
+    p.section-subtitle {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 25px;
+      color: #ddd;
+      font-size: 1rem;
+    }
+
+    /* GRID */
+    .widgets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      margin: 35px 0 10px;
+    }
+
+    .widget-card {
+      background: rgba(15,15,15,0.8);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 18px 18px 16px;
+      box-shadow: 0 0 18px rgba(120,120,255,0.35);
+      backdrop-filter: blur(4px);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: scale(0.97);
+      animation: fadeZoom .7s ease forwards;
+    }
+
+    @keyframes fadeZoom {
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
 </head>
 
 <body class="page-transition">
@@ -21,6 +118,7 @@
   </nav>
 </header>
 
+<!-- SUBNAV MINDBOUND -->
 <nav class="subnav">
   <ul>
     <li><a href="../mindbound/mindbound.html">Home Team</a></li>
@@ -30,40 +128,59 @@
   </ul>
 </nav>
 
-<div class="bg-container bg-mindbound-logo">
+<div class="bg-container">
   <main class="panel">
 
-    <!-- ============================== -->
+    <!-- PANORAMICA -->
     <h2 class="section-title">Panoramica per difficoltà</h2>
     <p class="section-subtitle">
-      Stato del raid in Normal, Heroic e Mythic.
+      Stato del raid per Normal, Heroic e Mythic.
     </p>
 
     <div class="widgets-grid">
-      <div class="widget-card"><h3 class="widget-title">Normal</h3><p class="widget-desc">Avanzamento in Normal</p><div id="card-normal" class="progress-content">Caricamento...</div></div>
-      <div class="widget-card"><h3 class="widget-title">Heroic</h3><p class="widget-desc">Avanzamento in Heroic</p><div id="card-heroic" class="progress-content">Caricamento...</div></div>
-      <div class="widget-card"><h3 class="widget-title">Mythic</h3><p class="widget-desc">Avanzamento in Mythic</p><div id="card-mythic" class="progress-content">Caricamento...</div></div>
+
+      <div class="widget-card">
+        <h3 class="widget-title">Normal</h3>
+        <div class="progress-content" id="card-normal">Caricamento…</div>
+      </div>
+
+      <div class="widget-card">
+        <h3 class="widget-title">Heroic</h3>
+        <div class="progress-content" id="card-heroic">Caricamento…</div>
+      </div>
+
+      <div class="widget-card">
+        <h3 class="widget-title">Mythic</h3>
+        <div class="progress-content" id="card-mythic">Caricamento…</div>
+      </div>
+
     </div>
 
-    <!-- ============================== -->
-    <section class="widget-full" style="margin-top:40px;">
-      <h2 class="section-title">Live del Raid</h2>
-      <p class="section-subtitle">Guarda la diretta del team MindBound o vedi gli ultimi VOD.</p>
-      <div id="twitch-live-container" style="text-align:center;"></div>
-    </section>
+    <!-- ULTIMA SESSIONE -->
+    <div class="widget-full" style="margin-top: 40px;">
+      <h2 class="section-title" id="last-session-title">
+        Ultima sessione raid
+      </h2>
+      <p class="section-subtitle">
+        Resoconto completo della serata MindBound: kill, wipe e progress.
+        Passa col mouse sui pallini per vedere i dettagli.
+      </p>
 
-    <!-- ============================== -->
-    <h2 class="section-title" id="last-session-title">Ultima sessione</h2>
-    <p class="section-subtitle">Riassunto compatto dei boss affrontati.</p>
+      <div class="session-summary-card" id="last-session-summary">
+        Caricamento…
+      </div>
 
-    <div id="last-session-summary" class="session-summary-card">Caricamento...</div>
+      <div class="dot-timeline-container" id="dot-timeline"></div>
 
-    <div class="pill-timeline" id="pill-timeline"></div>
-
-    <div class="widget-full" style="text-align:center; margin-top:25px;">
-      <a id="last-session-report-link" class="apply-button" style="display:none;" target="_blank">
-        Apri il report completo
-      </a>
+      <div style="text-align:center; margin-top:20px;">
+        <a id="last-session-report-link"
+           href="#"
+           target="_blank"
+           class="apply-button"
+           style="display:none;">
+          Apri il report dell’ultima sessione
+        </a>
+      </div>
     </div>
 
   </main>
@@ -73,122 +190,141 @@
   <p>&copy; 2025 Delirium Tremens</p>
 </footer>
 
+<!-- TRANSITION -->
 <script>
-document.addEventListener("DOMContentLoaded", () => document.body.classList.add("page-loaded"));
-
-document.querySelectorAll("a").forEach(a => {
-  if (a.hostname === location.hostname) {
-    a.addEventListener("click", e => {
-      e.preventDefault();
-      document.body.classList.remove("page-loaded");
-      setTimeout(() => location.href = a.href, 250);
-    });
-  }
+document.addEventListener("DOMContentLoaded", function () {
+  document.body.classList.add("page-loaded");
 });
 </script>
 
-<!-- WORKER URL -->
+<!-- URL WORKERS -->
 <script>
   const WORKER_FULL = "https://red-snowflake-a386.lucasantoro2905.workers.dev";
   const WORKER_LAST = "https://wild-mode-1b45.lucasantoro2905.workers.dev";
-
-  const TWITCH_WORKER = "URL_DEL_TUO_WORKER_TWITCH";
-  const TWITCH_CHANNEL = "il_tuo_canale";
 </script>
 
-<!-- LOGICA PROGRESS + TIMELINE -->
+<!-- PROGRESS LOGIC -->
 <script>
 async function loadDifficulty(diff, id) {
-  const box = document.getElementById(id);
   try {
+    const el = document.getElementById(id);
     const res = await fetch(`${WORKER_FULL}/progress-full?difficulty=${diff}`);
     const data = await res.json();
+
     const bosses = Object.keys(data.bosses || {});
     const killed = bosses.filter(b => data.bosses[b].kills > 0);
-    const inProg = bosses.filter(b => data.bosses[b].kills === 0 && data.bosses[b].bestPercentage < 100);
+    const inProgress = bosses.filter(
+      b => data.bosses[b].kills === 0 &&
+           data.bosses[b].bestPercentage != null &&
+           data.bosses[b].bestPercentage < 100
+    );
 
-    const best = inProg.length ? Math.min(...inProg.map(b => data.bosses[b].bestPercentage)) : "–";
-
-    box.innerHTML = `
-      <div><strong>Kill:</strong> ${killed.length}/${bosses.length}</div>
-      <div><strong>Progress:</strong> ${inProg.length}</div>
-      <div><strong>Best Pull:</strong> ${best}%</div>
+    let html = `
+      <strong>Kill:</strong> ${killed.length} / ${bosses.length}<br>
+      <strong>Progress:</strong> ${inProgress.length}<br>
+      <strong>Miglior try:</strong>
+      ${inProgress.length ? Math.min(...inProgress.map(b => data.bosses[b].bestPercentage)) + "%" : "—"}
       <div class="boss-list">
-        ${killed.map(b => `<span class="boss-killed">${b}</span>`).join("")}
-        ${inProg.map(b => `<span class="boss-progress">${b} (${data.bosses[b].bestPercentage}%)</span>`).join("")}
-      </div>
     `;
-  } catch {
-    box.innerHTML = "Errore nel caricamento.";
+
+    killed.forEach(b => html += `<span class="boss-killed">${b}</span>`);
+    inProgress.forEach(b => html += `<span class="boss-progress">${b} (${data.bosses[b].bestPercentage}%)</span>`);
+
+    html += "</div>";
+    el.innerHTML = html;
+
+  } catch (e) {
+    document.getElementById(id).textContent = "Errore nel caricamento.";
   }
 }
 
-async function fetchLast() {
-  const summary = document.getElementById("last-session-summary");
-  const pill = document.getElementById("pill-timeline");
-
+async function fetchLastSession() {
   const res = await fetch(`${WORKER_LAST}/progress-last`);
-  const last = await res.json();
+  return res.json();
+}
+
+/* ========= TIMELINE A PALLINI ========= */
+
+function renderLastSessionTimeline(last) {
+  const timeline = document.getElementById("dot-timeline");
+  const summary = document.getElementById("last-session-summary");
   const bosses = Object.values(last.bosses || {});
 
-  if (last.latestReport?.code) {
-    const l = document.getElementById("last-session-report-link");
-    l.href = `https://www.warcraftlogs.com/reports/${last.latestReport.code}`;
-    l.style.display = "inline-block";
+  if (!bosses.length) {
+    summary.innerHTML = "Nessun dato.";
+    return;
   }
 
-  const pulls = bosses.reduce((a,b)=>a+b.pulls,0);
-  const wipes = bosses.reduce((a,b)=>a+b.wipes,0);
-  const kills = bosses.reduce((a,b)=>a+b.kills,0);
+  // summary
+  const pulls = bosses.reduce((s,b)=>s+b.pulls,0);
+  const wipes = bosses.reduce((s,b)=>s+b.wipes,0);
+  const kills = bosses.reduce((s,b)=>s+b.kills,0);
 
   summary.innerHTML = `
-    <strong>Boss:</strong> ${bosses.length} —
-    <strong>Pull:</strong> ${pulls} —
-    <strong>Wipe:</strong> ${wipes} —
-    <strong>Kill:</strong> ${kills}
+    <strong>Boss:</strong> ${bosses.length}<br>
+    <strong>Pull totali:</strong> ${pulls}<br>
+    <strong>Wipe totali:</strong> ${wipes}<br>
+    <strong>Kill totali:</strong> ${kills}
   `;
 
-  pill.innerHTML = bosses.map(b => `
-    <div class="pill ${b.kills>0 ? "kill" : "progress"}">
-      <div class="pill-title">${b.bossName}</div>
-      <div class="pill-info">${b.kills>0?"Kill ✔️":`Best ${b.bestPercentage}%`}</div>
-    </div>
-  `).join("");
-}
-
-async function loadTwitch() {
-  const c = document.getElementById("twitch-live-container");
-  const r = await fetch(`${TWITCH_WORKER}?channel=${TWITCH_CHANNEL}`);
-  const d = await r.json();
-
-  if (d.isLive) {
-    c.innerHTML = `
-      <div class="twitch-wrapper">
-        <iframe
-          src="https://player.twitch.tv/?channel=${TWITCH_CHANNEL}&parent=lucasantoro.github.io"
-          frameborder="0"
-          allowfullscreen="true"
-          scrolling="no"
-          height="420"
-          width="100%">
-        </iframe>
-      </div>`;
-  } else {
-    c.innerHTML = `
-      <div class="twitch-offline">
-        <h3>Live offline</h3>
-        <p>Guarda i VOD dell'ultima serata!</p>
-        <a href="https://twitch.tv/${TWITCH_CHANNEL}/videos" class="vod-button" target="_blank">Vai ai VOD</a>
-      </div>`;
+  // link report
+  if (last.latestReport?.code) {
+    const a = document.getElementById("last-session-report-link");
+    a.href = `https://www.warcraftlogs.com/reports/${last.latestReport.code}`;
+    a.style.display = "inline-block";
   }
+
+  timeline.innerHTML = "";
+  bosses.sort((a,b)=>a.bossName.localeCompare(b.bossName));
+
+  bosses.forEach(b => {
+
+    const row = document.createElement("div");
+    row.className = "dot-row";
+
+    row.innerHTML = `<div class="dot-boss-name">${b.bossName}</div>`;
+
+    const line = document.createElement("div");
+    line.className = "dot-line";
+
+    for (let i = 0; i < b.pulls; i++) {
+      let cls = "dot-wipe";
+      let tip = `Wipe – Pull #${i+1}`;
+
+      if (i === b.pulls-1 && b.kills > 0) {
+        cls = "dot-kill";
+        tip = `KILL – Pull #${i+1}`;
+      } else if (b.bestPercentage != null &&
+                 b.bestPullIndex === i) {
+        cls = "dot-progress";
+        tip = `Best try: ${b.bestPercentage}% – Pull #${i+1}`;
+      }
+
+      const d = document.createElement("div");
+      d.className = `dot ${cls}`;
+      d.setAttribute("data-tip", tip);
+
+      line.appendChild(d);
+    }
+
+    row.appendChild(line);
+    timeline.appendChild(row);
+  });
 }
 
-(async ()=>{
-  loadDifficulty("normal","card-normal");
-  loadDifficulty("heroic","card-heroic");
-  loadDifficulty("mythic","card-mythic");
-  await fetchLast();
-  await loadTwitch();
+/* ========= INIT ========= */
+(async () => {
+  loadDifficulty("normal", "card-normal");
+  loadDifficulty("heroic", "card-heroic");
+  loadDifficulty("mythic", "card-mythic");
+
+  try {
+    const last = await fetchLastSession();
+    renderLastSessionTimeline(last);
+  } catch (e) {
+    document.getElementById("last-session-summary").textContent =
+      "Errore nel caricare l'ultima sessione.";
+  }
 })();
 </script>
 
