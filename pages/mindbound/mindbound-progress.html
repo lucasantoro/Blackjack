@@ -10,101 +10,96 @@
     /* HERO */
     .hero {
       padding: 80px 20px 50px;
+      background: none;
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
     }
+    .hero h2 {
+      font-size: 3rem;
+      color: #fff;
+      margin-bottom: 12px;
+      opacity: 0;
+      transform: translateY(25px);
+      animation: fadeUp .9s ease forwards;
+    }
+    .hero p {
+      font-size: 1.3rem;
+      opacity: 0;
+      max-width: 720px;
+      margin: 0 auto;
+      transform: translateY(20px);
+      animation: fadeUp 1.3s ease forwards;
+    }
 
-    /* TWITCH PANEL */
-    .twitch-panel {
-      background: rgba(20,20,20,0.85);
-      border: 1px solid rgba(255,255,255,0.12);
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* BG LOGO */
+    .bg-container {
+      position: relative;
+      background: url('../../img/mindbound_logo.png') center/cover no-repeat;
+      padding: 60px 0 80px;
+    }
+    .bg-container::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(2px);
+    }
+    .bg-container > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    main.panel {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    h2.section-title {
+      text-align: center;
+      color: #fff;
+      font-size: 2rem;
+      margin: 20px 0 10px;
+    }
+    p.section-subtitle {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 25px;
+      color: #ddd;
+      font-size: 1rem;
+    }
+
+    /* GRID */
+    .widgets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      margin: 35px 0 10px;
+    }
+
+    .widget-card {
+      background: rgba(15,15,15,0.8);
       border-radius: 14px;
-      padding: 20px;
-      margin: 40px 0;
-      box-shadow: 0 0 25px rgba(120,120,255,0.35);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 18px 18px 16px;
+      box-shadow: 0 0 18px rgba(120,120,255,0.35);
       backdrop-filter: blur(4px);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: scale(0.97);
       animation: fadeZoom .7s ease forwards;
     }
 
-    .twitch-header {
-      font-size: 1.4rem;
-      text-align: center;
-      color: #fff;
-      margin-bottom: 10px;
-    }
-
-    .twitch-status {
-      text-align: center;
-      color: #ccc;
-      margin-bottom: 15px;
-    }
-
-    .twitch-offline {
-      text-align: center;
-      opacity: 0.8;
-    }
-
-    .twitch-offline img {
-      width: 100%;
-      max-width: 500px;
-      border-radius: 10px;
-      opacity: 0.4;
-    }
-
-    .twitch-link-btn {
-      display: inline-block;
-      margin-top: 12px;
-      padding: 10px 16px;
-      border-radius: 8px;
-      background: #9146ff;
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-    .twitch-link-btn:hover {
-      background: #b68bff;
-    }
-
-    /* DOT TIMELINE (già definita, ma la riprendo per sicurezza) */
-    .dot-timeline-container {
-      margin-top: 25px;
-    }
-
-    .dot-row {
-      margin: 15px 0;
-    }
-    .dot-boss-name {
-      color: #fff;
-      margin-bottom: 6px;
-      font-size: 1.1rem;
-    }
-    .dot-line {
-      display: flex;
-      gap: 6px;
-    }
-    .dot {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      position: relative;
-    }
-    .dot-wipe { background: #ff5050; }
-    .dot-kill { background: #5cff9e; }
-    .dot-progress { background: #ffd46d; }
-
-    .dot:hover::after {
-      content: attr(data-tip);
-      position: absolute;
-      top: -32px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.85);
-      color: #fff;
-      padding: 6px 10px;
-      font-size: .8rem;
-      border-radius: 6px;
-      white-space: nowrap;
-      z-index: 20;
+    @keyframes fadeZoom {
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
@@ -123,106 +118,236 @@
   </nav>
 </header>
 
+<!-- SUBNAV MINDBOUND -->
 <nav class="subnav">
   <ul>
     <li><a href="../mindbound/mindbound.html">Home Team</a></li>
     <li><a href="../mindbound/roster-mindbound.html">Roster</a></li>
     <li><a href="../mindbound/mindbound-news.html">News</a></li>
-    <li><a class="active" href="../mindbound/mindbound-progress.html">Progress</a></li>
+    <li><a href="../mindbound/mindbound-progress.html" class="active">Progress</a></li>
   </ul>
 </nav>
 
 <div class="bg-container">
   <main class="panel">
 
-    <!-- TWITCH LIVE PANEL -->
-    <div class="twitch-panel">
-      <div class="twitch-header">🎥 Live Twitch – MindBound</div>
-      <div id="twitch-status" class="twitch-status">Caricamento stato live…</div>
-      <div id="twitch-live-slot"></div>
-    </div>
-
     <!-- PANORAMICA -->
     <h2 class="section-title">Panoramica per difficoltà</h2>
-    <p class="section-subtitle">Stato del raid per Normal, Heroic e Mythic.</p>
+    <p class="section-subtitle">
+      Stato del raid per Normal, Heroic e Mythic.
+    </p>
 
     <div class="widgets-grid">
+
       <div class="widget-card">
-        <h3>Normal</h3>
-        <div id="card-normal">Caricamento…</div>
+        <h3 class="widget-title">Normal</h3>
+        <div class="progress-content" id="card-normal">Caricamento…</div>
       </div>
+
       <div class="widget-card">
-        <h3>Heroic</h3>
-        <div id="card-heroic">Caricamento…</div>
+        <h3 class="widget-title">Heroic</h3>
+        <div class="progress-content" id="card-heroic">Caricamento…</div>
       </div>
+
       <div class="widget-card">
-        <h3>Mythic</h3>
-        <div id="card-mythic">Caricamento…</div>
+        <h3 class="widget-title">Mythic</h3>
+        <div class="progress-content" id="card-mythic">Caricamento…</div>
       </div>
+
     </div>
 
     <!-- ULTIMA SESSIONE -->
-    <h2 class="section-title">Ultima sessione raid</h2>
-    <div class="session-summary-card" id="last-session-summary">Caricamento…</div>
-    <div class="dot-timeline-container" id="dot-timeline"></div>
+    <div class="widget-full" style="margin-top: 40px;">
+      <h2 class="section-title" id="last-session-title">
+        Ultima sessione raid
+      </h2>
+      <p class="section-subtitle">
+        Resoconto completo della serata MindBound: kill, wipe e progress.
+        Passa col mouse sui pallini per vedere i dettagli.
+      </p>
 
-    <div style="text-align:center; margin-top:20px;">
-      <a id="last-session-report-link" class="apply-button" target="_blank" style="display:none;">
-        Apri il report completo
-      </a>
+      <div class="session-summary-card" id="last-session-summary">
+        Caricamento…
+      </div>
+
+      <div class="dot-timeline-container" id="dot-timeline"></div>
+
+      <div style="text-align:center; margin-top:20px;">
+        <a id="last-session-report-link"
+           href="#"
+           target="_blank"
+           class="apply-button"
+           style="display:none;">
+          Apri il report dell’ultima sessione
+        </a>
+      </div>
     </div>
+
   </main>
 </div>
 
-<footer><p>&copy; 2025 Delirium Tremens</p></footer>
+<footer>
+  <p>&copy; 2025 Delirium Tremens</p>
+</footer>
 
+<!-- TRANSITION -->
 <script>
-const WORKER_FULL = "https://red-snowflake-a386.lucasantoro2905.workers.dev";
-const WORKER_LAST = "https://wild-mode-1b45.lucasantoro2905.workers.dev";
-const WORKER_TWITCH = "https://YOUR_TWITCH_WORKER.workers.dev"; // <-- Sostituisci!
-const TWITCH_CHANNEL = "TWITCH_CHANNEL_NAME"; // <-- sostituisci
+document.addEventListener("DOMContentLoaded", function () {
+  document.body.classList.add("page-loaded");
+});
+</script>
 
-/* ---------- TWITCH LIVE PANEL ---------- */
-async function loadTwitch() {
-  const statusDiv = document.getElementById("twitch-status");
-  const liveSlot = document.getElementById("twitch-live-slot");
+<!-- URL WORKERS -->
+<script>
+  const WORKER_FULL = "https://red-snowflake-a386.lucasantoro2905.workers.dev";
+  const WORKER_LAST = "https://wild-mode-1b45.lucasantoro2905.workers.dev";
+</script>
 
+<!-- PROGRESS LOGIC -->
+<script>
+async function loadDifficulty(diff, id) {
   try {
-    const res = await fetch(`${WORKER_TWITCH}/twitch-status?channel=${TWITCH_CHANNEL}`);
+    const el = document.getElementById(id);
+    const res = await fetch(`${WORKER_FULL}/progress-full?difficulty=${diff}`);
     const data = await res.json();
 
-    if (data.live) {
-      statusDiv.textContent = "🔴 LIVE ORA";
-      liveSlot.innerHTML = `
-        <div style="text-align:center;">
-          <iframe
-            src="https://player.twitch.tv/?channel=${TWITCH_CHANNEL}&parent=${location.hostname}"
-            height="380"
-            width="100%"
-            allowfullscreen
-          ></iframe>
-          <a href="https://twitch.tv/${TWITCH_CHANNEL}" target="_blank" class="twitch-link-btn">
-            Guarda su Twitch
-          </a>
-        </div>
-      `;
-    } else {
-      statusDiv.textContent = "⚪ Offline";
-      liveSlot.innerHTML = `
-        <div class="twitch-offline">
-          <img src="../../img/twitch_offline.jpg">
-          <p>Il canale non è attualmente in live.</p>
-        </div>
-      `;
-    }
+    const bosses = Object.keys(data.bosses || {});
+    const killed = bosses.filter(b => data.bosses[b].kills > 0);
+    const inProgress = bosses.filter(
+      b => data.bosses[b].kills === 0 &&
+           data.bosses[b].bestPercentage != null &&
+           data.bosses[b].bestPercentage < 100
+    );
+
+    let html = `
+      <strong>Kill:</strong> ${killed.length} / ${bosses.length}<br>
+      <strong>Progress:</strong> ${inProgress.length}<br>
+      <strong>Miglior try:</strong>
+      ${inProgress.length ? Math.min(...inProgress.map(b => data.bosses[b].bestPercentage)) + "%" : "—"}
+      <div class="boss-list">
+    `;
+
+    killed.forEach(b => html += `<span class="boss-killed">${b}</span>`);
+    inProgress.forEach(b => html += `<span class="boss-progress">${b} (${data.bosses[b].bestPercentage}%)</span>`);
+
+    html += "</div>";
+    el.innerHTML = html;
+
   } catch (e) {
-    statusDiv.textContent = "Errore nel caricamento dello stato Twitch.";
+    document.getElementById(id).textContent = "Errore nel caricamento.";
   }
 }
 
-/* ---------- INIT PAGE ---------- */
+async function fetchLastSession() {
+  const res = await fetch(`${WORKER_LAST}/progress-last`);
+  return res.json();
+}
+
+/* ========= TIMELINE A PALLINI ========= */
+
+function renderLastSessionTimeline(last) {
+  const timeline = document.getElementById("dot-timeline");
+  const summary = document.getElementById("last-session-summary");
+  const bosses = Object.values(last.bosses || {});
+
+  if (!bosses.length) {
+    summary.innerHTML = "Nessun dato.";
+    return;
+  }
+
+  // summary
+  const pulls = bosses.reduce((s,b)=>s+b.pulls,0);
+  const wipes = bosses.reduce((s,b)=>s+b.wipes,0);
+  const kills = bosses.reduce((s,b)=>s+b.kills,0);
+
+  summary.innerHTML = `
+    <strong>Boss:</strong> ${bosses.length}<br>
+    <strong>Pull totali:</strong> ${pulls}<br>
+    <strong>Wipe totali:</strong> ${wipes}<br>
+    <strong>Kill totali:</strong> ${kills}
+  `;
+
+  // link report
+  if (last.latestReport?.code) {
+    const a = document.getElementById("last-session-report-link");
+    a.href = `https://www.warcraftlogs.com/reports/${last.latestReport.code}`;
+    a.style.display = "inline-block";
+  }
+
+  timeline.innerHTML = "";
+  bosses.sort((a,b)=>a.bossName.localeCompare(b.bossName));
+
+  bosses.forEach(b => {
+
+    const row = document.createElement("div");
+    row.className = "dot-row";
+
+    row.innerHTML = `<div class="dot-boss-name">${b.bossName}</div>`;
+
+    const line = document.createElement("div");
+    line.className = "dot-line";
+
+    for (let i = 0; i < b.pulls; i++) {
+
+      const d = document.createElement("div");
+      let cls = "dot-wipe";
+      let tip = `Wipe – Pull #${i+1}`;
+
+      // % HP rimanente se presente
+      if (b.hpPercentHistory && b.hpPercentHistory[i] != null) {
+        tip += ` – HP rimanente: ${b.hpPercentHistory[i]}%`;
+      }
+
+      // kill
+      if (i === b.pulls-1 && b.kills > 0) {
+        cls = "dot-kill";
+        tip = `KILL – Pull #${i+1}`;
+      }
+
+      // best try
+      if (b.bestPullIndex === i) {
+        cls = "dot-progress";
+        tip = `Best Try – ${b.bestPercentage}% – Pull #${i+1}`;
+      }
+
+      d.className = `dot ${cls}`;
+      d.setAttribute("data-tip", tip);
+
+      // link al pull
+      if (b.fightIDs && b.fightIDs[i] != null && last.latestReport?.code) {
+        const reportCode = last.latestReport.code;
+        const fightID = b.fightIDs[i];
+
+        d.style.cursor = "pointer";
+        d.addEventListener("click", () => {
+          window.open(
+            `https://www.warcraftlogs.com/reports/${reportCode}#fight=${fightID}`,
+            "_blank"
+          );
+        });
+      }
+
+      line.appendChild(d);
+    }
+
+    row.appendChild(line);
+    timeline.appendChild(row);
+  });
+}
+
+/* ========= INIT ========= */
 (async () => {
-  loadTwitch();
+  loadDifficulty("normal", "card-normal");
+  loadDifficulty("heroic", "card-heroic");
+  loadDifficulty("mythic", "card-mythic");
+
+  try {
+    const last = await fetchLastSession();
+    renderLastSessionTimeline(last);
+  } catch (e) {
+    document.getElementById("last-session-summary").textContent =
+      "Errore nel caricare l'ultima sessione.";
+  }
 })();
 </script>
 
