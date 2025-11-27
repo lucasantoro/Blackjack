@@ -182,7 +182,7 @@
       border-radius: 6px;
       font-size: 0.75rem;
       white-space: pre-line;
-      max-width: 240px;
+      max-width: 260px;
       text-align: left;
       opacity: 0;
       pointer-events: none;
@@ -525,6 +525,15 @@ function renderRoster(last) {
 
 /* ========= TIMELINE A PALLINI ========= */
 
+function diffLabel(diff) {
+  switch (diff) {
+    case 3: return "Normal";
+    case 4: return "Heroic";
+    case 5: return "Mythic";
+    default: return diff != null ? `Diff ${diff}` : "Sconosciuta";
+  }
+}
+
 function renderLastSessionTimeline(last) {
   const timeline = document.getElementById("dot-timeline");
   const summary = document.getElementById("last-session-summary");
@@ -586,6 +595,16 @@ function renderLastSessionTimeline(last) {
         parts.push(`Wipe – Pull #${pullNumber}`);
       }
 
+      // Difficoltà (da pullsDetail se presente, altrimenti da difficultiesSeen)
+      const detail = b.pullsDetail && b.pullsDetail[i];
+      let diff = detail ? detail.difficulty : null;
+      if (diff == null && Array.isArray(b.difficultiesSeen) && b.difficultiesSeen.length) {
+        diff = b.difficultiesSeen[0];
+      }
+      if (diff != null) {
+        parts.push(`Difficoltà: ${diffLabel(diff)}`);
+      }
+
       // HP rimanente
       if (!isKill && b.hpPercentHistory && b.hpPercentHistory[i] != null) {
         parts.push(`HP boss: ${b.hpPercentHistory[i]}%`);
@@ -598,16 +617,6 @@ function renderLastSessionTimeline(last) {
         const s = sec % 60;
         const durStr = m > 0 ? `${m}m ${s}s` : `${s}s`;
         parts.push(`Durata: ${durStr}`);
-      }
-
-      // Dettagli avanzati opzionali (dal worker, se li passi)
-      const detail = b.pullDetails && b.pullDetails[i];
-      if (detail) {
-        if (detail.startTime) parts.push(`Ora: ${detail.startTime}`);
-        if (detail.wipeReason) parts.push(`Motivo: ${detail.wipeReason}`);
-        if (detail.partyDiedAt) parts.push(`Party morto al: ${detail.partyDiedAt}%`);
-        if (detail.dps) parts.push(`DPS raid: ${detail.dps.toLocaleString("it-IT")}`);
-        if (detail.hps) parts.push(`HPS raid: ${detail.hps.toLocaleString("it-IT")}`);
       }
 
       let tip = parts.join(" • ");
