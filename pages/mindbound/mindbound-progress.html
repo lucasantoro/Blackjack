@@ -427,7 +427,7 @@ async function fetchLastSession() {
 
 /* ========= LIVE TWITCH ========= */
 async function fetchTwitchLive() {
-  const url = `${WORKER_TWITCH}/twitch-live?channel=${encodeURIComponent(TWITCH_CHANNEL)}`;
+  const url = `${WORKER_TWITCH}/?channel=${encodeURIComponent(TWITCH_CHANNEL)}`;
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error("Errore worker Twitch");
   return res.json();
