@@ -1,4 +1,36 @@
 /* =========================================================
+   BLACKJACK THEME – STYLE.CSS (update palette + glow)
+   ========================================================= */
+
+/* =========================================================
+   VARIABILI TEMA
+   ========================================================= */
+:root{
+  --bg: #070707;
+  --text: #cfcfcf;
+  --white: #ffffff;
+
+  /* Blackjack palette */
+  --accent: #4dff8a;        /* verde elettrico */
+  --accent-2: #ffd86b;      /* oro */
+  --accent-red: #ff4d4d;    /* rosso chips/dadi */
+
+  /* Glass & borders */
+  --glass: rgba(12, 12, 12, 0.72);
+  --glass-2: rgba(18, 18, 18, 0.80);
+  --border: rgba(255,255,255,0.12);
+
+  /* Glow */
+  --glow: rgba(77, 255, 138, 0.35);
+  --glow-strong: rgba(77, 255, 138, 0.55);
+  --glow-gold: rgba(255, 216, 107, 0.35);
+
+  /* Sheen */
+  --sheen: rgba(77, 255, 138, 0.20);
+  --sheen-soft: rgba(255, 255, 255, 0.12);
+}
+
+/* =========================================================
    BASE GLOBALE
    ========================================================= */
 
@@ -15,8 +47,10 @@ body {
 }
 
 body {
-  background: #0b0b0b;
-  color: #ccc;
+  background: radial-gradient(1200px 800px at 50% -10%, rgba(77,255,138,0.12), transparent 55%),
+              radial-gradient(900px 700px at 20% 20%, rgba(255,216,107,0.08), transparent 60%),
+              var(--bg);
+  color: var(--text);
   font-family: Arial, sans-serif;
   min-height: 100vh;
 }
@@ -28,15 +62,18 @@ main {
   padding: 0 20px;
 }
 
-/* Pannello “glass” centrale (usato da molte pagine) */
+/* Pannello “glass” centrale */
 .panel {
-  background: rgba(10, 0, 16, 0.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(10, 10, 10, 0.60);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
   border-radius: 20px;
   padding: 20px;
   margin: 20px auto;
-  box-shadow: 0 0 25px rgba(150, 60, 255, 0.4);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow:
+    0 0 28px rgba(0,0,0,0.55),
+    0 0 24px var(--glow);
 }
 
 /* =========================================================
@@ -48,18 +85,16 @@ h2,
 h3,
 h4,
 h5 {
-  color: #fff;
+  color: var(--white);
   margin-top: 0;
 }
 
-/* Titolo di sezione generico */
 .section-title {
   text-align: center;
   font-size: 2rem;
   margin: 20px 0 10px;
 }
 
-/* Sottotitolo di sezione */
 .section-subtitle {
   text-align: center;
   max-width: 800px;
@@ -68,7 +103,6 @@ h5 {
   font-size: 1rem;
 }
 
-/* Testo descrittivo lungo */
 .description-long {
   max-width: 900px;
   margin: 25px auto;
@@ -78,7 +112,6 @@ h5 {
   text-align: justify;
 }
 
-/* Varianti per pagine con molto testo (statuto, recruit, ecc.) */
 .statuto,
 .recruit {
   max-width: 1100px;
@@ -88,11 +121,12 @@ h5 {
 
 /* Link generici */
 a {
-  color: #ff5050;
+  color: var(--accent-2);
   text-decoration: none;
 }
 a:hover {
   text-decoration: underline;
+  color: var(--accent);
 }
 
 /* =========================================================
@@ -123,8 +157,8 @@ header {
 
 .mainnav a:hover,
 .mainnav a.active {
-  color: #ff5050;
-  text-shadow: 0 0 8px #ff5050;
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(77,255,138,0.75);
 }
 
 /* Fallback per header nav senza .mainnav */
@@ -144,21 +178,21 @@ header nav a {
 }
 header nav a:hover,
 header nav a.active {
-  color: #ff5050;
-  text-shadow: 0 0 8px #ff5050;
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(77,255,138,0.75);
 }
 
 /* =========================================================
-   NAVBAR SECONDARIA (subnav - per i raid team)
+   NAVBAR SECONDARIA (subnav)
    ========================================================= */
 
 .subnav {
   margin-top: 20px;
-  background: rgba(20, 20, 20, 0.8);
+  background: rgba(12, 12, 12, 0.85);
   padding: 12px 0;
   text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
   backdrop-filter: blur(4px);
 }
 
@@ -179,12 +213,12 @@ header nav a.active {
 
 .subnav a.active,
 .subnav a:hover {
-  color: #8892ff;
-  text-shadow: 0 0 8px #8892ff;
+  color: var(--accent-2);
+  text-shadow: 0 0 10px rgba(255,216,107,0.65);
 }
 
 /* =========================================================
-   HERO (intestazione pagina)
+   HERO
    ========================================================= */
 
 .hero {
@@ -204,25 +238,19 @@ header nav a.active {
   z-index: 2;
 }
 
-/* Hero principale (index usa h1) */
-.hero h1 {
-  font-size: 3rem;
-  margin-bottom: 10px;
-  opacity: 0;
-  transform: translateY(25px);
-  animation: fadeUp 0.9s ease forwards;
-}
-
-/* Se altre pagine usano h2 nella hero */
+/* Hero principale */
+.hero h1,
 .hero h2 {
   font-size: 3rem;
   margin-bottom: 10px;
   opacity: 0;
   transform: translateY(25px);
   animation: fadeUp 0.9s ease forwards;
+  text-shadow:
+    0 0 18px rgba(0,0,0,0.65),
+    0 0 16px rgba(77,255,138,0.25);
 }
 
-/* Sottotitolo della hero */
 .hero p {
   font-size: 1.3rem;
   opacity: 0;
@@ -230,14 +258,14 @@ header nav a.active {
   margin: 0 auto;
   transform: translateY(20px);
   animation: fadeUp 1.3s ease forwards;
+  color: #e7e7e7;
 }
 
-/* Tagline sopra il titolo (index) */
 .hero-tagline {
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: #ffb0b0;
+  color: #d7d7d7;
   margin-bottom: 6px;
   opacity: 0;
   transform: translateY(15px);
@@ -252,24 +280,27 @@ header nav a.active {
   display: inline-block;
   padding: 12px 24px;
   border-radius: 999px;
-  background: #ff5050;
-  color: #fff;
+  background: linear-gradient(90deg, rgba(77,255,138,0.95), rgba(255,216,107,0.95));
+  color: #0b0b0b;
   font-weight: bold;
   text-decoration: none;
-  box-shadow: 0 0 12px rgba(255, 80, 80, 0.6);
+  box-shadow: 0 0 16px rgba(77,255,138,0.45);
   transition: 0.3s;
+  border: 1px solid rgba(255,255,255,0.18);
 }
 .hero-cta a:hover {
-  background: #ff7373;
-  box-shadow: 0 0 18px rgba(255, 120, 120, 0.9);
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 22px rgba(77,255,138,0.70),
+    0 0 18px rgba(255,216,107,0.45);
 }
 
 /* =========================================================
-   BACKGROUND UNICO PER CONTENUTI (logo in fade)
+   BACKGROUND UNICO PER CONTENUTI
    ========================================================= */
 
 .bg-container {
-  position: relative;       /* necessario per l'overlay */
+  position: relative;
   padding: 60px 0 80px;
   z-index: 0;
 }
@@ -278,7 +309,7 @@ header nav a.active {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.62);
   backdrop-filter: blur(2px);
   z-index: 1;
 }
@@ -289,33 +320,38 @@ header nav a.active {
   z-index: 2;
 }
 
-/* Varianti di background (stesso CSS per tutte le pagine, path relativo da /css/) */
+/* Varianti di background */
 .bg-main-logo,
 .bg-main-logo-home {
-  background: url("../img/logo.png") center/cover no-repeat;
+  background: url("../img/blackjack_logo.png") center/cover no-repeat;
 }
 
+/* Se ti servono ancora questi, puoi lasciarli o aggiornarli */
 .bg-abyss-logo {
   background: url("../img/abysschosen_logo.png") center/cover no-repeat;
 }
-
 .bg-mindbound-logo {
   background: url("../img/mindbound_logo.png") center/cover no-repeat;
 }
 
-/* Vecchie classi di background sul body, se ancora presenti */
+/* Vecchie classi sul body */
 .abyss-bg {
   background: url("../img/abysschosen_logo.png") no-repeat center center fixed;
   background-size: cover;
 }
-
 .mindbound-bg {
   background: url("../img/mindbound_logo.png") no-repeat center center fixed;
   background-size: cover;
 }
 
+/* Nuova classe body per Blackjack */
+.blackjack-bg {
+  background: url("../img/blackjack_logo.png") no-repeat center center fixed;
+  background-size: cover;
+}
+
 /* =========================================================
-   GRID CARDS GENERALI (Home, Hollow Soul, ecc.)
+   GRID CARDS GENERALI
    ========================================================= */
 
 .grid-cards {
@@ -326,10 +362,9 @@ header nav a.active {
   width: 90%;
 }
 
-/* Card base riutilizzabile */
 .card {
-  background: rgba(20, 20, 20, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--glass);
+  border: 1px solid var(--border);
   padding: 25px;
   border-radius: 12px;
   color: #ddd;
@@ -342,7 +377,7 @@ header nav a.active {
   transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
-/* Effetto “sheen” diagonale */
+/* Sheen diagonale (verde) */
 .card::before {
   content: "";
   position: absolute;
@@ -352,9 +387,9 @@ header nav a.active {
   height: 300%;
   background: linear-gradient(
     120deg,
-    rgba(180, 0, 255, 0) 0%,
-    rgba(180, 0, 255, 0.25) 50%,
-    rgba(180, 0, 255, 0) 100%
+    rgba(77,255,138,0) 0%,
+    var(--sheen) 50%,
+    rgba(77,255,138,0) 100%
   );
   transform: rotate(25deg);
   transition: 0.8s;
@@ -367,8 +402,10 @@ header nav a.active {
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 0 22px rgba(180, 0, 255, 0.35);
-  border-color: rgba(180, 0, 255, 0.45);
+  box-shadow:
+    0 0 24px rgba(0,0,0,0.55),
+    0 0 22px var(--glow);
+  border-color: rgba(77,255,138,0.35);
 }
 
 .card h3 {
@@ -377,12 +414,12 @@ header nav a.active {
   color: #fff;
 }
 
-/* Button “scopri / vai a…” dentro alle card */
+/* Button dentro alle card */
 .team-btn {
   display: inline-block;
   margin-top: 18px;
   padding: 10px 18px;
-  border: 1px solid #fff;
+  border: 1px solid rgba(255,255,255,0.35);
   border-radius: 8px;
   color: #fff;
   text-decoration: none;
@@ -390,12 +427,14 @@ header nav a.active {
   font-size: 0.95rem;
 }
 .team-btn:hover {
-  background: #fff;
-  color: #000;
+  background: rgba(77,255,138,0.92);
+  border-color: rgba(77,255,138,0.55);
+  color: #0b0b0b;
+  box-shadow: 0 0 14px rgba(77,255,138,0.35);
 }
 
 /* =========================================================
-   CARD RAID TEAMS (Home + pagina Raider + pagine Team)
+   CARD RAID TEAMS
    ========================================================= */
 
 .raid-teams {
@@ -406,13 +445,12 @@ header nav a.active {
   margin-top: 50px;
 }
 
-/* Card specifiche dei team raid (Abyss / MindBound) */
 .team-card {
   width: 420px;
   padding: 30px;
   border-radius: 14px;
-  background: rgba(15, 15, 15, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--glass);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   color: #eee;
   backdrop-filter: blur(4px);
   opacity: 0;
@@ -432,7 +470,7 @@ header nav a.active {
   background: linear-gradient(
     120deg,
     rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.15) 50%,
+    var(--sheen-soft) 50%,
     rgba(255, 255, 255, 0) 100%
   );
   transform: rotate(25deg);
@@ -443,26 +481,23 @@ header nav a.active {
   left: 120%;
 }
 
-/* Animazioni ingresso (sinistra / destra) */
+/* Animazioni ingresso */
 .team-card.abyss {
   animation: slideLeft 0.8s ease forwards;
-  box-shadow: 0 0 15px rgba(255, 80, 80, 0.35);
+  box-shadow: 0 0 18px rgba(255, 80, 80, 0.28);
 }
 .team-card.mindbound {
   animation: slideRight 0.8s ease forwards;
-  box-shadow: 0 0 15px rgba(120, 120, 255, 0.35);
+  box-shadow: 0 0 18px rgba(255, 216, 107, 0.22);
 }
 
-/* Hover glow differenziato */
+/* Hover */
 .team-card:hover {
   transform: translateY(-8px);
-  border-color: rgba(255, 255, 255, 0.4);
-}
-.mindbound:hover {
-  box-shadow: 0 0 25px rgba(120, 120, 255, 0.55);
-}
-.abyss:hover {
-  box-shadow: 0 0 25px rgba(255, 80, 80, 0.55);
+  border-color: rgba(77,255,138,0.35);
+  box-shadow:
+    0 0 26px rgba(0,0,0,0.55),
+    0 0 22px rgba(77,255,138,0.35);
 }
 
 .team-card h3 {
@@ -475,7 +510,7 @@ header nav a.active {
 }
 
 /* =========================================================
-   ROSTER: GRIGLIA + CARD MEMBRO
+   ROSTER: GRIGLIA + CARD MEMBRO (vecchie card /members)
    ========================================================= */
 
 .roster-grid {
@@ -487,18 +522,21 @@ header nav a.active {
   margin: 0 auto;
 }
 
-/* Card membro (file in /members) */
 .member {
-  background: rgba(20, 0, 35, 0.7);
+  background: rgba(12, 12, 12, 0.72);
   padding: 20px;
   border-radius: 14px;
-  box-shadow: 0 0 20px rgba(140, 40, 200, 0.4);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 0 22px rgba(77,255,138,0.18);
   transition: 0.3s;
 }
 
 .member:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 28px rgba(180, 60, 255, 0.7);
+  transform: scale(1.03);
+  box-shadow:
+    0 0 28px rgba(0,0,0,0.55),
+    0 0 24px rgba(77,255,138,0.32);
+  border-color: rgba(77,255,138,0.28);
 }
 
 .member img {
@@ -506,32 +544,29 @@ header nav a.active {
   height: 240px;
   border-radius: 12px;
   object-fit: cover;
-  border: 2px solid #912dff;
+  border: 2px solid rgba(77,255,138,0.55);
   margin-bottom: 12px;
 }
 
 .member h3 {
-  color: #f1caff;
+  color: #fff;
   margin: 8px 0 6px;
 }
 
-/* Sottotitolo membro */
 .tagline {
   font-style: italic;
-  color: #d38aff;
+  color: rgba(255,216,107,0.95);
   margin-bottom: 10px;
 }
 
-/* Testo nella card membro */
 .member .description-long {
-  color: #f0e3ff;
+  color: #e9e9e9;
   font-size: 0.95rem;
   line-height: 1.4;
   text-shadow: 0 0 3px #000;
   text-align: left;
 }
 
-/* Contenitore meta finale */
 .member-meta {
   margin-top: 20px;
   display: flex;
@@ -539,7 +574,6 @@ header nav a.active {
   justify-content: space-between;
 }
 
-/* Icona classe */
 .class-icon {
   width: 34px;
   height: 34px;
@@ -552,16 +586,16 @@ header nav a.active {
 /* Badge Ruolo */
 .role-badge {
   padding: 5px 10px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 0.85rem;
   font-weight: bold;
-  color: #fff;
+  color: #0b0b0b;
 }
 
-/* Colori ruolo */
-.role-tank { background: #2b6cb0; }
-.role-healer { background: #38a169; }
-.role-dps { background: #e53e3e; }
+/* Colori ruolo (restano leggibili col tema) */
+.role-tank { background: #3da4ff; color: #0b0b0b; }
+.role-healer { background: #5cff9e; color: #0b0b0b; }
+.role-dps { background: #ff5050; color: #0b0b0b; }
 
 /* Bottone RaiderIO */
 .rio-btn {
@@ -569,26 +603,26 @@ header nav a.active {
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.35);
-  border-radius: 6px;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.28);
+  border-radius: 8px;
   color: #fff;
   font-size: 0.85rem;
   text-decoration: none;
   transition: 0.25s;
 }
 .rio-btn:hover {
-  background: rgba(255,255,255,0.22);
+  background: rgba(77,255,138,0.18);
+  border-color: rgba(77,255,138,0.35);
   transform: translateY(-2px);
+  box-shadow: 0 0 14px rgba(77,255,138,0.22);
 }
 
-/* Logo Raider.IO */
 .rio-logo {
   width: 20px;
   height: 20px;
   object-fit: contain;
 }
-
 
 /* =========================================================
    FORM RECLUTAMENTO
@@ -604,7 +638,7 @@ header nav a.active {
   display: block;
   margin-top: 15px;
   font-weight: bold;
-  color: #dab4ff;
+  color: rgba(255,216,107,0.95);
 }
 
 .apply-form input,
@@ -613,38 +647,42 @@ header nav a.active {
   width: 100%;
   padding: 10px;
   margin-top: 4px;
-  border-radius: 8px;
-  border: none;
-  background: rgba(60, 0, 90, 0.35);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(10,10,10,0.55);
   color: #fff;
-  box-shadow: 0 0 8px rgba(90, 30, 150, 0.4) inset;
+  box-shadow: 0 0 10px rgba(0,0,0,0.35) inset;
 }
 
 .apply-form textarea {
   min-height: 120px;
 }
 
-/* Pulsante principale (recruiting, apri logs, ecc.) */
+/* Pulsante principale */
 .apply-button {
   margin-top: 20px;
   padding: 12px 24px;
-  background: #7a2ec7;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
+  background: rgba(77,255,138,0.92);
+  color: #0b0b0b;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 10px;
   font-size: 1.05rem;
   cursor: pointer;
-  box-shadow: 0 0 12px rgba(140, 60, 255, 0.6);
+  box-shadow: 0 0 16px rgba(77,255,138,0.35);
   transition: 0.3s;
   display: inline-block;
+  font-weight: bold;
 }
 .apply-button:hover {
-  background: #9a4cff;
-  box-shadow: 0 0 18px rgba(180, 80, 255, 0.9);
+  transform: translateY(-2px);
+  background: rgba(255,216,107,0.95);
+  box-shadow:
+    0 0 22px rgba(255,216,107,0.35),
+    0 0 20px rgba(77,255,138,0.25);
 }
 
 /* =========================================================
-   PROGRESS (Normal / Heroic / Mythic)
+   PROGRESS (widgets)
    ========================================================= */
 
 .progress-panel {
@@ -653,7 +691,6 @@ header nav a.active {
   gap: 30px;
 }
 
-/* Griglia delle card Normal / Heroic / Mythic */
 .widgets-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -661,13 +698,12 @@ header nav a.active {
   margin: 35px 0 10px;
 }
 
-/* Card di progress individuale */
 .widget-card {
-  background: rgba(15, 15, 15, 0.8);
+  background: rgba(12, 12, 12, 0.78);
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 18px 18px 16px;
-  box-shadow: 0 0 18px rgba(184, 107, 255, 0.35);
+  box-shadow: 0 0 20px rgba(77,255,138,0.20);
   backdrop-filter: blur(4px);
   position: relative;
   overflow: hidden;
@@ -687,7 +723,7 @@ header nav a.active {
   background: linear-gradient(
     120deg,
     rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.16) 50%,
+    rgba(77,255,138,0.14) 50%,
     rgba(255, 255, 255, 0) 100%
   );
   transform: rotate(25deg);
@@ -700,11 +736,12 @@ header nav a.active {
 
 .widget-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 0 25px rgba(184, 107, 255, 0.6);
-  border-color: rgba(184, 107, 255, 0.45);
+  box-shadow:
+    0 0 26px rgba(0,0,0,0.55),
+    0 0 26px rgba(77,255,138,0.28);
+  border-color: rgba(77,255,138,0.30);
 }
 
-/* Titolo e descrizione singola card progress */
 .widget-title {
   font-size: 1.2rem;
   color: #fff;
@@ -716,12 +753,11 @@ header nav a.active {
   margin: 0 0 10px;
 }
 
-/* Contenuto con i dati (boss sconfitti, ecc.) */
 .progress-content {
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   padding: 10px 12px;
-  background: rgba(5, 5, 5, 0.6);
+  background: rgba(5, 5, 5, 0.62);
   font-size: 0.95rem;
   line-height: 1.5;
   min-height: 140px;
@@ -731,7 +767,6 @@ header nav a.active {
   margin: 4px 0;
 }
 
-/* Lista boss in fondo alla card */
 .boss-list {
   margin-top: 8px;
   font-size: 0.9rem;
@@ -747,14 +782,13 @@ header nav a.active {
 }
 .boss-killed {
   color: #9fffba;
-  border: 1px solid rgba(80, 255, 120, 0.4);
+  border: 1px solid rgba(80, 255, 120, 0.35);
 }
 .boss-progress {
   color: #ffeab4;
-  border: 1px solid rgba(255, 200, 80, 0.4);
+  border: 1px solid rgba(255, 200, 80, 0.35);
 }
 
-/* Contenitori larghi per timeline, logs, ecc. */
 .widget-full {
   margin-top: 40px;
 }
@@ -764,11 +798,11 @@ header nav a.active {
    ========================================================= */
 
 .session-summary-card {
-  background: rgba(15, 15, 15, 0.85);
+  background: rgba(12, 12, 12, 0.82);
   border-radius: 16px;
   padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 25px rgba(184, 107, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 24px rgba(77,255,138,0.18);
   backdrop-filter: blur(4px);
   margin-bottom: 25px;
   color: #eee;
@@ -782,13 +816,12 @@ header nav a.active {
   margin-top: 10px;
 }
 
-/* Card singola boss */
 .timeline-card {
-  background: rgba(20, 20, 20, 0.85);
+  background: rgba(16, 16, 16, 0.86);
   border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 20px;
   border-radius: 16px;
-  box-shadow: 0 0 20px rgba(184, 107, 255, 0.25);
+  box-shadow: 0 0 18px rgba(77,255,138,0.14);
   backdrop-filter: blur(4px);
   position: relative;
   overflow: hidden;
@@ -797,14 +830,13 @@ header nav a.active {
   animation: fadeUp 0.8s ease forwards;
 }
 
-/* Glow kill / progress */
 .timeline-card.kill {
-  border-color: rgba(80, 255, 120, 0.4);
-  box-shadow: 0 0 25px rgba(80, 255, 120, 0.4);
+  border-color: rgba(80, 255, 120, 0.35);
+  box-shadow: 0 0 24px rgba(80, 255, 120, 0.24);
 }
 .timeline-card.progress {
-  border-color: rgba(255, 180, 60, 0.35);
-  box-shadow: 0 0 25px rgba(255, 180, 60, 0.35);
+  border-color: rgba(255, 200, 80, 0.30);
+  box-shadow: 0 0 24px rgba(255, 200, 80, 0.18);
 }
 
 /* Sheen */
@@ -818,7 +850,7 @@ header nav a.active {
   background: linear-gradient(
     120deg,
     rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.14) 50%,
+    rgba(255, 216, 107, 0.10) 50%,
     rgba(255, 255, 255, 0) 100%
   );
   transform: rotate(25deg);
@@ -843,7 +875,7 @@ header nav a.active {
   color: #fff;
 }
 
-/* Loader circolare (se usato) */
+/* Loader */
 .chart-loader {
   display: flex;
   justify-content: center;
@@ -851,8 +883,8 @@ header nav a.active {
   height: 220px;
 }
 .loader {
-  border: 6px solid rgba(255, 255, 255, 0.2);
-  border-top: 6px solid #fff;
+  border: 6px solid rgba(255, 255, 255, 0.18);
+  border-top: 6px solid var(--accent);
   border-radius: 50%;
   width: 45px;
   height: 45px;
@@ -864,7 +896,7 @@ header nav a.active {
 }
 
 /* =========================================================
-   STATISTICHE HOLLOW SOUL (raider.io)
+   STATISTICHE HOLLOW SOUL
    ========================================================= */
 
 .stats-grid {
@@ -876,11 +908,11 @@ header nav a.active {
 }
 
 .stat-card {
-  background: rgba(15, 15, 25, 0.9);
+  background: rgba(12, 12, 18, 0.88);
   border-radius: 14px;
   padding: 20px 22px;
-  border: 1px solid rgba(180, 180, 255, 0.25);
-  box-shadow: 0 0 20px rgba(120, 120, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 22px rgba(255,216,107,0.12);
   backdrop-filter: blur(5px);
 }
 
@@ -888,7 +920,7 @@ header nav a.active {
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #aeb4ff;
+  color: rgba(255,216,107,0.95);
   margin-bottom: 6px;
 }
 
@@ -897,6 +929,7 @@ header nav a.active {
   font-weight: bold;
   color: #fff;
   margin-bottom: 4px;
+  text-shadow: 0 0 14px rgba(77,255,138,0.18);
 }
 
 .stat-hint {
@@ -917,18 +950,18 @@ header nav a.active {
   margin: 0 auto;
   border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 0 25px rgba(120,120,255,0.4);
-  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 0 26px rgba(77,255,138,0.18);
+  border: 1px solid rgba(255,255,255,0.12);
 }
 
 .twitch-offline {
   max-width: 650px;
   margin: 0 auto;
   padding: 25px 30px;
-  background: rgba(20,20,20,0.85);
+  background: rgba(16,16,16,0.85);
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 0 25px rgba(120,120,255,0.35);
+  box-shadow: 0 0 24px rgba(255,216,107,0.12);
   backdrop-filter: blur(4px);
   text-align: center;
 }
@@ -936,18 +969,20 @@ header nav a.active {
 .vod-button {
   display:inline-block;
   padding:12px 24px;
-  border-radius:8px;
-  background:#7a2ec7;
-  color:#fff;
+  border-radius:10px;
+  background: rgba(255,216,107,0.95);
+  color:#0b0b0b;
   text-decoration:none;
   font-weight:bold;
-  box-shadow:0 0 12px rgba(120,60,255,0.6);
+  box-shadow:0 0 16px rgba(255,216,107,0.22);
   transition:.3s;
+  border: 1px solid rgba(255,255,255,0.18);
 }
 
 .vod-button:hover {
-  background:#9a4cff;
-  box-shadow:0 0 18px rgba(160,80,255,0.9);
+  transform: translateY(-2px);
+  background: rgba(77,255,138,0.92);
+  box-shadow:0 0 20px rgba(77,255,138,0.28);
 }
 
 /* TIMELINE PILL */
@@ -959,21 +994,21 @@ header nav a.active {
 }
 
 .pill {
-  background: rgba(20,20,20,0.85);
+  background: rgba(16,16,16,0.85);
   border-radius: 12px;
   padding: 12px 18px;
-  border: 1px solid rgba(255,255,255,0.15);
-  box-shadow: 0 0 12px rgba(120,120,255,0.2);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 0 14px rgba(77,255,138,0.12);
 }
 
 .pill.kill {
-  border-color: rgba(80,255,120,0.5);
-  box-shadow: 0 0 15px rgba(80,255,120,0.3);
+  border-color: rgba(80,255,120,0.35);
+  box-shadow: 0 0 16px rgba(80,255,120,0.18);
 }
 
 .pill.progress {
-  border-color: rgba(255,200,80,0.4);
-  box-shadow: 0 0 15px rgba(255,200,80,0.3);
+  border-color: rgba(255,200,80,0.30);
+  box-shadow: 0 0 16px rgba(255,200,80,0.14);
 }
 
 .pill-title {
@@ -985,7 +1020,7 @@ header nav a.active {
 }
 
 /* =========================================================
-   TIMELINE A PALLINI – STILE MINDBOUND
+   TIMELINE A PALLINI – STILE MINDBOUND (tenuto, solo palette)
    ========================================================= */
 
 .dot-timeline-container {
@@ -996,18 +1031,18 @@ header nav a.active {
 }
 
 .dot-row {
-  background: rgba(20,20,30,0.75);
+  background: rgba(16,16,16,0.75);
   border: 1px solid rgba(255,255,255,0.12);
   border-radius: 14px;
   padding: 18px 20px;
   backdrop-filter: blur(4px);
-  box-shadow: 0 0 18px rgba(120,120,255,0.25);
+  box-shadow: 0 0 18px rgba(77,255,138,0.12);
   transition: .25s;
 }
 
 .dot-row:hover {
   transform: translateY(-3px);
-  box-shadow: 0 0 22px rgba(150,150,255,0.45);
+  box-shadow: 0 0 22px rgba(77,255,138,0.22);
 }
 
 .dot-boss-name {
@@ -1070,63 +1105,36 @@ header nav a.active {
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
-
 /* =========================================================
    ANIMAZIONI GLOBALI
    ========================================================= */
 
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeZoom {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 @keyframes slideLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(-25px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes slideRight {
-  from {
-    opacity: 0;
-    transform: translateX(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(25px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes spin {
-  100% {
-    transform: rotate(360deg);
-  }
+  100% { transform: rotate(360deg); }
 }
 
 /* =========================================================
-   TRANSIZIONE PAGINA (fade-in / fade-out)
+   TRANSIZIONE PAGINA
    ========================================================= */
 
 .page-transition {
@@ -1145,6 +1153,6 @@ header nav a.active {
 footer {
   text-align: center;
   padding: 40px 0;
-  color: #777;
+  color: #7c7c7c;
   margin-top: 40px;
 }
