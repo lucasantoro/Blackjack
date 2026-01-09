@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Blackjack – Video divertenti</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+
+<body class="page-transition blackjack-bg">
+
+<header>
+  <nav class="mainnav">
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="raider.html">Raider</a></li>
+      <li><a href="hollowsoul.html">Spettatori</a></li>
+      <li><a href="recruiting.html">Reclutamento</a></li>
+      <li><a href="statuto.html">Statuto</a></li>
+    </ul>
+  </nav>
+</header>
+
+<nav class="subnav">
+  <ul>
+    <li><a href="hollowsoul.html">Community</a></li>
+    <li><a href="hollowsoul-video.html" class="active">Video divertenti</a></li>
+    <li><a href="hollowsoul-eventi.html">Eventi di gilda</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <h2>Video divertenti della gilda</h2>
+    <p>
+      Clip leggere, wipe epici e momenti da ridere insieme: il lato più creativo degli Spettatori.
+    </p>
+  </div>
+</section>
+
+<div class="bg-container bg-main-logo">
+  <main class="panel">
+
+    <h2 class="section-title">La nostra videoteca</h2>
+    <p class="section-subtitle">
+      Un carosello di momenti memorabili caricati su YouTube dai membri della gilda.
+      Aggiorna queste card ogni volta che esce un nuovo video.
+    </p>
+
+    <div class="media-carousel">
+      <article class="media-card">
+        <div class="media-player">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="Fail della settimana"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <h3>Fail della settimana</h3>
+        <p>Una raccolta di pull finiti male e risate assicurate in voice chat.</p>
+      </article>
+
+      <article class="media-card">
+        <div class="media-player">
+          <iframe
+            src="https://www.youtube.com/embed/aqz-KE-bpKQ"
+            title="Highlight Mythic+"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <h3>Highlight Mythic+</h3>
+        <p>Combo perfette, salvataggi al volo e un finale degno di clip.</p>
+      </article>
+
+      <article class="media-card">
+        <div class="media-player">
+          <iframe
+            src="https://www.youtube.com/embed/oHg5SJYRHA0"
+            title="Serata meme"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <h3>Serata meme</h3>
+        <p>Quando la gilda si trasforma in un set di comedy raid.</p>
+      </article>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  <p>&copy; 2025 Blackjack</p>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.body.classList.add("page-loaded");
+});
+
+document.querySelectorAll("a").forEach(link => {
+  if (link.hostname === window.location.hostname) {
+    link.addEventListener("click", event => {
+      event.preventDefault();
+      const href = link.getAttribute("href");
+      document.body.classList.remove("page-loaded");
+      setTimeout(() => { window.location.href = href; }, 300);
+    });
+  }
+});
+</script>
+
+</body>
+</html>
