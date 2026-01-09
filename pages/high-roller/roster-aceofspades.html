@@ -4,158 +4,12 @@
 <meta charset="UTF-8">
 <title>Ace of Spades – Roster</title>
 <link rel="stylesheet" href="../../css/style.css">
-
-<style>
-/* =======================================================================
-   ROSTER – LAYOUT 2 COLONNE
-   ======================================================================= */
-.roster-grid {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 25px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 35px;
-  margin-top: 30px;
-}
-
-/* =======================================================================
-   CARD MEMBRO
-   ======================================================================= */
-.member-card {
-  background: rgba(20,20,20,0.8);
-  border: 1px solid rgba(255,255,255,0.12);
-  padding: 22px;
-  border-radius: 14px;
-  color: #eee;
-  backdrop-filter: blur(4px);
-  position: relative;
-  overflow: hidden;
-  opacity: 0;
-  transform: scale(0.96);
-  animation: fadeZoom 0.8s forwards;
-  box-shadow: 0 0 18px rgba(120,120,255,0.35);
-}
-
-.member-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(120,120,255,0.45);
-  box-shadow: 0 0 25px rgba(120,120,255,0.55);
-}
-
-/* HEADER – solo contenuto membro, nessuna icona */
-.member-header {
-  display: block;
-}
-
-/* =======================================================================
-   TESTO
-   ======================================================================= */
-.member-card h3 {
-  color: #fff;
-  font-size: 1.4rem;
-  margin: 0 0 10px;
-}
-
-.member-card p {
-  line-height: 1.45;
-  margin: 6px 0;
-}
-
-/* =======================================================================
-   FOOTER A DUE COLONNE
-   ======================================================================= */
-.member-footer {
-  margin-top: 18px;
-  padding-top: 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid rgba(255,255,255,0.08);
-}
-
-/* LEFT SIDE */
-.footer-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* Icona classe */
-.class-icon-small {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  border: none;
-}
-
-/* Badge ruolo */
-.role-badge {
-  display: inline-block;
-  padding: 5px 12px;
-  border-radius: 999px;
-  font-size: .85rem;
-  font-weight: bold;
-  color: #000;
-}
-
-/* Colori ruolo */
-.role-tank   { background: #3da4ff; }
-.role-healer { background: #5cff9e; }
-.role-dps    { background: #ff5050; }
-
-/* RIGHT SIDE */
-.footer-right {
-  position: relative;
-}
-
-/* RaiderIO button */
-.rio-btn {
-  display: inline-flex;
-  width: 55px;
-  height: 55px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.25);
-  padding: 6px;
-  transition: .25s;
-  position: relative;
-}
-
-.rio-btn:hover {
-  background: rgba(255,255,255,0.22);
-  border-color: rgba(255,255,255,0.45);
-  transform: translateY(-2px);
-}
-
-.rio-logo {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-/* Tooltip */
-.rio-btn:hover::after {
-  content: "Apri profilo Raider.IO";
-  position: absolute;
-  right: 110%;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.85);
-  color: #fff;
-  padding: 6px 10px;
-  font-size: .8rem;
-  white-space: nowrap;
-  border-radius: 6px;
-}
-</style>
-
 </head>
 
-<body class="page-transition mindbound-bg">
+<body class="page-transition blackjack-bg">
 
 <header>
-  <nav>
+  <nav class="mainnav">
     <ul>
       <li><a href="../../index.html">Home</a></li>
       <li><a href="../raider.html">Raider</a></li>
@@ -168,29 +22,37 @@
 
 <nav class="subnav">
   <ul>
-    <li><a href="../mindbound/mindbound.html">Home Team</a></li>
-    <li><a href="../mindbound/roster-mindbound.html" class="active">Roster</a></li>
-    <li><a href="../mindbound/mindbound-progress.html">Progress</a></li>
+    <li><a href="../high-roller/aceofspades.html">Home Team</a></li>
+    <li><a href="../high-roller/roster-aceofspades.html" class="active">Roster</a></li>
+    <li><a href="../high-roller/aceofspades-news.html">News</a></li>
+    <li><a href="../high-roller/aceofspades-progress.html">Progress</a></li>
   </ul>
 </nav>
 
-<div class="bg-container">
+<section class="hero">
+  <div class="hero-content">
+    <h2>Roster Ace of Spades</h2>
+    <p>Il team raid dei Blackjack: ruoli, specializzazioni e volti del roster.</p>
+  </div>
+</section>
+
+<div class="bg-container bg-aceofspades-logo">
   <main class="panel">
 
-    <h2 class="page-title">Roster MindBound</h2>
+    <h2 class="section-title">Roster Ace of Spades</h2>
 
-    <div class="roster-grid" id="roster-container"></div>
+    <div class="roster-grid roster-grid--two" id="roster-container"></div>
 
   </main>
 </div>
 
 <footer>
-  <p>&copy; 2025 Delirium Tremens</p>
+  <p>&copy; 2025 Blackjack</p>
 </footer>
 
 <!-- SCRIPT: COSTRUZIONE CARD DINAMICA -->
 <script>
-// LISTA DEI MEMBRI MINDBOUND
+// LISTA DEI MEMBRI ACE OF SPADES
 const members = [
   "odetta.html",
   "aqualara.html",
@@ -239,7 +101,7 @@ members.forEach(file => {
 
             <div class="footer-right">
               ${rioURL ? `
-                <a href="${rioURL}" target="_blank" class="rio-btn">
+                <a href="${rioURL}" target="_blank" class="rio-btn rio-btn--compact">
                   <img src="../../img/raiderio_logo.png" class="rio-logo">
                 </a>
               ` : ""}

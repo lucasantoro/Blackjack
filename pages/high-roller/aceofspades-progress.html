@@ -5,257 +5,9 @@
   <title>Ace of Spades – Progress</title>
   <link rel="stylesheet" href="../../css/style.css">
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-
-  <style>
-    /* HERO */
-    .hero {
-      padding: 80px 20px 50px;
-      background: none;
-      height: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-    .hero h2 {
-      font-size: 3rem;
-      color: #fff;
-      margin-bottom: 12px;
-      opacity: 0;
-      transform: translateY(25px);
-      animation: fadeUp .9s ease forwards;
-    }
-    .hero p {
-      font-size: 1.3rem;
-      opacity: 0;
-      max-width: 720px;
-      margin: 0 auto;
-      transform: translateY(20px);
-      animation: fadeUp 1.3s ease forwards;
-    }
-
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* BG LOGO */
-    .bg-container {
-      position: relative;
-      background: url('../../img/mindbound_logo.png') center/cover no-repeat;
-      padding: 60px 0 80px;
-    }
-    .bg-container::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      backdrop-filter: blur(2px);
-    }
-    .bg-container > * {
-      position: relative;
-      z-index: 2;
-    }
-
-    main.panel {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    h2.section-title {
-      text-align: center;
-      color: #fff;
-      font-size: 2rem;
-      margin: 20px 0 10px;
-    }
-    p.section-subtitle {
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto 25px;
-      color: #ddd;
-      font-size: 1rem;
-    }
-
-    /* GRID */
-    .widgets-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
-      margin: 35px 0 10px;
-    }
-
-    .widget-card {
-      background: rgba(15,15,15,0.8);
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 18px 18px 16px;
-      box-shadow: 0 0 18px rgba(120,120,255,0.35);
-      backdrop-filter: blur(4px);
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: scale(0.97);
-      animation: fadeZoom .7s ease forwards;
-    }
-
-    @keyframes fadeZoom {
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    /* ============ LIVE TWITCH ============ */
-    .live-raid-wrapper {
-      margin-top: 25px;
-    }
-    .live-raid-card {
-      background: rgba(15,15,15,0.9);
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 16px 18px 18px;
-      box-shadow: 0 0 18px rgba(120,120,255,0.35);
-      backdrop-filter: blur(4px);
-    }
-    .live-player-shell {
-      position: relative;
-      padding-bottom: 56.25%; /* 16:9 */
-      height: 0;
-      overflow: hidden;
-      border-radius: 10px;
-      margin-top: 10px;
-    }
-    .live-player-shell iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-    .live-status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.8rem;
-      padding: 4px 10px;
-      border-radius: 999px;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-    .live-status-pill .live-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #999;
-    }
-    .live-status-live {
-      background: rgba(220,20,60,0.15);
-      border-color: rgba(255,80,120,0.8);
-      color: #ff9ea8;
-    }
-    .live-status-live .live-dot {
-      background: #ff3b5c;
-      box-shadow: 0 0 6px rgba(255,0,70,0.9);
-    }
-    .live-status-offline {
-      background: rgba(80,80,80,0.2);
-      color: #ccc;
-    }
-    .live-description {
-      font-size: 0.9rem;
-      color: #ccc;
-      margin: 0 0 4px;
-    }
-
-    /* ============ TOOLTIP DOTS ============ */
-    .dot {
-      position: relative;
-    }
-    .dot::after {
-      content: attr(data-tip);
-      position: absolute;
-      left: 50%;
-      bottom: 140%;
-      transform: translateX(-50%) translateY(6px);
-      background: rgba(5,5,5,0.95);
-      color: #f5f5f5;
-      padding: 6px 10px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      white-space: pre-line;
-      max-width: 260px;
-      text-align: left;
-      opacity: 0;
-      pointer-events: none;
-      box-shadow: 0 0 10px rgba(0,0,0,0.7);
-      z-index: 20;
-      transition: opacity .15s ease, transform .15s ease;
-    }
-    .dot::before {
-      content: "";
-      position: absolute;
-      left: 50%;
-      bottom: 130%;
-      transform: translateX(-50%);
-      border-width: 6px;
-      border-style: solid;
-      border-color: rgba(5,5,5,0.95) transparent transparent transparent;
-      opacity: 0;
-      transition: opacity .15s ease;
-      z-index: 19;
-    }
-    .dot:hover::after,
-    .dot:hover::before {
-      opacity: 1;
-    }
-    .dot:hover::after {
-      transform: translateX(-50%) translateY(0);
-    }
-
-    /* ============ ROSTER CARD ============ */
-    .session-roster-card {
-      margin-top: 25px;
-      background: rgba(15,15,15,0.85);
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 16px 18px 18px;
-      box-shadow: 0 0 18px rgba(120,120,255,0.25);
-    }
-    .roster-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 8px 14px;
-      font-size: 0.9rem;
-    }
-    .roster-item-main {
-      font-weight: 600;
-    }
-    .roster-meta {
-      font-size: 0.8rem;
-      opacity: 0.85;
-    }
-    .roster-role-tag {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 2px 6px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.2);
-      display: inline-block;
-      margin-left: 4px;
-    }
-    .roster-role-tank {
-      border-color: #4fd1c5;
-    }
-    .roster-role-heal {
-      border-color: #63b3ed;
-    }
-    .roster-role-dps {
-      border-color: #f6ad55;
-    }
-  </style>
 </head>
 
-<body class="page-transition">
+<body class="page-transition blackjack-bg">
 
 <header>
   <nav class="mainnav">
@@ -269,7 +21,7 @@
   </nav>
 </header>
 
-<!-- SUBNAV MINDBOUND -->
+<!-- SUBNAV ACE OF SPADES -->
 <nav class="subnav">
   <ul>
     <li><a href="../high-roller/aceofspades.html">Home Team</a></li>
@@ -279,7 +31,14 @@
   </ul>
 </nav>
 
-<div class="bg-container">
+<section class="hero">
+  <div class="hero-content">
+    <h2>Progress Ace of Spades</h2>
+    <p>Avanzamento raid, recap sessioni e roster dell’ultima serata.</p>
+  </div>
+</section>
+
+<div class="bg-container bg-aceofspades-logo">
   <main class="panel">
 
     <!-- PANORAMICA -->
@@ -308,7 +67,7 @@
     </div>
 
     <!-- ULTIMA SESSIONE -->
-    <div class="widget-full" style="margin-top: 40px;">
+    <div class="widget-full">
       <h2 class="section-title" id="last-session-title">
         Ultima sessione raid
       </h2>
@@ -340,12 +99,11 @@
 
       <div class="dot-timeline-container" id="dot-timeline"></div>
 
-      <div style="text-align:center; margin-top:20px;">
+      <div class="text-center mt-20">
         <a id="last-session-report-link"
            href="#"
            target="_blank"
-           class="apply-button"
-           style="display:none;">
+           class="apply-button hidden">
           Apri il report dell’ultima sessione
         </a>
       </div>
@@ -353,7 +111,7 @@
       <!-- ROSTER DALL'ULTIMO REPORT -->
       <div class="session-roster-card" id="live-roster-card">
         <h3 class="widget-title">Roster attuale</h3>
-        <p class="section-subtitle" style="margin-bottom:10px;">
+        <p class="section-subtitle section-subtitle--compact">
           Giocatori presenti nell’ultima sessione registrata su Warcraft Logs.
         </p>
         <div id="live-roster">Caricamento roster…</div>
@@ -365,7 +123,7 @@
 </div>
 
 <footer>
-  <p>&copy; 2025 The Blackjack</p>
+  <p>&copy; 2025 Blackjack</p>
 </footer>
 
 <!-- TRANSITION -->
@@ -452,7 +210,7 @@ function renderTwitchLive(liveData) {
   pill.classList.add("live-status-live");
   pill.innerHTML = '<span class="live-dot"></span> Live ora';
 
-  const title = liveData.title || "Diretta raid MindBound";
+  const title = liveData.title || "Diretta raid Ace of Spades";
   const game = liveData.game_name;
   const viewers = liveData.viewer_count;
 
@@ -562,7 +320,7 @@ function renderRoster(last) {
     return `
       <div class="roster-item">
         <div class="roster-item-main">
-          <img src="${icon}" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;">
+          <img src="${icon}" class="roster-class-icon">
           ${p.name}
           <span class="roster-role-tag ${roleClass}">${role}</span>
         </div>
@@ -573,7 +331,7 @@ function renderRoster(last) {
     `;
   }).join("");
 
-  container.innerHTML = `<div class="roster-grid">${html}</div>`;
+  container.innerHTML = `<div class="roster-grid roster-grid--compact">${html}</div>`;
 }
 
 
@@ -614,7 +372,7 @@ function renderLastSessionTimeline(last) {
   if (last.latestReport?.code) {
     const a = document.getElementById("last-session-report-link");
     a.href = `https://www.warcraftlogs.com/reports/${last.latestReport.code}`;
-    a.style.display = "inline-block";
+    a.classList.remove("hidden");
   }
 
   timeline.innerHTML = "";
