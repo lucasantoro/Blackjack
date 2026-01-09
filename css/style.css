@@ -162,7 +162,11 @@ a:hover {
 header {
   display: flex;
   justify-content: center;
-  padding: 20px 0 10px;
+  padding: 18px 0;
+  background: #000;
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
 }
 
 /* Navbar principale (classe .mainnav) */
@@ -390,6 +394,7 @@ header nav a.active {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   margin: 40px auto;
   width: 90%;
+  align-items: stretch;
 }
 
 .card {
@@ -399,6 +404,8 @@ header nav a.active {
   border-radius: 12px;
   color: #ddd;
   backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
   opacity: 0;
   transform: scale(0.96);
   animation: fadeZoom 0.8s ease forwards;
@@ -455,6 +462,14 @@ header nav a.active {
   text-decoration: none;
   transition: 0.3s;
   font-size: 0.95rem;
+}
+
+.card .team-btn,
+.team-card .team-btn {
+  display: block;
+  width: fit-content;
+  margin: 18px auto 0;
+  text-align: center;
 }
 .team-btn:hover {
   background: rgba(77,255,138,0.92);
@@ -569,6 +584,7 @@ header nav a.active {
   grid-template-columns: repeat(2, 1fr);
   gap: 35px;
   margin-top: 30px;
+  align-items: stretch;
 }
 
 .member-card {
@@ -580,6 +596,9 @@ header nav a.active {
   backdrop-filter: blur(4px);
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 640px;
   opacity: 0;
   transform: scale(0.96);
   animation: fadeZoom 0.8s forwards;
@@ -593,7 +612,8 @@ header nav a.active {
 }
 
 .member-header {
-  display: block;
+  display: flex;
+  flex: 1;
 }
 
 .member-card h3 {
@@ -605,6 +625,18 @@ header nav a.active {
 .member-card p {
   line-height: 1.45;
   margin: 6px 0;
+}
+
+.member-card .member {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.member-card .description-long {
+  flex: 1;
+  overflow: auto;
+  padding-right: 4px;
 }
 
 .member-footer {
@@ -1462,7 +1494,9 @@ header nav a.active {
 
 footer {
   text-align: center;
-  padding: 40px 0;
-  color: #7c7c7c;
+  padding: 24px 0;
+  color: #cfcfcf;
   margin-top: 40px;
+  background: #000;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }

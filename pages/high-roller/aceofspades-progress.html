@@ -14,7 +14,7 @@
     <ul>
       <li><a href="../../index.html">Home</a></li>
       <li><a href="../raider.html">Raider</a></li>
-      <li><a href="../hollowsoul.html">Hollow Soul</a></li>
+      <li><a href="../hollowsoul.html">Spettatori</a></li>
       <li><a href="../recruiting.html">Reclutamento</a></li>
       <li><a href="../statuto.html">Statuto</a></li>
     </ul>
@@ -51,17 +51,17 @@
 
       <div class="widget-card">
         <h3 class="widget-title">Normal</h3>
-        <div class="progress-content" id="card-normal">Caricamento…</div>
+        <div class="progress-content" id="card-normal">Sto caricando…</div>
       </div>
 
       <div class="widget-card">
         <h3 class="widget-title">Heroic</h3>
-        <div class="progress-content" id="card-heroic">Caricamento…</div>
+        <div class="progress-content" id="card-heroic">Sto caricando…</div>
       </div>
 
       <div class="widget-card">
         <h3 class="widget-title">Mythic</h3>
-        <div class="progress-content" id="card-mythic">Caricamento…</div>
+        <div class="progress-content" id="card-mythic">Sto caricando…</div>
       </div>
 
     </div>
@@ -94,7 +94,7 @@
       <!-- /LIVE TWITCH -->
 
       <div class="session-summary-card" id="last-session-summary">
-        Caricamento…
+        Caricamento in corso…
       </div>
 
       <div class="dot-timeline-container" id="dot-timeline"></div>
@@ -114,7 +114,7 @@
         <p class="section-subtitle section-subtitle--compact">
           Giocatori presenti nell’ultima sessione registrata su Warcraft Logs.
         </p>
-        <div id="live-roster">Caricamento roster…</div>
+        <div id="live-roster">Sto caricando il roster…</div>
       </div>
 
     </div>
@@ -174,7 +174,7 @@ async function loadDifficulty(diff, id) {
     el.innerHTML = html;
 
   } catch (e) {
-    document.getElementById(id).textContent = "Errore nel caricamento.";
+    document.getElementById(id).textContent = "Impossibile caricare i dati.";
   }
 }
 
@@ -201,7 +201,7 @@ function renderTwitchLive(liveData) {
     pill.classList.remove("live-status-live");
     pill.classList.add("live-status-offline");
     pill.innerHTML = '<span class="live-dot"></span> Offline';
-    descr.textContent = "Il canale Twitch è attualmente offline. La prossima diretta raid verrà mostrata qui appena saremo live.";
+    descr.textContent = "Il canale Twitch è offline. La prossima diretta raid apparirà qui appena saremo live.";
     shell.innerHTML = "";
     return;
   }
@@ -219,66 +219,109 @@ function renderTwitchLive(liveData) {
   if (viewers != null) descText += ` • Viewers: ${viewers}`;
   descr.textContent = descText;
 
-  const parent = window.location.hostname;
-  const embedUrl =
-    `https://player.twitch.tv/?channel=${encodeURIComponent(TWITCH_CHANNEL)}&parent=${encodeURIComponent(parent)}`;
-
-  shell.innerHTML = `
+  const embed = `
     <iframe
-      src="${embedUrl}"
+      src="https://player.twitch.tv/?channel=${encodeURIComponent(TWITCH_CHANNEL)}&parent=${window.location.hostname}"
+      frameborder="0"
       allowfullscreen="true"
       scrolling="no"
-      allow="autoplay; fullscreen">
+      height="360"
+      width="100%">
     </iframe>
   `;
+  shell.innerHTML = embed;
+}
+
+async function initLiveTwitch() {
+  try {
+    const liveData = await fetchTwitchLive();
+    renderTwitchLive(liveData);
+  } catch (e) {
+    console.error("Errore live Twitch:", e);
+  }
+}
+
+/* ========= TIMELINE ========= */
+function buildTimeline(last) {
+  const container = document.getElementById("dot-timeline");
+  if (!container) return;
+
+  const pulls = last?.pulls || [];
+  if (!pulls.length) {
+    container.innerHTML = "<p class=\"section-subtitle\">Nessun dato da mostrare.</p>";
+    return;
+  }
+
+  const dots = pulls.map((pull, i) => {
+    const isKill = pull.kill;
+    const boss = pull.boss || "Boss";
+    const pct = pull.kill ? "100%" : `${pull.bestPercentage ?? "–"}%`;
+    const cls = isKill ? "dot dot-kill" : "dot dot-progress";
+    return `
+      <div class="timeline-dot" data-index="${i}">
+        <div class="${cls}"></div>
+        <div class="timeline-tooltip">
+          <strong>${boss}</strong><br>
+          ${isKill ? "Kill" : `Best ${pct}`}
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  container.innerHTML = `<div class="dot-timeline">${dots}</div>`;
+}
+
+/* ========= SESSION SUMMARY ========= */
+function renderSessionSummary(last) {
+  const container = document.getElementById("last-session-summary");
+  if (!container) return;
+
+  if (!last || !last.session) {
+    container.textContent = "Nessuna sessione disponibile.";
+    return;
+  }
+
+  const { session } = last;
+  const date = session.date || "Data non disponibile";
+  const duration = session.duration || "—";
+  const kills = session.kills ?? 0;
+  const wipes = session.wipes ?? 0;
+  const best = session.bestPercent != null ? `${session.bestPercent}%` : "—";
+
+  container.innerHTML = `
+    <h3 class="widget-title">Riassunto sessione</h3>
+    <p><strong>Data:</strong> ${date}</p>
+    <p><strong>Durata:</strong> ${duration}</p>
+    <p><strong>Kill:</strong> ${kills}</p>
+    <p><strong>Wipe:</strong> ${wipes}</p>
+    <p><strong>Miglior try:</strong> ${best}</p>
+  `;
+}
+
+/* ========= REPORT LINK ========= */
+function renderReportLink(last) {
+  const link = document.getElementById("last-session-report-link");
+  if (!link) return;
+
+  const url = last?.reportURL;
+  if (!url) return;
+
+  link.href = url;
+  link.classList.remove("hidden");
 }
 
 /* ========= ROSTER ========= */
 /* ========= ROSTER ULTIMO PULL ========= */
-
-function classIcon(className) {
-  if (!className) return "";
-  const cl = className.toLowerCase().replace(/\s+/g, "");
-  return `../../img/classes/${cl}.png`; 
-}
-
 function extractLastPullRoster(last) {
-  if (!last || !last.bosses) return [];
+  const pulls = last?.pulls || [];
+  if (!pulls.length) return [];
 
-  let latest = null;
-
-  // Trova il pull più recente tra tutti i boss
-  for (const boss of Object.values(last.bosses)) {
-    if (!boss.pullsDetail) continue;
-
-    boss.pullsDetail.forEach((p, idx) => {
-      if (!p) return;
-
-      const timestamp = p.end || p.start || 0;
-
-      if (!latest || timestamp > latest.timestamp) {
-        latest = {
-          roster: p.friendlyPlayers || [],
-          timestamp
-        };
-      }
-    });
-  }
+  const latest = pulls
+    .slice()
+    .reverse()
+    .find(p => p.friendlyPlayers && p.friendlyPlayers.length);
 
   return latest ? latest.roster : [];
-}
-
-function roleFromSpecSafe(spec) {
-  if (!spec) return "";
-  const s = spec.toLowerCase();
-
-  if (s.includes("protection") || s.includes("blood") || s.includes("guardian"))
-    return "tank";
-
-  if (s.includes("holy") || s.includes("restoration") || s.includes("disc") || s.includes("disci"))
-    return "healer";
-
-  return "dps";
 }
 
 function renderRoster(last) {
@@ -292,40 +335,33 @@ function renderRoster(last) {
     return;
   }
 
-  // Arricchisci i dati
   const enriched = pullRoster.map(p => ({
     name: p.name,
-    class: p.class || p.icon || "",
-    spec: p.spec || "",
-    role: roleFromSpecSafe(p.spec)
+    role: p.role || "",
+    class: p.class || ""
   }));
 
-  // Ordine per ruolo
-  const order = { tank: 0, healer: 1, dps: 2 };
-  enriched.sort((a, b) => {
-    const ra = order[a.role] ?? 99;
-    const rb = order[b.role] ?? 99;
-    if (ra !== rb) return ra - rb;
-    return a.name.localeCompare(b.name);
-  });
-
   const html = enriched.map(p => {
-    const icon = classIcon(p.class);
-    const role = p.role || "";
+    const role = p.role.toLowerCase();
     const roleClass =
       role === "tank" ? "roster-role-tank" :
       role === "healer" ? "roster-role-heal" :
       role === "dps" ? "roster-role-dps" : "";
 
+    const icon = p.class
+      ? `../../img/classes/${p.class.toLowerCase().replace(" ", "")}.png`
+      : "";
+
     return `
       <div class="roster-item">
         <div class="roster-item-main">
-          <img src="${icon}" class="roster-class-icon">
-          ${p.name}
-          <span class="roster-role-tag ${roleClass}">${role}</span>
+          ${icon ? `<img src="${icon}" class="roster-class-icon">` : ""}
+          <strong>${p.name}</strong>
+          ${role ? `<span class="roster-role-tag ${roleClass}">${role}</span>` : ""}
         </div>
         <div class="roster-meta">
-          ${p.class} – ${p.spec}
+          <span>${p.class || "Classe sconosciuta"}</span>
+          <span>${p.role || "Ruolo"}</span>
         </div>
       </div>
     `;
@@ -334,166 +370,29 @@ function renderRoster(last) {
   container.innerHTML = `<div class="roster-grid roster-grid--compact">${html}</div>`;
 }
 
-
-/* ========= TIMELINE A PALLINI ========= */
-
-function diffLabel(diff) {
-  switch (diff) {
-    case 3: return "Normal";
-    case 4: return "Heroic";
-    case 5: return "Mythic";
-    default: return diff != null ? `Diff ${diff}` : "Sconosciuta";
-  }
-}
-
-function renderLastSessionTimeline(last) {
-  const timeline = document.getElementById("dot-timeline");
-  const summary = document.getElementById("last-session-summary");
-  const bosses = Object.values(last.bosses || {});
-
-  if (!bosses.length) {
-    summary.innerHTML = "Nessun dato.";
-    return;
-  }
-
-  // summary
-  const pulls = bosses.reduce((s,b)=>s+b.pulls,0);
-  const wipes = bosses.reduce((s,b)=>s+b.wipes,0);
-  const kills = bosses.reduce((s,b)=>s+b.kills,0);
-
-  summary.innerHTML = `
-    <strong>Boss:</strong> ${bosses.length}<br>
-    <strong>Pull totali:</strong> ${pulls}<br>
-    <strong>Wipe totali:</strong> ${wipes}<br>
-    <strong>Kill totali:</strong> ${kills}
-  `;
-
-  // link report
-  if (last.latestReport?.code) {
-    const a = document.getElementById("last-session-report-link");
-    a.href = `https://www.warcraftlogs.com/reports/${last.latestReport.code}`;
-    a.classList.remove("hidden");
-  }
-
-  timeline.innerHTML = "";
-  bosses.sort((a,b)=>a.bossName.localeCompare(b.bossName));
-
-  bosses.forEach(b => {
-
-    const row = document.createElement("div");
-    row.className = "dot-row";
-
-    row.innerHTML = `<div class="dot-boss-name">${b.bossName}</div>`;
-
-    const line = document.createElement("div");
-    line.className = "dot-line";
-
-    for (let i = 0; i < b.pulls; i++) {
-
-      const d = document.createElement("div");
-      let cls = "dot-wipe";
-
-      const pullNumber = i + 1;
-      const isKill = (i === b.pulls - 1 && b.kills > 0);
-      const isBest = (b.bestPullIndex === i);
-
-      const parts = [];
-
-      if (isKill) {
-        parts.push(`KILL – Pull #${pullNumber}`);
-      } else if (isBest) {
-        parts.push(`Best try – ${b.bestPercentage}% – Pull #${pullNumber}`);
-      } else {
-        parts.push(`Wipe – Pull #${pullNumber}`);
-      }
-
-      // Difficoltà (da pullsDetail se presente, altrimenti da difficultiesSeen)
-      const detail = b.pullsDetail && b.pullsDetail[i];
-      let diff = detail ? detail.difficulty : null;
-      if (diff == null && Array.isArray(b.difficultiesSeen) && b.difficultiesSeen.length) {
-        diff = b.difficultiesSeen[0];
-      }
-      if (diff != null) {
-        parts.push(`Difficoltà: ${diffLabel(diff)}`);
-      }
-
-      // HP rimanente
-      if (!isKill && b.hpPercentHistory && b.hpPercentHistory[i] != null) {
-        parts.push(`HP boss: ${b.hpPercentHistory[i]}%`);
-      }
-
-      // Durata (in secondi) se presente: b.pullDurations[i]
-      if (b.pullDurations && b.pullDurations[i] != null) {
-        const sec = b.pullDurations[i];
-        const m = Math.floor(sec / 60);
-        const s = sec % 60;
-        const durStr = m > 0 ? `${m}m ${s}s` : `${s}s`;
-        parts.push(`Durata: ${durStr}`);
-      }
-
-      let tip = parts.join(" • ");
-
-      // classi colore
-      if (isKill) {
-        cls = "dot-kill";
-      } else if (isBest) {
-        cls = "dot-progress";
-      } else {
-        cls = "dot-wipe";
-      }
-
-      d.className = `dot ${cls}`;
-      d.setAttribute("data-tip", tip);
-
-      // link al pull
-      if (b.fightIDs && b.fightIDs[i] != null && last.latestReport?.code) {
-        const reportCode = last.latestReport.code;
-        const fightID = b.fightIDs[i];
-
-        d.style.cursor = "pointer";
-        d.addEventListener("click", () => {
-          window.open(
-            `https://www.warcraftlogs.com/reports/${reportCode}#fight=${fightID}`,
-            "_blank"
-          );
-        });
-      }
-
-      line.appendChild(d);
-    }
-
-    row.appendChild(line);
-    timeline.appendChild(row);
-  });
-}
-
-/* ========= INIT ========= */
-(async () => {
-  loadDifficulty("normal", "card-normal");
-  loadDifficulty("heroic", "card-heroic");
-  loadDifficulty("mythic", "card-mythic");
+async function initProgressPage() {
+  await Promise.all([
+    loadDifficulty("normal", "card-normal"),
+    loadDifficulty("heroic", "card-heroic"),
+    loadDifficulty("mythic", "card-mythic")
+  ]);
 
   try {
     const last = await fetchLastSession();
-    renderLastSessionTimeline(last);
+    buildTimeline(last);
+    renderSessionSummary(last);
+    renderReportLink(last);
     renderRoster(last);
   } catch (e) {
-    document.getElementById("last-session-summary").textContent =
-      "Errore nel caricare l'ultima sessione.";
+    console.error("Errore sessione:", e);
     const roster = document.getElementById("live-roster");
     if (roster) roster.textContent = "Errore nel caricare il roster.";
   }
 
-  // LIVE TWITCH
-  try {
-    const live = await fetchTwitchLive();
-    renderTwitchLive(live);
-  } catch (e) {
-    console.error(e);
-    const d = document.getElementById("live-description");
-    if (d) d.textContent = "Impossibile controllare lo stato della live Twitch.";
-  }
-})();
+  initLiveTwitch();
+}
+
+initProgressPage();
 </script>
 
 </body>
