@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Blackjack – Eventi di gilda</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+
+<body class="page-transition blackjack-bg">
+
+<header>
+  <nav class="mainnav">
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="raider.html">Raider</a></li>
+      <li><a href="hollowsoul.html">Spettatori</a></li>
+      <li><a href="recruiting.html">Reclutamento</a></li>
+      <li><a href="statuto.html">Statuto</a></li>
+    </ul>
+  </nav>
+</header>
+
+<nav class="subnav">
+  <ul>
+    <li><a href="hollowsoul.html">Community</a></li>
+    <li><a href="hollowsoul-video.html">Video divertenti</a></li>
+    <li><a href="hollowsoul-eventi.html" class="active">Eventi di gilda</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <h2>Eventi di gilda</h2>
+    <p>
+      Una bacheca viva con le serate più belle, raccontate con foto e ricordi.
+    </p>
+  </div>
+</section>
+
+<div class="bg-container bg-main-logo">
+  <main class="panel">
+
+    <h2 class="section-title">Diario degli Spettatori</h2>
+    <p class="section-subtitle">
+      Ogni post racconta un momento speciale: raid social, eventi creativi e attività fuori programma.
+      Scorri e immagina dove aggiungere le prossime foto.
+    </p>
+
+    <div class="events-feed">
+      <article class="event-card">
+        <img class="event-image" src="../img/blackjack_logo.png" alt="Foto evento - Serata transmog">
+        <div class="event-content">
+          <div class="event-meta">Serata transmog · 14/03/2025</div>
+          <h3>Passerella in gilda</h3>
+          <p>
+            Una notte dedicata alle skin più creative: voting live su Discord e premi improvvisati.
+          </p>
+        </div>
+      </article>
+
+      <article class="event-card">
+        <img class="event-image" src="../img/blackjack_logo.png" alt="Foto evento - Gilda on tour">
+        <div class="event-content">
+          <div class="event-meta">Eventone social · 02/03/2025</div>
+          <h3>Gilda on tour</h3>
+          <p>
+            Dungeon vecchi, achievement e mount run con roster misto: una maratona piena di meme.
+          </p>
+        </div>
+      </article>
+
+      <article class="event-card">
+        <img class="event-image" src="../img/blackjack_logo.png" alt="Foto evento - Serata PvP">
+        <div class="event-content">
+          <div class="event-meta">Battleground night · 21/02/2025</div>
+          <h3>PvP improvvisato</h3>
+          <p>
+            Team casual, chiamate rapide e tante clip condivise il giorno dopo.
+          </p>
+        </div>
+      </article>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  <p>&copy; 2025 Blackjack</p>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.body.classList.add("page-loaded");
+});
+
+document.querySelectorAll("a").forEach(link => {
+  if (link.hostname === window.location.hostname) {
+    link.addEventListener("click", event => {
+      event.preventDefault();
+      const href = link.getAttribute("href");
+      document.body.classList.remove("page-loaded");
+      setTimeout(() => { window.location.href = href; }, 300);
+    });
+  }
+});
+</script>
+
+</body>
+</html>

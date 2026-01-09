@@ -64,7 +64,7 @@ main {
 
 /* Pannello “glass” centrale */
 .panel {
-  background: rgba(10, 10, 10, 0.60);
+  background: rgba(10, 10, 10, 0.72);
   backdrop-filter: blur(7px);
   -webkit-backdrop-filter: blur(7px);
   border-radius: 20px;
@@ -101,6 +101,7 @@ h5 {
   margin: 0 auto 25px;
   color: #ddd;
   font-size: 1rem;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.65);
 }
 
 .description-long {
@@ -110,6 +111,12 @@ h5 {
   line-height: 1.6;
   color: #ddd;
   text-align: justify;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+.panel p,
+.panel li {
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
 }
 
 .text-center {
@@ -266,6 +273,7 @@ header nav a.active {
   color: #fff;
   text-align: center;
   z-index: 2;
+  text-shadow: 0 0 14px rgba(0, 0, 0, 0.75);
 }
 
 /* Hero principale */
@@ -325,6 +333,14 @@ header nav a.active {
     0 0 18px rgba(255,216,107,0.45);
 }
 
+.cta-final {
+  text-align: center;
+}
+
+.cta-final .team-btn {
+  margin: 20px auto 0;
+}
+
 /* =========================================================
    BACKGROUND UNICO PER CONTENUTI
    ========================================================= */
@@ -339,7 +355,7 @@ header nav a.active {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.62);
+  background: rgba(0, 0, 0, 0.72);
   backdrop-filter: blur(2px);
   z-index: 1;
 }
@@ -449,6 +465,7 @@ header nav a.active {
   font-size: 1.4rem;
   margin-bottom: 10px;
   color: #fff;
+  text-align: center;
 }
 
 /* Button dentro alle card */
@@ -561,6 +578,7 @@ header nav a.active {
   font-size: 1.8rem;
   margin-bottom: 12px;
   color: #fff;
+  text-align: center;
 }
 .team-card p {
   line-height: 1.5;
@@ -575,13 +593,13 @@ header nav a.active {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 30px;
   padding: 20px 0;
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
 .roster-grid--two {
   padding: 0 25px;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(320px, 1fr));
   gap: 35px;
   margin-top: 30px;
   align-items: stretch;
@@ -595,10 +613,11 @@ header nav a.active {
   color: #eee;
   backdrop-filter: blur(4px);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
-  height: 640px;
+  min-height: 700px;
+  height: auto;
   opacity: 0;
   transform: scale(0.96);
   animation: fadeZoom 0.8s forwards;
@@ -645,6 +664,9 @@ header nav a.active {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  min-height: 64px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -652,6 +674,7 @@ header nav a.active {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .class-icon-small {
@@ -663,16 +686,17 @@ header nav a.active {
 
 .footer-right {
   position: relative;
+  flex-shrink: 0;
 }
 
 .rio-btn--compact {
   display: inline-flex;
-  width: 55px;
-  height: 55px;
+  width: 64px;
+  height: 64px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.25);
-  padding: 6px;
+  padding: 8px;
   transition: 0.25s;
   position: relative;
 }
@@ -765,6 +789,7 @@ header nav a.active {
   font-size: 0.85rem;
   font-weight: bold;
   color: #0b0b0b;
+  line-height: 1.2;
 }
 
 /* Colori ruolo (restano leggibili col tema) */
@@ -794,8 +819,8 @@ header nav a.active {
 }
 
 .rio-logo {
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
 }
 
@@ -1255,6 +1280,110 @@ header nav a.active {
   font-size: 0.85rem;
   color: #aaa;
   margin-top: 10px;
+}
+
+/* =========================================================
+   SPETTATORI: VIDEO & EVENTI
+   ========================================================= */
+
+.media-carousel {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin: 30px auto;
+  width: 95%;
+}
+
+.media-card {
+  background: rgba(12, 12, 12, 0.78);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 16px;
+  box-shadow: 0 0 20px rgba(77, 255, 138, 0.18);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.media-player {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.media-player iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.media-card h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.media-card p {
+  margin: 0;
+  color: #ddd;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.events-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 30px auto 10px;
+  width: 95%;
+}
+
+.event-card {
+  display: grid;
+  grid-template-columns: minmax(180px, 260px) 1fr;
+  gap: 20px;
+  background: rgba(12, 12, 12, 0.82);
+  border-radius: 18px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 22px rgba(255, 216, 107, 0.16);
+  backdrop-filter: blur(4px);
+  align-items: center;
+}
+
+.event-image {
+  width: 100%;
+  border-radius: 14px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  height: 160px;
+}
+
+.event-content h3 {
+  margin: 0 0 8px;
+  text-align: left;
+}
+
+.event-meta {
+  font-size: 0.85rem;
+  color: rgba(255, 216, 107, 0.95);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 820px) {
+  .event-card {
+    grid-template-columns: 1fr;
+  }
+
+  .event-content h3 {
+    text-align: center;
+  }
 }
 
 /* ========= TWITCH ========= */
