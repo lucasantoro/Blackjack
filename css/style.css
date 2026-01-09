@@ -858,6 +858,10 @@ header nav a.active {
   min-height: 120px;
 }
 
+.apply-actions {
+  text-align: center;
+}
+
 /* Pulsante principale */
 .apply-button {
   margin-top: 20px;
