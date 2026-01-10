@@ -1297,6 +1297,17 @@ header nav a.active {
   gap: 12px;
   margin: 30px auto;
   width: 95%;
+  padding-bottom: 8px;
+}
+
+.media-carousel {
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+  scroll-snap-type: x mandatory;
+  flex: 1;
+  padding: 4px 6px 8px;
+  scroll-behavior: smooth;
 }
 
 .media-carousel {
