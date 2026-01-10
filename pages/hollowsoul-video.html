@@ -51,7 +51,7 @@
       <button class="carousel-nav carousel-prev" type="button" aria-label="Scorri a sinistra">
         &#x2039;
       </button>
-      <div class="media-carousel" id="youtube-carousel" data-channel-handle="@admin1/shorts">
+      <div class="media-carousel" id="youtube-carousel" data-channel-handle="@admin1">
         <p class="media-status">Caricamento degli Shorts...</p>
       </div>
       <button class="carousel-nav carousel-next" type="button" aria-label="Scorri a destra">
@@ -86,6 +86,7 @@ const carousel = document.getElementById("youtube-carousel");
 const statusMessage = carousel?.querySelector(".media-status");
 const CHANNEL_HANDLE = carousel?.dataset.channelHandle || "@admin1/shorts";
 const KEYWORD = "[Blackjack]";
+const CHANNEL_PAGE_HANDLE = CHANNEL_HANDLE.replace(/\/.*$/, "");
 
 const escapeHtml = (value) =>
   value.replace(/[&<>"']/g, (char) => ({
@@ -149,7 +150,7 @@ const extractVideoId = (entryId) => {
 };
 
 const fetchChannelId = async () => {
-  const url = `https://r.jina.ai/http://www.youtube.com/${CHANNEL_HANDLE}`;
+  const url = `https://r.jina.ai/http://www.youtube.com/${CHANNEL_PAGE_HANDLE}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Impossibile raggiungere il canale YouTube.");
