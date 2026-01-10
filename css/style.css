@@ -1291,11 +1291,13 @@ header nav a.active {
    ========================================================= */
 
 .media-carousel {
-  display: grid;
+  display: flex;
   gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
   margin: 30px auto;
   width: 95%;
+  padding-bottom: 8px;
 }
 
 .media-card {
@@ -1308,6 +1310,10 @@ header nav a.active {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-width: 280px;
+  max-width: 360px;
+  flex: 0 0 auto;
+  scroll-snap-align: center;
 }
 
 .media-player {
@@ -1337,6 +1343,20 @@ header nav a.active {
   color: #ddd;
   font-size: 0.95rem;
   text-align: center;
+}
+
+.media-meta {
+  font-size: 0.85rem;
+  color: #a6f7c7;
+  letter-spacing: 0.02em;
+}
+
+.media-status {
+  color: #ddd;
+  font-size: 1rem;
+  text-align: center;
+  width: 100%;
+  padding: 10px 0;
 }
 
 .events-feed {
