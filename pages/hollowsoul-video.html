@@ -47,16 +47,8 @@
       contengono la parola “blackjack”.
     </p>
 
-    <div class="media-carousel-wrapper">
-      <button class="carousel-nav carousel-prev" type="button" aria-label="Scorri a sinistra">
-        &#x2039;
-      </button>
-      <div class="media-carousel" id="youtube-carousel" data-channel-handle="@admin1">
-        <p class="media-status">Caricamento degli Shorts...</p>
-      </div>
-      <button class="carousel-nav carousel-next" type="button" aria-label="Scorri a destra">
-        &#x203A;
-      </button>
+    <div class="media-carousel" id="youtube-carousel" data-channel-handle="@admin1">
+      <p class="media-status">Caricamento degli Shorts...</p>
     </div>
 
   </main>
@@ -187,15 +179,6 @@ const fetchVideos = async (channelId) => {
     });
 };
 
-const updateNavState = () => {
-  const prevButton = document.querySelector(".carousel-prev");
-  const nextButton = document.querySelector(".carousel-next");
-  if (!carousel || !prevButton || !nextButton) return;
-  const maxScroll = carousel.scrollWidth - carousel.clientWidth;
-  prevButton.disabled = carousel.scrollLeft <= 0;
-  nextButton.disabled = carousel.scrollLeft >= maxScroll - 1;
-};
-
 const loadYoutubeCarousel = async () => {
   if (!carousel) return;
   try {
@@ -216,7 +199,6 @@ const loadYoutubeCarousel = async () => {
       });
       carousel.append(card);
     });
-    updateNavState();
   } catch (error) {
     carousel.innerHTML = "";
     renderStatus("Impossibile caricare i video in questo momento.");
@@ -226,27 +208,6 @@ const loadYoutubeCarousel = async () => {
 };
 
 loadYoutubeCarousel();
-
-const scrollCarousel = (direction) => {
-  if (!carousel) return;
-  const card = carousel.querySelector(".media-card");
-  const scrollAmount = card ? card.offsetWidth + 20 : 320;
-  carousel.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
-};
-
-document.querySelector(".carousel-prev")?.addEventListener("click", () => {
-  scrollCarousel(-1);
-});
-
-document.querySelector(".carousel-next")?.addEventListener("click", () => {
-  scrollCarousel(1);
-});
-
-carousel?.addEventListener("scroll", () => {
-  window.requestAnimationFrame(updateNavState);
-});
-
-window.addEventListener("resize", updateNavState);
 </script>
 
 </body>

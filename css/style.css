@@ -1290,13 +1290,14 @@ header nav a.active {
    SPETTATORI: VIDEO & EVENTI
    ========================================================= */
 
-.media-carousel-wrapper {
-  position: relative;
+.media-carousel {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
   margin: 30px auto;
   width: 95%;
+  padding-bottom: 8px;
 }
 
 .media-carousel {
@@ -1323,14 +1324,6 @@ header nav a.active {
   max-width: 360px;
   flex: 0 0 auto;
   scroll-snap-align: center;
-}
-
-.media-carousel::-webkit-scrollbar {
-  display: none;
-}
-
-.media-carousel {
-  scrollbar-width: none;
 }
 
 .media-player {
@@ -1374,32 +1367,6 @@ header nav a.active {
   text-align: center;
   width: 100%;
   padding: 10px 0;
-}
-
-.carousel-nav {
-  border: 1px solid rgba(77, 255, 138, 0.35);
-  background: rgba(12, 12, 12, 0.6);
-  color: #d7ffe6;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  font-size: 1.6rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-  box-shadow: 0 0 16px rgba(77, 255, 138, 0.18);
-}
-
-.carousel-nav:hover:not(:disabled) {
-  transform: scale(1.05);
-  box-shadow: 0 0 18px rgba(77, 255, 138, 0.35);
-}
-
-.carousel-nav:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
 }
 
 .events-feed {
