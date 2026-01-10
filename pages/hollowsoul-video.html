@@ -43,49 +43,20 @@
 
     <h2 class="section-title">La nostra videoteca</h2>
     <p class="section-subtitle">
-      Un carosello di momenti memorabili caricati su YouTube dai membri della gilda.
-      Aggiorna queste card ogni volta che esce un nuovo video.
+      Un carosello aggiornato automaticamente con gli Shorts del canale @admin1 che
+      contengono la parola “blackjack”.
     </p>
 
-    <div class="media-carousel">
-      <article class="media-card">
-        <div class="media-player">
-          <iframe
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-            title="Fail della settimana"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
-        </div>
-        <h3>Fail della settimana</h3>
-        <p>Una raccolta di pull finiti male e risate assicurate in voice chat.</p>
-      </article>
-
-      <article class="media-card">
-        <div class="media-player">
-          <iframe
-            src="https://www.youtube.com/embed/aqz-KE-bpKQ"
-            title="Highlight Mythic+"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
-        </div>
-        <h3>Highlight Mythic+</h3>
-        <p>Combo perfette, salvataggi al volo e un finale degno di clip.</p>
-      </article>
-
-      <article class="media-card">
-        <div class="media-player">
-          <iframe
-            src="https://www.youtube.com/embed/oHg5SJYRHA0"
-            title="Serata meme"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
-        </div>
-        <h3>Serata meme</h3>
-        <p>Quando la gilda si trasforma in un set di comedy raid.</p>
-      </article>
+    <div class="media-carousel-wrapper">
+      <button class="carousel-nav carousel-prev" type="button" aria-label="Scorri a sinistra">
+        &#x2039;
+      </button>
+      <div class="media-carousel" id="youtube-carousel" data-channel-handle="@admin1">
+        <p class="media-status">Caricamento degli Shorts...</p>
+      </div>
+      <button class="carousel-nav carousel-next" type="button" aria-label="Scorri a destra">
+        &#x203A;
+      </button>
     </div>
 
   </main>
@@ -110,6 +81,172 @@ document.querySelectorAll("a").forEach(link => {
     });
   }
 });
+
+const carousel = document.getElementById("youtube-carousel");
+const statusMessage = carousel?.querySelector(".media-status");
+const CHANNEL_HANDLE = carousel?.dataset.channelHandle || "@admin1";
+const KEYWORD = "[Blackjack]";
+
+const escapeHtml = (value) =>
+  value.replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;"
+  })[char]);
+
+const formatDate = (value) => {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+  return date.toLocaleDateString("it-IT", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric"
+  });
+};
+
+const renderStatus = (message) => {
+  if (statusMessage) {
+    statusMessage.textContent = message;
+  }
+};
+
+const renderVideoCard = ({ title, description, published, videoId }) => {
+  const article = document.createElement("article");
+  article.className = "media-card";
+
+  const player = document.createElement("div");
+  player.className = "media-player";
+  player.innerHTML = `
+    <iframe
+      src="https://www.youtube.com/embed/${videoId}"
+      title="${escapeHtml(title)}"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  `;
+
+  const heading = document.createElement("h3");
+  heading.textContent = title;
+
+  const meta = document.createElement("p");
+  meta.className = "media-meta";
+  meta.textContent = published ? `Pubblicato il ${published}` : "";
+
+  const body = document.createElement("p");
+  body.textContent = description || "Descrizione non disponibile.";
+
+  article.append(player, heading, meta, body);
+  return article;
+};
+
+const extractVideoId = (entryId) => {
+  const match = /yt:video:([\w-]+)/.exec(entryId);
+  return match ? match[1] : "";
+};
+
+const fetchChannelId = async () => {
+  const url = `https://r.jina.ai/http://www.youtube.com/${CHANNEL_HANDLE}`;
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error("Impossibile raggiungere il canale YouTube.");
+  }
+  const text = await response.text();
+  const match = text.match(/\"channelId\":\"(UC[^\"]+)\"/);
+  if (!match) {
+    throw new Error("Channel ID non trovato.");
+  }
+  return match[1];
+};
+
+const fetchVideos = async (channelId) => {
+  const feedUrl = `https://r.jina.ai/http://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+  const response = await fetch(feedUrl);
+  if (!response.ok) {
+    throw new Error("Feed YouTube non disponibile.");
+  }
+  const xmlText = await response.text();
+  const parser = new DOMParser();
+  const xml = parser.parseFromString(xmlText, "text/xml");
+  const entries = Array.from(xml.querySelectorAll("entry"));
+
+  return entries
+    .map((entry) => ({
+      title: entry.querySelector("title")?.textContent?.trim() || "Video",
+      description: entry.querySelector("media\\:description")?.textContent?.trim() || "",
+      published: entry.querySelector("published")?.textContent || "",
+      videoId: extractVideoId(entry.querySelector("id")?.textContent || "")
+    }))
+    .filter((item) => item.videoId)
+    .filter((item) => {
+      const haystack = `${item.title} ${item.description}`.toLowerCase();
+      return haystack.includes(KEYWORD.toLowerCase());
+    });
+};
+
+const updateNavState = () => {
+  const prevButton = document.querySelector(".carousel-prev");
+  const nextButton = document.querySelector(".carousel-next");
+  if (!carousel || !prevButton || !nextButton) return;
+  const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+  prevButton.disabled = carousel.scrollLeft <= 0;
+  nextButton.disabled = carousel.scrollLeft >= maxScroll - 1;
+};
+
+const loadYoutubeCarousel = async () => {
+  if (!carousel) return;
+  try {
+    const channelId = await fetchChannelId();
+    const videos = await fetchVideos(channelId);
+    carousel.innerHTML = "";
+
+    if (!videos.length) {
+      renderStatus("Nessun video con la parola “blackjack” trovato.");
+      carousel.append(statusMessage);
+      return;
+    }
+
+    videos.forEach((video) => {
+      const card = renderVideoCard({
+        ...video,
+        published: formatDate(video.published)
+      });
+      carousel.append(card);
+    });
+    updateNavState();
+  } catch (error) {
+    carousel.innerHTML = "";
+    renderStatus("Impossibile caricare i video in questo momento.");
+    carousel.append(statusMessage);
+    console.error(error);
+  }
+};
+
+loadYoutubeCarousel();
+
+const scrollCarousel = (direction) => {
+  if (!carousel) return;
+  const card = carousel.querySelector(".media-card");
+  const scrollAmount = card ? card.offsetWidth + 20 : 320;
+  carousel.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
+};
+
+document.querySelector(".carousel-prev")?.addEventListener("click", () => {
+  scrollCarousel(-1);
+});
+
+document.querySelector(".carousel-next")?.addEventListener("click", () => {
+  scrollCarousel(1);
+});
+
+carousel?.addEventListener("scroll", () => {
+  window.requestAnimationFrame(updateNavState);
+});
+
+window.addEventListener("resize", updateNavState);
 </script>
 
 </body>
