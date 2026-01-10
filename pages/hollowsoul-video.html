@@ -149,7 +149,7 @@ const extractVideoId = (entryId) => {
 };
 
 const fetchChannelId = async () => {
-  const url = `https://r.jina.ai/http://www.youtube.com/${CHANNEL_HANDLE}`;
+  const url = `https://www.youtube.com/${CHANNEL_HANDLE}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Impossibile raggiungere il canale YouTube.");
