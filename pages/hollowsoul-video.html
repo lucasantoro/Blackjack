@@ -156,7 +156,10 @@ const fetchChannelId = async () => {
     throw new Error("Impossibile raggiungere il canale YouTube.");
   }
   const text = await response.text();
-  const match = text.match(/\"channelId\":\"(UC[^\"]+)\"/);
+  const match =
+    text.match(/\"channelId\":\"(UC[^\"]+)\"/) ||
+    text.match(/\"externalId\":\"(UC[^\"]+)\"/) ||
+    text.match(/https:\/\/www\.youtube\.com\/channel\/(UC[\w-]+)/);
   if (!match) {
     throw new Error("Channel ID non trovato.");
   }
