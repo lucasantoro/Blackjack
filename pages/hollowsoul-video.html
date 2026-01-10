@@ -51,7 +51,7 @@
       <button class="carousel-nav carousel-prev" type="button" aria-label="Scorri a sinistra">
         &#x2039;
       </button>
-      <div class="media-carousel" id="youtube-carousel" data-channel-handle="@admin1">
+      <div class="media-carousel" id="youtube-carousel" data-channel-handle="@admin1/shorts">
         <p class="media-status">Caricamento degli Shorts...</p>
       </div>
       <button class="carousel-nav carousel-next" type="button" aria-label="Scorri a destra">
@@ -150,7 +150,7 @@ const extractVideoId = (entryId) => {
 };
 
 const fetchChannelId = async () => {
-  const url = `https://r.jina.ai/http://www.youtube.com/${CHANNEL_PAGE_HANDLE}`;
+  const url = `https://r.jina.ai/https://www.youtube.com/${CHANNEL_PAGE_HANDLE}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Impossibile raggiungere il canale YouTube.");
@@ -164,7 +164,7 @@ const fetchChannelId = async () => {
 };
 
 const fetchVideos = async (channelId) => {
-  const feedUrl = `https://r.jina.ai/http://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+  const feedUrl = `https://r.jina.ai/https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
   const response = await fetch(feedUrl);
   if (!response.ok) {
     throw new Error("Feed YouTube non disponibile.");
