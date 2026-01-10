@@ -51,7 +51,7 @@
       <button class="carousel-nav carousel-prev" type="button" aria-label="Scorri a sinistra">
         &#x2039;
       </button>
-      <div class="media-carousel" id="youtube-carousel" data-channel-handle="@admin1">
+      <div class="media-carousel" id="youtube-carousel" data-channel-handle="@admin1/shorts">
         <p class="media-status">Caricamento degli Shorts...</p>
       </div>
       <button class="carousel-nav carousel-next" type="button" aria-label="Scorri a destra">
@@ -84,7 +84,7 @@ document.querySelectorAll("a").forEach(link => {
 
 const carousel = document.getElementById("youtube-carousel");
 const statusMessage = carousel?.querySelector(".media-status");
-const CHANNEL_HANDLE = carousel?.dataset.channelHandle || "@admin1";
+const CHANNEL_HANDLE = carousel?.dataset.channelHandle || "@admin1/shorts";
 const KEYWORD = "[Blackjack]";
 
 const escapeHtml = (value) =>

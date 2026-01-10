@@ -1320,6 +1320,16 @@ header nav a.active {
   scroll-behavior: smooth;
 }
 
+.media-carousel {
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+  scroll-snap-type: x mandatory;
+  flex: 1;
+  padding: 4px 6px 8px;
+  scroll-behavior: smooth;
+}
+
 .media-card {
   background: rgba(12, 12, 12, 0.78);
   border-radius: 16px;
