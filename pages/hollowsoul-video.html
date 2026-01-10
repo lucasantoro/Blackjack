@@ -51,7 +51,7 @@
       <button class="carousel-nav carousel-prev" type="button" aria-label="Scorri a sinistra">
         &#x2039;
       </button>
-      <div class="media-carousel" id="youtube-carousel" data-channel-handle="@admin1/shorts" data-keyword="[Blackjack]">
+      <div class="media-carousel" id="youtube-carousel" data-channel-handle="@admin1/shorts" data-keyword="[Blackjack]" data-youtube-api-key="">
         <p class="media-status">Caricamento degli Shorts...</p>
       </div>
       <button class="carousel-nav carousel-next" type="button" aria-label="Scorri a destra">
@@ -86,6 +86,7 @@ const carousel = document.getElementById("youtube-carousel");
 const statusMessage = carousel?.querySelector(".media-status");
 const CHANNEL_HANDLE = carousel?.dataset.channelHandle || "@admin1/shorts";
 const KEYWORD = (carousel?.dataset.keyword || "[Blackjack]").trim();
+const YOUTUBE_API_KEY = (carousel?.dataset.youtubeApiKey || "").trim();
 const CHANNEL_PAGE_HANDLE = CHANNEL_HANDLE.replace(/\/.*$/, "");
 
 const escapeHtml = (value) =>
@@ -144,11 +145,6 @@ const renderVideoCard = ({ title, description, published, videoId }) => {
   return article;
 };
 
-const extractVideoId = (entryId) => {
-  const match = /yt:video:([\w-]+)/.exec(entryId);
-  return match ? match[1] : "";
-};
-
 const fetchChannelId = async () => {
   const url = `https://r.jina.ai/https://www.youtube.com/${CHANNEL_PAGE_HANDLE}`;
   const response = await fetch(url);
@@ -166,28 +162,66 @@ const fetchChannelId = async () => {
   return match[1];
 };
 
-const fetchVideos = async (channelId) => {
-  const feedUrl = `https://r.jina.ai/https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
-  const response = await fetch(feedUrl);
-  if (!response.ok) {
-    throw new Error("Feed YouTube non disponibile.");
-  }
-  const xmlText = await response.text();
-  const parser = new DOMParser();
-  const xml = parser.parseFromString(xmlText, "text/xml");
-  const entries = Array.from(xml.querySelectorAll("entry"));
+const parseDurationSeconds = (duration) => {
+  const match = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/.exec(duration);
+  if (!match) return 0;
+  const hours = Number(match[1] || 0);
+  const minutes = Number(match[2] || 0);
+  const seconds = Number(match[3] || 0);
+  return hours * 3600 + minutes * 60 + seconds;
+};
 
-  return entries
-    .map((entry) => ({
-      title: entry.querySelector("title")?.textContent?.trim() || "Video",
-      description: entry.querySelector("media\\:description")?.textContent?.trim() || "",
-      published: entry.querySelector("published")?.textContent || "",
-      videoId: extractVideoId(entry.querySelector("id")?.textContent || "")
+const fetchVideos = async (channelId) => {
+  if (!YOUTUBE_API_KEY) {
+    throw new Error("API key YouTube mancante.");
+  }
+
+  const searchParams = new URLSearchParams({
+    key: YOUTUBE_API_KEY,
+    part: "snippet",
+    channelId,
+    maxResults: "50",
+    order: "date",
+    type: "video",
+    videoDuration: "short"
+  });
+  const searchUrl = `https://www.googleapis.com/youtube/v3/search?${searchParams.toString()}`;
+  const searchResponse = await fetch(searchUrl);
+  if (!searchResponse.ok) {
+    throw new Error("Ricerca YouTube non disponibile.");
+  }
+  const searchData = await searchResponse.json();
+  const videoIds = (searchData.items || [])
+    .map((item) => item.id?.videoId)
+    .filter(Boolean);
+
+  if (!videoIds.length) return [];
+
+  const detailsParams = new URLSearchParams({
+    key: YOUTUBE_API_KEY,
+    part: "snippet,contentDetails",
+    id: videoIds.join(",")
+  });
+  const detailsUrl = `https://www.googleapis.com/youtube/v3/videos?${detailsParams.toString()}`;
+  const detailsResponse = await fetch(detailsUrl);
+  if (!detailsResponse.ok) {
+    throw new Error("Dettagli video non disponibili.");
+  }
+  const detailsData = await detailsResponse.json();
+
+  return (detailsData.items || [])
+    .map((item) => ({
+      title: item.snippet?.title?.trim() || "Video",
+      description: item.snippet?.description?.trim() || "",
+      published: item.snippet?.publishedAt || "",
+      durationSeconds: parseDurationSeconds(item.contentDetails?.duration || ""),
+      videoId: item.id || ""
     }))
     .filter((item) => item.videoId)
+    .filter((item) => item.durationSeconds > 0 && item.durationSeconds <= 60)
     .filter((item) => {
       if (!KEYWORD) return true;
-      const haystack = `${item.title} ${item.description}`.toLowerCase();
+      const haystack = item.description.toLowerCase();
       return haystack.includes(KEYWORD.toLowerCase());
     });
 };
@@ -224,7 +258,11 @@ const loadYoutubeCarousel = async () => {
     updateNavState();
   } catch (error) {
     carousel.innerHTML = "";
-    renderStatus("Impossibile caricare i video in questo momento.");
+    if (error instanceof Error && error.message.includes("API key")) {
+      renderStatus("Inserisci una YouTube API key per caricare gli Shorts.");
+    } else {
+      renderStatus("Impossibile caricare i video in questo momento.");
+    }
     carousel.append(statusMessage);
     console.error(error);
   }
