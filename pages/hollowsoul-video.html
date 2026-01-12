@@ -43,15 +43,15 @@
 
     <h2 class="section-title">La nostra videoteca</h2>
     <p class="section-subtitle">
-      Un carosello aggiornato automaticamente con gli Shorts del canale @admin1 che
-      contengono la parola “[Blackjack]”.
+      Un carosello aggiornato automaticamente con gli Shorts del canale Blackjack che
+      hanno il tag “[Blackjack]”.
     </p>
 
     <div class="media-carousel-wrapper">
       <button class="carousel-nav carousel-prev" type="button" aria-label="Scorri a sinistra">
         &#x2039;
       </button>
-      <div class="media-carousel" id="youtube-carousel" data-channel-handle="@admin1/shorts" data-keyword="[Blackjack]" data-youtube-api-key="">
+      <div class="media-carousel" id="youtube-carousel" data-channel-id="UC6xFbvCrfpcJ-7m3r_bQR0g" data-keyword="[Blackjack]" data-youtube-api-key="">
         <p class="media-status">Caricamento degli Shorts...</p>
       </div>
       <button class="carousel-nav carousel-next" type="button" aria-label="Scorri a destra">
@@ -84,7 +84,8 @@ document.querySelectorAll("a").forEach(link => {
 
 const carousel = document.getElementById("youtube-carousel");
 const statusMessage = carousel?.querySelector(".media-status");
-const CHANNEL_HANDLE = carousel?.dataset.channelHandle || "@admin1/shorts";
+const CHANNEL_HANDLE = carousel?.dataset.channelHandle || "";
+const CHANNEL_ID = carousel?.dataset.channelId?.trim() || "";
 const KEYWORD = (carousel?.dataset.keyword || "[Blackjack]").trim();
 const YOUTUBE_API_KEY = (carousel?.dataset.youtubeApiKey || "").trim();
 const CHANNEL_PAGE_HANDLE = CHANNEL_HANDLE.replace(/\/.*$/, "");
@@ -213,6 +214,7 @@ const fetchVideos = async (channelId) => {
     .map((item) => ({
       title: item.snippet?.title?.trim() || "Video",
       description: item.snippet?.description?.trim() || "",
+      tags: item.snippet?.tags || [],
       published: item.snippet?.publishedAt || "",
       durationSeconds: parseDurationSeconds(item.contentDetails?.duration || ""),
       videoId: item.id || ""
@@ -221,8 +223,8 @@ const fetchVideos = async (channelId) => {
     .filter((item) => item.durationSeconds > 0 && item.durationSeconds <= 60)
     .filter((item) => {
       if (!KEYWORD) return true;
-      const haystack = item.description.toLowerCase();
-      return haystack.includes(KEYWORD.toLowerCase());
+      const keyword = KEYWORD.toLowerCase();
+      return item.tags.some((tag) => tag.toLowerCase() === keyword);
     });
 };
 
@@ -238,12 +240,12 @@ const updateNavState = () => {
 const loadYoutubeCarousel = async () => {
   if (!carousel) return;
   try {
-    const channelId = await fetchChannelId();
+    const channelId = CHANNEL_ID || await fetchChannelId();
     const videos = await fetchVideos(channelId);
     carousel.innerHTML = "";
 
     if (!videos.length) {
-      renderStatus("Nessun video con la parola “blackjack” trovato.");
+      renderStatus("Nessun video con il tag “blackjack” trovato.");
       carousel.append(statusMessage);
       return;
     }
