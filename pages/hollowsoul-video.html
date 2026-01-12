@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Blackjack – Video divertenti</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+
+<body class="page-transition blackjack-bg">
+
+<header>
+  <nav class="mainnav">
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="raider.html">Raider</a></li>
+      <li><a href="hollowsoul.html">Spettatori</a></li>
+      <li><a href="recruiting.html">Reclutamento</a></li>
+      <li><a href="statuto.html">Statuto</a></li>
+    </ul>
+  </nav>
+</header>
+
+<nav class="subnav">
+  <ul>
+    <li><a href="hollowsoul.html">Community</a></li>
+    <li><a href="hollowsoul-video.html" class="active">Video divertenti</a></li>
+    <li><a href="hollowsoul-eventi.html">Eventi di gilda</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <h2>Video divertenti della gilda</h2>
+    <p>
+      Clip leggere, wipe epici e momenti da ridere insieme: il lato più creativo degli Spettatori.
+    </p>
+  </div>
+</section>
+
+<div class="bg-container bg-main-logo">
+  <main class="panel">
+
+    <h2 class="section-title">La nostra videoteca</h2>
+    <p class="section-subtitle">
+      Una selezione dal feed ufficiale di YouTube con i video che contengono “Blackjack” nel titolo
+      o nella descrizione, presentati in un comodo carosello.
+    </p>
+
+    <div class="media-carousel-wrapper" aria-live="polite">
+      <button class="carousel-nav" type="button" data-direction="prev" aria-label="Scorri indietro">&#8249;</button>
+      <div class="media-carousel" id="video-carousel" aria-label="Videoteca video Blackjack"></div>
+      <button class="carousel-nav" type="button" data-direction="next" aria-label="Scorri avanti">&#8250;</button>
+    </div>
+
+    <p class="media-status" id="video-status">Caricamento dei video in corso...</p>
+
+  </main>
+</div>
+
+<footer>
+  <p>&copy; 2025 Blackjack</p>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.body.classList.add("page-loaded");
+});
+
+document.querySelectorAll("a").forEach(link => {
+  if (link.hostname === window.location.hostname) {
+    link.addEventListener("click", event => {
+      event.preventDefault();
+      const href = link.getAttribute("href");
+      document.body.classList.remove("page-loaded");
+      setTimeout(() => { window.location.href = href; }, 300);
+    });
+  }
+});
+</script>
+
+<script>
+const FEED_URL = "https://www.youtube.com/feeds/videos.xml?channel_id=UC6xFbvCrfpcJ-7m3r_bQR0g";
+const KEYWORD = "blackjack";
+const statusEl = document.getElementById("video-status");
+const carousel = document.getElementById("video-carousel");
+
+function extractVideoId(item) {
+  if (item.guid) {
+    const match = item.guid.match(/yt:video:([\w-]+)/i);
+    if (match) {
+      return match[1];
+    }
+  }
+
+  if (item.link) {
+    try {
+      const url = new URL(item.link);
+      const id = url.searchParams.get("v");
+      if (id) {
+        return id;
+      }
+    } catch (error) {
+      return "";
+    }
+  }
+
+  return "";
+}
+
+function formatPublishedDate(value) {
+  if (!value) {
+    return "";
+  }
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  return date.toLocaleDateString("it-IT");
+}
+
+function renderVideos(items) {
+  const filtered = items.filter(item => {
+    const title = (item.title || "").toLowerCase();
+    const description = (item.description || "").toLowerCase();
+    return title.includes(KEYWORD) || description.includes(KEYWORD);
+  });
+
+  if (!filtered.length) {
+    statusEl.textContent = "Nessun video disponibile al momento.";
+    return;
+  }
+
+  statusEl.textContent = "";
+  statusEl.style.display = "none";
+
+  filtered.forEach(item => {
+    const videoId = extractVideoId(item);
+    if (!videoId) {
+      return;
+    }
+
+    const card = document.createElement("article");
+    card.className = "media-card";
+
+    const player = document.createElement("div");
+    player.className = "media-player";
+
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube.com/embed/${videoId}`;
+    iframe.title = item.title || "Video Blackjack";
+    iframe.loading = "lazy";
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+
+    player.appendChild(iframe);
+
+    const title = document.createElement("h3");
+    title.textContent = item.title || "Video Blackjack";
+
+    const dateText = formatPublishedDate(item.pubDate);
+    const meta = document.createElement("p");
+    meta.className = "media-meta";
+    meta.textContent = dateText ? `Pubblicato il ${dateText}` : "";
+
+    const description = document.createElement("p");
+    description.textContent = item.description ? item.description.replace(/<[^>]*>/g, "").trim() : "";
+
+    card.append(player, title, meta, description);
+    carousel.appendChild(card);
+  });
+}
+
+function setupCarouselControls() {
+  const buttons = document.querySelectorAll(".carousel-nav");
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      const direction = button.dataset.direction;
+      const scrollAmount = carousel.clientWidth * 0.9;
+      carousel.scrollBy({
+        left: direction === "next" ? scrollAmount : -scrollAmount,
+        behavior: "smooth"
+      });
+    });
+  });
+}
+
+async function loadVideos() {
+  const rssUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(FEED_URL)}`;
+
+  try {
+    const response = await fetch(rssUrl);
+    if (!response.ok) {
+      throw new Error("Feed non disponibile");
+    }
+
+    const data = await response.json();
+    if (!data.items) {
+      throw new Error("Feed non valido");
+    }
+
+    renderVideos(data.items);
+  } catch (error) {
+    statusEl.textContent = "Impossibile caricare i video in questo momento.";
+  }
+}
+
+setupCarouselControls();
+loadVideos();
+</script>
+
+</body>
+</html>
