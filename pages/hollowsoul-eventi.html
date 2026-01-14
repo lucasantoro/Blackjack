@@ -47,39 +47,85 @@
       Scorri e immagina dove aggiungere le prossime foto.
     </p>
 
-    <div class="events-feed">
-      <article class="event-card">
-        <img class="event-image" src="../img/blackjack_logo.png" alt="Foto evento - Serata transmog">
-        <div class="event-content">
-          <div class="event-meta">Serata transmog · 14/03/2025</div>
-          <h3>Passerella in gilda</h3>
-          <p>
-            Una notte dedicata alle skin più creative: voting live su Discord e premi improvvisati.
-          </p>
-        </div>
-      </article>
+    <div class="media-carousel-wrapper events-carousel-wrapper" aria-live="polite">
+      <button class="carousel-nav" type="button" data-direction="prev" data-target="events-carousel" aria-label="Scorri indietro">&#8249;</button>
+      <div class="media-carousel events-carousel" id="events-carousel" aria-label="Diario eventi di gilda">
+        <article class="event-card event-card--carousel" tabindex="0" data-title="Passerella in gilda" data-date="14/03/2025" data-category="Serata transmog" data-image="../img/blackjack_logo.png" data-body="La serata è partita con un red carpet improvvisato in piazza: ognuno ha presentato il proprio set, raccontando la storia dietro ogni dettaglio. Tra effetti luce, votazioni live su Discord e una giuria improvvisata, abbiamo premiato gli outfit più creativi con screenshot celebrativi e tante risate. Il finale? Un giro foto di gruppo davanti al quartier generale della gilda, da appendere subito nella bacheca.">
+          <img class="event-image" src="../img/blackjack_logo.png" alt="Foto evento - Serata transmog">
+          <div class="event-content">
+            <div class="event-meta">Serata transmog · 14/03/2025</div>
+            <h3>Passerella in gilda</h3>
+            <p class="event-snippet">
+              Un red carpet improvvisato, voti live e una sfilata piena di glitter e meme.
+            </p>
+            <button class="event-open" type="button">Leggi l'articolo</button>
+          </div>
+        </article>
 
-      <article class="event-card">
-        <img class="event-image" src="../img/blackjack_logo.png" alt="Foto evento - Gilda on tour">
-        <div class="event-content">
-          <div class="event-meta">Eventone social · 02/03/2025</div>
-          <h3>Gilda on tour</h3>
-          <p>
-            Dungeon vecchi, achievement e mount run con roster misto: una maratona piena di meme.
-          </p>
-        </div>
-      </article>
+        <article class="event-card event-card--carousel" tabindex="0" data-title="Gilda on tour" data-date="02/03/2025" data-category="Eventone social" data-image="../img/blackjack_logo.png" data-body="Una maratona di dungeon storici con roster misto: healer nuovi, tank storici e un sacco di cameo improvvisi. Tra achievement nostalgia e mount run notturni, abbiamo riempito la chat di battute e screenshot, soprattutto quando il loot era tutto tranne che collaborativo. La serata si è conclusa con una votazione sul prossimo raid retrò, scelto direttamente dal team.">
+          <img class="event-image" src="../img/blackjack_logo.png" alt="Foto evento - Gilda on tour">
+          <div class="event-content">
+            <div class="event-meta">Eventone social · 02/03/2025</div>
+            <h3>Gilda on tour</h3>
+            <p class="event-snippet">
+              Dungeon vintage, mount run e una playlist di meme in cuffia.
+            </p>
+            <button class="event-open" type="button">Leggi l'articolo</button>
+          </div>
+        </article>
 
-      <article class="event-card">
-        <img class="event-image" src="../img/blackjack_logo.png" alt="Foto evento - Serata PvP">
-        <div class="event-content">
-          <div class="event-meta">Battleground night · 21/02/2025</div>
-          <h3>PvP improvvisato</h3>
-          <p>
-            Team casual, chiamate rapide e tante clip condivise il giorno dopo.
-          </p>
+        <article class="event-card event-card--carousel" tabindex="0" data-title="PvP improvvisato" data-date="21/02/2025" data-category="Battleground night" data-image="../img/blackjack_logo.png" data-body="Abbiamo lanciato una call improvvisa e ci siamo ritrovati in battleground con team casual. Nessuna strategia rigida, solo tanta comunicazione e clip assurde salvate al volo. Il momento top? Una difesa eroica dell'obiettivo con due healer e un rogue invisibile che salvava la bandiera. Il giorno dopo, highlights condivisi nel canale video.">
+          <img class="event-image" src="../img/blackjack_logo.png" alt="Foto evento - Serata PvP">
+          <div class="event-content">
+            <div class="event-meta">Battleground night · 21/02/2025</div>
+            <h3>PvP improvvisato</h3>
+            <p class="event-snippet">
+              Team casual, chiamate veloci e una raffica di clip epiche.
+            </p>
+            <button class="event-open" type="button">Leggi l'articolo</button>
+          </div>
+        </article>
+
+        <article class="event-card event-card--carousel" tabindex="0" data-title="Caccia al tesoro in gilda" data-date="09/02/2025" data-category="Serata creativa" data-image="../img/blackjack_logo.png" data-body="Abbiamo trasformato la serata in una caccia al tesoro: indizi sparsi tra capitali e dungeon, screenshot obbligatori e punti bonus per chi scopriva il riferimento più nascosto. Le squadre hanno corso tra portali e flight path, mentre su Discord partivano suggerimenti in stile escape room. È stato un modo perfetto per coinvolgere anche i nuovi arrivati.">
+          <img class="event-image" src="../img/blackjack_logo.png" alt="Foto evento - Caccia al tesoro">
+          <div class="event-content">
+            <div class="event-meta">Serata creativa · 09/02/2025</div>
+            <h3>Caccia al tesoro in gilda</h3>
+            <p class="event-snippet">
+              Indizi sparsi, squadre miste e tanta corsa tra portali.
+            </p>
+            <button class="event-open" type="button">Leggi l'articolo</button>
+          </div>
+        </article>
+
+        <article class="event-card event-card--carousel" tabindex="0" data-title="Notte delle leggende" data-date="25/01/2025" data-category="Story night" data-image="../img/blackjack_logo.png" data-body="Una serata dedicata ai racconti: ognuno ha condiviso la propria storia di gilda, tra prime kill, wipe memorabili e aneddoti fuori tempo. Abbiamo alternato momenti chill con soste in taverna e un finale davanti al falò, mentre scorrevano le foto storiche della community. Un evento rilassato che ha dato spazio a tutti.">
+          <img class="event-image" src="../img/blackjack_logo.png" alt="Foto evento - Notte delle leggende">
+          <div class="event-content">
+            <div class="event-meta">Story night · 25/01/2025</div>
+            <h3>Notte delle leggende</h3>
+            <p class="event-snippet">
+              Racconti di raid, taverne virtuali e foto storiche della community.
+            </p>
+            <button class="event-open" type="button">Leggi l'articolo</button>
+          </div>
+        </article>
+      </div>
+      <button class="carousel-nav" type="button" data-direction="next" data-target="events-carousel" aria-label="Scorri avanti">&#8250;</button>
+    </div>
+
+    <div class="event-modal" id="event-modal" aria-hidden="true">
+      <div class="event-modal__overlay" data-close="modal"></div>
+      <div class="event-modal__content" role="dialog" aria-modal="true" aria-labelledby="event-modal-title">
+        <button class="event-modal__close" type="button" data-close="modal" aria-label="Chiudi articolo">&times;</button>
+        <div class="event-modal__media">
+          <img id="event-modal-image" src="" alt="">
         </div>
-      </article>
+        <div class="event-modal__body">
+          <p class="event-modal__meta" id="event-modal-meta"></p>
+          <h3 id="event-modal-title"></h3>
+          <p id="event-modal-text"></p>
+        </div>
+      </div>
     </div>
 
   </main>
@@ -102,6 +148,77 @@ document.querySelectorAll("a").forEach(link => {
       document.body.classList.remove("page-loaded");
       setTimeout(() => { window.location.href = href; }, 300);
     });
+  }
+});
+</script>
+
+<script>
+const eventsCarousel = document.getElementById("events-carousel");
+const modal = document.getElementById("event-modal");
+const modalTitle = document.getElementById("event-modal-title");
+const modalMeta = document.getElementById("event-modal-meta");
+const modalText = document.getElementById("event-modal-text");
+const modalImage = document.getElementById("event-modal-image");
+
+function openModal(card) {
+  const title = card.dataset.title || "";
+  const date = card.dataset.date || "";
+  const category = card.dataset.category || "";
+  const body = card.dataset.body || "";
+  const image = card.dataset.image || "";
+
+  modalTitle.textContent = title;
+  modalMeta.textContent = `${category} · ${date}`.trim();
+  modalText.textContent = body;
+  modalImage.src = image;
+  modalImage.alt = `Foto evento - ${title}`;
+
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+}
+
+function closeModal() {
+  modal.classList.remove("is-open");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+}
+
+document.querySelectorAll(".carousel-nav[data-target='events-carousel']").forEach(button => {
+  button.addEventListener("click", () => {
+    const direction = button.dataset.direction;
+    const scrollAmount = eventsCarousel.clientWidth * 0.9;
+    eventsCarousel.scrollBy({
+      left: direction === "next" ? scrollAmount : -scrollAmount,
+      behavior: "smooth"
+    });
+  });
+});
+
+document.querySelectorAll(".event-card--carousel").forEach(card => {
+  card.addEventListener("click", () => openModal(card));
+  card.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openModal(card);
+    }
+  });
+  const button = card.querySelector(".event-open");
+  if (button) {
+    button.addEventListener("click", event => {
+      event.stopPropagation();
+      openModal(card);
+    });
+  }
+});
+
+document.querySelectorAll("[data-close='modal']").forEach(element => {
+  element.addEventListener("click", closeModal);
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && modal.classList.contains("is-open")) {
+    closeModal();
   }
 });
 </script>
