@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_PATH = ROOT / "data" / "aceofspades-roster.json"
 MEMBERS_DIR = ROOT / "members"
 WORKER_URL = "https://wild-mode-1b45.lucasantoro2905.workers.dev/progress-last"
-DEFAULT_IMAGE = "../../img/logo.png"
+DEFAULT_IMAGE = ""
 PLACEHOLDER_TAGLINE = "Scheda in aggiornamento"
 PLACEHOLDER_BIO = "Qui puoi aggiungere una presentazione personalizzata del player."
 

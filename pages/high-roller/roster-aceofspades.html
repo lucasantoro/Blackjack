@@ -35,7 +35,7 @@
     <div class="hero-tagline">Roster</div>
     <h2>Ace of Spades</h2>
     <p>
-      Il roster ufficiale del team, con schede personalizzabili per ogni Raider e una struttura pronta a crescere senza diventare pesante da aggiornare.
+      Il roster ufficiale del team, con profili rapidi, immagini dei personaggi e collegamenti diretti alle schede Armory.
     </p>
   </div>
 </section>
@@ -48,7 +48,7 @@
         <div class="eyebrow">Team structure</div>
         <h2 class="section-title">Roster Ace of Spades</h2>
         <p class="section-subtitle">
-          Ogni scheda legge i dati da un file unico del roster: classe, server, ruolo e testo personalizzato restano facili da mantenere anche quando entrano nuovi player.
+          Ogni Raider ha un profilo compatto con ruolo, specializzazione, presentazione e accesso rapido ai riferimenti esterni del personaggio.
         </p>
       </div>
 
@@ -140,7 +140,23 @@ function firstSentence(value) {
 }
 
 function hasCustomProfile(member) {
-  return member.profileStatus === "custom";
+  return Boolean(member.customTagline || member.customBio || member.customImage || member.profileStatus === "custom");
+}
+
+function getMemberTagline(member) {
+  return member.customTagline || member.tagline || "Presenza del roster";
+}
+
+function getMemberBio(member) {
+  return member.customBio || member.bio || "Profilo in aggiornamento.";
+}
+
+function getMemberImage(member) {
+  return member.customImage || member.sourceImage || member.image || "";
+}
+
+function isIncompleteProfile(member) {
+  return !getMemberBio(member) || !getMemberImage(member) || !member.armoryUrl;
 }
 
 function getActiveMembers() {
@@ -150,7 +166,7 @@ function getActiveMembers() {
 function getFilteredMembers() {
   return getActiveMembers().filter(member => {
     const matchesRole = state.role === "all" || member.role === state.role;
-    const haystack = normalizeText([member.name, member.class, member.server, member.tagline].join(" "));
+    const haystack = normalizeText([member.name, member.class, member.spec, member.server, getMemberTagline(member)].join(" "));
     const matchesSearch = !state.search || haystack.includes(normalizeText(state.search));
     return matchesRole && matchesSearch;
   });
@@ -187,7 +203,7 @@ function renderSummary() {
   const summary = document.getElementById("roster-summary");
   const activeMembers = getActiveMembers();
   const customProfiles = activeMembers.filter(hasCustomProfile).length;
-  const placeholderProfiles = activeMembers.length - customProfiles;
+  const armoryProfiles = activeMembers.filter(member => member.armoryUrl).length;
   const countsByRole = roleOrder.reduce((acc, role) => {
     acc[role] = activeMembers.filter(member => member.role === role).length;
     return acc;
@@ -216,8 +232,8 @@ function renderSummary() {
         <span class="roster-summary-card__label">dps</span>
       </div>
       <div class="roster-summary-card">
-        <span class="roster-summary-card__value">${placeholderProfiles}</span>
-        <span class="roster-summary-card__label">schede da rifinire</span>
+        <span class="roster-summary-card__value">${armoryProfiles}</span>
+        <span class="roster-summary-card__label">profili armory</span>
       </div>
     </div>
   `;
@@ -225,16 +241,22 @@ function renderSummary() {
 
 function renderMemberCard(member) {
   const safeName = escapeHtml(member.name);
-  const safeTagline = escapeHtml(member.tagline);
-  const safeBio = escapeHtml(member.bio);
-  const safeSnippet = escapeHtml(firstSentence(member.bio));
+  const safeTagline = escapeHtml(getMemberTagline(member));
+  const safeBio = escapeHtml(getMemberBio(member));
+  const safeSnippet = escapeHtml(firstSentence(getMemberBio(member)));
   const safeClass = escapeHtml(member.class || "Classe in aggiornamento");
+  const safeSpec = escapeHtml(member.spec || "");
   const safeServer = escapeHtml(member.server || "");
   const roleInfo = roleConfig[member.role] || roleConfig.unknown;
   const hasKnownClass = member.class && member.class !== "Unknown";
-  const hasImage = Boolean(member.image);
+  const image = getMemberImage(member);
+  const hasImage = Boolean(image);
+  const safeImage = escapeHtml(image);
+  const safeArmoryUrl = member.armoryUrl ? escapeHtml(member.armoryUrl) : "";
+  const safeRioUrl = member.rio ? escapeHtml(member.rio) : "";
   const cardMeta = [
     roleInfo.label,
+    safeSpec,
     hasKnownClass ? safeClass : "",
     safeServer
   ].filter(Boolean).join(" | ");
@@ -242,7 +264,9 @@ function renderMemberCard(member) {
   return `
     <article class="member-card member-card--compact">
       <div class="member-card__media">
-        <img src="${hasImage ? member.image : "../../img/logo.png"}" alt="${safeName}">
+        ${hasImage
+          ? `<img src="${safeImage}" alt="${safeName}">`
+          : `<div class="member-card__fallback" aria-hidden="true">${safeName.slice(0, 1)}</div>`}
       </div>
 
       <div class="member-card__body">
@@ -255,25 +279,30 @@ function renderMemberCard(member) {
           <div class="member-card__tags">
             ${hasKnownClass ? `<img class="class-icon-small" src="${classIcon(member.class)}" alt="${safeClass}">` : ""}
             <span class="role-badge ${roleInfo.badgeClass}">${roleInfo.label}</span>
-            ${hasCustomProfile(member) ? "" : `<span class="member-card__status">Da completare</span>`}
+            ${isIncompleteProfile(member) ? `<span class="member-card__status">Da completare</span>` : ""}
           </div>
         </div>
 
-        <p class="member-card__class">${hasKnownClass ? safeClass : "Classe in aggiornamento"}</p>
+        <p class="member-card__class">${[safeSpec, hasKnownClass ? safeClass : "Classe in aggiornamento"].filter(Boolean).join(" | ")}</p>
         <p class="member-card__snippet">${safeSnippet}</p>
 
         <details class="member-details">
-          <summary>${hasCustomProfile(member) ? "Apri profilo completo" : "Apri scheda base"}</summary>
+          <summary>${hasCustomProfile(member) ? "Apri profilo completo" : "Apri scheda"}</summary>
           <p>${safeBio}</p>
         </details>
 
         <div class="member-card__footer">
           <span class="member-card__class">${cardMeta}</span>
-          ${member.rio ? `
-            <a href="${member.rio}" target="_blank" rel="noopener noreferrer" class="rio-btn--compact" aria-label="Apri il profilo Raider.IO di ${safeName}">
-              <img src="../../img/raiderio_logo.png" class="rio-logo" alt="Raider.IO">
-            </a>
-          ` : ""}
+          <div class="member-card__links">
+            ${safeArmoryUrl ? `
+              <a href="${safeArmoryUrl}" target="_blank" rel="noopener noreferrer" class="armory-link">Armory</a>
+            ` : ""}
+            ${safeRioUrl ? `
+              <a href="${safeRioUrl}" target="_blank" rel="noopener noreferrer" class="rio-btn--compact" aria-label="Apri il profilo Raider.IO di ${safeName}">
+                <img src="../../img/raiderio_logo.png" class="rio-logo" alt="Raider.IO">
+              </a>
+            ` : ""}
+          </div>
         </div>
       </div>
     </article>

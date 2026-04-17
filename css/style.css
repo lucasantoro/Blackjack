@@ -841,6 +841,10 @@ header nav a.active {
   height: auto;
 }
 
+.member-card__media {
+  display: flex;
+}
+
 .member-card__media img,
 .member img {
   width: 100%;
@@ -848,6 +852,22 @@ header nav a.active {
   border-radius: 18px;
   object-fit: cover;
   border: 1px solid rgba(126, 255, 168, 0.2);
+}
+
+.member-card__fallback {
+  width: 100%;
+  height: 112px;
+  border-radius: 18px;
+  border: 1px solid rgba(126, 255, 168, 0.2);
+  display: grid;
+  place-items: center;
+  color: var(--white);
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 2rem;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(126, 255, 168, 0.22), transparent 36%),
+    radial-gradient(circle at 80% 24%, rgba(240, 200, 104, 0.18), transparent 28%),
+    linear-gradient(160deg, rgba(23, 38, 35, 0.96), rgba(8, 13, 13, 0.96));
 }
 
 .member-card__body {
@@ -909,6 +929,37 @@ header nav a.active {
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
+}
+
+.member-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.armory-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(240, 200, 104, 0.24);
+  background: rgba(13, 19, 19, 0.92);
+  color: var(--white);
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.armory-link:hover {
+  transform: translateY(-2px);
+  border-color: rgba(126, 255, 168, 0.46);
+  background: rgba(126, 255, 168, 0.14);
+  color: var(--white);
 }
 
 .member-details {
@@ -1423,9 +1474,10 @@ header nav a.active {
 }
 
 .media-carousel-wrapper {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   margin-top: 24px;
 }
 
@@ -1433,8 +1485,11 @@ header nav a.active {
 .events-carousel {
   display: flex;
   gap: 20px;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   flex: 1;
+  min-width: 0;
+  scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   scrollbar-width: none;
 }
@@ -1446,12 +1501,32 @@ header nav a.active {
 
 .media-card,
 .event-card--carousel {
-  min-width: 280px;
-  max-width: 360px;
+  flex: 0 0 clamp(280px, 48%, 380px);
+  min-width: 0;
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  scroll-snap-align: start;
+}
+
+.media-card {
+  height: 100%;
+}
+
+.media-card h3 {
+  font-size: 1.16rem;
+  line-height: 1.25;
+  margin-bottom: 0;
+}
+
+.media-card p:last-child {
+  margin: 0;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
 }
 
 .media-player,
@@ -1532,6 +1607,12 @@ header nav a.active {
   align-items: center;
 }
 
+.event-card.event-card--carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
 .event-card--carousel {
   cursor: pointer;
 }
@@ -1545,9 +1626,58 @@ header nav a.active {
 .event-image {
   width: 100%;
   height: 170px;
-  object-fit: cover;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(240, 200, 104, 0.25), transparent 28%),
+    radial-gradient(circle at 84% 24%, rgba(126, 255, 168, 0.18), transparent 30%),
+    linear-gradient(160deg, rgba(20, 33, 31, 0.96), rgba(8, 12, 12, 0.98));
+}
+
+.event-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(140deg, rgba(255, 255, 255, 0.1), transparent 30%),
+    linear-gradient(0deg, rgba(4, 7, 7, 0.42), rgba(4, 7, 7, 0.08));
+}
+
+.event-image--transmog {
+  background:
+    radial-gradient(circle at 18% 24%, rgba(240, 200, 104, 0.34), transparent 28%),
+    radial-gradient(circle at 72% 20%, rgba(255, 124, 168, 0.26), transparent 26%),
+    linear-gradient(145deg, rgba(54, 26, 43, 0.96), rgba(15, 15, 24, 0.98));
+}
+
+.event-image--tour {
+  background:
+    radial-gradient(circle at 22% 22%, rgba(126, 255, 168, 0.28), transparent 28%),
+    radial-gradient(circle at 78% 26%, rgba(135, 195, 255, 0.24), transparent 30%),
+    linear-gradient(145deg, rgba(14, 44, 39, 0.96), rgba(8, 14, 21, 0.98));
+}
+
+.event-image--pvp {
+  background:
+    radial-gradient(circle at 20% 18%, rgba(255, 106, 99, 0.32), transparent 30%),
+    radial-gradient(circle at 82% 26%, rgba(240, 200, 104, 0.22), transparent 28%),
+    linear-gradient(145deg, rgba(47, 16, 16, 0.96), rgba(15, 11, 17, 0.98));
+}
+
+.event-image--treasure {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(240, 200, 104, 0.36), transparent 30%),
+    radial-gradient(circle at 76% 30%, rgba(126, 255, 168, 0.22), transparent 28%),
+    linear-gradient(145deg, rgba(44, 30, 10, 0.96), rgba(14, 18, 16, 0.98));
+}
+
+.event-image--legends {
+  background:
+    radial-gradient(circle at 20% 18%, rgba(126, 255, 168, 0.2), transparent 28%),
+    radial-gradient(circle at 78% 24%, rgba(240, 200, 104, 0.3), transparent 30%),
+    linear-gradient(145deg, rgba(28, 34, 50, 0.96), rgba(12, 13, 18, 0.98));
 }
 
 .event-content h3 {
@@ -1600,11 +1730,12 @@ header nav a.active {
   gap: 24px;
 }
 
-.event-modal__media img {
+.event-modal__art {
   width: 100%;
-  max-height: 360px;
-  object-fit: cover;
+  min-height: 280px;
+  height: 100%;
   border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .event-modal__body {
@@ -1787,6 +1918,11 @@ footer {
   .media-carousel-wrapper {
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .media-card,
+  .event-card--carousel {
+    flex-basis: min(100%, 340px);
   }
 
   .subnav {
