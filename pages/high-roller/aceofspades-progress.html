@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ace of Spades – Progress</title>
+  <title>Ace of Spades | Progress</title>
   <link rel="stylesheet" href="../../css/style.css">
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
@@ -22,7 +22,6 @@
   </nav>
 </header>
 
-<!-- SUBNAV ACE OF SPADES -->
 <nav class="subnav">
   <ul>
     <li><a href="../high-roller/aceofspades.html">Home Team</a></li>
@@ -32,92 +31,108 @@
 </nav>
 
 <section class="hero">
-  <div class="hero-content">
-    <h2>Progress Ace of Spades</h2>
-    <p>Avanzamento raid, recap sessioni e roster dell’ultima serata.</p>
+  <div class="hero-content hero-content--wide">
+    <div class="hero-tagline">Raid Progress</div>
+    <h2>Ace of Spades</h2>
+    <p>
+      Panoramica del team raid con stato per difficolta, ultima sessione registrata e accesso rapido ai riferimenti ufficiali di gilda.
+    </p>
+
+    <div class="hero-actions">
+      <a href="https://raider.io/guilds/eu/nemesis/Blackjack" target="_blank" rel="noopener noreferrer" class="button-primary">Raider.IO gilda</a>
+      <a href="https://www.warcraftlogs.com/guild/id/808206" target="_blank" rel="noopener noreferrer" class="button-secondary">Warcraft Logs gilda</a>
+    </div>
+
+    <div class="metric-grid" id="progress-metrics">
+      <div class="metric-card">
+        <span class="metric-card__value">...</span>
+        <span class="metric-card__label">Caricamento progress</span>
+      </div>
+    </div>
   </div>
 </section>
 
 <div class="bg-container bg-aceofspades-logo">
-  <main class="panel">
+  <main class="panel progress-panel">
 
-    <!-- PANORAMICA -->
-    <h2 class="section-title">Panoramica per difficoltà</h2>
-    <p class="section-subtitle">
-      Stato del raid per Normal, Heroic e Mythic.
-    </p>
-
-    <div class="widgets-grid">
-
-      <div class="widget-card">
-        <h3 class="widget-title">Normal</h3>
-        <div class="progress-content" id="card-normal">Sto caricando…</div>
+    <section class="section-shell">
+      <div class="section-head">
+        <div class="eyebrow">Overview</div>
+        <h2 class="section-title">Panoramica per difficolta</h2>
+        <p class="section-subtitle">
+          Lettura rapida di Normal, Heroic e Mythic con boss chiusi, tentativi aperti e miglior progress disponibile.
+        </p>
       </div>
 
-      <div class="widget-card">
-        <h3 class="widget-title">Heroic</h3>
-        <div class="progress-content" id="card-heroic">Sto caricando…</div>
+      <div class="widgets-grid">
+        <article class="widget-card progress-difficulty-card">
+          <div id="card-normal" class="progress-content progress-content--rich">Sto caricando...</div>
+        </article>
+        <article class="widget-card progress-difficulty-card">
+          <div id="card-heroic" class="progress-content progress-content--rich">Sto caricando...</div>
+        </article>
+        <article class="widget-card progress-difficulty-card">
+          <div id="card-mythic" class="progress-content progress-content--rich">Sto caricando...</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-shell">
+      <div class="section-head">
+        <div class="eyebrow">Last Raid</div>
+        <h2 class="section-title" id="last-session-title">Ultima sessione registrata</h2>
+        <p class="section-subtitle">
+          Report recente, boss affrontati, pull della serata e roster rilevato da Warcraft Logs.
+        </p>
       </div>
 
-      <div class="widget-card">
-        <h3 class="widget-title">Mythic</h3>
-        <div class="progress-content" id="card-mythic">Sto caricando…</div>
-      </div>
+      <div class="progress-session-grid">
+        <article class="session-summary-card" id="last-session-summary">
+          Caricamento sessione...
+        </article>
 
-    </div>
+        <article class="widget-card progress-links-card">
+          <h3 class="widget-title">Riferimenti utili</h3>
+          <p class="widget-desc">Link rapidi per tenere tutto a portata di click.</p>
+          <div class="progress-link-list">
+            <a href="https://raider.io/guilds/eu/nemesis/Blackjack" target="_blank" rel="noopener noreferrer" class="armory-link">Raider.IO gilda</a>
+            <a href="https://www.warcraftlogs.com/guild/id/808206" target="_blank" rel="noopener noreferrer" class="armory-link">Warcraft Logs gilda</a>
+            <a id="last-session-report-link" href="#" target="_blank" rel="noopener noreferrer" class="armory-link hidden">Ultimo report</a>
+          </div>
+        </article>
 
-    <!-- ULTIMA SESSIONE -->
-    <div class="widget-full">
-      <h2 class="section-title" id="last-session-title">
-        Ultima sessione raid
-      </h2>
-      <p class="section-subtitle">
-        Resoconto completo della serata Ace of Spades: kill, wipe e progress.
-        Passa col mouse sui pallini per vedere i dettagli.
-      </p>
-
-      <!-- LIVE TWITCH -->
-      <div id="live-raid-wrapper" class="live-raid-wrapper">
-        <div class="live-raid-card" id="live-raid-card">
+        <article class="live-raid-card" id="live-raid-card">
           <div class="live-status-pill live-status-offline" id="live-status-pill">
             <span class="live-dot"></span> Offline
           </div>
-          <h3 class="widget-title">Diretta raid – Twitch</h3>
+          <h3 class="widget-title">Diretta raid Twitch</h3>
           <p class="live-description" id="live-description">
-            La diretta verrà mostrata qui quando il canale sarà online.
+            La diretta apparira qui appena il canale andra live.
           </p>
-          <div class="live-player-shell" id="live-player-shell">
-            <!-- iframe Twitch verrà inserito via JS -->
-          </div>
+          <div class="live-player-shell" id="live-player-shell"></div>
+        </article>
+      </div>
+
+      <div class="progress-boss-shell">
+        <div class="progress-boss-shell__header">
+          <h3>Timeline boss dell'ultima serata</h3>
+          <p>Ogni riga raccoglie i tentativi del boss in ordine di pull. Passa sui pallini per vedere il dettaglio.</p>
         </div>
+        <div class="dot-timeline-container" id="dot-timeline"></div>
       </div>
-      <!-- /LIVE TWITCH -->
+    </section>
 
-      <div class="session-summary-card" id="last-session-summary">
-        Caricamento in corso…
-      </div>
-
-      <div class="dot-timeline-container" id="dot-timeline"></div>
-
-      <div class="text-center mt-20">
-        <a id="last-session-report-link"
-           href="#"
-           target="_blank"
-           class="apply-button hidden">
-          Apri il report dell’ultima sessione
-        </a>
-      </div>
-
-      <!-- ROSTER DALL'ULTIMO REPORT -->
-      <div class="session-roster-card" id="live-roster-card">
-        <h3 class="widget-title">Roster attuale</h3>
-        <p class="section-subtitle section-subtitle--compact">
-          Giocatori presenti nell’ultima sessione registrata su Warcraft Logs.
+    <section class="section-shell">
+      <div class="section-head">
+        <div class="eyebrow">Raid Roster</div>
+        <h2 class="section-title">Roster della sessione</h2>
+        <p class="section-subtitle">
+          Giocatori presenti nell'ultimo report, arricchiti con ruolo e profilo locale quando disponibili.
         </p>
-        <div id="live-roster">Sto caricando il roster…</div>
       </div>
 
-    </div>
+      <div id="live-roster">Sto caricando il roster...</div>
+    </section>
 
   </main>
 </div>
@@ -126,82 +141,540 @@
   <p>&copy; 2026 Blackjack</p>
 </footer>
 
-<!-- TRANSITION -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("page-loaded");
 });
 </script>
 
-<!-- URL WORKERS -->
 <script>
-  const WORKER_FULL = "https://red-snowflake-a386.lucasantoro2905.workers.dev";
-  const WORKER_LAST = "https://wild-mode-1b45.lucasantoro2905.workers.dev";
+const WORKER_FULL = "https://red-snowflake-a386.lucasantoro2905.workers.dev";
+const WORKER_LAST = "https://wild-mode-1b45.lucasantoro2905.workers.dev";
+const WORKER_TWITCH = "https://tiny-fog-34d1.lucasantoro2905.workers.dev";
+const TWITCH_CHANNEL = "londe83";
+const LOCAL_ROSTER_URL = "../../data/aceofspades-roster.json";
+const GUILD_RIO_URL = "https://raider.io/guilds/eu/nemesis/Blackjack";
+const GUILD_WCL_URL = "https://www.warcraftlogs.com/guild/id/808206";
 
-  /* LIVE TWITCH */
-  const TWITCH_CHANNEL = "londe83";
-  const WORKER_TWITCH = "https://tiny-fog-34d1.lucasantoro2905.workers.dev"; // cambia se usi un altro URL
-</script>
+const BOSS_ORDER = [
+  "Plexus Sentinel",
+  "Soulbinder Naazindhri",
+  "Forgeweaver Araz",
+  "The Soul Hunters",
+  "Fractillus",
+  "Nexus-King Salhadaar",
+  "Loom'ithar",
+  "Dimensius, the All-Devouring"
+];
 
-<!-- PROGRESS LOGIC -->
-<script>
-async function loadDifficulty(diff, id) {
-  try {
-    const el = document.getElementById(id);
-    const res = await fetch(`${WORKER_FULL}/progress-full?difficulty=${diff}`);
-    const data = await res.json();
+const difficultyLabels = {
+  normal: "Normal",
+  heroic: "Heroic",
+  mythic: "Mythic"
+};
 
-    const bosses = Object.keys(data.bosses || {});
-    const killed = bosses.filter(b => data.bosses[b].kills > 0);
-    const inProgress = bosses.filter(
-      b => data.bosses[b].kills === 0 &&
-           data.bosses[b].bestPercentage != null &&
-           data.bosses[b].bestPercentage < 100
-    );
+const state = {
+  fullProgress: {},
+  lastSession: null,
+  localRoster: new Map()
+};
 
-    let html = `
-      <strong>Kill:</strong> ${killed.length} / ${bosses.length}<br>
-      <strong>Progress:</strong> ${inProgress.length}<br>
-      <strong>Miglior try:</strong>
-      ${inProgress.length ? Math.min(...inProgress.map(b => data.bosses[b].bestPercentage)) + "%" : "—"}
-      <div class="boss-list">
-    `;
+function normalizeText(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9]/g, "")
+    .toLowerCase();
+}
 
-    killed.forEach(b => html += `<span class="boss-killed">${b}</span>`);
-    inProgress.forEach(b => html += `<span class="boss-progress">${b} (${data.bosses[b].bestPercentage}%)</span>`);
+function normalizeBossName(name) {
+  const compact = String(name || "")
+    .replace(/â€™/g, "'")
+    .replace(/’/g, "'")
+    .replace(/,/g, "")
+    .trim();
 
-    html += "</div>";
-    el.innerHTML = html;
+  const aliases = {
+    "loomithar": "Loom'ithar",
+    "soulbindernaazindhri": "Soulbinder Naazindhri",
+    "forgeweaveraraz": "Forgeweaver Araz",
+    "thesoulhunters": "The Soul Hunters",
+    "fractillus": "Fractillus",
+    "nexuskingsalhadaar": "Nexus-King Salhadaar",
+    "dimensiusthealldevouring": "Dimensius, the All-Devouring",
+    "plexussentinel": "Plexus Sentinel"
+  };
 
-  } catch (e) {
-    document.getElementById(id).textContent = "Impossibile caricare i dati.";
+  return aliases[normalizeText(compact)] || compact;
+}
+
+function classIcon(name) {
+  return `../../img/classes/${String(name || "").toLowerCase().replace(/\s+/g, "")}.png`;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function formatDateTime(timestamp) {
+  if (!timestamp) return "Data non disponibile";
+  const date = new Date(timestamp);
+  if (Number.isNaN(date.getTime())) return "Data non disponibile";
+  return date.toLocaleString("it-IT", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+function formatSeconds(totalSeconds) {
+  if (totalSeconds == null || Number.isNaN(totalSeconds)) return "n/d";
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}m ${String(seconds).padStart(2, "0")}s`;
+}
+
+function formatPercent(value) {
+  if (value == null || Number.isNaN(Number(value))) return "—";
+  return `${Number(value).toFixed(2).replace(/\.00$/, "")}%`;
+}
+
+function sortBossEntries(entries) {
+  return entries.slice().sort((left, right) => {
+    const leftIndex = BOSS_ORDER.indexOf(normalizeBossName(left.name));
+    const rightIndex = BOSS_ORDER.indexOf(normalizeBossName(right.name));
+    const safeLeft = leftIndex === -1 ? 999 : leftIndex;
+    const safeRight = rightIndex === -1 ? 999 : rightIndex;
+    return safeLeft - safeRight || left.name.localeCompare(right.name);
+  });
+}
+
+function normalizeProgressData(diff, payload) {
+  const bossMap = payload?.bosses || {};
+  const bossEntries = sortBossEntries(
+    Object.values(bossMap).map(boss => ({
+      name: normalizeBossName(boss.bossName || boss.name),
+      pulls: boss.pulls || 0,
+      kills: boss.kills || 0,
+      wipes: boss.wipes || 0,
+      bestPercentage: boss.bestPercentage,
+      lastKill: boss.lastKill || null,
+      lastPull: boss.lastPull || null
+    }))
+  );
+
+  const killed = bossEntries.filter(boss => boss.kills > 0).length;
+  const inProgress = bossEntries.filter(boss => boss.kills === 0 && boss.bestPercentage != null).length;
+  const bestProgress = bossEntries
+    .filter(boss => boss.kills === 0 && boss.bestPercentage != null)
+    .reduce((best, boss) => Math.min(best, boss.bestPercentage), 101);
+
+  return {
+    diff,
+    label: difficultyLabels[diff] || diff,
+    bossEntries,
+    summary: {
+      totalBosses: bossEntries.length,
+      killed,
+      inProgress,
+      pulls: bossEntries.reduce((sum, boss) => sum + boss.pulls, 0),
+      bestProgress: bestProgress === 101 ? null : bestProgress
+    }
+  };
+}
+
+function normalizeLastSession(payload) {
+  const report = payload?.report || payload?.latestReport || null;
+  const bossEntries = sortBossEntries(
+    Object.values(payload?.bosses || {}).map(boss => ({
+      name: normalizeBossName(boss.bossName || boss.name),
+      pulls: boss.pulls || 0,
+      kills: boss.kills || 0,
+      wipes: boss.wipes || 0,
+      bestPercentage: boss.bestPercentage,
+      pullsDetail: (boss.pullsDetail || [])
+        .filter(pull => pull.kill !== null || pull.difficulty !== null)
+        .map(pull => ({
+          index: pull.index,
+          fightID: pull.fightID,
+          isKill: pull.kill === true,
+          bestPercentage: pull.kill === true ? 0 : pull.fightPercentage,
+          difficulty: pull.difficulty,
+          durationSec: pull.durationSec,
+          startTime: pull.startTime,
+          endTime: pull.endTime
+        }))
+    }))
+  );
+
+  const totalKills = bossEntries.reduce((sum, boss) => sum + boss.kills, 0);
+  const totalWipes = bossEntries.reduce((sum, boss) => sum + boss.wipes, 0);
+  const totalPulls = bossEntries.reduce((sum, boss) => sum + boss.pullsDetail.length, 0);
+  const bestTry = bossEntries
+    .filter(boss => boss.bestPercentage != null)
+    .reduce((best, boss) => Math.min(best, boss.bestPercentage), 101);
+  const durationSec = report
+    ? Math.max(0, Math.round((report.endTime - report.startTime) / 1000))
+    : null;
+
+  return {
+    report,
+    reportUrl: report?.code ? `https://www.warcraftlogs.com/reports/${report.code}` : "",
+    roster: payload?.roster || [],
+    bossEntries,
+    summary: {
+      totalKills,
+      totalWipes,
+      totalPulls,
+      bestTry: bestTry === 101 ? null : bestTry,
+      durationSec
+    }
+  };
+}
+
+async function loadLocalRoster() {
+  const response = await fetch(LOCAL_ROSTER_URL);
+  if (!response.ok) {
+    throw new Error("Roster locale non disponibile");
   }
+
+  const payload = await response.json();
+  const members = payload.members || [];
+  const map = new Map();
+
+  members.forEach(member => {
+    map.set(normalizeText(member.name), member);
+  });
+
+  state.localRoster = map;
+}
+
+function renderMetricCards() {
+  const metrics = document.getElementById("progress-metrics");
+  const mythic = state.fullProgress.mythic;
+  const heroic = state.fullProgress.heroic;
+  const last = state.lastSession;
+
+  if (!mythic || !heroic || !last) {
+    metrics.innerHTML = `
+      <div class="metric-card">
+        <span class="metric-card__value">...</span>
+        <span class="metric-card__label">Caricamento progress</span>
+      </div>
+    `;
+    return;
+  }
+
+  metrics.innerHTML = `
+    <div class="metric-card">
+      <span class="metric-card__value">${mythic.summary.killed}/${mythic.summary.totalBosses || "0"}</span>
+      <span class="metric-card__label">boss mythic chiusi</span>
+    </div>
+    <div class="metric-card">
+      <span class="metric-card__value">${heroic.summary.killed}/${heroic.summary.totalBosses || "0"}</span>
+      <span class="metric-card__label">boss heroic chiusi</span>
+    </div>
+    <div class="metric-card">
+      <span class="metric-card__value">${formatPercent(mythic.summary.bestProgress)}</span>
+      <span class="metric-card__label">miglior try mythic aperto</span>
+    </div>
+    <div class="metric-card">
+      <span class="metric-card__value">${last.summary.totalPulls}</span>
+      <span class="metric-card__label">pull nell'ultima sessione</span>
+    </div>
+    <div class="metric-card">
+      <span class="metric-card__value">${formatDateTime(last.report?.endTime)}</span>
+      <span class="metric-card__label">ultima serata registrata</span>
+    </div>
+  `;
+}
+
+function renderDifficultyCard(cardId, progressData) {
+  const container = document.getElementById(cardId);
+  if (!container) return;
+
+  const { label, bossEntries, summary } = progressData;
+
+  if (!bossEntries.length) {
+    container.innerHTML = `<div class="empty-state">Nessun dato disponibile per ${escapeHtml(label)}.</div>`;
+    return;
+  }
+
+  const bossRows = bossEntries.map(boss => {
+    const isKilled = boss.kills > 0;
+    const statusClass = isKilled ? "boss-killed" : boss.bestPercentage != null ? "boss-progress" : "";
+    const statusText = isKilled ? "Kill" : boss.bestPercentage != null ? `Best ${formatPercent(boss.bestPercentage)}` : "Nessun pull";
+
+    return `
+      <div class="progress-boss-row">
+        <div class="progress-boss-row__copy">
+          <strong>${escapeHtml(boss.name)}</strong>
+          <span>${boss.pulls} pull${boss.pulls === 1 ? "" : "s"} • ${boss.wipes} wipe${boss.wipes === 1 ? "" : "s"}</span>
+        </div>
+        <span class="progress-boss-chip ${statusClass}">${statusText}</span>
+      </div>
+    `;
+  }).join("");
+
+  container.innerHTML = `
+    <div class="progress-card-head">
+      <div>
+        <p class="widget-desc">${escapeHtml(label)}</p>
+        <h3 class="widget-title">${summary.killed}/${summary.totalBosses} boss chiusi</h3>
+      </div>
+      <span class="progress-card-badge">${summary.pulls} pull</span>
+    </div>
+    <div class="progress-card-stats">
+      <div class="progress-mini-stat">
+        <span class="progress-mini-stat__value">${summary.inProgress}</span>
+        <span class="progress-mini-stat__label">boss aperti</span>
+      </div>
+      <div class="progress-mini-stat">
+        <span class="progress-mini-stat__value">${formatPercent(summary.bestProgress)}</span>
+        <span class="progress-mini-stat__label">miglior try</span>
+      </div>
+    </div>
+    <div class="progress-boss-stack">
+      ${bossRows}
+    </div>
+  `;
+}
+
+function renderSessionSummary(lastSession) {
+  const container = document.getElementById("last-session-summary");
+  if (!container) return;
+
+  const report = lastSession.report;
+  if (!report) {
+    container.innerHTML = `<div class="empty-state">Nessuna sessione disponibile.</div>`;
+    return;
+  }
+
+  container.innerHTML = `
+    <h3 class="widget-title">${escapeHtml(report.title || "Ultimo report")}</h3>
+    <p class="widget-desc">
+      ${escapeHtml(report.zone?.name || "Raid")} • chiusura ${escapeHtml(formatDateTime(report.endTime))}
+    </p>
+    <div class="session-meta-grid">
+      <div class="progress-mini-stat">
+        <span class="progress-mini-stat__value">${lastSession.summary.totalKills}</span>
+        <span class="progress-mini-stat__label">kill</span>
+      </div>
+      <div class="progress-mini-stat">
+        <span class="progress-mini-stat__value">${lastSession.summary.totalWipes}</span>
+        <span class="progress-mini-stat__label">wipe</span>
+      </div>
+      <div class="progress-mini-stat">
+        <span class="progress-mini-stat__value">${lastSession.summary.totalPulls}</span>
+        <span class="progress-mini-stat__label">pull</span>
+      </div>
+      <div class="progress-mini-stat">
+        <span class="progress-mini-stat__value">${formatPercent(lastSession.summary.bestTry)}</span>
+        <span class="progress-mini-stat__label">best try</span>
+      </div>
+      <div class="progress-mini-stat">
+        <span class="progress-mini-stat__value">${formatSeconds(lastSession.summary.durationSec)}</span>
+        <span class="progress-mini-stat__label">durata</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderReportLink(lastSession) {
+  const reportLink = document.getElementById("last-session-report-link");
+  const title = document.getElementById("last-session-title");
+  if (!reportLink || !title) return;
+
+  if (!lastSession.reportUrl) {
+    reportLink.classList.add("hidden");
+    return;
+  }
+
+  reportLink.href = lastSession.reportUrl;
+  reportLink.classList.remove("hidden");
+
+  const reportTitle = lastSession.report?.title || "Ultima sessione registrata";
+  title.textContent = reportTitle;
+}
+
+function buildTimeline(lastSession) {
+  const container = document.getElementById("dot-timeline");
+  if (!container) return;
+
+  const rows = lastSession.bossEntries
+    .filter(boss => boss.pullsDetail.length)
+    .map(boss => {
+      const dots = boss.pullsDetail.map(pull => {
+        const tipLines = [
+          `Pull ${pull.index}`,
+          pull.isKill ? "Kill" : `Wipe ${formatPercent(pull.bestPercentage)}`,
+          `${formatSeconds(pull.durationSec)}`
+        ];
+
+        return `
+          <span
+            class="dot ${pull.isKill ? "dot-kill" : "dot-progress"}"
+            data-tip="${escapeHtml(tipLines.join("\n"))}">
+          </span>
+        `;
+      }).join("");
+
+      return `
+        <div class="dot-row">
+          <div class="dot-boss-name">${escapeHtml(boss.name)}</div>
+          <div class="dot-line">${dots}</div>
+        </div>
+      `;
+    }).join("");
+
+  container.innerHTML = rows || `<div class="empty-state">Nessun pull boss disponibile nel report piu recente.</div>`;
+}
+
+function getRoleBadge(role) {
+  const normalized = String(role || "").toLowerCase();
+  if (normalized === "tank") return "roster-role-tank";
+  if (normalized === "healer") return "roster-role-heal";
+  if (normalized === "dps") return "roster-role-dps";
+  return "roster-role-unknown";
+}
+
+function enrichRosterPlayer(player) {
+  const local = state.localRoster.get(normalizeText(player.name)) || null;
+  return {
+    name: player.name,
+    className: local?.class || player.class || "Unknown",
+    spec: local?.spec || "",
+    role: local?.role || player.role || "unknown",
+    image: local?.customImage || local?.sourceImage || "",
+    armoryUrl: local?.armoryUrl || "",
+    rioUrl: local?.rio || "",
+    server: local?.server || player.server || ""
+  };
+}
+
+function renderRoster(lastSession) {
+  const container = document.getElementById("live-roster");
+  if (!container) return;
+
+  const players = (lastSession.roster || []).map(enrichRosterPlayer);
+  if (!players.length) {
+    container.innerHTML = `<div class="empty-state">Nessun roster trovato nell'ultimo report.</div>`;
+    return;
+  }
+
+  players.sort((left, right) => left.name.localeCompare(right.name));
+
+  const html = players.map(player => {
+    const safeName = escapeHtml(player.name);
+    const safeClass = escapeHtml(player.className);
+    const safeSpec = escapeHtml(player.spec || "");
+    const safeServer = escapeHtml(player.server || "");
+    const safeImage = escapeHtml(player.image || "");
+    const safeArmory = escapeHtml(player.armoryUrl || "");
+    const safeRio = escapeHtml(player.rioUrl || "");
+    const hasImage = Boolean(player.image);
+    const hasKnownClass = player.className && player.className !== "Unknown";
+    const subtitle = [safeSpec, safeClass].filter(Boolean).join(" | ");
+
+    return `
+      <article class="report-roster-card">
+        <div class="report-roster-card__media">
+          ${hasImage
+            ? `<img src="${safeImage}" alt="${safeName}">`
+            : `<div class="report-roster-card__fallback" aria-hidden="true">${safeName.slice(0, 1)}</div>`}
+        </div>
+        <div class="report-roster-card__body">
+          <div class="report-roster-card__top">
+            <div>
+              <h3>${safeName}</h3>
+              <p>${subtitle || "Profilo report"}</p>
+            </div>
+            <span class="roster-role-tag ${getRoleBadge(player.role)}">${escapeHtml(player.role || "unknown")}</span>
+          </div>
+          <div class="report-roster-card__meta">
+            ${hasKnownClass ? `<span>${safeClass}</span>` : ""}
+            ${safeServer ? `<span>${safeServer}</span>` : ""}
+          </div>
+          <div class="report-roster-card__links">
+            ${safeArmory ? `<a href="${safeArmory}" target="_blank" rel="noopener noreferrer" class="armory-link">Armory</a>` : ""}
+            ${safeRio ? `
+              <a href="${safeRio}" target="_blank" rel="noopener noreferrer" class="rio-btn--compact" aria-label="Apri il profilo Raider.IO di ${safeName}">
+                <img src="../../img/raiderio_logo.png" class="rio-logo" alt="Raider.IO">
+              </a>
+            ` : ""}
+          </div>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  container.innerHTML = `<div class="report-roster-grid">${html}</div>`;
+}
+
+async function loadDifficulty(diff, cardId) {
+  const response = await fetch(`${WORKER_FULL}/progress-full?difficulty=${diff}`);
+  if (!response.ok) {
+    throw new Error(`Progress ${diff} non disponibile`);
+  }
+  const payload = await response.json();
+  const normalized = normalizeProgressData(diff, payload);
+  state.fullProgress[diff] = normalized;
+  renderDifficultyCard(cardId, normalized);
+}
+
+async function fetchProgressSummary() {
+  const response = await fetch(`${WORKER_FULL}/progress-summary`);
+  if (!response.ok) {
+    throw new Error("Progress summary non disponibile");
+  }
+
+  const payload = await response.json();
+  const progress = payload?.progress || {};
+
+  ["normal", "heroic", "mythic"].forEach(diff => {
+    if (!progress[diff]) return;
+    state.fullProgress[diff] = normalizeProgressData(diff, progress[diff]);
+    renderDifficultyCard(`card-${diff}`, state.fullProgress[diff]);
+  });
 }
 
 async function fetchLastSession() {
-  const res = await fetch(`${WORKER_LAST}/progress-last`);
-  return res.json();
+  const response = await fetch(`${WORKER_LAST}/progress-last`);
+  if (!response.ok) {
+    throw new Error("Ultima sessione non disponibile");
+  }
+  const payload = await response.json();
+  state.lastSession = normalizeLastSession(payload);
 }
 
-/* ========= LIVE TWITCH ========= */
 async function fetchTwitchLive() {
-  const url = `${WORKER_TWITCH}/?channel=${encodeURIComponent(TWITCH_CHANNEL)}`;
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error("Errore worker Twitch");
-  return res.json();
+  const response = await fetch(`${WORKER_TWITCH}/?channel=${encodeURIComponent(TWITCH_CHANNEL)}`, {
+    cache: "no-store"
+  });
+  if (!response.ok) {
+    throw new Error("Worker Twitch non disponibile");
+  }
+  return response.json();
 }
 
-function renderTwitchLive(liveData) {
+function renderTwitchLive(data) {
   const pill = document.getElementById("live-status-pill");
-  const descr = document.getElementById("live-description");
+  const description = document.getElementById("live-description");
   const shell = document.getElementById("live-player-shell");
-  if (!pill || !descr || !shell) return;
+  if (!pill || !description || !shell) return;
 
-  if (!liveData || !liveData.live) {
+  if (!data || !data.live) {
     pill.classList.remove("live-status-live");
     pill.classList.add("live-status-offline");
     pill.innerHTML = '<span class="live-dot"></span> Offline';
-    descr.textContent = "Il canale Twitch è offline. La prossima diretta raid apparirà qui appena saremo live.";
+    description.textContent = "Il canale e offline. La prossima diretta apparira qui appena il raid va live.";
     shell.innerHTML = "";
     return;
   }
@@ -210,186 +683,65 @@ function renderTwitchLive(liveData) {
   pill.classList.add("live-status-live");
   pill.innerHTML = '<span class="live-dot"></span> Live ora';
 
-  const title = liveData.title || "Diretta raid Ace of Spades";
-  const game = liveData.game_name;
-  const viewers = liveData.viewer_count;
+  const bits = [data.title || "Diretta raid", data.game_name ? `Gioco: ${data.game_name}` : "", data.viewer_count != null ? `Viewers: ${data.viewer_count}` : ""].filter(Boolean);
+  description.textContent = bits.join(" • ");
 
-  let descText = title;
-  if (game) descText += ` • Giocando: ${game}`;
-  if (viewers != null) descText += ` • Viewers: ${viewers}`;
-  descr.textContent = descText;
-
-  const embed = `
+  shell.innerHTML = `
     <iframe
       src="https://player.twitch.tv/?channel=${encodeURIComponent(TWITCH_CHANNEL)}&parent=${window.location.hostname}"
       frameborder="0"
       allowfullscreen="true"
       scrolling="no"
-      height="360"
-      width="100%">
+      title="Live Twitch ${escapeHtml(TWITCH_CHANNEL)}">
     </iframe>
   `;
-  shell.innerHTML = embed;
-}
-
-async function initLiveTwitch() {
-  try {
-    const liveData = await fetchTwitchLive();
-    renderTwitchLive(liveData);
-  } catch (e) {
-    console.error("Errore live Twitch:", e);
-  }
-}
-
-/* ========= TIMELINE ========= */
-function buildTimeline(last) {
-  const container = document.getElementById("dot-timeline");
-  if (!container) return;
-
-  const pulls = last?.pulls || [];
-  if (!pulls.length) {
-    container.innerHTML = "<p class=\"section-subtitle\">Nessun dato da mostrare.</p>";
-    return;
-  }
-
-  const dots = pulls.map((pull, i) => {
-    const isKill = pull.kill;
-    const boss = pull.boss || "Boss";
-    const pct = pull.kill ? "100%" : `${pull.bestPercentage ?? "–"}%`;
-    const cls = isKill ? "dot dot-kill" : "dot dot-progress";
-    return `
-      <div class="timeline-dot" data-index="${i}">
-        <div class="${cls}"></div>
-        <div class="timeline-tooltip">
-          <strong>${boss}</strong><br>
-          ${isKill ? "Kill" : `Best ${pct}`}
-        </div>
-      </div>
-    `;
-  }).join("");
-
-  container.innerHTML = `<div class="dot-timeline">${dots}</div>`;
-}
-
-/* ========= SESSION SUMMARY ========= */
-function renderSessionSummary(last) {
-  const container = document.getElementById("last-session-summary");
-  if (!container) return;
-
-  if (!last || !last.session) {
-    container.textContent = "Nessuna sessione disponibile.";
-    return;
-  }
-
-  const { session } = last;
-  const date = session.date || "Data non disponibile";
-  const duration = session.duration || "—";
-  const kills = session.kills ?? 0;
-  const wipes = session.wipes ?? 0;
-  const best = session.bestPercent != null ? `${session.bestPercent}%` : "—";
-
-  container.innerHTML = `
-    <h3 class="widget-title">Riassunto sessione</h3>
-    <p><strong>Data:</strong> ${date}</p>
-    <p><strong>Durata:</strong> ${duration}</p>
-    <p><strong>Kill:</strong> ${kills}</p>
-    <p><strong>Wipe:</strong> ${wipes}</p>
-    <p><strong>Miglior try:</strong> ${best}</p>
-  `;
-}
-
-/* ========= REPORT LINK ========= */
-function renderReportLink(last) {
-  const link = document.getElementById("last-session-report-link");
-  if (!link) return;
-
-  const url = last?.reportURL;
-  if (!url) return;
-
-  link.href = url;
-  link.classList.remove("hidden");
-}
-
-/* ========= ROSTER ========= */
-/* ========= ROSTER ULTIMO PULL ========= */
-function extractLastPullRoster(last) {
-  const pulls = last?.pulls || [];
-  if (!pulls.length) return [];
-
-  const latest = pulls
-    .slice()
-    .reverse()
-    .find(p => p.friendlyPlayers && p.friendlyPlayers.length);
-
-  return latest ? latest.roster : [];
-}
-
-function renderRoster(last) {
-  const container = document.getElementById("live-roster");
-  if (!container) return;
-
-  const pullRoster = extractLastPullRoster(last);
-
-  if (!pullRoster.length) {
-    container.textContent = "Nessun roster trovato nell’ultimo pull.";
-    return;
-  }
-
-  const enriched = pullRoster.map(p => ({
-    name: p.name,
-    role: p.role || "",
-    class: p.class || ""
-  }));
-
-  const html = enriched.map(p => {
-    const role = p.role.toLowerCase();
-    const roleClass =
-      role === "tank" ? "roster-role-tank" :
-      role === "healer" ? "roster-role-heal" :
-      role === "dps" ? "roster-role-dps" : "";
-
-    const icon = p.class
-      ? `../../img/classes/${p.class.toLowerCase().replace(" ", "")}.png`
-      : "";
-
-    return `
-      <div class="roster-item">
-        <div class="roster-item-main">
-          ${icon ? `<img src="${icon}" class="roster-class-icon">` : ""}
-          <strong>${p.name}</strong>
-          ${role ? `<span class="roster-role-tag ${roleClass}">${role}</span>` : ""}
-        </div>
-        <div class="roster-meta">
-          <span>${p.class || "Classe sconosciuta"}</span>
-          <span>${p.role || "Ruolo"}</span>
-        </div>
-      </div>
-    `;
-  }).join("");
-
-  container.innerHTML = `<div class="roster-grid roster-grid--compact">${html}</div>`;
 }
 
 async function initProgressPage() {
-  await Promise.all([
-    loadDifficulty("normal", "card-normal"),
-    loadDifficulty("heroic", "card-heroic"),
-    loadDifficulty("mythic", "card-mythic")
-  ]);
-
   try {
-    const last = await fetchLastSession();
-    buildTimeline(last);
-    renderSessionSummary(last);
-    renderReportLink(last);
-    renderRoster(last);
-  } catch (e) {
-    console.error("Errore sessione:", e);
-    const roster = document.getElementById("live-roster");
-    if (roster) roster.textContent = "Errore nel caricare il roster.";
+    await loadLocalRoster();
+  } catch (error) {
+    console.warn("Roster locale non disponibile:", error);
   }
 
-  initLiveTwitch();
+  const progressPromise = (async () => {
+    try {
+      await fetchProgressSummary();
+    } catch (error) {
+      console.warn("Summary worker non disponibile, uso fallback:", error);
+      await Promise.allSettled([
+        loadDifficulty("normal", "card-normal"),
+        loadDifficulty("heroic", "card-heroic"),
+        loadDifficulty("mythic", "card-mythic")
+      ]);
+    }
+    renderMetricCards();
+  })();
+
+  const sessionPromise = (async () => {
+    try {
+      await fetchLastSession();
+      renderSessionSummary(state.lastSession);
+      renderReportLink(state.lastSession);
+      buildTimeline(state.lastSession);
+      renderRoster(state.lastSession);
+    } catch (error) {
+      console.error("Errore ultima sessione:", error);
+      document.getElementById("last-session-summary").innerHTML = `<div class="empty-state">Impossibile caricare la sessione piu recente.</div>`;
+      document.getElementById("dot-timeline").innerHTML = `<div class="empty-state">Timeline non disponibile.</div>`;
+      document.getElementById("live-roster").innerHTML = `<div class="empty-state">Roster non disponibile.</div>`;
+    }
+    renderMetricCards();
+  })();
+
+  await Promise.allSettled([progressPromise, sessionPromise]);
+
+  try {
+    const twitchData = await fetchTwitchLive();
+    renderTwitchLive(twitchData);
+  } catch (error) {
+    console.error("Errore live Twitch:", error);
+  }
 }
 
 initProgressPage();
