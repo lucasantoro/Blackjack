@@ -35,7 +35,7 @@
     <div class="hero-tagline">Roster</div>
     <h2>Ace of Spades</h2>
     <p>
-      Ruoli, volti e profili del team raid, organizzati per funzione per leggere subito la struttura del gruppo.
+      Il roster ufficiale del team, con schede personalizzabili per ogni Raider e una struttura pronta a crescere senza diventare pesante da aggiornare.
     </p>
   </div>
 </section>
@@ -48,11 +48,16 @@
         <div class="eyebrow">Team structure</div>
         <h2 class="section-title">Roster Ace of Spades</h2>
         <p class="section-subtitle">
-          Una panoramica del team con riepilogo iniziale, gruppi per ruolo e profili completi apribili quando vuoi approfondire.
+          Ogni scheda legge i dati da un file unico del roster: classe, server, ruolo e testo personalizzato restano facili da mantenere anche quando entrano nuovi player.
         </p>
       </div>
 
       <div class="roster-layout">
+        <div class="roster-toolbar">
+          <input id="roster-search" class="roster-search" type="search" placeholder="Cerca per nome, classe o server">
+          <div class="roster-filters" id="roster-filters"></div>
+        </div>
+
         <div class="roster-summary" id="roster-summary">
           <div class="roster-summary__grid">
             <div class="roster-summary-card">
@@ -74,89 +79,48 @@
 </footer>
 
 <script>
-const localProfileFiles = [
-  "odetta.html",
-  "aqualara.html",
-  "blakinsidia.html",
-  "gearstrike.html",
-  "rocoro.html",
-  "zepyrot.html",
-  "trolluido.html"
-];
+const rosterDataUrl = "../../data/aceofspades-roster.json";
 
-const workerRosterURL = "https://wild-mode-1b45.lucasantoro2905.workers.dev/progress-last";
-
-const roleClassMap = {
-  tank: "role-tank",
-  healer: "role-healer",
-  dps: "role-dps",
-  unknown: "role-unknown"
-};
-
-const roleLabels = {
-  tank: "Tank",
-  healer: "Healer",
-  dps: "DPS",
-  unknown: "Roster"
-};
-
-const roleDescriptions = {
-  tank: "Chi apre la strada, tiene il ritmo del pull e assorbe la pressione del fight.",
-  healer: "Chi tiene il team in piedi, stabilizza il caos e protegge la progressione.",
-  dps: "Chi converte strategia e uptime in danno pulito, pressione costante e utility.",
-  unknown: "Schede già presenti nel roster raid, con dettagli base in attesa di profilo completo."
+const roleConfig = {
+  tank: {
+    label: "Tank",
+    badgeClass: "role-tank",
+    sectionCopy: "Chi apre la strada, detta il ritmo del pull e regge la pressione del fight."
+  },
+  healer: {
+    label: "Healer",
+    badgeClass: "role-healer",
+    sectionCopy: "Chi tiene il team in piedi, rimette ordine e protegge la serata."
+  },
+  dps: {
+    label: "DPS",
+    badgeClass: "role-dps",
+    sectionCopy: "Chi trasforma preparazione e uptime in danno, utility e chiusura dei boss."
+  },
+  unknown: {
+    label: "Da completare",
+    badgeClass: "role-unknown",
+    sectionCopy: "Schede base pronte da personalizzare con ruolo finale, tagline e presentazione."
+  }
 };
 
 const roleOrder = ["tank", "healer", "dps", "unknown"];
 
-function normalizeName(value) {
-  return value
+const state = {
+  members: [],
+  search: "",
+  role: "all"
+};
+
+function normalizeText(value) {
+  return (value || "")
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-zA-Z0-9]/g, "")
     .toLowerCase();
-}
-
-function slugifyName(value) {
-  return normalizeName(value) || "membro";
 }
 
 function classIcon(name) {
   return `../../img/classes/${name.toLowerCase().replace(/\s+/g, "")}.png`;
-}
-
-function normalizeClassName(value) {
-  if (!value) return "Unknown";
-  const classes = {
-    deathknight: "Death Knight",
-    demonhunter: "Demon Hunter",
-    evoker: "Evoker",
-    shaman: "Shaman",
-    druid: "Druid",
-    warrior: "Warrior",
-    priest: "Priest",
-    mage: "Mage",
-    hunter: "Hunter",
-    warlock: "Warlock",
-    paladin: "Paladin",
-    monk: "Monk"
-  };
-
-  const normalized = value.toLowerCase().replace(/\s+/g, "");
-  return classes[normalized] || value;
-}
-
-function inferRole(metaRole, tagline, description, className) {
-  if (metaRole) return metaRole.toLowerCase();
-
-  const text = `${tagline} ${description}`.toLowerCase();
-  if (text.includes("healer") || text.includes("guarit")) return "healer";
-  if (text.includes("tank")) return "tank";
-
-  const pureDpsClasses = ["Mage", "Hunter", "Warlock", "Rogue"];
-  if (pureDpsClasses.includes(className)) return "dps";
-
-  return "unknown";
 }
 
 function escapeHtml(value) {
@@ -168,145 +132,92 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
-function firstSentence(text) {
+function firstSentence(value) {
+  const text = String(value || "").trim();
   const match = text.match(/^.*?[.!?](?:\s|$)/);
-  const sentence = match ? match[0].trim() : text.trim();
+  const sentence = match ? match[0].trim() : text;
   return sentence.length > 155 ? `${sentence.slice(0, 152)}...` : sentence;
 }
 
-function parseMember(html) {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, "text/html");
-
-  const wrapper = doc.querySelector(".member");
-  const image = wrapper?.querySelector("img")?.getAttribute("src") || "../../img/logo.png";
-  const name = wrapper?.querySelector("h3")?.textContent?.trim() || "Membro";
-  const tagline = wrapper?.querySelector(".tagline")?.textContent?.trim() || "Raider Ace of Spades";
-  const description = wrapper?.querySelector(".description-long")?.textContent?.trim() || "Scheda membro in aggiornamento.";
-  const meta = wrapper?.querySelector(".member-meta");
-  const className = normalizeClassName(meta?.dataset.class || "Unknown");
-  const role = inferRole(meta?.dataset.role, tagline, description, className);
-  const rioURL = meta?.dataset.rio || "";
-
-  return {
-    key: normalizeName(name),
-    name,
-    tagline,
-    description,
-    snippet: firstSentence(description),
-    role,
-    className,
-    rioURL,
-    image,
-    server: "Nemesis",
-    isLocalProfile: true
-  };
+function hasCustomProfile(member) {
+  return member.profileStatus === "custom";
 }
 
-async function loadLocalProfiles() {
-  const profiles = await Promise.all(
-    localProfileFiles.map(async file => {
-      const response = await fetch(`../../members/${file}`);
-      if (!response.ok) {
-        throw new Error(`Errore caricando ${file}`);
-      }
-
-      const html = await response.text();
-      return parseMember(html);
-    })
-  );
-
-  return new Map(profiles.map(profile => [profile.key, profile]));
+function getActiveMembers() {
+  return state.members.filter(member => member.active !== false);
 }
 
-async function loadWorkerRoster() {
-  const response = await fetch(workerRosterURL);
-  if (!response.ok) {
-    throw new Error("Impossibile caricare il roster dal worker.");
-  }
-
-  const payload = await response.json();
-  return payload.roster || [];
-}
-
-function buildRioUrl(name, server) {
-  if (!name || !server) return "";
-  return `https://raider.io/characters/eu/${encodeURIComponent(server)}/${encodeURIComponent(name)}`;
-}
-
-function buildRosterEntry(entry, localProfile) {
-  const className = normalizeClassName(entry.class);
-
-  if (localProfile) {
-    return {
-      ...localProfile,
-      className: localProfile.className !== "Unknown" ? localProfile.className : className,
-      rioURL: localProfile.rioURL || buildRioUrl(entry.name, entry.server),
-      server: entry.server || localProfile.server || "Nemesis"
-    };
-  }
-
-  const role = inferRole("", "", "", className);
-  const description = `${entry.name} fa parte del roster Ace of Spades. Scheda personale in aggiornamento.`;
-
-  return {
-    key: normalizeName(entry.name),
-    name: entry.name,
-    tagline: entry.server ? `Raider da ${entry.server}` : "Raider Ace of Spades",
-    description,
-    snippet: firstSentence(description),
-    role,
-    className,
-    rioURL: buildRioUrl(entry.name, entry.server),
-    image: "../../img/logo.png",
-    server: entry.server || "",
-    isLocalProfile: false
-  };
-}
-
-function mergeRoster(workerRoster, localProfiles) {
-  const merged = workerRoster.map(entry => {
-    const key = normalizeName(entry.name);
-    return buildRosterEntry(entry, localProfiles.get(key));
+function getFilteredMembers() {
+  return getActiveMembers().filter(member => {
+    const matchesRole = state.role === "all" || member.role === state.role;
+    const haystack = normalizeText([member.name, member.class, member.server, member.tagline].join(" "));
+    const matchesSearch = !state.search || haystack.includes(normalizeText(state.search));
+    return matchesRole && matchesSearch;
   });
-
-  localProfiles.forEach((profile, key) => {
-    if (!merged.some(member => member.key === key)) {
-      merged.push(profile);
-    }
-  });
-
-  return merged;
 }
 
-function renderSummary(parsedMembers) {
+function renderFilters() {
+  const container = document.getElementById("roster-filters");
+  const filters = [
+    { value: "all", label: "Tutti" },
+    { value: "tank", label: "Tank" },
+    { value: "healer", label: "Healer" },
+    { value: "dps", label: "DPS" },
+    { value: "unknown", label: "Da completare" }
+  ];
+
+  container.innerHTML = filters.map(filter => `
+    <button
+      type="button"
+      class="filter-chip ${state.role === filter.value ? "is-active" : ""}"
+      data-role-filter="${filter.value}">
+      ${filter.label}
+    </button>
+  `).join("");
+
+  container.querySelectorAll("[data-role-filter]").forEach(button => {
+    button.addEventListener("click", () => {
+      state.role = button.getAttribute("data-role-filter");
+      renderRoster();
+    });
+  });
+}
+
+function renderSummary() {
   const summary = document.getElementById("roster-summary");
-  const counts = roleOrder.reduce((acc, role) => {
-    acc[role] = parsedMembers.filter(member => member.role === role).length;
+  const activeMembers = getActiveMembers();
+  const customProfiles = activeMembers.filter(hasCustomProfile).length;
+  const placeholderProfiles = activeMembers.length - customProfiles;
+  const countsByRole = roleOrder.reduce((acc, role) => {
+    acc[role] = activeMembers.filter(member => member.role === role).length;
     return acc;
   }, {});
 
   summary.innerHTML = `
     <div class="roster-summary__grid">
       <div class="roster-summary-card">
-        <span class="roster-summary-card__value">${parsedMembers.length}</span>
-        <span class="roster-summary-card__label">membri nel roster</span>
+        <span class="roster-summary-card__value">${activeMembers.length}</span>
+        <span class="roster-summary-card__label">membri attivi</span>
       </div>
       <div class="roster-summary-card">
-        <span class="roster-summary-card__value">${counts.tank}</span>
+        <span class="roster-summary-card__value">${customProfiles}</span>
+        <span class="roster-summary-card__label">schede personalizzate</span>
+      </div>
+      <div class="roster-summary-card">
+        <span class="roster-summary-card__value">${countsByRole.tank}</span>
         <span class="roster-summary-card__label">tank</span>
       </div>
       <div class="roster-summary-card">
-        <span class="roster-summary-card__value">${counts.healer}</span>
+        <span class="roster-summary-card__value">${countsByRole.healer}</span>
         <span class="roster-summary-card__label">healer</span>
       </div>
       <div class="roster-summary-card">
-        <span class="roster-summary-card__value">${counts.dps}</span>
+        <span class="roster-summary-card__value">${countsByRole.dps}</span>
         <span class="roster-summary-card__label">dps</span>
       </div>
       <div class="roster-summary-card">
-        <span class="roster-summary-card__value">${counts.unknown}</span>
-        <span class="roster-summary-card__label">schede base</span>
+        <span class="roster-summary-card__value">${placeholderProfiles}</span>
+        <span class="roster-summary-card__label">schede da rifinire</span>
       </div>
     </div>
   `;
@@ -315,22 +226,23 @@ function renderSummary(parsedMembers) {
 function renderMemberCard(member) {
   const safeName = escapeHtml(member.name);
   const safeTagline = escapeHtml(member.tagline);
-  const safeClass = escapeHtml(member.className);
-  const safeSnippet = escapeHtml(member.snippet);
-  const safeDescription = escapeHtml(member.description);
-  const roleClass = roleClassMap[member.role] || "role-unknown";
-  const roleLabel = roleLabels[member.role] || "Roster";
-  const hasKnownClass = member.className && member.className !== "Unknown";
-  const footerMeta = [
-    `Ruolo ${roleLabel}`,
-    hasKnownClass ? `Classe ${safeClass}` : "",
-    member.server ? `Server ${escapeHtml(member.server)}` : ""
+  const safeBio = escapeHtml(member.bio);
+  const safeSnippet = escapeHtml(firstSentence(member.bio));
+  const safeClass = escapeHtml(member.class || "Classe in aggiornamento");
+  const safeServer = escapeHtml(member.server || "");
+  const roleInfo = roleConfig[member.role] || roleConfig.unknown;
+  const hasKnownClass = member.class && member.class !== "Unknown";
+  const hasImage = Boolean(member.image);
+  const cardMeta = [
+    roleInfo.label,
+    hasKnownClass ? safeClass : "",
+    safeServer
   ].filter(Boolean).join(" | ");
 
   return `
     <article class="member-card member-card--compact">
       <div class="member-card__media">
-        <img src="${member.image}" alt="${safeName}">
+        <img src="${hasImage ? member.image : "../../img/logo.png"}" alt="${safeName}">
       </div>
 
       <div class="member-card__body">
@@ -341,8 +253,9 @@ function renderMemberCard(member) {
           </div>
 
           <div class="member-card__tags">
-            ${hasKnownClass ? `<img class="class-icon-small" src="${classIcon(member.className)}" alt="${safeClass}">` : ""}
-            <span class="role-badge ${roleClass}">${roleLabel}</span>
+            ${hasKnownClass ? `<img class="class-icon-small" src="${classIcon(member.class)}" alt="${safeClass}">` : ""}
+            <span class="role-badge ${roleInfo.badgeClass}">${roleInfo.label}</span>
+            ${hasCustomProfile(member) ? "" : `<span class="member-card__status">Da completare</span>`}
           </div>
         </div>
 
@@ -350,14 +263,14 @@ function renderMemberCard(member) {
         <p class="member-card__snippet">${safeSnippet}</p>
 
         <details class="member-details">
-          <summary>${member.isLocalProfile ? "Apri profilo completo" : "Apri scheda base"}</summary>
-          <p>${safeDescription}</p>
+          <summary>${hasCustomProfile(member) ? "Apri profilo completo" : "Apri scheda base"}</summary>
+          <p>${safeBio}</p>
         </details>
 
         <div class="member-card__footer">
-          <span class="member-card__class">${footerMeta}</span>
-          ${member.rioURL ? `
-            <a href="${member.rioURL}" target="_blank" rel="noopener noreferrer" class="rio-btn--compact" aria-label="Apri il profilo Raider.IO di ${safeName}">
+          <span class="member-card__class">${cardMeta}</span>
+          ${member.rio ? `
+            <a href="${member.rio}" target="_blank" rel="noopener noreferrer" class="rio-btn--compact" aria-label="Apri il profilo Raider.IO di ${safeName}">
               <img src="../../img/raiderio_logo.png" class="rio-logo" alt="Raider.IO">
             </a>
           ` : ""}
@@ -367,18 +280,29 @@ function renderMemberCard(member) {
   `;
 }
 
-function renderGroups(parsedMembers) {
+function renderRoster() {
+  renderFilters();
+  renderSummary();
+
   const container = document.getElementById("roster-container");
-  const groupedMarkup = roleOrder.map(role => {
-    const membersByRole = parsedMembers.filter(member => member.role === role);
+  const filteredMembers = getFilteredMembers();
+
+  if (!filteredMembers.length) {
+    container.innerHTML = `<div class="empty-state">Nessun Raider corrisponde ai filtri attuali.</div>`;
+    return;
+  }
+
+  container.innerHTML = roleOrder.map(role => {
+    const membersByRole = filteredMembers.filter(member => member.role === role);
     if (!membersByRole.length) return "";
 
+    const roleInfo = roleConfig[role];
     return `
       <section class="roster-role-section">
         <div class="roster-role-section__header">
           <div>
-            <h3>${roleLabels[role]}</h3>
-            <p>${roleDescriptions[role]}</p>
+            <h3>${roleInfo.label}</h3>
+            <p>${roleInfo.sectionCopy}</p>
           </div>
           <span class="roster-role-section__count">${membersByRole.length} ${membersByRole.length === 1 ? "membro" : "membri"}</span>
         </div>
@@ -389,53 +313,40 @@ function renderGroups(parsedMembers) {
       </section>
     `;
   }).join("");
-
-  container.innerHTML = groupedMarkup;
 }
 
 async function loadRoster() {
-  const rosterContainer = document.getElementById("roster-container");
-
-  try {
-    const localProfiles = await loadLocalProfiles();
-    let parsedMembers = Array.from(localProfiles.values());
-
-    try {
-      const workerRoster = await loadWorkerRoster();
-      if (workerRoster.length) {
-        parsedMembers = mergeRoster(workerRoster, localProfiles);
-      }
-    } catch (workerError) {
-      console.warn("Roster worker non disponibile in questo contesto:", workerError);
-    }
-
-    parsedMembers.sort((a, b) => {
-      const roleIndex = roleOrder.indexOf(a.role) - roleOrder.indexOf(b.role);
-      if (roleIndex !== 0) return roleIndex;
-      return a.name.localeCompare(b.name, "it");
-    });
-
-    renderSummary(parsedMembers);
-    renderGroups(parsedMembers);
-  } catch (error) {
-    console.error(error);
-    rosterContainer.innerHTML = `
-      <div class="section-shell">
-        <p class="lead">Impossibile caricare il roster in questo momento.</p>
-      </div>
-    `;
+  const response = await fetch(rosterDataUrl);
+  if (!response.ok) {
+    throw new Error("Impossibile caricare il file roster.");
   }
+
+  const payload = await response.json();
+  state.members = payload.members || [];
+  renderRoster();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("page-loaded");
-  loadRoster();
+
+  const search = document.getElementById("roster-search");
+  search.addEventListener("input", event => {
+    state.search = event.target.value;
+    renderRoster();
+  });
+
+  loadRoster().catch(error => {
+    console.error(error);
+    document.getElementById("roster-container").innerHTML = `
+      <div class="empty-state">Impossibile caricare il roster in questo momento.</div>
+    `;
+  });
 });
 
 document.querySelectorAll("a").forEach(link => {
   if (link.hostname === window.location.hostname) {
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
       const href = this.getAttribute("href");
       document.body.classList.remove("page-loaded");
       setTimeout(() => { window.location.href = href; }, 300);
