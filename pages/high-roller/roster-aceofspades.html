@@ -35,8 +35,7 @@
     <div class="hero-tagline">Roster</div>
     <h2>Ace of Spades</h2>
     <p>
-      Ruoli, volti e profili del team raid. Il roster ora è organizzato per funzione,
-      così si capisce subito la struttura del gruppo senza scorrere card enormi una dopo l'altra.
+      Ruoli, volti e profili del team raid, organizzati per funzione per leggere subito la struttura del gruppo.
     </p>
   </div>
 </section>
@@ -49,8 +48,7 @@
         <div class="eyebrow">Team structure</div>
         <h2 class="section-title">Roster Ace of Spades</h2>
         <p class="section-subtitle">
-          Ho riorganizzato la presentazione con un riepilogo iniziale e gruppi per ruolo.
-          Le card sono più compatte, ma i profili completi restano apribili quando vuoi leggere di più.
+          Una panoramica del team con riepilogo iniziale, gruppi per ruolo e profili completi apribili quando vuoi approfondire.
         </p>
       </div>
 
@@ -76,40 +74,93 @@
 </footer>
 
 <script>
-const members = [
+const localProfileFiles = [
   "odetta.html",
   "aqualara.html",
+  "blakinsidia.html",
   "gearstrike.html",
+  "rocoro.html",
   "zepyrot.html",
   "trolluido.html"
 ];
 
+const workerRosterURL = "https://wild-mode-1b45.lucasantoro2905.workers.dev/progress-last";
+
 const roleClassMap = {
   tank: "role-tank",
   healer: "role-healer",
-  dps: "role-dps"
+  dps: "role-dps",
+  unknown: "role-unknown"
 };
 
 const roleLabels = {
   tank: "Tank",
   healer: "Healer",
-  dps: "DPS"
+  dps: "DPS",
+  unknown: "Roster"
 };
 
 const roleDescriptions = {
   tank: "Chi apre la strada, tiene il ritmo del pull e assorbe la pressione del fight.",
   healer: "Chi tiene il team in piedi, stabilizza il caos e protegge la progressione.",
-  dps: "Chi converte strategia e uptime in danno pulito, pressione costante e utility."
+  dps: "Chi converte strategia e uptime in danno pulito, pressione costante e utility.",
+  unknown: "Schede già presenti nel roster raid, con dettagli base in attesa di profilo completo."
 };
 
-const roleOrder = ["tank", "healer", "dps"];
+const roleOrder = ["tank", "healer", "dps", "unknown"];
+
+function normalizeName(value) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9]/g, "")
+    .toLowerCase();
+}
+
+function slugifyName(value) {
+  return normalizeName(value) || "membro";
+}
 
 function classIcon(name) {
   return `../../img/classes/${name.toLowerCase().replace(/\s+/g, "")}.png`;
 }
 
+function normalizeClassName(value) {
+  if (!value) return "Unknown";
+  const classes = {
+    deathknight: "Death Knight",
+    demonhunter: "Demon Hunter",
+    evoker: "Evoker",
+    shaman: "Shaman",
+    druid: "Druid",
+    warrior: "Warrior",
+    priest: "Priest",
+    mage: "Mage",
+    hunter: "Hunter",
+    warlock: "Warlock",
+    paladin: "Paladin",
+    monk: "Monk"
+  };
+
+  const normalized = value.toLowerCase().replace(/\s+/g, "");
+  return classes[normalized] || value;
+}
+
+function inferRole(metaRole, tagline, description, className) {
+  if (metaRole) return metaRole.toLowerCase();
+
+  const text = `${tagline} ${description}`.toLowerCase();
+  if (text.includes("healer") || text.includes("guarit")) return "healer";
+  if (text.includes("tank")) return "tank";
+
+  const pureDpsClasses = ["Mage", "Hunter", "Warlock", "Rogue"];
+  if (pureDpsClasses.includes(className)) return "dps";
+
+  return "unknown";
+}
+
 function escapeHtml(value) {
-  return value
+  return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -128,16 +179,17 @@ function parseMember(html) {
   const doc = parser.parseFromString(html, "text/html");
 
   const wrapper = doc.querySelector(".member");
-  const image = wrapper?.querySelector("img")?.getAttribute("src") || "";
+  const image = wrapper?.querySelector("img")?.getAttribute("src") || "../../img/logo.png";
   const name = wrapper?.querySelector("h3")?.textContent?.trim() || "Membro";
-  const tagline = wrapper?.querySelector(".tagline")?.textContent?.trim() || "";
-  const description = wrapper?.querySelector(".description-long")?.textContent?.trim() || "";
+  const tagline = wrapper?.querySelector(".tagline")?.textContent?.trim() || "Raider Ace of Spades";
+  const description = wrapper?.querySelector(".description-long")?.textContent?.trim() || "Scheda membro in aggiornamento.";
   const meta = wrapper?.querySelector(".member-meta");
-  const role = meta?.dataset.role?.toLowerCase() || "dps";
-  const className = meta?.dataset.class || "Unknown";
+  const className = normalizeClassName(meta?.dataset.class || "Unknown");
+  const role = inferRole(meta?.dataset.role, tagline, description, className);
   const rioURL = meta?.dataset.rio || "";
 
   return {
+    key: normalizeName(name),
     name,
     tagline,
     description,
@@ -145,8 +197,86 @@ function parseMember(html) {
     role,
     className,
     rioURL,
-    image
+    image,
+    server: "Nemesis",
+    isLocalProfile: true
   };
+}
+
+async function loadLocalProfiles() {
+  const profiles = await Promise.all(
+    localProfileFiles.map(async file => {
+      const response = await fetch(`../../members/${file}`);
+      if (!response.ok) {
+        throw new Error(`Errore caricando ${file}`);
+      }
+
+      const html = await response.text();
+      return parseMember(html);
+    })
+  );
+
+  return new Map(profiles.map(profile => [profile.key, profile]));
+}
+
+async function loadWorkerRoster() {
+  const response = await fetch(workerRosterURL);
+  if (!response.ok) {
+    throw new Error("Impossibile caricare il roster dal worker.");
+  }
+
+  const payload = await response.json();
+  return payload.roster || [];
+}
+
+function buildRioUrl(name, server) {
+  if (!name || !server) return "";
+  return `https://raider.io/characters/eu/${encodeURIComponent(server)}/${encodeURIComponent(name)}`;
+}
+
+function buildRosterEntry(entry, localProfile) {
+  const className = normalizeClassName(entry.class);
+
+  if (localProfile) {
+    return {
+      ...localProfile,
+      className: localProfile.className !== "Unknown" ? localProfile.className : className,
+      rioURL: localProfile.rioURL || buildRioUrl(entry.name, entry.server),
+      server: entry.server || localProfile.server || "Nemesis"
+    };
+  }
+
+  const role = inferRole("", "", "", className);
+  const description = `${entry.name} fa parte del roster Ace of Spades. Scheda personale in aggiornamento.`;
+
+  return {
+    key: normalizeName(entry.name),
+    name: entry.name,
+    tagline: entry.server ? `Raider da ${entry.server}` : "Raider Ace of Spades",
+    description,
+    snippet: firstSentence(description),
+    role,
+    className,
+    rioURL: buildRioUrl(entry.name, entry.server),
+    image: "../../img/logo.png",
+    server: entry.server || "",
+    isLocalProfile: false
+  };
+}
+
+function mergeRoster(workerRoster, localProfiles) {
+  const merged = workerRoster.map(entry => {
+    const key = normalizeName(entry.name);
+    return buildRosterEntry(entry, localProfiles.get(key));
+  });
+
+  localProfiles.forEach((profile, key) => {
+    if (!merged.some(member => member.key === key)) {
+      merged.push(profile);
+    }
+  });
+
+  return merged;
 }
 
 function renderSummary(parsedMembers) {
@@ -174,6 +304,10 @@ function renderSummary(parsedMembers) {
         <span class="roster-summary-card__value">${counts.dps}</span>
         <span class="roster-summary-card__label">dps</span>
       </div>
+      <div class="roster-summary-card">
+        <span class="roster-summary-card__value">${counts.unknown}</span>
+        <span class="roster-summary-card__label">schede base</span>
+      </div>
     </div>
   `;
 }
@@ -184,8 +318,14 @@ function renderMemberCard(member) {
   const safeClass = escapeHtml(member.className);
   const safeSnippet = escapeHtml(member.snippet);
   const safeDescription = escapeHtml(member.description);
-  const roleClass = roleClassMap[member.role] || "role-dps";
-  const roleLabel = roleLabels[member.role] || "DPS";
+  const roleClass = roleClassMap[member.role] || "role-unknown";
+  const roleLabel = roleLabels[member.role] || "Roster";
+  const hasKnownClass = member.className && member.className !== "Unknown";
+  const footerMeta = [
+    `Ruolo ${roleLabel}`,
+    hasKnownClass ? `Classe ${safeClass}` : "",
+    member.server ? `Server ${escapeHtml(member.server)}` : ""
+  ].filter(Boolean).join(" | ");
 
   return `
     <article class="member-card member-card--compact">
@@ -201,21 +341,21 @@ function renderMemberCard(member) {
           </div>
 
           <div class="member-card__tags">
-            <img class="class-icon-small" src="${classIcon(member.className)}" alt="${safeClass}">
+            ${hasKnownClass ? `<img class="class-icon-small" src="${classIcon(member.className)}" alt="${safeClass}">` : ""}
             <span class="role-badge ${roleClass}">${roleLabel}</span>
           </div>
         </div>
 
-        <p class="member-card__class">${safeClass}</p>
+        <p class="member-card__class">${hasKnownClass ? safeClass : "Classe in aggiornamento"}</p>
         <p class="member-card__snippet">${safeSnippet}</p>
 
         <details class="member-details">
-          <summary>Apri profilo completo</summary>
+          <summary>${member.isLocalProfile ? "Apri profilo completo" : "Apri scheda base"}</summary>
           <p>${safeDescription}</p>
         </details>
 
         <div class="member-card__footer">
-          <span class="member-card__class">Ruolo ${roleLabel} | Classe ${safeClass}</span>
+          <span class="member-card__class">${footerMeta}</span>
           ${member.rioURL ? `
             <a href="${member.rioURL}" target="_blank" rel="noopener noreferrer" class="rio-btn--compact" aria-label="Apri il profilo Raider.IO di ${safeName}">
               <img src="../../img/raiderio_logo.png" class="rio-logo" alt="Raider.IO">
@@ -257,17 +397,17 @@ async function loadRoster() {
   const rosterContainer = document.getElementById("roster-container");
 
   try {
-    const parsedMembers = await Promise.all(
-      members.map(async file => {
-        const response = await fetch(`../../members/${file}`);
-        if (!response.ok) {
-          throw new Error(`Errore caricando ${file}`);
-        }
+    const localProfiles = await loadLocalProfiles();
+    let parsedMembers = Array.from(localProfiles.values());
 
-        const html = await response.text();
-        return parseMember(html);
-      })
-    );
+    try {
+      const workerRoster = await loadWorkerRoster();
+      if (workerRoster.length) {
+        parsedMembers = mergeRoster(workerRoster, localProfiles);
+      }
+    } catch (workerError) {
+      console.warn("Roster worker non disponibile in questo contesto:", workerError);
+    }
 
     parsedMembers.sort((a, b) => {
       const roleIndex = roleOrder.indexOf(a.role) - roleOrder.indexOf(b.role);
