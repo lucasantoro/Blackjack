@@ -2,7 +2,8 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Blackjack – Raider</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blackjack | Raider</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
@@ -21,60 +22,123 @@
   </nav>
 </header>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-content">
+    <div class="hero-tagline">Percorso raid</div>
     <h2>I Raider dei Blackjack</h2>
     <p>
-      Un solo team, una sola identità: metodo, costanza e mentalità da progress.
+      Un solo team, una sola identità: preparazione, responsabilità e un modo di giocare
+      che resta pulito anche quando il livello sale.
     </p>
+
+    <div class="hero-stats">
+      <div class="stat-chip">
+        <span class="stat-chip__value">HC</span>
+        <span class="stat-chip__label">clear rapido come standard</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-chip__value">Mythic</span>
+        <span class="stat-chip__label">progress con continuità</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-chip__value">Review</span>
+        <span class="stat-chip__label">dopo ogni serata importante</span>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- SFONDO CON LOGO -->
 <div class="bg-container bg-main-logo">
   <main class="panel">
 
-    <h2 class="section-title">Chi sono i Raider</h2>
+    <section class="split-layout">
+      <div class="section-shell">
+        <div class="section-head">
+          <div class="eyebrow">Filosofia</div>
+          <h2 class="section-title">Chi sono i Raider</h2>
+          <p class="section-subtitle">
+            Questa pagina ora lavora meglio come ponte tra home, roster e progress:
+            meno testo ripetuto, più orientamento e più chiarezza su cosa significa giocare qui.
+          </p>
+        </div>
 
-    <p class="description-long">
-      I Raider dei <strong>Blackjack</strong> sono giocatori affidabili, motivati e rispettosi,
-      uniti dalla voglia di affrontare il raid con organizzazione, responsabilità e spirito di squadra.
-    </p>
-
-    <p class="description-long">
-      La nostra struttura ruota attorno a un unico team:
-      <strong>Ace of Spades</strong>.
-      Obiettivo: progress solido, comunicazione chiara e miglioramento continuo.
-    </p>
-
-    <!-- CARD RAID TEAM -->
-    <div class="raid-teams">
-
-      <!-- classe Ace of Spades con animazione dedicata -->
-      <div class="team-card aceofspades">
-        <h3>Ace of Spades</h3>
-        <p>
-          Un gruppo compatto e orientato alla performance, con un ambiente sereno ma determinato.
-          Preparazione, review e crescita costante di roster e singoli.
+        <p class="description-long">
+          I Raider dei <strong>Blackjack</strong> sono giocatori affidabili, motivati e rispettosi,
+          uniti dalla voglia di affrontare il raid con organizzazione, comunicazione chiara e disciplina sostenibile.
+          La nostra struttura ruota attorno a un solo team: <strong>Ace of Spades</strong>.
         </p>
-        <a href="../pages/high-roller/aceofspades.html" class="team-btn">Scopri il team</a>
       </div>
 
-    </div>
+      <aside class="panel-callout">
+        <div class="eyebrow">Mentalità</div>
+        <h3>Come affrontiamo il progress</h3>
+        <ul class="check-list">
+          <li><strong>Preparazione personale</strong> prima di chiedere performance al gruppo.</li>
+          <li><strong>Feedback leggibile</strong> invece di tensione o caos in voice.</li>
+          <li><strong>Crescita costante</strong> del roster, non solo del singolo player.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div class="eyebrow">Team</div>
+        <h2 class="section-title">Ace of Spades</h2>
+        <p class="section-subtitle">
+          Il cuore del reparto Raider. Qui il sito ora usa lo spazio per dare accessi chiari alle pagine che servono davvero.
+        </p>
+      </div>
+
+      <div class="raid-teams">
+        <article class="team-card aceofspades">
+          <h3>Team overview</h3>
+          <p>
+            Un gruppo compatto e ordinato, con ambiente sereno ma aspettative chiare.
+            L'obiettivo non è solo chiudere il contenuto, ma farlo bene e nel modo giusto.
+          </p>
+          <a href="../pages/high-roller/aceofspades.html" class="team-btn">Apri la pagina del team</a>
+        </article>
+
+        <article class="team-card aceofspades">
+          <h3>Roster</h3>
+          <p>
+            Presentazione per ruolo, profili più compatti e accesso diretto ai membri del team senza muri verticali.
+          </p>
+          <a href="../pages/high-roller/roster-aceofspades.html" class="team-btn">Vedi il roster</a>
+        </article>
+
+        <article class="team-card aceofspades">
+          <h3>Progress</h3>
+          <p>
+            Stato del raid, ultime sessioni, report e roster live: la parte più utile da consultare durante la stagione.
+          </p>
+          <a href="../pages/high-roller/aceofspades-progress.html" class="team-btn">Vai al progress</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="cta-final">
+      <div class="eyebrow">Recruiting</div>
+      <h2 class="section-title">Cerchi un team serio ma vivibile?</h2>
+      <p class="lead">
+        Se ti ritrovi in questa impostazione e vuoi contribuire a un roster affidabile,
+        il passo successivo è la candidatura.
+      </p>
+      <a href="recruiting.html" class="button-primary">Compila il form</a>
+    </section>
 
   </main>
 </div>
 
 <footer>
-  <p>&copy; 2025 Blackjack – Sito ufficiale</p>
+  <p>&copy; 2026 Blackjack | Raider</p>
 </footer>
 
-<!-- TRANSIZIONE PAGINE -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   document.body.classList.add("page-loaded");
 });
+
 document.querySelectorAll("a").forEach(link => {
   if (link.hostname === window.location.hostname) {
     link.addEventListener("click", function (e) {

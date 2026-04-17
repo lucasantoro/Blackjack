@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<title>Ace of Spades – Roster</title>
-<link rel="stylesheet" href="../../css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ace of Spades | Roster</title>
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 
 <body class="page-transition blackjack-bg">
@@ -22,36 +24,58 @@
 
 <nav class="subnav">
   <ul>
-    <li><a href="../high-roller/aceofspades.html">Home Team</a></li>
-    <li><a href="../high-roller/roster-aceofspades.html" class="active">Roster</a></li>
-    <li><a href="../high-roller/aceofspades-progress.html">Progress</a></li>
+    <li><a href="aceofspades.html">Home Team</a></li>
+    <li><a href="roster-aceofspades.html" class="active">Roster</a></li>
+    <li><a href="aceofspades-progress.html">Progress</a></li>
   </ul>
 </nav>
 
 <section class="hero">
   <div class="hero-content">
-    <h2>Roster Ace of Spades</h2>
-    <p>Ruoli, specializzazioni e volti del team raid Blackjack.</p>
+    <div class="hero-tagline">Roster</div>
+    <h2>Ace of Spades</h2>
+    <p>
+      Ruoli, volti e profili del team raid. Il roster ora è organizzato per funzione,
+      così si capisce subito la struttura del gruppo senza scorrere card enormi una dopo l'altra.
+    </p>
   </div>
 </section>
 
 <div class="bg-container bg-aceofspades-logo">
   <main class="panel">
 
-    <h2 class="section-title">Roster Ace of Spades</h2>
+    <section class="section-shell">
+      <div class="section-head">
+        <div class="eyebrow">Team structure</div>
+        <h2 class="section-title">Roster Ace of Spades</h2>
+        <p class="section-subtitle">
+          Ho riorganizzato la presentazione con un riepilogo iniziale e gruppi per ruolo.
+          Le card sono più compatte, ma i profili completi restano apribili quando vuoi leggere di più.
+        </p>
+      </div>
 
-    <div class="roster-grid roster-grid--two" id="roster-container"></div>
+      <div class="roster-layout">
+        <div class="roster-summary" id="roster-summary">
+          <div class="roster-summary__grid">
+            <div class="roster-summary-card">
+              <span class="roster-summary-card__value">...</span>
+              <span class="roster-summary-card__label">Caricamento roster</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="roster-shell" id="roster-container"></div>
+      </div>
+    </section>
 
   </main>
 </div>
 
 <footer>
-  <p>&copy; 2025 Blackjack</p>
+  <p>&copy; 2026 Blackjack | Roster Ace of Spades</p>
 </footer>
 
-<!-- SCRIPT: COSTRUZIONE CARD DINAMICA -->
 <script>
-// LISTA DEI MEMBRI ACE OF SPADES
 const members = [
   "odetta.html",
   "aqualara.html",
@@ -60,63 +84,223 @@ const members = [
   "trolluido.html"
 ];
 
-// Mappa ruoli
-const roleMap = {
-  "TANK": "role-tank",
-  "HEALER": "role-healer",
-  "DPS": "role-dps"
+const roleClassMap = {
+  tank: "role-tank",
+  healer: "role-healer",
+  dps: "role-dps"
 };
 
-// Icone classi
+const roleLabels = {
+  tank: "Tank",
+  healer: "Healer",
+  dps: "DPS"
+};
+
+const roleDescriptions = {
+  tank: "Chi apre la strada, tiene il ritmo del pull e assorbe la pressione del fight.",
+  healer: "Chi tiene il team in piedi, stabilizza il caos e protegge la progressione.",
+  dps: "Chi converte strategia e uptime in danno pulito, pressione costante e utility."
+};
+
+const roleOrder = ["tank", "healer", "dps"];
+
 function classIcon(name) {
-  return `../../img/classes/${name.toLowerCase().replace(" ", "")}.png`;
+  return `../../img/classes/${name.toLowerCase().replace(/\s+/g, "")}.png`;
 }
 
-const container = document.getElementById("roster-container");
+function escapeHtml(value) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
 
-// Caricamento dinamico
-members.forEach(file => {
-  fetch(`../../members/${file}`)
-    .then(res => res.text())
-    .then(html => {
+function firstSentence(text) {
+  const match = text.match(/^.*?[.!?](?:\s|$)/);
+  const sentence = match ? match[0].trim() : text.trim();
+  return sentence.length > 155 ? `${sentence.slice(0, 152)}...` : sentence;
+}
 
-      // Metadata
-      const className = html.match(/data-class="([^"]+)"/)?.[1] ?? null;
-      const roleName  = html.match(/data-role="([^"]+)"/)?.[1]?.toUpperCase() ?? null;
-      const rioURL    = html.match(/data-rio="([^"]+)"/)?.[1] ?? null;
+function parseMember(html) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
 
-      container.innerHTML += `
-        <div class="member-card">
+  const wrapper = doc.querySelector(".member");
+  const image = wrapper?.querySelector("img")?.getAttribute("src") || "";
+  const name = wrapper?.querySelector("h3")?.textContent?.trim() || "Membro";
+  const tagline = wrapper?.querySelector(".tagline")?.textContent?.trim() || "";
+  const description = wrapper?.querySelector(".description-long")?.textContent?.trim() || "";
+  const meta = wrapper?.querySelector(".member-meta");
+  const role = meta?.dataset.role?.toLowerCase() || "dps";
+  const className = meta?.dataset.class || "Unknown";
+  const rioURL = meta?.dataset.rio || "";
 
-          <div class="member-header">
-            <div>${html}</div>
+  return {
+    name,
+    tagline,
+    description,
+    snippet: firstSentence(description),
+    role,
+    className,
+    rioURL,
+    image
+  };
+}
+
+function renderSummary(parsedMembers) {
+  const summary = document.getElementById("roster-summary");
+  const counts = roleOrder.reduce((acc, role) => {
+    acc[role] = parsedMembers.filter(member => member.role === role).length;
+    return acc;
+  }, {});
+
+  summary.innerHTML = `
+    <div class="roster-summary__grid">
+      <div class="roster-summary-card">
+        <span class="roster-summary-card__value">${parsedMembers.length}</span>
+        <span class="roster-summary-card__label">membri nel roster</span>
+      </div>
+      <div class="roster-summary-card">
+        <span class="roster-summary-card__value">${counts.tank}</span>
+        <span class="roster-summary-card__label">tank</span>
+      </div>
+      <div class="roster-summary-card">
+        <span class="roster-summary-card__value">${counts.healer}</span>
+        <span class="roster-summary-card__label">healer</span>
+      </div>
+      <div class="roster-summary-card">
+        <span class="roster-summary-card__value">${counts.dps}</span>
+        <span class="roster-summary-card__label">dps</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderMemberCard(member) {
+  const safeName = escapeHtml(member.name);
+  const safeTagline = escapeHtml(member.tagline);
+  const safeClass = escapeHtml(member.className);
+  const safeSnippet = escapeHtml(member.snippet);
+  const safeDescription = escapeHtml(member.description);
+  const roleClass = roleClassMap[member.role] || "role-dps";
+  const roleLabel = roleLabels[member.role] || "DPS";
+
+  return `
+    <article class="member-card member-card--compact">
+      <div class="member-card__media">
+        <img src="${member.image}" alt="${safeName}">
+      </div>
+
+      <div class="member-card__body">
+        <div class="member-card__top">
+          <div>
+            <h3 class="member-card__name">${safeName}</h3>
+            <p class="tagline">${safeTagline}</p>
           </div>
 
-          <div class="member-footer">
-            <div class="footer-left">
-              ${className ? `<img class="class-icon-small" src="${classIcon(className)}">` : ""}
-              ${roleName ? `<span class="role-badge ${roleMap[roleName]}">${roleName}</span>` : ""}
-            </div>
-
-            <div class="footer-right">
-              ${rioURL ? `
-                <a href="${rioURL}" target="_blank" class="rio-btn rio-btn--compact">
-                  <img src="../../img/raiderio_logo.png" class="rio-logo">
-                </a>
-              ` : ""}
-            </div>
+          <div class="member-card__tags">
+            <img class="class-icon-small" src="${classIcon(member.className)}" alt="${safeClass}">
+            <span class="role-badge ${roleClass}">${roleLabel}</span>
           </div>
+        </div>
 
-        </div>`;
-    })
-    .catch(err => console.error("Errore caricando membro:", file, err));
-});
-</script>
+        <p class="member-card__class">${safeClass}</p>
+        <p class="member-card__snippet">${safeSnippet}</p>
 
-<!-- PAGE TRANSITION -->
-<script>
+        <details class="member-details">
+          <summary>Apri profilo completo</summary>
+          <p>${safeDescription}</p>
+        </details>
+
+        <div class="member-card__footer">
+          <span class="member-card__class">Ruolo ${roleLabel} | Classe ${safeClass}</span>
+          ${member.rioURL ? `
+            <a href="${member.rioURL}" target="_blank" rel="noopener noreferrer" class="rio-btn--compact" aria-label="Apri il profilo Raider.IO di ${safeName}">
+              <img src="../../img/raiderio_logo.png" class="rio-logo" alt="Raider.IO">
+            </a>
+          ` : ""}
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderGroups(parsedMembers) {
+  const container = document.getElementById("roster-container");
+  const groupedMarkup = roleOrder.map(role => {
+    const membersByRole = parsedMembers.filter(member => member.role === role);
+    if (!membersByRole.length) return "";
+
+    return `
+      <section class="roster-role-section">
+        <div class="roster-role-section__header">
+          <div>
+            <h3>${roleLabels[role]}</h3>
+            <p>${roleDescriptions[role]}</p>
+          </div>
+          <span class="roster-role-section__count">${membersByRole.length} ${membersByRole.length === 1 ? "membro" : "membri"}</span>
+        </div>
+
+        <div class="roster-role-grid">
+          ${membersByRole.map(renderMemberCard).join("")}
+        </div>
+      </section>
+    `;
+  }).join("");
+
+  container.innerHTML = groupedMarkup;
+}
+
+async function loadRoster() {
+  const rosterContainer = document.getElementById("roster-container");
+
+  try {
+    const parsedMembers = await Promise.all(
+      members.map(async file => {
+        const response = await fetch(`../../members/${file}`);
+        if (!response.ok) {
+          throw new Error(`Errore caricando ${file}`);
+        }
+
+        const html = await response.text();
+        return parseMember(html);
+      })
+    );
+
+    parsedMembers.sort((a, b) => {
+      const roleIndex = roleOrder.indexOf(a.role) - roleOrder.indexOf(b.role);
+      if (roleIndex !== 0) return roleIndex;
+      return a.name.localeCompare(b.name, "it");
+    });
+
+    renderSummary(parsedMembers);
+    renderGroups(parsedMembers);
+  } catch (error) {
+    console.error(error);
+    rosterContainer.innerHTML = `
+      <div class="section-shell">
+        <p class="lead">Impossibile caricare il roster in questo momento.</p>
+      </div>
+    `;
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("page-loaded");
+  loadRoster();
+});
+
+document.querySelectorAll("a").forEach(link => {
+  if (link.hostname === window.location.hostname) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      const href = this.getAttribute("href");
+      document.body.classList.remove("page-loaded");
+      setTimeout(() => { window.location.href = href; }, 300);
+    });
+  }
 });
 </script>
 
