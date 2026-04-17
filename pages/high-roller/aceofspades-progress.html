@@ -34,8 +34,8 @@
   <div class="hero-content hero-content--wide">
     <div class="hero-tagline">Raid Progress</div>
     <h2>Ace of Spades</h2>
-    <p>
-      Panoramica del team raid con stato per difficolta, ultima sessione registrata e accesso rapido ai riferimenti ufficiali di gilda.
+    <p id="progress-context">
+      Progress attuale e storico raid del team, con selezione del raid da visualizzare e dettaglio per difficolta.
     </p>
 
     <div class="hero-actions">
@@ -56,24 +56,32 @@
   <main class="panel progress-panel">
 
     <section class="section-shell">
-      <div class="section-head">
-        <div class="eyebrow">Overview</div>
-        <h2 class="section-title">Panoramica per difficolta</h2>
-        <p class="section-subtitle">
-          Lettura rapida di Normal, Heroic e Mythic con boss chiusi, tentativi aperti e miglior progress disponibile.
-        </p>
+      <div class="progress-toolbar">
+        <div class="progress-toolbar__copy">
+          <div class="eyebrow">Raid History</div>
+          <h2 class="section-title">Progress del raid</h2>
+          <p class="section-subtitle">
+            La pagina apre sempre il raid piu recente disponibile. Dal menu puoi passare allo storico senza cambiare pagina.
+          </p>
+        </div>
+
+        <div class="progress-picker">
+          <label for="raid-selector">Raid visualizzato</label>
+          <select id="raid-selector" class="progress-select" aria-label="Seleziona il raid da visualizzare">
+            <option value="">Caricamento...</option>
+          </select>
+        </div>
       </div>
 
-      <div class="widgets-grid">
-        <article class="widget-card progress-difficulty-card">
-          <div id="card-normal" class="progress-content progress-content--rich">Sto caricando...</div>
-        </article>
-        <article class="widget-card progress-difficulty-card">
-          <div id="card-heroic" class="progress-content progress-content--rich">Sto caricando...</div>
-        </article>
-        <article class="widget-card progress-difficulty-card">
-          <div id="card-mythic" class="progress-content progress-content--rich">Sto caricando...</div>
-        </article>
+      <div class="progress-switcher" id="progress-view-tabs" role="tablist" aria-label="Vista progress">
+        <button type="button" class="is-active" data-view="overview" role="tab" aria-selected="true">Riepilogo</button>
+        <button type="button" data-view="normal" role="tab" aria-selected="false">Normal</button>
+        <button type="button" data-view="heroic" role="tab" aria-selected="false">Heroic</button>
+        <button type="button" data-view="mythic" role="tab" aria-selected="false">Mythic</button>
+      </div>
+
+      <div class="progress-view-shell" id="progress-view">
+        Sto caricando...
       </div>
     </section>
 
@@ -82,7 +90,7 @@
         <div class="eyebrow">Last Raid</div>
         <h2 class="section-title" id="last-session-title">Ultima sessione registrata</h2>
         <p class="section-subtitle">
-          Report recente, boss affrontati, pull della serata e roster rilevato da Warcraft Logs.
+          Ultimo report disponibile per il raid selezionato, con timeline dei boss e link rapidi ai riferimenti utili.
         </p>
       </div>
 
@@ -93,7 +101,7 @@
 
         <article class="widget-card progress-links-card">
           <h3 class="widget-title">Riferimenti utili</h3>
-          <p class="widget-desc">Link rapidi per tenere tutto a portata di click.</p>
+          <p class="widget-desc">Link rapidi per il raid visualizzato.</p>
           <div class="progress-link-list">
             <a href="https://raider.io/guilds/eu/nemesis/Blackjack" target="_blank" rel="noopener noreferrer" class="armory-link">Raider.IO gilda</a>
             <a href="https://www.warcraftlogs.com/guild/id/808206" target="_blank" rel="noopener noreferrer" class="armory-link">Warcraft Logs gilda</a>
@@ -107,7 +115,7 @@
           </div>
           <h3 class="widget-title">Diretta raid Twitch</h3>
           <p class="live-description" id="live-description">
-            La diretta apparira qui appena il canale andra live.
+            La diretta appare qui appena il canale va live.
           </p>
           <div class="live-player-shell" id="live-player-shell"></div>
         </article>
@@ -120,18 +128,6 @@
         </div>
         <div class="dot-timeline-container" id="dot-timeline"></div>
       </div>
-    </section>
-
-    <section class="section-shell">
-      <div class="section-head">
-        <div class="eyebrow">Raid Roster</div>
-        <h2 class="section-title">Roster della sessione</h2>
-        <p class="section-subtitle">
-          Giocatori presenti nell'ultimo report, arricchiti con ruolo e profilo locale quando disponibili.
-        </p>
-      </div>
-
-      <div id="live-roster">Sto caricando il roster...</div>
     </section>
 
   </main>
@@ -152,68 +148,22 @@ const WORKER_FULL = "https://red-snowflake-a386.lucasantoro2905.workers.dev";
 const WORKER_LAST = "https://wild-mode-1b45.lucasantoro2905.workers.dev";
 const WORKER_TWITCH = "https://tiny-fog-34d1.lucasantoro2905.workers.dev";
 const TWITCH_CHANNEL = "londe83";
-const LOCAL_ROSTER_URL = "../../data/aceofspades-roster.json";
-const GUILD_RIO_URL = "https://raider.io/guilds/eu/nemesis/Blackjack";
-const GUILD_WCL_URL = "https://www.warcraftlogs.com/guild/id/808206";
-
-const BOSS_ORDER = [
-  "Plexus Sentinel",
-  "Soulbinder Naazindhri",
-  "Forgeweaver Araz",
-  "The Soul Hunters",
-  "Fractillus",
-  "Nexus-King Salhadaar",
-  "Loom'ithar",
-  "Dimensius, the All-Devouring"
-];
 
 const difficultyLabels = {
+  overview: "Riepilogo",
   normal: "Normal",
   heroic: "Heroic",
   mythic: "Mythic"
 };
 
 const state = {
-  fullProgress: {},
+  summaryPayload: null,
   lastSession: null,
-  localRoster: new Map()
+  activeView: "overview"
 };
 
-function normalizeText(value) {
-  return String(value || "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-zA-Z0-9]/g, "")
-    .toLowerCase();
-}
-
-function normalizeBossName(name) {
-  const compact = String(name || "")
-    .replace(/â€™/g, "'")
-    .replace(/’/g, "'")
-    .replace(/,/g, "")
-    .trim();
-
-  const aliases = {
-    "loomithar": "Loom'ithar",
-    "soulbindernaazindhri": "Soulbinder Naazindhri",
-    "forgeweaveraraz": "Forgeweaver Araz",
-    "thesoulhunters": "The Soul Hunters",
-    "fractillus": "Fractillus",
-    "nexuskingsalhadaar": "Nexus-King Salhadaar",
-    "dimensiusthealldevouring": "Dimensius, the All-Devouring",
-    "plexussentinel": "Plexus Sentinel"
-  };
-
-  return aliases[normalizeText(compact)] || compact;
-}
-
-function classIcon(name) {
-  return `../../img/classes/${String(name || "").toLowerCase().replace(/\s+/g, "")}.png`;
-}
-
 function escapeHtml(value) {
-  return String(value)
+  return String(value ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -242,285 +192,290 @@ function formatSeconds(totalSeconds) {
 }
 
 function formatPercent(value) {
-  if (value == null || Number.isNaN(Number(value))) return "—";
+  if (value == null || Number.isNaN(Number(value))) return "n/d";
   return `${Number(value).toFixed(2).replace(/\.00$/, "")}%`;
 }
 
-function sortBossEntries(entries) {
-  return entries.slice().sort((left, right) => {
-    const leftIndex = BOSS_ORDER.indexOf(normalizeBossName(left.name));
-    const rightIndex = BOSS_ORDER.indexOf(normalizeBossName(right.name));
-    const safeLeft = leftIndex === -1 ? 999 : leftIndex;
-    const safeRight = rightIndex === -1 ? 999 : rightIndex;
-    return safeLeft - safeRight || left.name.localeCompare(right.name);
-  });
+function makeZoneLabel(zone) {
+  if (!zone) return "Raid";
+  return zone.expansion ? `${zone.expansion} - ${zone.name}` : zone.name;
 }
 
-function normalizeProgressData(diff, payload) {
-  const bossMap = payload?.bosses || {};
-  const bossEntries = sortBossEntries(
-    Object.values(bossMap).map(boss => ({
-      name: normalizeBossName(boss.bossName || boss.name),
-      pulls: boss.pulls || 0,
-      kills: boss.kills || 0,
-      wipes: boss.wipes || 0,
-      bestPercentage: boss.bestPercentage,
-      lastKill: boss.lastKill || null,
-      lastPull: boss.lastPull || null
-    }))
-  );
-
-  const killed = bossEntries.filter(boss => boss.kills > 0).length;
-  const inProgress = bossEntries.filter(boss => boss.kills === 0 && boss.bestPercentage != null).length;
-  const bestProgress = bossEntries
-    .filter(boss => boss.kills === 0 && boss.bestPercentage != null)
-    .reduce((best, boss) => Math.min(best, boss.bestPercentage), 101);
-
-  return {
-    diff,
-    label: difficultyLabels[diff] || diff,
-    bossEntries,
+function getProgress(diff) {
+  return state.summaryPayload?.progress?.[diff] || {
+    bossList: [],
     summary: {
-      totalBosses: bossEntries.length,
-      killed,
-      inProgress,
-      pulls: bossEntries.reduce((sum, boss) => sum + boss.pulls, 0),
-      bestProgress: bestProgress === 101 ? null : bestProgress
+      totalBosses: 0,
+      killedBosses: 0,
+      inProgressBosses: 0,
+      totalPulls: 0,
+      bestProgress: null
     }
   };
 }
 
-function normalizeLastSession(payload) {
-  const report = payload?.report || payload?.latestReport || null;
-  const bossEntries = sortBossEntries(
-    Object.values(payload?.bosses || {}).map(boss => ({
-      name: normalizeBossName(boss.bossName || boss.name),
-      pulls: boss.pulls || 0,
-      kills: boss.kills || 0,
-      wipes: boss.wipes || 0,
-      bestPercentage: boss.bestPercentage,
-      pullsDetail: (boss.pullsDetail || [])
-        .filter(pull => pull.kill !== null || pull.difficulty !== null)
-        .map(pull => ({
-          index: pull.index,
-          fightID: pull.fightID,
-          isKill: pull.kill === true,
-          bestPercentage: pull.kill === true ? 0 : pull.fightPercentage,
-          difficulty: pull.difficulty,
-          durationSec: pull.durationSec,
-          startTime: pull.startTime,
-          endTime: pull.endTime
-        }))
-    }))
-  );
-
-  const totalKills = bossEntries.reduce((sum, boss) => sum + boss.kills, 0);
-  const totalWipes = bossEntries.reduce((sum, boss) => sum + boss.wipes, 0);
-  const totalPulls = bossEntries.reduce((sum, boss) => sum + boss.pullsDetail.length, 0);
-  const bestTry = bossEntries
-    .filter(boss => boss.bestPercentage != null)
-    .reduce((best, boss) => Math.min(best, boss.bestPercentage), 101);
-  const durationSec = report
-    ? Math.max(0, Math.round((report.endTime - report.startTime) / 1000))
-    : null;
-
-  return {
-    report,
-    reportUrl: report?.code ? `https://www.warcraftlogs.com/reports/${report.code}` : "",
-    roster: payload?.roster || [],
-    bossEntries,
-    summary: {
-      totalKills,
-      totalWipes,
-      totalPulls,
-      bestTry: bestTry === 101 ? null : bestTry,
-      durationSec
-    }
-  };
+function selectedZone() {
+  return state.summaryPayload?.selectedZone || null;
 }
 
-async function loadLocalRoster() {
-  const response = await fetch(LOCAL_ROSTER_URL);
-  if (!response.ok) {
-    throw new Error("Roster locale non disponibile");
+function renderContext() {
+  const context = document.getElementById("progress-context");
+  if (!context) return;
+
+  const zone = selectedZone();
+  if (!zone) {
+    context.textContent = "Progress attuale e storico raid del team, con selezione del raid da visualizzare e dettaglio per difficolta.";
+    return;
   }
 
-  const payload = await response.json();
-  const members = payload.members || [];
-  const map = new Map();
-
-  members.forEach(member => {
-    map.set(normalizeText(member.name), member);
-  });
-
-  state.localRoster = map;
+  context.textContent = `Raid visualizzato: ${makeZoneLabel(zone)}. La pagina apre automaticamente il raid piu recente disponibile, ma puoi passare allo storico dal menu.`;
 }
 
 function renderMetricCards() {
   const metrics = document.getElementById("progress-metrics");
-  const mythic = state.fullProgress.mythic;
-  const heroic = state.fullProgress.heroic;
-  const last = state.lastSession;
+  const zone = selectedZone();
+  const overview = state.summaryPayload?.overview || {};
+  const mythic = getProgress("mythic").summary;
+  const heroic = getProgress("heroic").summary;
 
-  if (!mythic || !heroic || !last) {
-    metrics.innerHTML = `
-      <div class="metric-card">
-        <span class="metric-card__value">...</span>
-        <span class="metric-card__label">Caricamento progress</span>
-      </div>
-    `;
-    return;
-  }
+  if (!metrics || !zone) return;
 
   metrics.innerHTML = `
     <div class="metric-card">
-      <span class="metric-card__value">${mythic.summary.killed}/${mythic.summary.totalBosses || "0"}</span>
+      <span class="metric-card__value">${escapeHtml(zone.name)}</span>
+      <span class="metric-card__label">raid visualizzato</span>
+    </div>
+    <div class="metric-card">
+      <span class="metric-card__value">${mythic.killedBosses}/${mythic.totalBosses}</span>
       <span class="metric-card__label">boss mythic chiusi</span>
     </div>
     <div class="metric-card">
-      <span class="metric-card__value">${heroic.summary.killed}/${heroic.summary.totalBosses || "0"}</span>
+      <span class="metric-card__value">${heroic.killedBosses}/${heroic.totalBosses}</span>
       <span class="metric-card__label">boss heroic chiusi</span>
     </div>
     <div class="metric-card">
-      <span class="metric-card__value">${formatPercent(mythic.summary.bestProgress)}</span>
-      <span class="metric-card__label">miglior try mythic aperto</span>
+      <span class="metric-card__value">${overview.reportsCount ?? 0}</span>
+      <span class="metric-card__label">report archiviati</span>
     </div>
     <div class="metric-card">
-      <span class="metric-card__value">${last.summary.totalPulls}</span>
-      <span class="metric-card__label">pull nell'ultima sessione</span>
-    </div>
-    <div class="metric-card">
-      <span class="metric-card__value">${formatDateTime(last.report?.endTime)}</span>
-      <span class="metric-card__label">ultima serata registrata</span>
+      <span class="metric-card__value">${formatDateTime(overview.latestReportTime)}</span>
+      <span class="metric-card__label">ultimo report del raid</span>
     </div>
   `;
 }
 
-function renderDifficultyCard(cardId, progressData) {
-  const container = document.getElementById(cardId);
+function renderRaidSelector() {
+  const select = document.getElementById("raid-selector");
+  const history = state.summaryPayload?.history || [];
+  const currentZoneId = state.summaryPayload?.currentZoneId;
+  const currentSelection = selectedZone();
+
+  if (!select) return;
+
+  select.innerHTML = history.map(zone => {
+    const suffix = zone.id === currentZoneId ? " (attuale)" : "";
+    return `<option value="${zone.id}" ${zone.id === currentSelection?.id ? "selected" : ""}>${escapeHtml(makeZoneLabel(zone) + suffix)}</option>`;
+  }).join("");
+
+  select.onchange = async (event) => {
+    const zoneId = event.target.value;
+    await loadProgress(zoneId);
+  };
+}
+
+function renderViewTabs() {
+  const container = document.getElementById("progress-view-tabs");
   if (!container) return;
 
-  const { label, bossEntries, summary } = progressData;
+  container.querySelectorAll("button").forEach(button => {
+    const isActive = button.dataset.view === state.activeView;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-selected", String(isActive));
+    button.onclick = () => {
+      state.activeView = button.dataset.view;
+      renderViewTabs();
+      renderProgressView();
+    };
+  });
+}
 
-  if (!bossEntries.length) {
-    container.innerHTML = `<div class="empty-state">Nessun dato disponibile per ${escapeHtml(label)}.</div>`;
-    return;
-  }
+function renderOverviewTab() {
+  const diffs = ["normal", "heroic", "mythic"];
+  const cards = diffs.map(diff => {
+    const summary = getProgress(diff).summary;
+    return `
+      <article class="progress-summary-card">
+        <div class="progress-summary-card__eyebrow">${difficultyLabels[diff]}</div>
+        <div class="progress-summary-card__value">${summary.killedBosses}/${summary.totalBosses}</div>
+        <div class="progress-summary-card__meta">
+          <span>${summary.totalPulls} pull</span>
+          <span>${summary.inProgressBosses} boss aperti</span>
+          <span>best ${formatPercent(summary.bestProgress)}</span>
+        </div>
+      </article>
+    `;
+  }).join("");
 
-  const bossRows = bossEntries.map(boss => {
+  const overview = state.summaryPayload?.overview || {};
+
+  return `
+    <div class="progress-summary-strip">
+      ${cards}
+      <article class="progress-summary-card progress-summary-card--accent">
+        <div class="progress-summary-card__eyebrow">Archivio raid</div>
+        <div class="progress-summary-card__value">${overview.reportsCount ?? 0}</div>
+        <div class="progress-summary-card__meta">
+          <span>${overview.totalBosses ?? 0} boss tracciati</span>
+          <span>${formatDateTime(overview.latestReportTime)}</span>
+        </div>
+      </article>
+    </div>
+    <p class="progress-view-note">Usa le tab sopra per entrare nel dettaglio di una singola difficolta.</p>
+  `;
+}
+
+function renderDifficultyTab(diff) {
+  const payload = getProgress(diff);
+  const summary = payload.summary;
+  const bossRows = (payload.bossList || []).map(boss => {
     const isKilled = boss.kills > 0;
-    const statusClass = isKilled ? "boss-killed" : boss.bestPercentage != null ? "boss-progress" : "";
+    const chipClass = isKilled ? "boss-killed" : boss.bestPercentage != null ? "boss-progress" : "";
     const statusText = isKilled ? "Kill" : boss.bestPercentage != null ? `Best ${formatPercent(boss.bestPercentage)}` : "Nessun pull";
 
     return `
-      <div class="progress-boss-row">
+        <div class="progress-boss-row">
         <div class="progress-boss-row__copy">
-          <strong>${escapeHtml(boss.name)}</strong>
-          <span>${boss.pulls} pull${boss.pulls === 1 ? "" : "s"} • ${boss.wipes} wipe${boss.wipes === 1 ? "" : "s"}</span>
+          <strong>${escapeHtml(boss.bossName)}</strong>
+          <span>${boss.pulls} pull${boss.pulls === 1 ? "" : "s"} - ${boss.wipes} wipe${boss.wipes === 1 ? "" : "s"}</span>
         </div>
-        <span class="progress-boss-chip ${statusClass}">${statusText}</span>
+        <span class="progress-boss-chip ${chipClass}">${statusText}</span>
       </div>
     `;
   }).join("");
 
-  container.innerHTML = `
-    <div class="progress-card-head">
-      <div>
-        <p class="widget-desc">${escapeHtml(label)}</p>
-        <h3 class="widget-title">${summary.killed}/${summary.totalBosses} boss chiusi</h3>
+  if (!payload.bossList.length) {
+    return `<div class="empty-state">Nessun dato disponibile per ${escapeHtml(difficultyLabels[diff])}.</div>`;
+  }
+
+  return `
+    <div class="progress-difficulty-layout">
+      <div class="progress-headline">
+        <div>
+          <p class="widget-desc">${escapeHtml(makeZoneLabel(selectedZone()))}</p>
+          <h3 class="widget-title">${escapeHtml(difficultyLabels[diff])}</h3>
+        </div>
+        <span class="progress-card-badge">${summary.killedBosses}/${summary.totalBosses} boss chiusi</span>
       </div>
-      <span class="progress-card-badge">${summary.pulls} pull</span>
-    </div>
-    <div class="progress-card-stats">
-      <div class="progress-mini-stat">
-        <span class="progress-mini-stat__value">${summary.inProgress}</span>
-        <span class="progress-mini-stat__label">boss aperti</span>
+
+      <div class="progress-stats-row">
+        <div class="progress-mini-stat">
+          <span class="progress-mini-stat__value">${summary.killedBosses}</span>
+          <span class="progress-mini-stat__label">boss chiusi</span>
+        </div>
+        <div class="progress-mini-stat">
+          <span class="progress-mini-stat__value">${summary.inProgressBosses}</span>
+          <span class="progress-mini-stat__label">boss aperti</span>
+        </div>
+        <div class="progress-mini-stat">
+          <span class="progress-mini-stat__value">${summary.totalPulls}</span>
+          <span class="progress-mini-stat__label">pull totali</span>
+        </div>
+        <div class="progress-mini-stat">
+          <span class="progress-mini-stat__value">${formatPercent(summary.bestProgress)}</span>
+          <span class="progress-mini-stat__label">miglior try aperto</span>
+        </div>
       </div>
-      <div class="progress-mini-stat">
-        <span class="progress-mini-stat__value">${formatPercent(summary.bestProgress)}</span>
-        <span class="progress-mini-stat__label">miglior try</span>
+
+      <div class="progress-boss-list">
+        ${bossRows}
       </div>
-    </div>
-    <div class="progress-boss-stack">
-      ${bossRows}
     </div>
   `;
 }
 
-function renderSessionSummary(lastSession) {
-  const container = document.getElementById("last-session-summary");
+function renderProgressView() {
+  const container = document.getElementById("progress-view");
   if (!container) return;
 
-  const report = lastSession.report;
+  container.innerHTML = state.activeView === "overview"
+    ? renderOverviewTab()
+    : renderDifficultyTab(state.activeView);
+}
+
+function renderSessionSummary() {
+  const container = document.getElementById("last-session-summary");
+  const title = document.getElementById("last-session-title");
+  const report = state.lastSession?.report;
+
+  if (!container || !title) return;
+
   if (!report) {
-    container.innerHTML = `<div class="empty-state">Nessuna sessione disponibile.</div>`;
+    title.textContent = "Ultima sessione registrata";
+    container.innerHTML = `<div class="empty-state">Nessuna sessione disponibile per il raid selezionato.</div>`;
     return;
   }
 
+  title.textContent = `Ultima sessione - ${report.zone?.name || "Raid"}`;
   container.innerHTML = `
     <h3 class="widget-title">${escapeHtml(report.title || "Ultimo report")}</h3>
-    <p class="widget-desc">
-      ${escapeHtml(report.zone?.name || "Raid")} • chiusura ${escapeHtml(formatDateTime(report.endTime))}
-    </p>
+    <p class="widget-desc">${escapeHtml(report.zone?.name || "Raid")} - chiusura ${escapeHtml(formatDateTime(report.endTime))}</p>
     <div class="session-meta-grid">
       <div class="progress-mini-stat">
-        <span class="progress-mini-stat__value">${lastSession.summary.totalKills}</span>
+        <span class="progress-mini-stat__value">${state.lastSession.summary.totalKills}</span>
         <span class="progress-mini-stat__label">kill</span>
       </div>
       <div class="progress-mini-stat">
-        <span class="progress-mini-stat__value">${lastSession.summary.totalWipes}</span>
+        <span class="progress-mini-stat__value">${state.lastSession.summary.totalWipes}</span>
         <span class="progress-mini-stat__label">wipe</span>
       </div>
       <div class="progress-mini-stat">
-        <span class="progress-mini-stat__value">${lastSession.summary.totalPulls}</span>
+        <span class="progress-mini-stat__value">${state.lastSession.summary.totalPulls}</span>
         <span class="progress-mini-stat__label">pull</span>
       </div>
       <div class="progress-mini-stat">
-        <span class="progress-mini-stat__value">${formatPercent(lastSession.summary.bestTry)}</span>
+        <span class="progress-mini-stat__value">${formatPercent(state.lastSession.summary.bestPercentage)}</span>
         <span class="progress-mini-stat__label">best try</span>
       </div>
       <div class="progress-mini-stat">
-        <span class="progress-mini-stat__value">${formatSeconds(lastSession.summary.durationSec)}</span>
+        <span class="progress-mini-stat__value">${formatSeconds(state.lastSession.summary.durationSec)}</span>
         <span class="progress-mini-stat__label">durata</span>
       </div>
     </div>
   `;
 }
 
-function renderReportLink(lastSession) {
+function renderReportLink() {
   const reportLink = document.getElementById("last-session-report-link");
-  const title = document.getElementById("last-session-title");
-  if (!reportLink || !title) return;
+  if (!reportLink) return;
 
-  if (!lastSession.reportUrl) {
+  if (!state.lastSession?.reportUrl) {
     reportLink.classList.add("hidden");
+    reportLink.removeAttribute("href");
     return;
   }
 
-  reportLink.href = lastSession.reportUrl;
+  reportLink.href = state.lastSession.reportUrl;
   reportLink.classList.remove("hidden");
-
-  const reportTitle = lastSession.report?.title || "Ultima sessione registrata";
-  title.textContent = reportTitle;
 }
 
-function buildTimeline(lastSession) {
+function buildTimeline() {
   const container = document.getElementById("dot-timeline");
   if (!container) return;
 
-  const rows = lastSession.bossEntries
-    .filter(boss => boss.pullsDetail.length)
+  const rows = (state.lastSession?.bossList || [])
+    .filter(boss => (boss.pullsDetail || []).length)
     .map(boss => {
       const dots = boss.pullsDetail.map(pull => {
         const tipLines = [
           `Pull ${pull.index}`,
-          pull.isKill ? "Kill" : `Wipe ${formatPercent(pull.bestPercentage)}`,
-          `${formatSeconds(pull.durationSec)}`
+          pull.kill ? "Kill" : `Wipe ${formatPercent(pull.fightPercentage)}`,
+          difficultyLabels[pull.difficulty] || String(pull.difficulty || "").toUpperCase(),
+          formatSeconds(pull.durationSec)
         ];
 
         return `
           <span
-            class="dot ${pull.isKill ? "dot-kill" : "dot-progress"}"
+            class="dot ${pull.kill ? "dot-kill" : "dot-progress"}"
             data-tip="${escapeHtml(tipLines.join("\n"))}">
           </span>
         `;
@@ -528,7 +483,7 @@ function buildTimeline(lastSession) {
 
       return `
         <div class="dot-row">
-          <div class="dot-boss-name">${escapeHtml(boss.name)}</div>
+          <div class="dot-boss-name">${escapeHtml(boss.bossName)}</div>
           <div class="dot-line">${dots}</div>
         </div>
       `;
@@ -537,121 +492,22 @@ function buildTimeline(lastSession) {
   container.innerHTML = rows || `<div class="empty-state">Nessun pull boss disponibile nel report piu recente.</div>`;
 }
 
-function getRoleBadge(role) {
-  const normalized = String(role || "").toLowerCase();
-  if (normalized === "tank") return "roster-role-tank";
-  if (normalized === "healer") return "roster-role-heal";
-  if (normalized === "dps") return "roster-role-dps";
-  return "roster-role-unknown";
-}
-
-function enrichRosterPlayer(player) {
-  const local = state.localRoster.get(normalizeText(player.name)) || null;
-  return {
-    name: player.name,
-    className: local?.class || player.class || "Unknown",
-    spec: local?.spec || "",
-    role: local?.role || player.role || "unknown",
-    image: local?.customImage || local?.sourceImage || "",
-    armoryUrl: local?.armoryUrl || "",
-    rioUrl: local?.rio || "",
-    server: local?.server || player.server || ""
-  };
-}
-
-function renderRoster(lastSession) {
-  const container = document.getElementById("live-roster");
-  if (!container) return;
-
-  const players = (lastSession.roster || []).map(enrichRosterPlayer);
-  if (!players.length) {
-    container.innerHTML = `<div class="empty-state">Nessun roster trovato nell'ultimo report.</div>`;
-    return;
-  }
-
-  players.sort((left, right) => left.name.localeCompare(right.name));
-
-  const html = players.map(player => {
-    const safeName = escapeHtml(player.name);
-    const safeClass = escapeHtml(player.className);
-    const safeSpec = escapeHtml(player.spec || "");
-    const safeServer = escapeHtml(player.server || "");
-    const safeImage = escapeHtml(player.image || "");
-    const safeArmory = escapeHtml(player.armoryUrl || "");
-    const safeRio = escapeHtml(player.rioUrl || "");
-    const hasImage = Boolean(player.image);
-    const hasKnownClass = player.className && player.className !== "Unknown";
-    const subtitle = [safeSpec, safeClass].filter(Boolean).join(" | ");
-
-    return `
-      <article class="report-roster-card">
-        <div class="report-roster-card__media">
-          ${hasImage
-            ? `<img src="${safeImage}" alt="${safeName}">`
-            : `<div class="report-roster-card__fallback" aria-hidden="true">${safeName.slice(0, 1)}</div>`}
-        </div>
-        <div class="report-roster-card__body">
-          <div class="report-roster-card__top">
-            <div>
-              <h3>${safeName}</h3>
-              <p>${subtitle || "Profilo report"}</p>
-            </div>
-            <span class="roster-role-tag ${getRoleBadge(player.role)}">${escapeHtml(player.role || "unknown")}</span>
-          </div>
-          <div class="report-roster-card__meta">
-            ${hasKnownClass ? `<span>${safeClass}</span>` : ""}
-            ${safeServer ? `<span>${safeServer}</span>` : ""}
-          </div>
-          <div class="report-roster-card__links">
-            ${safeArmory ? `<a href="${safeArmory}" target="_blank" rel="noopener noreferrer" class="armory-link">Armory</a>` : ""}
-            ${safeRio ? `
-              <a href="${safeRio}" target="_blank" rel="noopener noreferrer" class="rio-btn--compact" aria-label="Apri il profilo Raider.IO di ${safeName}">
-                <img src="../../img/raiderio_logo.png" class="rio-logo" alt="Raider.IO">
-              </a>
-            ` : ""}
-          </div>
-        </div>
-      </article>
-    `;
-  }).join("");
-
-  container.innerHTML = `<div class="report-roster-grid">${html}</div>`;
-}
-
-async function loadDifficulty(diff, cardId) {
-  const response = await fetch(`${WORKER_FULL}/progress-full?difficulty=${diff}`);
-  if (!response.ok) {
-    throw new Error(`Progress ${diff} non disponibile`);
-  }
-  const payload = await response.json();
-  const normalized = normalizeProgressData(diff, payload);
-  state.fullProgress[diff] = normalized;
-  renderDifficultyCard(cardId, normalized);
-}
-
-async function fetchProgressSummary() {
-  const response = await fetch(`${WORKER_FULL}/progress-summary`);
+async function fetchSummary(zoneId) {
+  const query = zoneId ? `?zoneId=${encodeURIComponent(zoneId)}` : "";
+  const response = await fetch(`${WORKER_FULL}/progress-summary${query}`, { cache: "no-store" });
   if (!response.ok) {
     throw new Error("Progress summary non disponibile");
   }
-
-  const payload = await response.json();
-  const progress = payload?.progress || {};
-
-  ["normal", "heroic", "mythic"].forEach(diff => {
-    if (!progress[diff]) return;
-    state.fullProgress[diff] = normalizeProgressData(diff, progress[diff]);
-    renderDifficultyCard(`card-${diff}`, state.fullProgress[diff]);
-  });
+  return response.json();
 }
 
-async function fetchLastSession() {
-  const response = await fetch(`${WORKER_LAST}/progress-last`);
+async function fetchLastSession(zoneId) {
+  const query = zoneId ? `?zoneId=${encodeURIComponent(zoneId)}` : "";
+  const response = await fetch(`${WORKER_LAST}/progress-last${query}`, { cache: "no-store" });
   if (!response.ok) {
     throw new Error("Ultima sessione non disponibile");
   }
-  const payload = await response.json();
-  state.lastSession = normalizeLastSession(payload);
+  return response.json();
 }
 
 async function fetchTwitchLive() {
@@ -674,7 +530,7 @@ function renderTwitchLive(data) {
     pill.classList.remove("live-status-live");
     pill.classList.add("live-status-offline");
     pill.innerHTML = '<span class="live-dot"></span> Offline';
-    description.textContent = "Il canale e offline. La prossima diretta apparira qui appena il raid va live.";
+    description.textContent = "Il canale e offline. La prossima diretta appare qui appena il raid va live.";
     shell.innerHTML = "";
     return;
   }
@@ -683,8 +539,12 @@ function renderTwitchLive(data) {
   pill.classList.add("live-status-live");
   pill.innerHTML = '<span class="live-dot"></span> Live ora';
 
-  const bits = [data.title || "Diretta raid", data.game_name ? `Gioco: ${data.game_name}` : "", data.viewer_count != null ? `Viewers: ${data.viewer_count}` : ""].filter(Boolean);
-  description.textContent = bits.join(" • ");
+  const bits = [
+    data.title || "Diretta raid",
+    data.game_name ? `Gioco: ${data.game_name}` : "",
+    data.viewer_count != null ? `Viewers: ${data.viewer_count}` : ""
+  ].filter(Boolean);
+  description.textContent = bits.join(" - ");
 
   shell.innerHTML = `
     <iframe
@@ -697,44 +557,37 @@ function renderTwitchLive(data) {
   `;
 }
 
-async function initProgressPage() {
-  try {
-    await loadLocalRoster();
-  } catch (error) {
-    console.warn("Roster locale non disponibile:", error);
+async function loadProgress(zoneId) {
+  state.summaryPayload = await fetchSummary(zoneId);
+  if (!state.summaryPayload?.selectedZone) {
+    throw new Error("Raid selezionato non disponibile");
   }
 
-  const progressPromise = (async () => {
-    try {
-      await fetchProgressSummary();
-    } catch (error) {
-      console.warn("Summary worker non disponibile, uso fallback:", error);
-      await Promise.allSettled([
-        loadDifficulty("normal", "card-normal"),
-        loadDifficulty("heroic", "card-heroic"),
-        loadDifficulty("mythic", "card-mythic")
-      ]);
-    }
-    renderMetricCards();
-  })();
+  if (!["overview", "normal", "heroic", "mythic"].includes(state.activeView)) {
+    state.activeView = "overview";
+  }
 
-  const sessionPromise = (async () => {
-    try {
-      await fetchLastSession();
-      renderSessionSummary(state.lastSession);
-      renderReportLink(state.lastSession);
-      buildTimeline(state.lastSession);
-      renderRoster(state.lastSession);
-    } catch (error) {
-      console.error("Errore ultima sessione:", error);
-      document.getElementById("last-session-summary").innerHTML = `<div class="empty-state">Impossibile caricare la sessione piu recente.</div>`;
-      document.getElementById("dot-timeline").innerHTML = `<div class="empty-state">Timeline non disponibile.</div>`;
-      document.getElementById("live-roster").innerHTML = `<div class="empty-state">Roster non disponibile.</div>`;
-    }
-    renderMetricCards();
-  })();
+  renderContext();
+  renderMetricCards();
+  renderRaidSelector();
+  renderViewTabs();
+  renderProgressView();
 
-  await Promise.allSettled([progressPromise, sessionPromise]);
+  state.lastSession = await fetchLastSession(state.summaryPayload.selectedZone.id);
+  renderSessionSummary();
+  renderReportLink();
+  buildTimeline();
+}
+
+async function initProgressPage() {
+  try {
+    await loadProgress();
+  } catch (error) {
+    console.error("Errore progress:", error);
+    document.getElementById("progress-view").innerHTML = `<div class="empty-state">Impossibile caricare il progress del team.</div>`;
+    document.getElementById("last-session-summary").innerHTML = `<div class="empty-state">Sessione non disponibile.</div>`;
+    document.getElementById("dot-timeline").innerHTML = `<div class="empty-state">Timeline non disponibile.</div>`;
+  }
 
   try {
     const twitchData = await fetchTwitchLive();
