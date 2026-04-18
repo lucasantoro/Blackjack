@@ -26,7 +26,7 @@
   <ul>
     <li><a href="hollowsoul.html" class="active">Community</a></li>
     <li><a href="hollowsoul-video.html">Video divertenti</a></li>
-    <li><a href="hollowsoul-eventi.html">Eventi di gilda</a></li>
+    <li><a href="hollowsoul-eventi.html">Diario</a></li>
   </ul>
 </nav>
 
@@ -98,33 +98,21 @@
       <div class="stats-grid">
 
         <div class="stat-card">
-          <div class="stat-label">Player unici in gilda</div>
+          <div class="stat-label">Account unici in gilda</div>
           <div class="stat-value" id="stat-unique">-</div>
-          <div class="stat-hint" id="stat-unique-hint">Conteggio dei player unici del roster.</div>
+          <div class="stat-hint" id="stat-unique-hint">Conteggio account-level del roster di gilda.</div>
         </div>
 
         <div class="stat-card">
-          <div class="stat-label">Personaggi nel roster</div>
+          <div class="stat-label">Personaggi totali in gilda</div>
           <div class="stat-value" id="stat-characters">-</div>
-          <div class="stat-hint">Totale dei personaggi presenti nel roster, alt inclusi.</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-label">Giocatori attivi M+ (30 giorni)</div>
-          <div class="stat-value" id="stat-active">-</div>
-          <div class="stat-hint">Player unici che hanno completato almeno una Mythic+ nell'ultimo mese.</div>
+          <div class="stat-hint">Totale dei personaggi presenti in gilda, alt inclusi.</div>
         </div>
 
         <div class="stat-card">
           <div class="stat-label">Punteggio medio M+ (Top 10)</div>
           <div class="stat-value" id="stat-avg-score">-</div>
           <div class="stat-hint">Media del punteggio Mythic+ dei top 10 profili tracciati.</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-label">Punteggio medio M+ (Top 30)</div>
-          <div class="stat-value" id="stat-avg-top30">-</div>
-          <div class="stat-hint">Media del punteggio Mythic+ dei migliori 30 profili della gilda.</div>
         </div>
 
         <div class="stat-card">
@@ -135,9 +123,7 @@
 
       </div>
 
-      <p class="stats-note" id="stats-note">
-        Dati aggiornati automaticamente.
-      </p>
+      <p class="stats-note" id="stats-note">Dati aggiornati automaticamente.</p>
     </section>
 
   </main>
@@ -168,34 +154,23 @@ async function loadHollowSoulStats() {
   const elUnique = document.getElementById("stat-unique");
   const elUniqueHint = document.getElementById("stat-unique-hint");
   const elChars = document.getElementById("stat-characters");
-  const elActive = document.getElementById("stat-active");
   const elAvg10 = document.getElementById("stat-avg-score");
-  const elAvg30 = document.getElementById("stat-avg-top30");
   const elRuns = document.getElementById("stat-guild-runs");
   const note = document.getElementById("stats-note");
 
   try {
-    const res = await fetch("https://hollow-stats-api.lucasantoro2905.workers.dev");
+    const res = await fetch("https://blackjack-community-stats.lucasantoro2905.workers.dev");
     const data = await res.json();
-    const mappingEnabled = data.identityMode === "mapped";
-
-    elUnique.textContent = data.uniquePlayers ?? data.totalCharacters ?? "-";
+    elUnique.textContent = data.uniquePlayers ?? "-";
     elChars.textContent = data.totalCharacters ?? "-";
-    elActive.textContent = data.activePlayersLast30 ?? "-";
     elAvg10.textContent = data.avgScoreTop10 ?? "-";
-    elAvg30.textContent = data.avgScoreTop30 ?? "-";
     elRuns.textContent = data.guildRunsLast30 ?? "-";
 
-    elUniqueHint.textContent = mappingEnabled
-      ? "Conta i player unici tramite mapping main/alt del worker."
-      : "In attesa del mapping main/alt: questo numero coincide ancora con i personaggi.";
-
-    note.textContent = mappingEnabled
-      ? "Statistiche aggiornate via Worker ogni 6 ore."
-      : "Statistiche aggiornate via Worker ogni 6 ore. Per un conteggio davvero unico serve il mapping main/alt nel worker.";
+    elUniqueHint.textContent = "Le API pubbliche disponibili non espongono un identificatore account-level affidabile per separare main e alt.";
+    note.textContent = "Statistiche aggiornate via Worker ogni 6 ore. Personaggi totali e dati Mythic+ sono automatici; il numero di account unici non e ricavabile in modo preciso dalle API pubbliche.";
   } catch (e) {
     console.error("Errore stats:", e);
-    elUnique.textContent = elChars.textContent = elActive.textContent = elAvg10.textContent = elAvg30.textContent = elRuns.textContent = "-";
+    elUnique.textContent = elChars.textContent = elAvg10.textContent = elRuns.textContent = "-";
     elUniqueHint.textContent = "Impossibile leggere il conteggio dei player unici.";
     note.textContent = "Impossibile caricare le statistiche al momento.";
   }

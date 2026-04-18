@@ -35,7 +35,7 @@
     <div class="hero-tagline">Raid Progress</div>
     <h2>Ace of Spades</h2>
     <p id="progress-context">
-      Progress attuale e storico raid del team, con selezione del raid da visualizzare e dettaglio per difficolta.
+      Progress attuale e storico del team, con selezione della campagna raid e dettaglio per difficolta.
     </p>
 
     <div class="hero-actions">
@@ -61,13 +61,13 @@
           <div class="eyebrow">Raid History</div>
           <h2 class="section-title">Progress del raid</h2>
           <p class="section-subtitle">
-            La pagina apre sempre il raid piu recente disponibile. Dal menu puoi passare allo storico senza cambiare pagina.
+            La pagina apre sempre la campagna raid attuale. Dal menu puoi passare allo storico senza cambiare pagina.
           </p>
         </div>
 
         <div class="progress-picker">
-          <label for="raid-selector">Raid visualizzato</label>
-          <select id="raid-selector" class="progress-select" aria-label="Seleziona il raid da visualizzare">
+          <label for="raid-selector">Campagna raid</label>
+          <select id="raid-selector" class="progress-select" aria-label="Seleziona la campagna raid da visualizzare">
             <option value="">Caricamento...</option>
           </select>
         </div>
@@ -83,6 +83,7 @@
       <div class="progress-view-shell" id="progress-view">
         Sto caricando...
       </div>
+      <p class="progress-view-explainer" id="progress-view-explainer"></p>
     </section>
 
     <section class="section-shell">
@@ -90,7 +91,7 @@
         <div class="eyebrow">Last Raid</div>
         <h2 class="section-title" id="last-session-title">Ultima sessione registrata</h2>
         <p class="section-subtitle">
-          Ultimo report disponibile per il raid selezionato, con timeline dei boss e link rapidi ai riferimenti utili.
+          Ultimo report disponibile per la campagna selezionata, con timeline dei boss e link rapidi ai riferimenti utili.
         </p>
       </div>
 
@@ -124,7 +125,7 @@
       <div class="progress-boss-shell">
         <div class="progress-boss-shell__header">
           <h3>Timeline boss dell'ultima serata</h3>
-          <p>Ogni riga raccoglie i tentativi del boss in ordine di pull. Passa sui pallini per vedere il dettaglio.</p>
+          <p>Ogni riga mostra i pull in orizzontale. Passa il mouse sui pallini per vedere percentuale, durata e difficolta del tentativo.</p>
         </div>
         <div class="dot-timeline-container" id="dot-timeline"></div>
       </div>
@@ -144,9 +145,9 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 <script>
-const WORKER_FULL = "https://red-snowflake-a386.lucasantoro2905.workers.dev";
-const WORKER_LAST = "https://wild-mode-1b45.lucasantoro2905.workers.dev";
-const WORKER_TWITCH = "https://tiny-fog-34d1.lucasantoro2905.workers.dev";
+const WORKER_FULL = "https://blackjack-raid-progress.lucasantoro2905.workers.dev";
+const WORKER_LAST = "https://blackjack-raid-session.lucasantoro2905.workers.dev";
+const WORKER_TWITCH = "https://blackjack-twitch-status.lucasantoro2905.workers.dev";
 const TWITCH_CHANNEL = "londe83";
 
 const difficultyLabels = {
@@ -215,7 +216,7 @@ function getProgress(diff) {
 }
 
 function selectedZone() {
-  return state.summaryPayload?.selectedZone || null;
+  return state.summaryPayload?.selectedCampaign || null;
 }
 
 function renderContext() {
@@ -224,11 +225,11 @@ function renderContext() {
 
   const zone = selectedZone();
   if (!zone) {
-    context.textContent = "Progress attuale e storico raid del team, con selezione del raid da visualizzare e dettaglio per difficolta.";
+    context.textContent = "Progress attuale e storico del team, con selezione della campagna raid e dettaglio per difficolta.";
     return;
   }
 
-  context.textContent = `Raid visualizzato: ${makeZoneLabel(zone)}. La pagina apre automaticamente il raid piu recente disponibile, ma puoi passare allo storico dal menu.`;
+  context.textContent = `Campagna visualizzata: ${makeZoneLabel(zone)}. La pagina apre automaticamente la campagna raid attuale, ma puoi passare allo storico dal menu.`;
 }
 
 function renderMetricCards() {
@@ -267,14 +268,14 @@ function renderMetricCards() {
 function renderRaidSelector() {
   const select = document.getElementById("raid-selector");
   const history = state.summaryPayload?.history || [];
-  const currentZoneId = state.summaryPayload?.currentZoneId;
+  const currentZoneId = state.summaryPayload?.currentCampaignId;
   const currentSelection = selectedZone();
 
   if (!select) return;
 
   select.innerHTML = history.map(zone => {
     const suffix = zone.id === currentZoneId ? " (attuale)" : "";
-    return `<option value="${zone.id}" ${zone.id === currentSelection?.id ? "selected" : ""}>${escapeHtml(makeZoneLabel(zone) + suffix)}</option>`;
+    return `<option value="${zone.id}" ${zone.id === currentSelection?.id ? "selected" : ""}>${escapeHtml(`${makeZoneLabel(zone)} - ${zone.bossCount} boss${suffix}`)}</option>`;
   }).join("");
 
   select.onchange = async (event) => {
@@ -395,11 +396,19 @@ function renderDifficultyTab(diff) {
 
 function renderProgressView() {
   const container = document.getElementById("progress-view");
+  const explainer = document.getElementById("progress-view-explainer");
   if (!container) return;
 
   container.innerHTML = state.activeView === "overview"
     ? renderOverviewTab()
     : renderDifficultyTab(state.activeView);
+
+  if (explainer) {
+    const totalBosses = selectedZone()?.bossCount ?? 0;
+    explainer.textContent = state.activeView === "overview"
+      ? `Il riepilogo mostra l'intera campagna raid. I valori x/y indicano boss chiusi su ${totalBosses} totali.`
+      : `${difficultyLabels[state.activeView]} mostra boss chiusi su ${totalBosses} totali della campagna raid selezionata.`;
+  }
 }
 
 function renderSessionSummary() {
@@ -493,7 +502,7 @@ function buildTimeline() {
 }
 
 async function fetchSummary(zoneId) {
-  const query = zoneId ? `?zoneId=${encodeURIComponent(zoneId)}` : "";
+  const query = zoneId ? `?campaignId=${encodeURIComponent(zoneId)}` : "";
   const response = await fetch(`${WORKER_FULL}/progress-summary${query}`, { cache: "no-store" });
   if (!response.ok) {
     throw new Error("Progress summary non disponibile");
@@ -502,7 +511,7 @@ async function fetchSummary(zoneId) {
 }
 
 async function fetchLastSession(zoneId) {
-  const query = zoneId ? `?zoneId=${encodeURIComponent(zoneId)}` : "";
+  const query = zoneId ? `?campaignId=${encodeURIComponent(zoneId)}` : "";
   const response = await fetch(`${WORKER_LAST}/progress-last${query}`, { cache: "no-store" });
   if (!response.ok) {
     throw new Error("Ultima sessione non disponibile");
@@ -559,7 +568,7 @@ function renderTwitchLive(data) {
 
 async function loadProgress(zoneId) {
   state.summaryPayload = await fetchSummary(zoneId);
-  if (!state.summaryPayload?.selectedZone) {
+  if (!state.summaryPayload?.selectedCampaign) {
     throw new Error("Raid selezionato non disponibile");
   }
 
@@ -573,7 +582,7 @@ async function loadProgress(zoneId) {
   renderViewTabs();
   renderProgressView();
 
-  state.lastSession = await fetchLastSession(state.summaryPayload.selectedZone.id);
+  state.lastSession = await fetchLastSession(state.summaryPayload.selectedCampaign.id);
   renderSessionSummary();
   renderReportLink();
   buildTimeline();

@@ -155,6 +155,15 @@ h2,
   margin-bottom: 26px;
 }
 
+.section-head--center {
+  justify-items: center;
+  text-align: center;
+}
+
+.section-head--center .section-subtitle {
+  margin: 0 auto;
+}
+
 .eyebrow {
   color: var(--accent-2);
   text-transform: uppercase;
@@ -628,6 +637,9 @@ header nav a.active {
 .team-card,
 .path-card,
 .hub-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   background: linear-gradient(180deg, rgba(18, 28, 28, 0.9), rgba(9, 14, 14, 0.94));
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
@@ -681,6 +693,7 @@ header nav a.active {
 .path-card .team-btn,
 .hub-card .team-btn {
   margin-top: 18px;
+  align-self: center;
 }
 
 .raid-teams,
@@ -695,6 +708,13 @@ header nav a.active {
   box-shadow: 0 16px 30px rgba(0, 0, 0, 0.24), 0 0 24px var(--glow-gold);
 }
 
+.team-card,
+.path-card,
+.hub-card {
+  text-align: center;
+  align-items: center;
+}
+
 .team-card.abyss {
   border-color: rgba(255, 106, 99, 0.24);
 }
@@ -706,7 +726,8 @@ header nav a.active {
 .cta-final {
   display: grid;
   gap: 16px;
-  justify-items: start;
+  justify-items: center;
+  text-align: center;
 }
 
 .cta-final .section-title {
@@ -822,7 +843,7 @@ header nav a.active {
 }
 
 .roster-role-grid {
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .member-card {
@@ -1290,6 +1311,12 @@ header nav a.active {
   color: var(--muted);
 }
 
+.progress-view-explainer {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
 .progress-difficulty-layout,
 .progress-boss-list {
   display: grid;
@@ -1536,7 +1563,7 @@ header nav a.active {
 .timeline-container,
 .dot-timeline-container {
   display: grid;
-  gap: 22px;
+  gap: 12px;
   margin-top: 22px;
 }
 
@@ -1596,30 +1623,38 @@ header nav a.active {
 }
 
 .dot-row {
-  padding: 18px 20px;
-  border-radius: 16px;
+  display: grid;
+  grid-template-columns: minmax(180px, 240px) 1fr;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 14px;
   border: 1px solid var(--line);
   background: rgba(10, 16, 16, 0.82);
 }
 
 .dot-boss-name {
-  font-size: 1.16rem;
-  margin-bottom: 10px;
+  font-size: 1rem;
+  line-height: 1.25;
 }
 
 .dot-line {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
 }
 
 .dot {
   position: relative;
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
   border-radius: 50%;
-  cursor: pointer;
+  cursor: help;
   transition: transform 0.2s ease;
 }
 
@@ -2165,6 +2200,11 @@ footer {
   .progress-card-head,
   .progress-boss-row {
     flex-direction: column;
+    align-items: start;
+  }
+
+  .dot-row {
+    grid-template-columns: 1fr;
     align-items: start;
   }
 
