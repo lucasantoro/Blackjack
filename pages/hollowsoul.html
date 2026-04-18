@@ -95,18 +95,18 @@
         Un'istantanea dei nostri dati social e Mythic+ aggiornati tramite Worker e Raider.IO.
       </p>
 
-      <div class="stats-grid">
+      <div class="stats-grid stats-grid--duo">
 
-        <div class="stat-card">
-          <div class="stat-label">Account unici in gilda</div>
-          <div class="stat-value" id="stat-unique">-</div>
-          <div class="stat-hint" id="stat-unique-hint">Conteggio account-level del roster di gilda.</div>
+        <div class="stat-card stat-card--feature">
+          <div class="stat-label">Profili Raider.IO tracciati</div>
+          <div class="stat-value" id="stat-tracked">-</div>
+          <div class="stat-hint" id="stat-tracked-hint">Personaggi della gilda letti con score Mythic+ disponibile.</div>
         </div>
 
-        <div class="stat-card">
-          <div class="stat-label">Personaggi totali in gilda</div>
-          <div class="stat-value" id="stat-characters">-</div>
-          <div class="stat-hint">Totale dei personaggi presenti in gilda, alt inclusi.</div>
+        <div class="stat-card stat-card--feature">
+          <div class="stat-label">Miglior score M+</div>
+          <div class="stat-value" id="stat-peak-score">-</div>
+          <div class="stat-hint" id="stat-peak-score-hint">Il profilo piu alto del roster tracciato.</div>
         </div>
 
         <div class="stat-card">
@@ -121,6 +121,16 @@
           <div class="stat-hint">Totale delle Mythic+ completate dai membri della gilda.</div>
         </div>
 
+      </div>
+
+      <div class="community-breakdown">
+        <div class="community-breakdown__head">
+          <h3>Distribuzione ruoli nel roster</h3>
+          <p>Basata sul ruolo attivo letto dal roster Raider.IO della gilda.</p>
+        </div>
+        <div class="community-role-bars" id="community-role-bars">
+          <div class="empty-state">Caricamento distribuzione ruoli...</div>
+        </div>
       </div>
 
       <p class="stats-note" id="stats-note">Dati aggiornati automaticamente.</p>
@@ -151,27 +161,59 @@ document.querySelectorAll("a").forEach(a => {
 
 <script>
 async function loadHollowSoulStats() {
-  const elUnique = document.getElementById("stat-unique");
-  const elUniqueHint = document.getElementById("stat-unique-hint");
-  const elChars = document.getElementById("stat-characters");
+  const elTracked = document.getElementById("stat-tracked");
+  const elTrackedHint = document.getElementById("stat-tracked-hint");
+  const elPeakScore = document.getElementById("stat-peak-score");
+  const elPeakScoreHint = document.getElementById("stat-peak-score-hint");
   const elAvg10 = document.getElementById("stat-avg-score");
   const elRuns = document.getElementById("stat-guild-runs");
+  const roleBars = document.getElementById("community-role-bars");
   const note = document.getElementById("stats-note");
 
   try {
     const res = await fetch("https://blackjack-community-stats.lucasantoro2905.workers.dev");
     const data = await res.json();
-    elUnique.textContent = data.uniquePlayers ?? "-";
-    elChars.textContent = data.totalCharacters ?? "-";
+    const leaders = Array.isArray(data.scoreLeaders) ? data.scoreLeaders : [];
+    const topLeader = leaders[0] || null;
+    const roles = data.roleBreakdown || {};
+    const totalRoles = ["tank", "healer", "dps"].reduce((sum, key) => sum + Number(roles[key] || 0), 0);
+
+    elTracked.textContent = data.trackedCharacters ?? "-";
+    elTrackedHint.textContent = data.activePlayersLast30 != null
+      ? `${data.activePlayersLast30} con almeno una key negli ultimi 30 giorni.`
+      : "Attivita recente non disponibile.";
+    elPeakScore.textContent = data.peakScore ?? "-";
+    elPeakScoreHint.textContent = topLeader
+      ? `${topLeader.name} guida il roster tracciato con ${topLeader.score} punti.`
+      : "Nessun leader score disponibile.";
     elAvg10.textContent = data.avgScoreTop10 ?? "-";
     elRuns.textContent = data.guildRunsLast30 ?? "-";
+    roleBars.innerHTML = totalRoles
+      ? ["tank", "healer", "dps"].map(role => {
+          const count = Number(roles[role] || 0);
+          const percent = totalRoles ? Math.round((count / totalRoles) * 100) : 0;
+          const label = role === "tank" ? "Tank" : role === "healer" ? "Healer" : "DPS";
+          return `
+            <div class="community-role-row">
+              <div class="community-role-row__meta">
+                <span>${label}</span>
+                <strong>${count}</strong>
+              </div>
+              <div class="community-role-track">
+                <span class="community-role-fill community-role-fill--${role}" style="width:${percent}%"></span>
+              </div>
+            </div>
+          `;
+        }).join("")
+      : `<div class="empty-state">Distribuzione ruoli non disponibile.</div>`;
 
-    elUniqueHint.textContent = "Le API pubbliche disponibili non espongono un identificatore account-level affidabile per separare main e alt.";
-    note.textContent = "Statistiche aggiornate via Worker ogni 6 ore. Personaggi totali e dati Mythic+ sono automatici; il numero di account unici non e ricavabile in modo preciso dalle API pubbliche.";
+    note.textContent = "Statistiche aggiornate via Worker ogni 6 ore.";
   } catch (e) {
     console.error("Errore stats:", e);
-    elUnique.textContent = elChars.textContent = elAvg10.textContent = elRuns.textContent = "-";
-    elUniqueHint.textContent = "Impossibile leggere il conteggio dei player unici.";
+    elTracked.textContent = elPeakScore.textContent = elAvg10.textContent = elRuns.textContent = "-";
+    elTrackedHint.textContent = "Impossibile leggere i profili tracciati.";
+    elPeakScoreHint.textContent = "Impossibile leggere il leader score.";
+    roleBars.innerHTML = `<div class="empty-state">Distribuzione ruoli non disponibile.</div>`;
     note.textContent = "Impossibile caricare le statistiche al momento.";
   }
 }

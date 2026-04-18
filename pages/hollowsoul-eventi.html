@@ -45,17 +45,10 @@
 
     <div class="section-head section-head--center">
       <div class="eyebrow">Community diary</div>
-      <h2 class="section-title">Cronaca automatica della gilda</h2>
       <p class="section-subtitle">
-        Il diario unisce due sorgenti: articoli automatici generati dagli achievement di gilda
+        Il diario unisce articoli automatici generati dagli achievement di gilda
         e articoli manuali salvati in un file JSON locale.
       </p>
-    </div>
-
-    <div class="roster-filters" id="diary-filters">
-      <button type="button" class="filter-chip is-active" data-filter="all">Tutti</button>
-      <button type="button" class="filter-chip" data-filter="auto">Automatici</button>
-      <button type="button" class="filter-chip" data-filter="manual">Manuali</button>
     </div>
 
     <div class="events-feed" id="diary-feed">
@@ -63,7 +56,7 @@
     </div>
 
     <p class="stats-note" id="diary-note">
-      Il feed automatico legge gli achievement recenti della gilda. Gli articoli manuali arrivano da <code>data/hollowsoul-diary-manual.json</code>.
+      Il feed automatico legge gli achievement recenti della gilda. Gli articoli manuali arrivano da <code>data/hollowsoul-diary-manual.json</code>; per personalizzare i testi automatici puoi usare <code>data/hollowsoul-diary-overrides.json</code>.
     </p>
 
     <div class="event-modal" id="event-modal" aria-hidden="true">
@@ -76,7 +69,9 @@
         <div class="event-modal__body">
           <p class="event-modal__meta" id="event-modal-meta"></p>
           <h3 id="event-modal-title"></h3>
-          <p id="event-modal-text"></p>
+          <p class="event-modal__snippet" id="event-modal-snippet"></p>
+          <div class="event-modal__text" id="event-modal-text"></div>
+          <a class="armory-link hidden" id="event-modal-source" href="#" target="_blank" rel="noopener noreferrer">Apri la fonte</a>
         </div>
       </div>
     </div>
@@ -108,10 +103,10 @@ document.querySelectorAll("a").forEach(link => {
 <script>
 const DIARY_AUTO_URL = "https://blackjack-community-diary.lucasantoro2905.workers.dev";
 const DIARY_MANUAL_URL = "../data/hollowsoul-diary-manual.json";
+const DIARY_OVERRIDES_URL = "../data/hollowsoul-diary-overrides.json";
 
 const state = {
-  articles: [],
-  filter: "all"
+  articles: []
 };
 
 const diaryFeed = document.getElementById("diary-feed");
@@ -119,8 +114,10 @@ const diaryNote = document.getElementById("diary-note");
 const modal = document.getElementById("event-modal");
 const modalTitle = document.getElementById("event-modal-title");
 const modalMeta = document.getElementById("event-modal-meta");
+const modalSnippet = document.getElementById("event-modal-snippet");
 const modalText = document.getElementById("event-modal-text");
-const modalArt = document.getElementById("event-modal-art");
+const modalArtShell = document.querySelector(".event-modal__media");
+const modalSource = document.getElementById("event-modal-source");
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -156,19 +153,22 @@ function excerpt(value) {
 function articleMeta(article) {
   const bits = [
     article.category || "Diario",
-    formatDate(article.date),
-    article.mode === "manual" ? "Manuale" : "Automatico"
+    formatDate(article.date)
   ].filter(Boolean);
   return bits.join(" - ");
 }
 
-function filteredArticles() {
-  if (state.filter === "all") return state.articles;
-  return state.articles.filter(article => article.mode === state.filter);
+function renderEventArt(article, extraClass = "") {
+  const artClass = `event-image event-image--${escapeHtml(article.art || "achievement")}${extraClass ? ` ${extraClass}` : ""}`;
+  const label = escapeHtml(article.category || "Diario");
+  const style = article.image
+    ? ` style="background-image:linear-gradient(0deg, rgba(4,7,7,0.46), rgba(4,7,7,0.14)), url('${escapeHtml(article.image)}'); background-size:cover; background-position:center;"`
+    : "";
+  return `<div class="${artClass}"${style} aria-hidden="true"><span class="event-image__label">${label}</span></div>`;
 }
 
 function renderDiary() {
-  const articles = filteredArticles();
+  const articles = state.articles;
 
   if (!articles.length) {
     diaryFeed.innerHTML = `<div class="empty-state">Nessun articolo disponibile per il filtro attuale.</div>`;
@@ -180,7 +180,7 @@ function renderDiary() {
       class="event-card"
       tabindex="0"
       data-article-id="${escapeHtml(article.id)}">
-      <div class="event-image event-image--${escapeHtml(article.art || "achievement")}" aria-hidden="true"></div>
+      ${renderEventArt(article)}
       <div class="event-content">
         <div class="event-meta">${escapeHtml(articleMeta(article))}</div>
         <h3>${escapeHtml(article.title)}</h3>
@@ -218,8 +218,26 @@ function renderDiary() {
 function openModal(article) {
   modalTitle.textContent = article.title || "";
   modalMeta.textContent = articleMeta(article);
-  modalText.textContent = article.body || "";
-  modalArt.className = `event-modal__art event-image event-image--${article.art || "achievement"}`;
+  modalSnippet.textContent = article.snippet || "";
+  modalText.innerHTML = String(article.body || "")
+    .split(/\n{2,}/)
+    .filter(Boolean)
+    .map(paragraph => `<p>${escapeHtml(paragraph)}</p>`)
+    .join("");
+  if (modalArtShell) {
+    modalArtShell.innerHTML = renderEventArt(article, "event-modal__art");
+    const nextArt = modalArtShell.querySelector(".event-modal__art");
+    if (nextArt) {
+      nextArt.id = "event-modal-art";
+    }
+  }
+  if (article.sourceUrl) {
+    modalSource.href = article.sourceUrl;
+    modalSource.classList.remove("hidden");
+  } else {
+    modalSource.classList.add("hidden");
+    modalSource.removeAttribute("href");
+  }
   modal.classList.add("is-open");
   modal.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
@@ -231,18 +249,6 @@ function closeModal() {
   document.body.classList.remove("modal-open");
 }
 
-function setupFilters() {
-  document.querySelectorAll("#diary-filters [data-filter]").forEach(button => {
-    button.addEventListener("click", () => {
-      state.filter = button.dataset.filter;
-      document.querySelectorAll("#diary-filters [data-filter]").forEach(item => {
-        item.classList.toggle("is-active", item.dataset.filter === state.filter);
-      });
-      renderDiary();
-    });
-  });
-}
-
 async function loadManualArticles() {
   try {
     const response = await fetch(DIARY_MANUAL_URL, { cache: "no-store" });
@@ -251,6 +257,17 @@ async function loadManualArticles() {
     return Array.isArray(payload.articles) ? payload.articles.map(article => ({ ...article, mode: "manual" })) : [];
   } catch {
     return [];
+  }
+}
+
+async function loadOverrides() {
+  try {
+    const response = await fetch(DIARY_OVERRIDES_URL, { cache: "no-store" });
+    if (!response.ok) return {};
+    const payload = await response.json();
+    return payload?.overrides && typeof payload.overrides === "object" ? payload.overrides : {};
+  } catch {
+    return {};
   }
 }
 
@@ -265,8 +282,6 @@ async function loadAutomaticArticles() {
 }
 
 async function initDiary() {
-  setupFilters();
-
   document.querySelectorAll("[data-close='modal']").forEach(element => {
     element.addEventListener("click", closeModal);
   });
@@ -278,10 +293,20 @@ async function initDiary() {
   });
 
   const manual = await loadManualArticles();
+  const overrides = await loadOverrides();
 
   try {
     const automatic = await loadAutomaticArticles();
-    state.articles = [...manual, ...automatic]
+    state.articles = [
+      ...manual,
+      ...automatic
+        .map(article => {
+          const override = overrides[String(article.achievementId)] || overrides[article.id] || null;
+          if (override?.hidden) return null;
+          return override ? { ...article, ...override } : article;
+        })
+        .filter(Boolean)
+    ]
       .sort((left, right) => {
         const leftDate = normalizeDate(left.date)?.getTime() || 0;
         const rightDate = normalizeDate(right.date)?.getTime() || 0;
