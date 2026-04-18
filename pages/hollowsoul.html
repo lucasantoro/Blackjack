@@ -173,21 +173,22 @@ async function loadHollowSoulStats() {
   try {
     const res = await fetch("https://blackjack-community-stats.lucasantoro2905.workers.dev");
     const data = await res.json();
-    const leaders = Array.isArray(data.scoreLeaders) ? data.scoreLeaders : [];
+    const payload = data?.summary && typeof data.summary === "object" ? data.summary : data;
+    const leaders = Array.isArray(payload.scoreLeaders) ? payload.scoreLeaders : [];
     const topLeader = leaders[0] || null;
-    const roles = data.roleBreakdown || {};
+    const roles = payload.roleBreakdown || {};
     const totalRoles = ["tank", "healer", "dps"].reduce((sum, key) => sum + Number(roles[key] || 0), 0);
 
-    elTracked.textContent = data.trackedCharacters ?? "-";
-    elTrackedHint.textContent = data.activePlayersLast30 != null
-      ? `${data.activePlayersLast30} con almeno una key negli ultimi 30 giorni.`
+    elTracked.textContent = payload.trackedCharacters ?? "-";
+    elTrackedHint.textContent = payload.activePlayersLast30 != null
+      ? `${payload.activePlayersLast30} con almeno una key negli ultimi 30 giorni.`
       : "Attivita recente non disponibile.";
-    elPeakScore.textContent = data.peakScore ?? "-";
+    elPeakScore.textContent = payload.peakScore ?? "-";
     elPeakScoreHint.textContent = topLeader
       ? `${topLeader.name} guida il roster tracciato con ${topLeader.score} punti.`
       : "Nessun leader score disponibile.";
-    elAvg10.textContent = data.avgScoreTop10 ?? "-";
-    elRuns.textContent = data.guildRunsLast30 ?? "-";
+    elAvg10.textContent = payload.avgScoreTop10 ?? "-";
+    elRuns.textContent = payload.guildRunsLast30 ?? "-";
     roleBars.innerHTML = totalRoles
       ? ["tank", "healer", "dps"].map(role => {
           const count = Number(roles[role] || 0);
