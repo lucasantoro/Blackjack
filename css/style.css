@@ -651,10 +651,12 @@ header nav a.active {
 .hub-card {
   display: flex;
   flex-direction: column;
+  align-self: stretch;
   gap: 12px;
   background: linear-gradient(180deg, rgba(18, 28, 28, 0.9), rgba(9, 14, 14, 0.94));
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
+  height: 100%;
   padding: 26px;
   position: relative;
   overflow: hidden;
@@ -704,7 +706,7 @@ header nav a.active {
 .team-card .team-btn,
 .path-card .team-btn,
 .hub-card .team-btn {
-  margin-top: 18px;
+  margin-top: auto;
   align-self: center;
 }
 
@@ -1160,6 +1162,92 @@ header nav a.active {
 
 .apply-actions {
   margin-top: 8px;
+  display: flex;
+  justify-content: center;
+}
+
+/* =========================================================
+   STATUTO
+   ========================================================= */
+
+.statute-shell {
+  display: grid;
+  gap: 22px;
+}
+
+.statute-toolbar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.statute-summary-card {
+  padding: 22px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: rgba(12, 18, 18, 0.82);
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+}
+
+.statute-summary-card__value--compact {
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.statute-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.statute-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.statute-card {
+  padding: clamp(24px, 3vw, 34px);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: rgba(12, 18, 18, 0.82);
+  box-shadow: var(--shadow-soft);
+}
+
+.statute-rule-list {
+  display: grid;
+  gap: 14px;
+}
+
+.statute-rule-item {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  padding: 16px 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 13, 13, 0.84);
+}
+
+.statute-rule-index {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--accent-2);
+  font-weight: 800;
+  background: rgba(240, 200, 104, 0.1);
+  border: 1px solid rgba(240, 200, 104, 0.18);
+}
+
+.statute-rule-item p {
+  margin: 0;
+  text-align: left;
 }
 
 /* =========================================================
@@ -1820,12 +1908,43 @@ header nav a.active {
   text-align: center;
 }
 
-.home-vod-grid {
+.home-vod-carousel-shell {
   margin-top: 24px;
 }
 
-.home-vod-grid .video-card {
+.home-vod-carousel {
+  align-items: stretch;
+  padding: 4px 2px 10px;
+}
+
+.home-vod-carousel .video-card {
+  flex: 0 0 clamp(280px, 48%, 380px);
+  min-width: 0;
+  min-height: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: start;
+}
+
+.home-vod-carousel .video-body {
+  display: grid;
+  gap: 8px;
+  flex: 1;
+}
+
+.home-vod-carousel .vod-button {
+  margin-top: auto;
+  align-self: center;
+}
+
+.home-vod-modal__content {
+  max-width: 960px;
+}
+
+.home-vod-modal__content .event-modal__body {
+  justify-items: center;
+  text-align: center;
 }
 
 .community-breakdown__head h3 {
@@ -2861,6 +2980,7 @@ footer {
   }
 
   .split-layout,
+  .statute-toolbar,
   .achievement-summary-grid,
   .achievement-overview-grid,
   .achievement-category-board,

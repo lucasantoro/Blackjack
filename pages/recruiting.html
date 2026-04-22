@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Reclutamento – Blackjack</title>
+<title>Reclutamento - Blackjack</title>
 <link rel="stylesheet" href="../css/style.css">
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 
 <body class="page-transition blackjack-bg">
@@ -21,39 +22,32 @@
   </nav>
 </header>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-content">
     <h2>Reclutamento</h2>
-    <p>
-      Vuoi sederti al tavolo? Compila il modulo e ti ricontattiamo su Discord.
-    </p>
+    <p>Compila il modulo con i tuoi dati principali e il contesto in cui vorresti entrare in gilda.</p>
   </div>
 </section>
 
-<!-- BG LOGO + OVERLAY -->
 <div class="bg-container bg-main-logo">
-
   <main class="panel recruit">
 
-    <h2 class="section-title">Come candidarsi</h2>
-    <p class="section-subtitle">
-      Lasciaci i tuoi dati e raccontaci cosa cerchi in gilda.
-      Il nostro staff ti risponderà appena possibile.
-    </p>
+    <div class="section-head section-head--center">
+      <div class="eyebrow">Candidatura</div>
+      <h2 class="section-title">Modulo di ingresso</h2>
+      <p class="section-subtitle">Classe e specializzazione sono aggiornate all'assetto attuale, inclusa Devourer per Demon Hunter.</p>
+    </div>
 
-    <!-- FORM -->
     <form id="applyForm" class="apply-form">
+      <label for="discordInput">Discord</label>
+      <input id="discordInput" type="text" name="Discord" placeholder="es: nickname o user Discord" required>
 
-      <label>Discord</label>
-      <input type="text" name="Discord" placeholder="es: Odetti#1234" required>
+      <label for="characterInput">Nome del personaggio</label>
+      <input id="characterInput" type="text" name="Personaggio" placeholder="Il tuo main" required>
 
-      <label>Nome del personaggio</label>
-      <input type="text" name="Personaggio" placeholder="Il tuo main" required>
-
-      <label>Classe</label>
+      <label for="classSelect">Classe</label>
       <select id="classSelect" name="Classe" required>
-        <option value="">Seleziona la classe…</option>
+        <option value="">Seleziona la classe...</option>
         <option>Death Knight</option>
         <option>Demon Hunter</option>
         <option>Druid</option>
@@ -69,24 +63,23 @@
         <option>Warrior</option>
       </select>
 
-      <label>Specializzazione</label>
+      <label for="specSelect">Specializzazione</label>
       <select id="specSelect" name="Spec" required>
-        <option value="">Seleziona prima una classe…</option>
+        <option value="">Seleziona prima una classe...</option>
       </select>
 
-      <label>Link a Raider.IO o Warcraft Logs</label>
-      <input type="text" name="Logs" placeholder="URL al tuo profilo (opzionale)">
+      <label for="logsInput">Link a Raider.IO o Warcraft Logs</label>
+      <input id="logsInput" type="url" name="Logs" placeholder="URL del profilo o del report">
 
-      <label>Disponibilità</label>
-      <textarea name="Disponibilità" placeholder="Giorni/orari per raid e attività" required></textarea>
+      <label for="availabilityInput">Disponibilita</label>
+      <textarea id="availabilityInput" name="Disponibilita" placeholder="Giorni e orari in cui giochi di solito" required></textarea>
 
-      <label>Perché vuoi unirti ai Blackjack?</label>
-      <textarea name="Motivazione" placeholder="Cosa cerchi e quali sono i tuoi obiettivi" required></textarea>
+      <label for="motivationInput">Cosa cerchi nei Blackjack</label>
+      <textarea id="motivationInput" name="Motivazione" placeholder="Obiettivi, aspettative e tipo di ambiente che vuoi trovare" required></textarea>
 
       <div class="apply-actions">
         <button type="submit" class="apply-button">Invia candidatura</button>
       </div>
-
     </form>
 
   </main>
@@ -96,11 +89,11 @@
   <p>&copy; 2026 Blackjack</p>
 </footer>
 
-<!-- TRANSIZIONE PAGINE -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   document.body.classList.add("page-loaded");
 });
+
 document.querySelectorAll("a").forEach(link => {
   if (link.hostname === window.location.hostname) {
     link.addEventListener("click", function (e) {
@@ -113,15 +106,12 @@ document.querySelectorAll("a").forEach(link => {
 });
 </script>
 
-<!-- INVIO FORM AL WEBHOOK DISCORD -->
 <script>
-document.getElementById("applyForm").addEventListener("submit", async function(e) {
-  e.preventDefault();
+document.getElementById("applyForm").addEventListener("submit", async function(event) {
+  event.preventDefault();
 
   const webhookURL = "https://discord.com/api/webhooks/1439257704198832194/KIM82-eZUORCNmAYRBTZwjatEASiltvNvZ-0hAvp2_bjUw_BB0kTPo3ITRJDz-RisJnM";
-
   const formData = new FormData(this);
-
   const message = Array.from(formData.entries())
     .map(([key, value]) => `**${key}:** ${value}`)
     .join("\n");
@@ -132,18 +122,18 @@ document.getElementById("applyForm").addEventListener("submit", async function(e
     body: JSON.stringify({ content: message })
   });
 
-  alert("Candidatura inviata con successo!");
+  alert("Candidatura inviata con successo.");
   this.reset();
+  document.getElementById("specSelect").innerHTML = `<option value="">Seleziona prima una classe...</option>`;
 });
 </script>
 
-<!-- POPOLAMENTO SPEC IN BASE ALLA CLASSE -->
 <script>
 const specByClass = {
   "Death Knight": ["Blood", "Frost", "Unholy"],
-  "Demon Hunter": ["Havoc", "Vengeance"],
+  "Demon Hunter": ["Devourer", "Havoc", "Vengeance"],
   "Druid": ["Balance", "Feral", "Guardian", "Restoration"],
-  "Evoker": ["Devastation", "Preservation", "Augmentation"],
+  "Evoker": ["Augmentation", "Devastation", "Preservation"],
   "Hunter": ["Beast Mastery", "Marksmanship", "Survival"],
   "Mage": ["Arcane", "Fire", "Frost"],
   "Monk": ["Brewmaster", "Mistweaver", "Windwalker"],
@@ -159,18 +149,20 @@ const classSelect = document.getElementById("classSelect");
 const specSelect = document.getElementById("specSelect");
 
 classSelect.addEventListener("change", () => {
-  specSelect.innerHTML = "";
   const selectedClass = classSelect.value;
+  specSelect.innerHTML = "";
 
-  if (!selectedClass) {
-    specSelect.innerHTML = `<option value="">Seleziona prima una classe…</option>`;
+  if (!selectedClass || !specByClass[selectedClass]) {
+    specSelect.innerHTML = `<option value="">Seleziona prima una classe...</option>`;
     return;
   }
 
+  specSelect.innerHTML = `<option value="">Seleziona la specializzazione...</option>`;
   specByClass[selectedClass].forEach(spec => {
-    const op = document.createElement("option");
-    op.value = op.textContent = spec;
-    specSelect.appendChild(op);
+    const option = document.createElement("option");
+    option.value = spec;
+    option.textContent = spec;
+    specSelect.appendChild(option);
   });
 });
 </script>

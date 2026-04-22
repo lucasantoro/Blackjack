@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Statuto - Blackjack</title>
 <link rel="stylesheet" href="../css/style.css">
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 
 <body class="page-transition blackjack-bg">
@@ -21,126 +22,58 @@
   </nav>
 </header>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-content">
-    <h2>Statuto della Gilda Blackjack</h2>
-    <p>I principi che guidano la community, i ruoli e le regole condivise.</p>
+    <h2>Statuto della gilda</h2>
+    <p>Regole, ruoli e raid rules dei Blackjack in un pannello navigabile.</p>
   </div>
 </section>
 
-<!-- SFONDO UNICO (logo generale) -->
 <div class="bg-container bg-main-logo">
-  <section class="statuto panel">
+  <main class="panel statuto">
 
-    <h2>📜 REGOLAMENTO – BLACKJACK</h2>
+    <div class="section-head section-head--center">
+      <div class="eyebrow">Regolamento</div>
+      <h2 class="section-title">Blackjack</h2>
+      <p class="section-subtitle">Scegli una categoria, scorri le regole e tieni sempre sotto mano il conteggio della sezione attiva.</p>
+    </div>
 
-    <h3>👁️ IDENTITÀ DEL TAVOLO</h3>
-    <p>
-      Ciao e benvenuti nei Blackjack! Per chi non ci conosce o per i nuovi arrivati, la gilda Blackjack nasce
-      con l’obiettivo di creare un gruppo maturo, affiatato e appassionato di World of Warcraft. Nel corso degli
-      innumerevoli anni della storia di WoW, molti giocatori sono passati per le più svariate gilde portando esperienza
-      maturata in ambienti hardcore, semi-hardcore e softcore.
-    </p>
-    <p>
-      In questa gilda si richiede rispetto, gioco di squadra e divertimento. Attitudine e comportamento impeccabili.
-      Qui si scherza, si ride e si osa… la tossicità resta fuori dal casinò.
-    </p>
+    <section class="statute-shell">
+      <div class="statute-toolbar">
+        <div class="statute-summary-card">
+          <div class="stat-label">Sezioni</div>
+          <div class="stat-value" id="statute-section-count">-</div>
+          <div class="stat-hint">Blocchi disponibili nello statuto.</div>
+        </div>
+        <div class="statute-summary-card">
+          <div class="stat-label">Regole visibili</div>
+          <div class="stat-value" id="statute-rule-count">-</div>
+          <div class="stat-hint">Voci contenute nella sezione aperta.</div>
+        </div>
+        <div class="statute-summary-card">
+          <div class="stat-label">Categoria attiva</div>
+          <div class="stat-value statute-summary-card__value--compact" id="statute-active-label">-</div>
+          <div class="stat-hint">Sezione che stai leggendo adesso.</div>
+        </div>
+      </div>
 
-    <h3>🎩 STRUTTURA DELLA GILDA</h3>
-    <ul>
-      <li><strong>♠️ Casino Royale</strong> – Guild Master: decide la direzione della gilda e ha l’ultima parola su ogni mano.</li>
-      <li><strong>🎩 Pit Boss</strong> – Vice GM: supporta il Banco e coordina staff e attività.</li>
-      <li><strong>🔥 Jack</strong> – Officer Raid: gestisce raid, roster e progress, analisi fight, meccaniche, build e ottimizzazione.</li>
-      <li><strong>🎉 Dealer</strong> – Officer Eventi &amp; Social: mount run, achievement, eventi community.</li>
-      <li><strong>🂡 High Roller</strong> – Raider attivi nel progress: presenza costante e affidabilità.</li>
-      <li><strong>🍀 Buy-In</strong> – Nuovi membri in prova: carte in mano, pronti a dimostrare il proprio valore.</li>
-      <li><strong>🃏 Split</strong> – Ruolo di default per tutti gli Alt dei membri della gilda.</li>
-      <li><strong>🎲 Spettatore</strong> – Membri casual, social e alt: parte del tavolo, senza obblighi di puntata.</li>
-    </ul>
+      <div class="statute-filter-bar" id="statute-filter-bar"></div>
 
-    <h3>🎯 OBIETTIVI DI GILDA</h3>
-    <p>
-      Il nostro obiettivo principale è divertirsi insieme. Blackjack è una gilda di giocatori “cresciuti”, ma con lo
-      spirito da bambini, e fondamentalmente vogliamo riuscire a conoscere e integrare tutti i membri.
-    </p>
-    <p>
-      Discord e gli altri canali non sono obbligatori, ma fortemente consigliati. Chi gioca senza interagire è il benvenuto,
-      ma perderà parte della socialità della gilda.
-    </p>
+      <div class="statute-nav">
+        <button type="button" class="button-secondary" id="statute-prev">Sezione precedente</button>
+        <button type="button" class="button-secondary" id="statute-next">Sezione successiva</button>
+      </div>
 
-    <h3>🤝 COMPORTAMENTO IN GILDA</h3>
-    <p>
-      In gilda si convive pacificamente. Come nella vita reale, possono nascere antipatie personali, ma non tolleriamo
-      comportamenti tossici, aggressivi o polemici che possano minare l’atmosfera generale. La gilda è aperta anche in uscita,
-      quindi nessun vincolo rigido: la porta è sempre aperta.
-    </p>
+      <article class="statute-card" id="statute-card"></article>
+    </section>
 
-    <h3>⚖️ REGOLE GENERALI</h3>
-    <ul>
-      <li>Rispetto obbligatorio verso tutti.</li>
-      <li>Vietati flame, offese e comportamenti tossici.</li>
-      <li>Nessun atteggiamento da “so tutto io”, “io so io voi non siete un cazzo”.</li>
-    </ul>
-
-    <h3>⚔️ RAID E PROGRESS</h3>
-    <p>
-      Non raidiamo per i drop: M+ e Gran Banca bastano per equipaggiarsi rapidamente. Il raid è fatto quasi esclusivamente
-      per gloria e progress.
-    </p>
-    <p><strong>Giorni di raid attuali:</strong> lunedì e mercoledì inizio ore 21:15.</p>
-
-    <h3>🎯 REGOLE RAID</h3>
-    <ul>
-      <li>❌ Vietato raidare con altre gilde negli stessi giorni/orari.</li>
-      <li>✅ Raid fuori orario consentiti se non creano problemi.</li>
-      <li>⚠️ Boss in progress → avvisare il comparto Officer.</li>
-      <li>⏳ Progress prima del reset solo dopo le attività di gilda.</li>
-      <li>🧩 Alt ammessi se non interferiscono con il roster principale.</li>
-      <li>🗣️ Discord obbligatorio in ascolto durante il raid.</li>
-      <li>⁉️ Chiarimenti prima del pull, strategie condivise con gli officer.</li>
-      <li>🧠 UI e keybind sono liberi. In caso di problemi, lo staff propone ottimizzazioni: la disponibilità al confronto è richiesta.</li>
-      <li>⚠️ Rispondere sempre agli inviti su Discord, sia per confermare che per declinare.</li>
-    </ul>
-
-    <h3>🏆 LOOT E PRIORITÀ</h3>
-    <p>Le regole sono semplici:</p>
-    <ul>
-      <li>Need solo per pezzi BIS; tutto il resto va in Greed.</li>
-      <li>Nei BIS si considera attendance e performance, sempre in modo equilibrato.</li>
-      <li>Priorità a tanks e healers.</li>
-      <li>Per i set, la priorità va a chi completa bonus x2 o x4.</li>
-    </ul>
-    <p>
-      I loot vanno sempre passati al giocatore incaricato tramite RC Loot Council. Il loot è del gruppo, non del singolo.
-    </p>
-
-    <h3>🧭 ACCESSO AI RUOLI</h3>
-    <p><strong>➡️ Da Buy-In a High Roller</strong></p>
-    <ul>
-      <li>Minimo 4 serate organizzate.</li>
-      <li>Atteggiamento positivo e spirito di squadra.</li>
-    </ul>
-    <p><strong>➡️ Nomina Officer / Conta Carte</strong></p>
-    <ul>
-      <li>Scelta dal Banco e dal Pit Boss.</li>
-    </ul>
-
-    <h3>⛔ SANZIONI</h3>
-    <ul>
-      <li>Richiamo verbale.</li>
-      <li>Declassamento a Giocatore Social.</li>
-      <li>Sospensione dal tavolo.</li>
-    </ul>
-
-  </section>
+  </main>
 </div>
 
 <footer>
   <p>&copy; 2026 Blackjack</p>
 </footer>
 
-<!-- TRANSIZIONE -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   document.body.classList.add("page-loaded");
@@ -156,6 +89,208 @@ document.querySelectorAll("a").forEach(link => {
     });
   }
 });
+</script>
+
+<script>
+const statuteSections = [
+  {
+    id: "identita",
+    label: "Identita",
+    title: "Identita del tavolo",
+    intro: "Blackjack nasce per creare un gruppo maturo, affiatato e appassionato di World of Warcraft.",
+    rules: [
+      "Molti membri arrivano da esperienze hardcore, semi-hardcore e softcore.",
+      "In questa gilda si richiede rispetto, gioco di squadra e divertimento.",
+      "Attitudine e comportamento impeccabili.",
+      "Qui si scherza, si ride e si osa.",
+      "La tossicita resta fuori dal casino."
+    ]
+  },
+  {
+    id: "struttura",
+    label: "Struttura",
+    title: "Struttura della gilda",
+    intro: "Ogni ruolo ha una funzione precisa e leggibile.",
+    rules: [
+      "Casino Royale - Guild Master: decide la direzione della gilda e ha l'ultima parola su ogni mano.",
+      "Pit Boss - Vice GM: supporta il Banco e coordina staff e attivita.",
+      "Jack - Officer Raid: gestisce raid, roster e progress, analisi fight, meccaniche, build e ottimizzazione.",
+      "Dealer - Officer Eventi & Social: segue mount run, achievement ed eventi community.",
+      "High Roller - Raider attivi nel progress: presenza costante e affidabilita.",
+      "Buy-In - Nuovi membri in prova: pronti a dimostrare il proprio valore.",
+      "Split - Ruolo di default per tutti gli alt dei membri della gilda.",
+      "Spettatore - Membri casual, social e alt: parte del tavolo senza obblighi di puntata."
+    ]
+  },
+  {
+    id: "obiettivi",
+    label: "Obiettivi",
+    title: "Obiettivi di gilda",
+    intro: "L'obiettivo principale e divertirsi insieme.",
+    rules: [
+      "Blackjack e una gilda di giocatori cresciuti, ma con lo spirito da bambini.",
+      "Vogliamo conoscere e integrare tutti i membri nel tempo.",
+      "Discord e gli altri canali non sono obbligatori, ma fortemente consigliati.",
+      "Chi gioca senza interagire e il benvenuto, ma perdera parte della socialita della gilda."
+    ]
+  },
+  {
+    id: "comportamento",
+    label: "Comportamento",
+    title: "Comportamento in gilda",
+    intro: "La convivenza deve restare pacifica anche quando nascono antipatie personali.",
+    rules: [
+      "Rispetto verso tutti.",
+      "Vietati flame, offese e comportamenti tossici.",
+      "Nessun atteggiamento da 'so tutto io'.",
+      "Non tolleriamo comportamenti aggressivi o polemici che possano minare l'atmosfera generale."
+    ]
+  },
+  {
+    id: "raid",
+    label: "Raid",
+    title: "Raid e progress",
+    intro: "Le regole raid sono valide per il main e vanno rispettate con chiarezza.",
+    rules: [
+      "Giorni di raid attuali: lunedi e mercoledi, inizio ore 21:15.",
+      "Progress vietato con il main dal mercoledi al lunedi inclusi.",
+      "Martedi libero pre-reset: e consentito raidare e fare progress anche con il main.",
+      "Gli alt sono sempre ammessi durante la settimana.",
+      "Se intendi provare boss nella difficolta successiva con il main, avvisa sempre rasal95 o mc_donald_.",
+      "Esempio: progress in Normal -> avvisare per tentativi in HC.",
+      "Esempio: progress in HC -> avvisare per tentativi in Mythic.",
+      "Vietato raidare con altre gilde negli stessi giorni e orari del raid di gilda.",
+      "Discord obbligatorio almeno in ascolto durante il raid.",
+      "Chiarimenti e strategie sempre prima del pull, condivisi con gli officer.",
+      "UI e keybind liberi. In caso di problemi, lo staff puo proporre ottimizzazioni ed e richiesta disponibilita al confronto.",
+      "Agli inviti su Discord si risponde sempre, sia per confermare sia per declinare."
+    ]
+  },
+  {
+    id: "loot",
+    label: "Loot",
+    title: "Loot e priorita",
+    intro: "Il loot e del gruppo, non del singolo.",
+    rules: [
+      "Nei BIS si considerano attendance e performance, sempre in modo equilibrato.",
+      "Priorita a tank e healer.",
+      "Per i set la priorita va a chi completa bonus x2 o x4.",
+      "I loot vanno sempre passati al giocatore incaricato tramite RC Loot Council."
+    ]
+  },
+  {
+    id: "ruoli",
+    label: "Accesso ruoli",
+    title: "Accesso ai ruoli",
+    intro: "I passaggi di ruolo non sono automatici.",
+    rules: [
+      "Da Buy-In a High Roller: minimo 4 serate organizzate.",
+      "Da Buy-In a High Roller: atteggiamento positivo e spirito di squadra.",
+      "Nomina Officer o Conta Carte: scelta dal Banco e dal Pit Boss."
+    ]
+  },
+  {
+    id: "sanzioni",
+    label: "Sanzioni",
+    title: "Sanzioni",
+    intro: "Quando serve intervenire, la scala e diretta.",
+    rules: [
+      "Richiamo verbale.",
+      "Declassamento a Giocatore Social.",
+      "Sospensione dal tavolo."
+    ]
+  }
+];
+
+const statuteState = { activeIndex: 0 };
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function renderStatuteFilters() {
+  const container = document.getElementById("statute-filter-bar");
+  if (!container) return;
+
+  container.innerHTML = statuteSections.map((section, index) => `
+    <button type="button" class="filter-chip ${index === statuteState.activeIndex ? "is-active" : ""}" data-statute-index="${index}">
+      ${escapeHtml(section.label)}
+    </button>
+  `).join("");
+
+  container.querySelectorAll("[data-statute-index]").forEach(button => {
+    button.addEventListener("click", () => {
+      statuteState.activeIndex = Number(button.getAttribute("data-statute-index"));
+      renderStatute();
+    });
+  });
+}
+
+function renderStatuteCard() {
+  const card = document.getElementById("statute-card");
+  const section = statuteSections[statuteState.activeIndex];
+  if (!card || !section) return;
+
+  card.innerHTML = `
+    <div class="section-head section-head--center">
+      <div class="eyebrow">${escapeHtml(section.label)}</div>
+      <h3 class="section-title">${escapeHtml(section.title)}</h3>
+      <p class="section-subtitle">${escapeHtml(section.intro)}</p>
+    </div>
+    <div class="statute-rule-list">
+      ${section.rules.map((rule, index) => `
+        <article class="statute-rule-item">
+          <span class="statute-rule-index">${index + 1}</span>
+          <p>${escapeHtml(rule)}</p>
+        </article>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderStatuteSummary() {
+  const active = statuteSections[statuteState.activeIndex];
+  document.getElementById("statute-section-count").textContent = statuteSections.length;
+  document.getElementById("statute-rule-count").textContent = active.rules.length;
+  document.getElementById("statute-active-label").textContent = active.label;
+}
+
+function renderStatuteNav() {
+  const prev = document.getElementById("statute-prev");
+  const next = document.getElementById("statute-next");
+  if (!prev || !next) return;
+
+  prev.disabled = statuteState.activeIndex === 0;
+  next.disabled = statuteState.activeIndex === statuteSections.length - 1;
+
+  prev.onclick = () => {
+    if (statuteState.activeIndex > 0) {
+      statuteState.activeIndex -= 1;
+      renderStatute();
+    }
+  };
+
+  next.onclick = () => {
+    if (statuteState.activeIndex < statuteSections.length - 1) {
+      statuteState.activeIndex += 1;
+      renderStatute();
+    }
+  };
+}
+
+function renderStatute() {
+  renderStatuteFilters();
+  renderStatuteSummary();
+  renderStatuteCard();
+  renderStatuteNav();
+}
+
+renderStatute();
 </script>
 
 </body>
