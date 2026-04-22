@@ -34,8 +34,7 @@
   <div class="hero-content">
     <h2>Diario degli Spettatori</h2>
     <p>
-      Un feed della community che puo vivere da solo: achievement di gilda trasformati in articoli,
-      con la possibilita di aggiungere anche post manuali quando vuoi.
+      Una raccolta dei momenti recenti della community, con articoli brevi, immagini e una lettura piu ordinata degli eventi di gilda.
     </p>
   </div>
 </section>
@@ -46,17 +45,20 @@
     <div class="section-head section-head--center">
       <div class="eyebrow">Community diary</div>
       <p class="section-subtitle">
-        Il diario unisce articoli automatici generati dagli achievement di gilda
-        e articoli manuali salvati in un file JSON locale.
+        Gli eventi scorrono in orizzontale e ogni card apre un articolo completo, cosi la pagina resta piu leggera ma leggibile.
       </p>
     </div>
 
-    <div class="events-feed" id="diary-feed">
-      <div class="empty-state">Caricamento articoli in corso...</div>
+    <div class="media-carousel-wrapper diary-carousel-shell">
+      <button class="carousel-nav" id="diary-prev" type="button" aria-label="Articoli precedenti">&#10094;</button>
+      <div class="events-carousel diary-carousel" id="diary-feed">
+        <div class="empty-state">Caricamento articoli in corso...</div>
+      </div>
+      <button class="carousel-nav" id="diary-next" type="button" aria-label="Articoli successivi">&#10095;</button>
     </div>
 
     <p class="stats-note" id="diary-note">
-      Il feed automatico legge gli achievement recenti della gilda. Gli articoli manuali arrivano da <code>data/hollowsoul-diary-manual.json</code>; per personalizzare i testi automatici puoi usare <code>data/hollowsoul-diary-overrides.json</code>.
+      Il feed legge gli achievement recenti della gilda. Gli articoli manuali arrivano da <code>data/hollowsoul-diary-manual.json</code>; i testi possono essere generati lato worker e, se serve, rifiniti con override locali.
     </p>
 
     <div class="event-modal" id="event-modal" aria-hidden="true">
@@ -111,6 +113,8 @@ const state = {
 
 const diaryFeed = document.getElementById("diary-feed");
 const diaryNote = document.getElementById("diary-note");
+const diaryPrev = document.getElementById("diary-prev");
+const diaryNext = document.getElementById("diary-next");
 const modal = document.getElementById("event-modal");
 const modalTitle = document.getElementById("event-modal-title");
 const modalMeta = document.getElementById("event-modal-meta");
@@ -161,10 +165,36 @@ function articleMeta(article) {
 function renderEventArt(article, extraClass = "") {
   const artClass = `event-image event-image--${escapeHtml(article.art || "achievement")}${extraClass ? ` ${extraClass}` : ""}`;
   const label = escapeHtml(article.category || "Diario");
-  const style = article.image
-    ? ` style="background-image:linear-gradient(0deg, rgba(4,7,7,0.46), rgba(4,7,7,0.14)), url('${escapeHtml(article.image)}'); background-size:cover; background-position:center;"`
+  const image = article.image ? escapeHtml(article.image) : "";
+  const backdrop = image
+    ? `<div class="event-image__backdrop" style="background-image:url('${image}');"></div>`
     : "";
-  return `<div class="${artClass}"${style} aria-hidden="true"><span class="event-image__label">${label}</span></div>`;
+  const icon = image
+    ? `<img class="event-image__icon" src="${image}" alt="" loading="lazy" decoding="async">`
+    : `<div class="event-image__icon event-image__icon--placeholder" aria-hidden="true">${escapeHtml((article.title || "B").slice(0, 1))}</div>`;
+  return `
+    <div class="${artClass}" aria-hidden="true">
+      ${backdrop}
+      <div class="event-image__frame">${icon}</div>
+      <span class="event-image__label">${label}</span>
+    </div>
+  `;
+}
+
+function updateDiaryNav() {
+  if (!diaryPrev || !diaryNext) return;
+  const maxScroll = Math.max(0, diaryFeed.scrollWidth - diaryFeed.clientWidth);
+  const current = Math.round(diaryFeed.scrollLeft);
+  diaryPrev.disabled = current <= 4;
+  diaryNext.disabled = current >= maxScroll - 4;
+}
+
+function scrollDiary(direction) {
+  const amount = Math.max(280, Math.round(diaryFeed.clientWidth * 0.82));
+  diaryFeed.scrollBy({
+    left: direction * amount,
+    behavior: "smooth"
+  });
 }
 
 function renderDiary() {
@@ -172,12 +202,13 @@ function renderDiary() {
 
   if (!articles.length) {
     diaryFeed.innerHTML = `<div class="empty-state">Nessun articolo disponibile per il filtro attuale.</div>`;
+    updateDiaryNav();
     return;
   }
 
   diaryFeed.innerHTML = articles.map(article => `
     <article
-      class="event-card"
+      class="event-card event-card--carousel"
       tabindex="0"
       data-article-id="${escapeHtml(article.id)}">
       ${renderEventArt(article)}
@@ -213,6 +244,8 @@ function renderDiary() {
       });
     }
   });
+
+  updateDiaryNav();
 }
 
 function openModal(article) {
@@ -282,6 +315,13 @@ async function loadAutomaticArticles() {
 }
 
 async function initDiary() {
+  if (diaryPrev && diaryNext) {
+    diaryPrev.addEventListener("click", () => scrollDiary(-1));
+    diaryNext.addEventListener("click", () => scrollDiary(1));
+    diaryFeed.addEventListener("scroll", updateDiaryNav, { passive: true });
+    window.addEventListener("resize", updateDiaryNav);
+  }
+
   document.querySelectorAll("[data-close='modal']").forEach(element => {
     element.addEventListener("click", closeModal);
   });
@@ -314,7 +354,7 @@ async function initDiary() {
       });
 
     renderDiary();
-    diaryNote.textContent = `Articoli caricati: ${state.articles.length}. Feed automatico dagli achievement di gilda, piu eventuali articoli manuali locali.`;
+    diaryNote.textContent = `Articoli caricati: ${state.articles.length}. I testi nuovi possono essere generati lato worker e corretti localmente solo quando serve.`;
   } catch (error) {
     state.articles = manual;
     renderDiary();

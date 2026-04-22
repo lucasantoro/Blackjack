@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OVERRIDES_PATH = ROOT / "data" / "hollowsoul-diary-overrides.json"
 DEFAULT_SOURCE_URL = "https://blackjack-community-diary.lucasantoro2905.workers.dev"
+ALLOWED_ART = {"achievement", "legends", "tour", "treasure", "transmog", "pvp"}
 
 
 def load_feed(source_url: str) -> list[dict]:
@@ -30,17 +31,12 @@ def save_overrides(payload: dict) -> None:
     OVERRIDES_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def ask_model(article: dict) -> dict:
-    base_url = os.environ.get("DIARY_LLM_BASE_URL", "").rstrip("/")
-    model = os.environ.get("DIARY_LLM_MODEL", "").strip()
-    api_key = os.environ.get("DIARY_LLM_API_KEY", "").strip()
-
-    if not base_url or not model:
-        raise RuntimeError("Set DIARY_LLM_BASE_URL and DIARY_LLM_MODEL before running the generator.")
-
-    prompt = (
+def build_prompt(article: dict) -> str:
+    return (
         "Scrivi un breve articolo in italiano per il diario di una gilda di World of Warcraft. "
         "Tono naturale, sobrio, non epico, non pomposo. "
+        "Non parlare di automazione, feed, generatori o 'nuove voci automatiche'. "
+        "Scrivi come se fosse un breve pezzo editoriale del sito. "
         "Restituisci solo JSON con chiavi title, snippet, body, art. "
         "body deve essere 2 o 3 paragrafi brevi. "
         "art deve essere uno tra: achievement, legends, tour, treasure, transmog, pvp.\n\n"
@@ -50,13 +46,29 @@ def ask_model(article: dict) -> dict:
         f"Data: {article.get('date', '')}\n"
     )
 
+
+def ask_model(article: dict) -> dict:
+    provider = os.environ.get("DIARY_AI_PROVIDER", "").strip().lower()
+    if provider == "gemini" or os.environ.get("GEMINI_API_KEY", "").strip():
+        return ask_gemini(article)
+    return ask_openai_compatible(article)
+
+
+def ask_openai_compatible(article: dict) -> dict:
+    base_url = os.environ.get("DIARY_LLM_BASE_URL", "").rstrip("/")
+    model = os.environ.get("DIARY_LLM_MODEL", "").strip()
+    api_key = os.environ.get("DIARY_LLM_API_KEY", "").strip()
+
+    if not base_url or not model:
+        raise RuntimeError("Set DIARY_LLM_BASE_URL and DIARY_LLM_MODEL before running the generator.")
+
     payload = {
         "model": model,
         "temperature": 0.8,
         "response_format": {"type": "json_object"},
         "messages": [
             {"role": "system", "content": "Sei un assistente che scrive micro-articoli per il diario di una gilda WoW."},
-            {"role": "user", "content": prompt},
+            {"role": "user", "content": build_prompt(article)},
         ],
     }
 
@@ -77,7 +89,94 @@ def ask_model(article: dict) -> dict:
         raise RuntimeError(error.read().decode("utf-8", "replace")) from error
 
     content = result["choices"][0]["message"]["content"]
-    return json.loads(content)
+    return normalize_generated_article(json.loads(extract_json_object(content)), article)
+
+
+def ask_gemini(article: dict) -> dict:
+    api_key = os.environ.get("GEMINI_API_KEY", "").strip()
+    model = os.environ.get("DIARY_GEMINI_MODEL", os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")).strip()
+    base_url = os.environ.get("GEMINI_API_BASE_URL", "https://generativelanguage.googleapis.com/v1beta").rstrip("/")
+
+    if not api_key:
+        raise RuntimeError("Set GEMINI_API_KEY before running the generator.")
+
+    payload = {
+        "contents": [
+            {
+                "parts": [
+                    {"text": build_prompt(article)}
+                ]
+            }
+        ],
+        "generationConfig": {
+            "temperature": 0.8,
+            "responseMimeType": "application/json",
+            "responseJsonSchema": {
+                "type": "object",
+                "properties": {
+                    "title": {"type": "string"},
+                    "snippet": {"type": "string"},
+                    "body": {"type": "string"},
+                    "art": {"type": "string", "enum": sorted(ALLOWED_ART)},
+                },
+                "required": ["title", "snippet", "body", "art"],
+            },
+        },
+    }
+
+    request = urllib.request.Request(
+        f"{base_url}/models/{model}:generateContent",
+        data=json.dumps(payload).encode("utf-8"),
+        headers={
+            "Content-Type": "application/json",
+            "x-goog-api-key": api_key,
+        },
+        method="POST",
+    )
+
+    try:
+        with urllib.request.urlopen(request, timeout=60) as response:
+            result = json.load(response)
+    except urllib.error.HTTPError as error:
+        raise RuntimeError(error.read().decode("utf-8", "replace")) from error
+
+    content = extract_gemini_text(result)
+    return normalize_generated_article(json.loads(extract_json_object(content)), article)
+
+
+def extract_json_object(content: str) -> str:
+    text = str(content).strip()
+    if text.startswith("```"):
+        lines = text.splitlines()
+        if len(lines) >= 3:
+            return "\n".join(lines[1:-1]).strip()
+    return text
+
+
+def extract_gemini_text(payload: dict) -> str:
+    candidates = payload.get("candidates") or []
+    parts: list[str] = []
+    for candidate in candidates:
+        content = candidate.get("content") or {}
+        for part in content.get("parts") or []:
+            if isinstance(part, dict) and part.get("text"):
+                parts.append(str(part["text"]))
+    if not parts:
+        raise RuntimeError(f"Gemini response missing text: {json.dumps(payload, ensure_ascii=False)}")
+    return "".join(parts).strip()
+
+
+def normalize_generated_article(generated_article: dict, article: dict) -> dict:
+    art = str(generated_article.get("art", article.get("art", "achievement"))).strip()
+    if art not in ALLOWED_ART:
+        art = article.get("art", "achievement")
+
+    return {
+        "title": str(generated_article.get("title", article.get("title", ""))).strip(),
+        "snippet": str(generated_article.get("snippet", article.get("snippet", ""))).strip(),
+        "body": str(generated_article.get("body", article.get("body", ""))).strip(),
+        "art": art,
+    }
 
 
 def main() -> None:
@@ -100,12 +199,7 @@ def main() -> None:
             continue
 
         generated_article = ask_model(article)
-        overrides[key] = {
-            "title": generated_article.get("title", article.get("title", "")),
-            "snippet": generated_article.get("snippet", article.get("snippet", "")),
-            "body": generated_article.get("body", article.get("body", "")),
-            "art": generated_article.get("art", article.get("art", "achievement")),
-        }
+        overrides[key] = generated_article
         generated += 1
 
     save_overrides(payload)

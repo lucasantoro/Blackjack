@@ -58,15 +58,6 @@
           <div class="roster-filters" id="roster-filters"></div>
         </div>
 
-        <div class="roster-summary" id="roster-summary">
-          <div class="roster-summary__grid">
-            <div class="roster-summary-card">
-              <span class="roster-summary-card__value">...</span>
-              <span class="roster-summary-card__label">Caricamento roster</span>
-            </div>
-          </div>
-        </div>
-
         <div class="roster-shell" id="roster-container"></div>
       </div>
     </section>
@@ -363,46 +354,6 @@ function renderFilters() {
   });
 }
 
-function renderSummary() {
-  const summary = document.getElementById("roster-summary");
-  const activeMembers = getActiveMembers();
-  const customProfiles = activeMembers.filter(hasCustomProfile).length;
-  const armoryProfiles = activeMembers.filter(member => member.armoryUrl).length;
-  const countsByRole = roleOrder.reduce((acc, role) => {
-    acc[role] = activeMembers.filter(member => member.role === role).length;
-    return acc;
-  }, {});
-
-  summary.innerHTML = `
-    <div class="roster-summary__grid">
-      <div class="roster-summary-card">
-        <span class="roster-summary-card__value">${activeMembers.length}</span>
-        <span class="roster-summary-card__label">membri attivi</span>
-      </div>
-      <div class="roster-summary-card">
-        <span class="roster-summary-card__value">${customProfiles}</span>
-        <span class="roster-summary-card__label">schede personalizzate</span>
-      </div>
-      <div class="roster-summary-card">
-        <span class="roster-summary-card__value">${countsByRole.tank}</span>
-        <span class="roster-summary-card__label">tank</span>
-      </div>
-      <div class="roster-summary-card">
-        <span class="roster-summary-card__value">${countsByRole.healer}</span>
-        <span class="roster-summary-card__label">healer</span>
-      </div>
-      <div class="roster-summary-card">
-        <span class="roster-summary-card__value">${countsByRole.dps}</span>
-        <span class="roster-summary-card__label">dps</span>
-      </div>
-      <div class="roster-summary-card">
-        <span class="roster-summary-card__value">${armoryProfiles}</span>
-        <span class="roster-summary-card__label">profili armory</span>
-      </div>
-    </div>
-  `;
-}
-
 function renderMemberCard(member) {
   const safeName = escapeHtml(member.name);
   const safeTagline = escapeHtml(getMemberTagline(member));
@@ -474,7 +425,6 @@ function renderMemberCard(member) {
 
 function renderRoster() {
   renderFilters();
-  renderSummary();
 
   const container = document.getElementById("roster-container");
   const filteredMembers = getFilteredMembers();
