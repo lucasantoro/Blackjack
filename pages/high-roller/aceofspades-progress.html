@@ -485,7 +485,8 @@ function buildTimeline() {
         return `
           <span
             class="dot ${pull.kill ? "dot-kill" : "dot-progress"}"
-            data-tip="${escapeHtml(tipLines.join("\n"))}">
+            data-tip="${escapeHtml(tipLines.join("\n"))}"
+            title="${escapeHtml(tipLines.join(" | "))}">
           </span>
         `;
       }).join("");

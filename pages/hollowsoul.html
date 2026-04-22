@@ -90,10 +90,10 @@
     </section>
 
     <section>
-      <h2 class="section-title">Numeri della community</h2>
-      <p class="section-subtitle">
-        Un'istantanea dei nostri dati social e Mythic+ aggiornati tramite Worker e Raider.IO.
-      </p>
+      <div class="section-head section-head--center">
+        <h2 class="section-title">Numeri della community</h2>
+        <p class="section-subtitle">Dati community e Mythic+ letti dai worker della gilda.</p>
+      </div>
 
       <div class="stats-grid stats-grid--duo">
 
@@ -121,16 +121,6 @@
           <div class="stat-hint">Totale delle Mythic+ completate dai membri della gilda.</div>
         </div>
 
-      </div>
-
-      <div class="community-breakdown">
-        <div class="community-breakdown__head">
-          <h3>Distribuzione ruoli nel roster</h3>
-          <p>Basata sul ruolo attivo letto dal roster Raider.IO della gilda.</p>
-        </div>
-        <div class="community-role-bars" id="community-role-bars">
-          <div class="empty-state">Caricamento distribuzione ruoli...</div>
-        </div>
       </div>
 
       <p class="stats-note" id="stats-note">Dati aggiornati dal worker della gilda.</p>
@@ -167,7 +157,6 @@ async function loadHollowSoulStats() {
   const elPeakScoreHint = document.getElementById("stat-peak-score-hint");
   const elAvg10 = document.getElementById("stat-avg-score");
   const elRuns = document.getElementById("stat-guild-runs");
-  const roleBars = document.getElementById("community-role-bars");
   const note = document.getElementById("stats-note");
 
   try {
@@ -176,8 +165,6 @@ async function loadHollowSoulStats() {
     const payload = data?.summary && typeof data.summary === "object" ? data.summary : data;
     const leaders = Array.isArray(payload.scoreLeaders) ? payload.scoreLeaders : [];
     const topLeader = leaders[0] || null;
-    const roles = payload.roleBreakdown || {};
-    const totalRoles = ["tank", "healer", "dps"].reduce((sum, key) => sum + Number(roles[key] || 0), 0);
 
     elTracked.textContent = payload.trackedCharacters ?? "-";
     elTrackedHint.textContent = payload.activePlayersLast30 != null
@@ -189,24 +176,6 @@ async function loadHollowSoulStats() {
       : "Nessun leader score disponibile.";
     elAvg10.textContent = payload.avgScoreTop10 ?? "-";
     elRuns.textContent = payload.guildRunsLast30 ?? "-";
-    roleBars.innerHTML = totalRoles
-      ? ["tank", "healer", "dps"].map(role => {
-          const count = Number(roles[role] || 0);
-          const percent = totalRoles ? Math.round((count / totalRoles) * 100) : 0;
-          const label = role === "tank" ? "Tank" : role === "healer" ? "Healer" : "DPS";
-          return `
-            <div class="community-role-row">
-              <div class="community-role-row__meta">
-                <span>${label}</span>
-                <strong>${count}</strong>
-              </div>
-              <div class="community-role-track">
-                <span class="community-role-fill community-role-fill--${role}" style="width:${percent}%"></span>
-              </div>
-            </div>
-          `;
-        }).join("")
-      : `<div class="empty-state">Distribuzione ruoli non disponibile.</div>`;
 
     note.textContent = "Statistiche aggiornate via Worker ogni 6 ore.";
   } catch (e) {
@@ -214,7 +183,6 @@ async function loadHollowSoulStats() {
     elTracked.textContent = elPeakScore.textContent = elAvg10.textContent = elRuns.textContent = "-";
     elTrackedHint.textContent = "Impossibile leggere i profili tracciati.";
     elPeakScoreHint.textContent = "Impossibile leggere il leader score.";
-    roleBars.innerHTML = `<div class="empty-state">Distribuzione ruoli non disponibile.</div>`;
     note.textContent = "Impossibile caricare le statistiche al momento.";
   }
 }

@@ -181,6 +181,27 @@
       </div>
     </section>
 
+    <section class="section-shell section-shell--centered" id="home-twitch-section">
+      <div class="section-head section-head--center">
+        <div class="eyebrow">Twitch</div>
+        <h2 class="section-title">Dirette e VOD</h2>
+        <p class="section-subtitle">Canale raid e archivio delle ultime registrazioni.</p>
+      </div>
+
+      <article class="live-raid-card hidden" id="home-live-card">
+        <div class="live-status-pill live-status-live" id="home-live-pill">
+          <span class="live-dot"></span> Live ora
+        </div>
+        <h3 class="widget-title">Raid live su Twitch</h3>
+        <p class="live-description" id="home-live-description"></p>
+        <div class="live-player-shell" id="home-live-player"></div>
+      </article>
+
+      <div class="video-grid home-vod-grid" id="home-vod-grid">
+        <div class="empty-state">Caricamento VOD...</div>
+      </div>
+    </section>
+
     <section class="cta-final">
       <div class="eyebrow">Entrare in gilda</div>
       <h2 class="section-title">Vuoi unirti ai Blackjack?</h2>
@@ -213,6 +234,100 @@ document.querySelectorAll("a").forEach(link => {
     });
   }
 });
+</script>
+
+<script>
+const HOME_TWITCH_WORKER = "https://blackjack-twitch-status.lucasantoro2905.workers.dev";
+const HOME_TWITCH_CHANNEL = "londe83";
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function formatVodDate(value) {
+  const date = new Date(value || "");
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString("it-IT", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  });
+}
+
+function renderHomeTwitch(payload) {
+  const liveCard = document.getElementById("home-live-card");
+  const liveDescription = document.getElementById("home-live-description");
+  const livePlayer = document.getElementById("home-live-player");
+  const vodGrid = document.getElementById("home-vod-grid");
+
+  if (!vodGrid) return;
+
+  if (payload?.live && liveCard && liveDescription && livePlayer) {
+    liveCard.classList.remove("hidden");
+    const liveBits = [
+      payload.title || "Diretta raid",
+      payload.game_name || "",
+      payload.viewer_count != null ? `${payload.viewer_count} spettatori` : ""
+    ].filter(Boolean);
+    liveDescription.textContent = liveBits.join(" - ");
+    livePlayer.innerHTML = `
+      <iframe
+        src="https://player.twitch.tv/?channel=${encodeURIComponent(HOME_TWITCH_CHANNEL)}&parent=${window.location.hostname}"
+        frameborder="0"
+        allowfullscreen="true"
+        scrolling="no"
+        title="Live Twitch ${escapeHtml(HOME_TWITCH_CHANNEL)}">
+      </iframe>
+    `;
+  }
+
+  const videos = Array.isArray(payload?.recentVideos) ? payload.recentVideos : [];
+  vodGrid.innerHTML = videos.length
+    ? videos.map(video => `
+        <article class="video-card">
+          <div class="editorial-card__media">
+            ${video.thumbnail_url
+              ? `<img src="${escapeHtml(video.thumbnail_url)}" alt="${escapeHtml(video.title || "VOD Twitch")}" loading="lazy" decoding="async">`
+              : `<div class="editorial-card__placeholder">VOD</div>`}
+          </div>
+          <div class="video-body">
+            <div class="editorial-card__meta">
+              <span>${escapeHtml(video.duration || "VOD")}</span>
+              <strong>${escapeHtml(formatVodDate(video.published_at) || "")}</strong>
+            </div>
+            <h3>${escapeHtml(video.title || "VOD Twitch")}</h3>
+            <p>${escapeHtml(video.view_count != null ? `${video.view_count} visualizzazioni` : "Registrazione Twitch")}</p>
+            <a href="${escapeHtml(video.url || "#")}" target="_blank" rel="noopener noreferrer" class="vod-button">Apri il VOD</a>
+          </div>
+        </article>
+      `).join("")
+    : `<div class="empty-state">Nessun VOD disponibile al momento.</div>`;
+}
+
+async function loadHomeTwitch() {
+  try {
+    const response = await fetch(`${HOME_TWITCH_WORKER}/?channel=${encodeURIComponent(HOME_TWITCH_CHANNEL)}&videos=6`, {
+      cache: "no-store"
+    });
+    if (!response.ok) {
+      throw new Error("Worker Twitch non disponibile");
+    }
+    const payload = await response.json();
+    renderHomeTwitch(payload);
+  } catch (error) {
+    const vodGrid = document.getElementById("home-vod-grid");
+    if (vodGrid) {
+      vodGrid.innerHTML = `<div class="empty-state">Impossibile caricare lo storico Twitch.</div>`;
+    }
+  }
+}
+
+loadHomeTwitch();
 </script>
 
 </body>

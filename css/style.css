@@ -153,6 +153,8 @@ h2,
   display: grid;
   gap: 14px;
   margin-bottom: 26px;
+  justify-items: center;
+  text-align: center;
 }
 
 .section-head--center {
@@ -179,7 +181,7 @@ h2,
 
 .section-subtitle {
   max-width: 760px;
-  margin: 0;
+  margin: 0 auto;
   color: var(--muted);
   font-size: 1.02rem;
 }
@@ -188,12 +190,20 @@ h2,
   margin-bottom: 10px;
 }
 
+.panel > .section-title,
+.panel > .section-subtitle {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .lead,
 .description-long {
   max-width: 860px;
-  margin: 0;
+  margin: 0 auto;
   color: #dce7e1;
   font-size: 1.04rem;
+  text-align: center;
 }
 
 .description-long + .description-long {
@@ -613,6 +623,8 @@ header nav a.active {
 .panel-callout {
   display: grid;
   gap: 14px;
+  text-align: center;
+  justify-items: center;
 }
 
 .check-list strong {
@@ -1066,6 +1078,8 @@ header nav a.active {
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(11, 17, 17, 0.88);
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  text-align: center;
+  align-items: center;
 }
 
 .rio-btn:hover,
@@ -1180,6 +1194,11 @@ header nav a.active {
   display: flex;
 }
 
+.progress-link-list {
+  justify-content: center;
+  text-align: center;
+}
+
 .progress-card-head,
 .progress-boss-row {
   justify-content: space-between;
@@ -1198,6 +1217,8 @@ header nav a.active {
 .progress-picker {
   display: grid;
   gap: 10px;
+  justify-items: center;
+  text-align: center;
 }
 
 .progress-picker label {
@@ -1434,6 +1455,8 @@ header nav a.active {
   display: grid;
   gap: 8px;
   margin-bottom: 18px;
+  justify-items: center;
+  text-align: center;
 }
 
 .progress-boss-shell__header p {
@@ -1631,6 +1654,7 @@ header nav a.active {
   border-radius: 14px;
   border: 1px solid var(--line);
   background: rgba(10, 16, 16, 0.82);
+  overflow: visible;
 }
 
 .dot-boss-name {
@@ -1644,6 +1668,7 @@ header nav a.active {
   gap: 8px;
   flex-wrap: nowrap;
   overflow-x: auto;
+  overflow-y: visible;
   padding-bottom: 4px;
   scrollbar-width: thin;
 }
@@ -1693,6 +1718,7 @@ header nav a.active {
   pointer-events: none;
   transition: opacity 0.18s ease, transform 0.18s ease;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.36);
+  z-index: 5;
 }
 
 .dot:hover::after {
@@ -1737,6 +1763,8 @@ header nav a.active {
 
 .stat-card {
   padding: 22px;
+  text-align: center;
+  justify-items: center;
 }
 
 .stat-card--feature {
@@ -1777,6 +1805,27 @@ header nav a.active {
 .community-breakdown__head {
   display: grid;
   gap: 6px;
+  justify-items: center;
+  text-align: center;
+}
+
+.section-shell--centered {
+  text-align: center;
+}
+
+.section-shell--centered .widget-title,
+.section-shell--centered .widget-desc,
+.section-shell--centered .live-description,
+.section-shell--centered .video-body {
+  text-align: center;
+}
+
+.home-vod-grid {
+  margin-top: 24px;
+}
+
+.home-vod-grid .video-card {
+  overflow: hidden;
 }
 
 .community-breakdown__head h3 {

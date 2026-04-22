@@ -46,9 +46,7 @@
       <div class="section-head section-head--center">
         <div class="eyebrow">Achievement board</div>
         <h2 class="section-title">Panoramica achievement di gilda</h2>
-        <p class="section-subtitle">
-          Le categorie principali seguono la struttura Blizzard e mostrano il peso di ogni blocco sul totale achievement della gilda.
-        </p>
+        <p class="section-subtitle">Categorie principali e avanzamento della gilda.</p>
       </div>
 
       <div class="achievement-summary-grid">
@@ -78,9 +76,7 @@
       <div class="section-head section-head--center">
         <div class="eyebrow">Achievement history</div>
         <h2 class="section-title">Storico per categorie</h2>
-        <p class="section-subtitle">
-          Ogni pannello raccoglie gli achievement completati in una delle categorie principali mostrate da Blizzard.
-        </p>
+        <p class="section-subtitle">Archivio completo per categoria.</p>
       </div>
 
       <div class="achievement-category-board" id="achievement-category-board">
@@ -190,6 +186,7 @@ function renderAchievementSummary(payload) {
           id: item.id,
           category: item.name,
           count: item.completedCount,
+          points: item.totalPoints,
           percent: item.percent,
           latestDate: item.latestDate
         }))
@@ -211,7 +208,7 @@ function renderAchievementSummary(payload) {
           </div>
           <h3>${escapeHtml(item.category || "Categoria")}</h3>
           <div class="achievement-panel-meta">
-            <strong>${escapeHtml(item.count ?? 0)}</strong>
+            <strong>${escapeHtml(item.points ?? item.count ?? 0)} pt</strong>
             <span>${escapeHtml(item.latestDate ? `Ultimo ${formatDate(item.latestDate)}` : "Nessun unlock registrato")}</span>
           </div>
         </article>
@@ -240,7 +237,7 @@ function renderAchievementCategories(payload) {
       </summary>
       <div class="achievement-history-card__body">
         <div class="achievement-history-card__stats">
-          <span>${escapeHtml(category.completedCount ?? 0)} achievement completati</span>
+          <span>${escapeHtml(category.totalPoints ?? 0)} punti categoria</span>
           <span>${escapeHtml(formatPanelPercent(category.percent))} completamento categoria</span>
         </div>
         ${(Array.isArray(category.achievements) && category.achievements.length)
