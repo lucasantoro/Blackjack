@@ -100,6 +100,20 @@
 
     <section class="section-shell">
       <div class="section-head section-head--center">
+        <div class="eyebrow">Achievement history</div>
+        <h2 class="section-title">Storico per categorie</h2>
+        <p class="section-subtitle">
+          Una vista piu completa dello storico guild achievement, organizzata per categoria e aggiornata dal worker.
+        </p>
+      </div>
+
+      <div class="achievement-category-board" id="achievement-category-board">
+        <div class="empty-state">Caricamento storico categorie...</div>
+      </div>
+    </section>
+
+    <section class="section-shell">
+      <div class="section-head section-head--center">
         <div class="eyebrow">Manual stories</div>
         <h2 class="section-title">Articoli di serata</h2>
         <p class="section-subtitle">
@@ -146,6 +160,7 @@ const achievementLatestTitle = document.getElementById("achievement-latest-title
 const achievementVisible = document.getElementById("achievement-visible");
 const achievementStream = document.getElementById("achievement-stream");
 const achievementCategories = document.getElementById("achievement-categories");
+const achievementCategoryBoard = document.getElementById("achievement-category-board");
 const manualArticles = document.getElementById("manual-articles");
 const diaryNote = document.getElementById("diary-note");
 
@@ -256,6 +271,46 @@ function renderAchievementSummary(payload) {
   diaryNote.textContent = `Achievement caricati: ${summary.showingCount ?? achievements.length ?? 0} su ${totalCompleted ?? 0} totali registrati dalla gilda.`;
 }
 
+function renderAchievementCategories(payload) {
+  const categories = Array.isArray(payload?.categories) ? payload.categories : [];
+
+  if (!categories.length) {
+    achievementCategoryBoard.innerHTML = `<div class="empty-state">Storico categorie non disponibile.</div>`;
+    return;
+  }
+
+  achievementCategoryBoard.innerHTML = categories.map(category => `
+    <details class="achievement-history-card">
+      <summary class="achievement-history-card__summary">
+        <div>
+          <h3>${escapeHtml(category.name || "Categoria")}</h3>
+          <p>${escapeHtml(category.latestDate ? `Ultimo sblocco ${formatDate(category.latestDate)}` : "Nessuna data disponibile")}</p>
+        </div>
+        <strong>${escapeHtml(category.completedCount ?? 0)}</strong>
+      </summary>
+      <div class="achievement-history-card__body">
+        ${(Array.isArray(category.achievements) ? category.achievements : []).map(item => `
+          <article class="achievement-history-row">
+            <div class="achievement-history-row__icon">
+              ${item.image
+                ? `<img src="${escapeHtml(item.image)}" alt="" loading="lazy" decoding="async">`
+                : `<span>${escapeHtml((item.title || "A").slice(0, 1))}</span>`}
+            </div>
+            <div class="achievement-history-row__copy">
+              <h4>${escapeHtml(item.title || "Achievement")}</h4>
+              <p>${escapeHtml(item.description || "Dettaglio non disponibile.")}</p>
+            </div>
+            <div class="achievement-history-row__meta">
+              <span>${escapeHtml(formatDate(item.date))}</span>
+              ${item.sourceUrl ? `<a href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">Fonte</a>` : ""}
+            </div>
+          </article>
+        `).join("")}
+      </div>
+    </details>
+  `).join("");
+}
+
 function renderManualArticles(items) {
   if (!Array.isArray(items) || !items.length) {
     manualArticles.innerHTML = `<div class="empty-state">Nessun articolo manuale disponibile.</div>`;
@@ -298,6 +353,7 @@ async function loadAchievementBoard() {
     }
     const payload = await response.json();
     renderAchievementSummary(payload);
+    renderAchievementCategories(payload);
   } catch (error) {
     achievementTotal.textContent = "-";
     achievementVisible.textContent = "-";
@@ -305,6 +361,7 @@ async function loadAchievementBoard() {
     achievementLatestTitle.textContent = "Impossibile leggere gli achievement della gilda.";
     achievementStream.innerHTML = `<div class="empty-state">Impossibile caricare gli achievement recenti.</div>`;
     achievementCategories.innerHTML = `<div class="empty-state">Categorie non disponibili.</div>`;
+    achievementCategoryBoard.innerHTML = `<div class="empty-state">Storico categorie non disponibile.</div>`;
     diaryNote.textContent = "Il riepilogo achievement non e disponibile al momento.";
   }
 }
