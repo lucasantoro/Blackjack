@@ -34,7 +34,7 @@
   <div class="hero-content">
     <h2>Diario degli Spettatori</h2>
     <p>
-      Una raccolta dei momenti recenti della community, con articoli brevi, immagini e una lettura piu ordinata degli eventi di gilda.
+      Una pagina mista: sopra il riepilogo achievement della gilda, sotto gli articoli scritti a mano per raccontare davvero le serate che vale la pena ricordare.
     </p>
   </div>
 </section>
@@ -42,41 +42,75 @@
 <div class="bg-container bg-main-logo">
   <main class="panel">
 
-    <div class="section-head section-head--center">
-      <div class="eyebrow">Community diary</div>
-      <p class="section-subtitle">
-        Gli eventi scorrono in orizzontale e ogni card apre un articolo completo, cosi la pagina resta piu leggera ma leggibile.
+    <section class="section-shell">
+      <div class="section-head section-head--center">
+        <div class="eyebrow">Achievement board</div>
+        <h2 class="section-title">Panoramica achievement di gilda</h2>
+        <p class="section-subtitle">
+          Un quadro sintetico degli sblocchi recenti dei Blackjack, con ultime conquiste e categorie piu presenti nello storico vicino.
+        </p>
+      </div>
+
+      <div class="achievement-summary-grid">
+        <article class="stat-card stat-card--feature">
+          <div class="stat-label">Achievement sbloccati</div>
+          <div class="stat-value" id="achievement-total">-</div>
+          <div class="stat-hint">Totale obiettivi completati dalla gilda.</div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-label">Ultimo sblocco</div>
+          <div class="stat-value stat-value--compact" id="achievement-latest-date">-</div>
+          <div class="stat-hint" id="achievement-latest-title">Sto leggendo gli ultimi dati Blizzard.</div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-label">Voci recenti visibili</div>
+          <div class="stat-value" id="achievement-visible">-</div>
+          <div class="stat-hint">Numero di achievement recenti mostrati in questa pagina.</div>
+        </article>
+      </div>
+
+      <div class="achievement-overview-grid">
+        <section class="achievement-board-card">
+          <div class="achievement-board-card__head">
+            <h3>Ultimi achievement</h3>
+            <p>Una lettura rapida dei traguardi piu recenti della gilda.</p>
+          </div>
+          <div class="achievement-stream" id="achievement-stream">
+            <div class="empty-state">Caricamento achievement in corso...</div>
+          </div>
+        </section>
+
+        <aside class="achievement-side-card">
+          <div class="achievement-board-card__head">
+            <h3>Categorie in evidenza</h3>
+            <p>Una sintesi delle tipologie di achievement piu presenti nel blocco recente.</p>
+          </div>
+          <div class="achievement-category-list" id="achievement-categories">
+            <div class="empty-state">Caricamento categorie...</div>
+          </div>
+        </aside>
+      </div>
+
+      <p class="stats-note" id="diary-note">
+        Dati letti dal worker Blizzard della gilda.
       </p>
-    </div>
+    </section>
 
-    <div class="media-carousel-wrapper diary-carousel-shell">
-      <button class="carousel-nav" id="diary-prev" type="button" aria-label="Articoli precedenti">&#10094;</button>
-      <div class="events-carousel diary-carousel" id="diary-feed">
-        <div class="empty-state">Caricamento articoli in corso...</div>
+    <section class="section-shell">
+      <div class="section-head section-head--center">
+        <div class="eyebrow">Manual stories</div>
+        <h2 class="section-title">Articoli di serata</h2>
+        <p class="section-subtitle">
+          Qui puoi raccontare le serate che meritano davvero un testo tuo: progress, eventi community, first kill o notti particolarmente riuscite.
+        </p>
       </div>
-      <button class="carousel-nav" id="diary-next" type="button" aria-label="Articoli successivi">&#10095;</button>
-    </div>
 
-    <p class="stats-note" id="diary-note">
-      Il feed legge gli achievement recenti della gilda. Gli articoli manuali arrivano da <code>data/hollowsoul-diary-manual.json</code>; i testi possono essere generati lato worker e, se serve, rifiniti con override locali.
-    </p>
-
-    <div class="event-modal" id="event-modal" aria-hidden="true">
-      <div class="event-modal__overlay" data-close="modal"></div>
-      <div class="event-modal__content" role="dialog" aria-modal="true" aria-labelledby="event-modal-title">
-        <button class="event-modal__close" type="button" data-close="modal" aria-label="Chiudi articolo">&times;</button>
-        <div class="event-modal__media">
-          <div class="event-modal__art" id="event-modal-art" aria-hidden="true"></div>
-        </div>
-        <div class="event-modal__body">
-          <p class="event-modal__meta" id="event-modal-meta"></p>
-          <h3 id="event-modal-title"></h3>
-          <p class="event-modal__snippet" id="event-modal-snippet"></p>
-          <div class="event-modal__text" id="event-modal-text"></div>
-          <a class="armory-link hidden" id="event-modal-source" href="#" target="_blank" rel="noopener noreferrer">Apri la fonte</a>
-        </div>
+      <div class="diary-editorial-grid" id="manual-articles">
+        <div class="empty-state">Caricamento articoli manuali...</div>
       </div>
-    </div>
+    </section>
 
   </main>
 </div>
@@ -103,25 +137,17 @@ document.querySelectorAll("a").forEach(link => {
 </script>
 
 <script>
-const DIARY_AUTO_URL = "https://blackjack-community-diary.lucasantoro2905.workers.dev";
+const DIARY_AUTO_URL = "https://blackjack-community-diary.lucasantoro2905.workers.dev?limit=8";
 const DIARY_MANUAL_URL = "../data/hollowsoul-diary-manual.json";
-const DIARY_OVERRIDES_URL = "../data/hollowsoul-diary-overrides.json";
 
-const state = {
-  articles: []
-};
-
-const diaryFeed = document.getElementById("diary-feed");
+const achievementTotal = document.getElementById("achievement-total");
+const achievementLatestDate = document.getElementById("achievement-latest-date");
+const achievementLatestTitle = document.getElementById("achievement-latest-title");
+const achievementVisible = document.getElementById("achievement-visible");
+const achievementStream = document.getElementById("achievement-stream");
+const achievementCategories = document.getElementById("achievement-categories");
+const manualArticles = document.getElementById("manual-articles");
 const diaryNote = document.getElementById("diary-note");
-const diaryPrev = document.getElementById("diary-prev");
-const diaryNext = document.getElementById("diary-next");
-const modal = document.getElementById("event-modal");
-const modalTitle = document.getElementById("event-modal-title");
-const modalMeta = document.getElementById("event-modal-meta");
-const modalSnippet = document.getElementById("event-modal-snippet");
-const modalText = document.getElementById("event-modal-text");
-const modalArtShell = document.querySelector(".event-modal__media");
-const modalSource = document.getElementById("event-modal-source");
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -138,233 +164,166 @@ function normalizeDate(value) {
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
-function formatDate(value) {
+function formatDate(value, options = {}) {
   const date = normalizeDate(value);
   if (!date) return "Data non disponibile";
   return date.toLocaleDateString("it-IT", {
     day: "2-digit",
     month: "2-digit",
-    year: "numeric"
+    year: "numeric",
+    ...options
+  });
+}
+
+function formatShortMonth(value) {
+  const date = normalizeDate(value);
+  if (!date) return "";
+  return date.toLocaleDateString("it-IT", {
+    day: "2-digit",
+    month: "short"
   });
 }
 
 function excerpt(value) {
   const text = String(value || "").trim();
-  if (text.length <= 160) return text;
-  return `${text.slice(0, 157).trim()}...`;
+  if (text.length <= 220) return text;
+  return `${text.slice(0, 217).trim()}...`;
 }
 
-function articleMeta(article) {
-  const bits = [
-    article.category || "Diario",
-    formatDate(article.date)
-  ].filter(Boolean);
-  return bits.join(" - ");
+function renderAchievementSummary(payload) {
+  const summary = payload?.summary || {};
+  const fallbackArticles = Array.isArray(payload?.articles) ? payload.articles : [];
+  const achievements = Array.isArray(summary.recentAchievements) && summary.recentAchievements.length
+    ? summary.recentAchievements
+    : fallbackArticles.map(item => ({
+        id: item.id,
+        title: item.title,
+        date: item.date,
+        category: item.category,
+        image: item.image,
+        sourceUrl: item.sourceUrl,
+        achievementId: item.achievementId
+      }));
+  const latest = summary.latestUnlock || achievements[0] || null;
+  const categories = Array.isArray(summary.topCategories) && summary.topCategories.length
+    ? summary.topCategories
+    : Array.from(achievements.reduce((acc, item) => {
+        const key = item.category || "Achievement";
+        acc.set(key, (acc.get(key) || 0) + 1);
+        return acc;
+      }, new Map()).entries()).map(([category, count]) => ({ category, count }));
+  const totalCompleted = summary.totalCompleted ?? payload?.metadata?.totalCompleted ?? achievements.length;
+
+  achievementTotal.textContent = totalCompleted ?? "-";
+  achievementVisible.textContent = summary.showingCount ?? achievements.length ?? "-";
+  achievementLatestDate.textContent = latest?.date ? formatDate(latest.date) : "-";
+  achievementLatestTitle.textContent = latest?.title
+    ? `${latest.title}${latest.category ? ` · ${latest.category}` : ""}`
+    : "Nessuno sblocco recente disponibile.";
+
+  achievementStream.innerHTML = achievements.length
+    ? achievements.map(item => `
+        <article class="achievement-row">
+          <div class="achievement-row__icon">
+            ${item.image
+              ? `<img src="${escapeHtml(item.image)}" alt="" loading="lazy" decoding="async">`
+              : `<span>${escapeHtml((item.title || "A").slice(0, 1))}</span>`}
+          </div>
+          <div class="achievement-row__body">
+            <div class="achievement-row__meta">
+              <span>${escapeHtml(item.category || "Achievement")}</span>
+              <strong>${escapeHtml(formatDate(item.date))}</strong>
+            </div>
+            <h3>${escapeHtml(item.title || "Achievement")}</h3>
+          </div>
+          <div class="achievement-row__side">
+            <span>${escapeHtml(formatShortMonth(item.date))}</span>
+            ${item.sourceUrl ? `<a href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">Fonte</a>` : ""}
+          </div>
+        </article>
+      `).join("")
+    : `<div class="empty-state">Nessun achievement recente disponibile.</div>`;
+
+  achievementCategories.innerHTML = categories.length
+    ? categories.map(item => `
+        <div class="achievement-category-pill">
+          <span>${escapeHtml(item.category)}</span>
+          <strong>${escapeHtml(item.count)}</strong>
+        </div>
+      `).join("")
+    : `<div class="empty-state">Nessuna categoria disponibile.</div>`;
+
+  diaryNote.textContent = `Achievement caricati: ${summary.showingCount ?? achievements.length ?? 0} su ${totalCompleted ?? 0} totali registrati dalla gilda.`;
 }
 
-function renderEventArt(article, extraClass = "") {
-  const artClass = `event-image event-image--${escapeHtml(article.art || "achievement")}${extraClass ? ` ${extraClass}` : ""}`;
-  const label = escapeHtml(article.category || "Diario");
-  const image = article.image ? escapeHtml(article.image) : "";
-  const backdrop = image
-    ? `<div class="event-image__backdrop" style="background-image:url('${image}');"></div>`
-    : "";
-  const icon = image
-    ? `<img class="event-image__icon" src="${image}" alt="" loading="lazy" decoding="async">`
-    : `<div class="event-image__icon event-image__icon--placeholder" aria-hidden="true">${escapeHtml((article.title || "B").slice(0, 1))}</div>`;
-  return `
-    <div class="${artClass}" aria-hidden="true">
-      ${backdrop}
-      <div class="event-image__frame">${icon}</div>
-      <span class="event-image__label">${label}</span>
-    </div>
-  `;
-}
-
-function updateDiaryNav() {
-  if (!diaryPrev || !diaryNext) return;
-  const maxScroll = Math.max(0, diaryFeed.scrollWidth - diaryFeed.clientWidth);
-  const current = Math.round(diaryFeed.scrollLeft);
-  diaryPrev.disabled = current <= 4;
-  diaryNext.disabled = current >= maxScroll - 4;
-}
-
-function scrollDiary(direction) {
-  const amount = Math.max(280, Math.round(diaryFeed.clientWidth * 0.82));
-  diaryFeed.scrollBy({
-    left: direction * amount,
-    behavior: "smooth"
-  });
-}
-
-function renderDiary() {
-  const articles = state.articles;
-
-  if (!articles.length) {
-    diaryFeed.innerHTML = `<div class="empty-state">Nessun articolo disponibile per il filtro attuale.</div>`;
-    updateDiaryNav();
+function renderManualArticles(items) {
+  if (!Array.isArray(items) || !items.length) {
+    manualArticles.innerHTML = `<div class="empty-state">Nessun articolo manuale disponibile.</div>`;
     return;
   }
 
-  diaryFeed.innerHTML = articles.map(article => `
-    <article
-      class="event-card event-card--carousel"
-      tabindex="0"
-      data-article-id="${escapeHtml(article.id)}">
-      ${renderEventArt(article)}
-      <div class="event-content">
-        <div class="event-meta">${escapeHtml(articleMeta(article))}</div>
-        <h3>${escapeHtml(article.title)}</h3>
-        <p class="event-snippet">${escapeHtml(article.snippet || excerpt(article.body))}</p>
-        <button class="event-open" type="button">Leggi l'articolo</button>
-      </div>
-    </article>
-  `).join("");
+  manualArticles.innerHTML = items.map(article => {
+    const paragraphs = Array.isArray(article.body)
+      ? article.body
+      : String(article.body || "").split(/\n{2,}/).filter(Boolean);
 
-  diaryFeed.querySelectorAll("[data-article-id]").forEach(card => {
-    const open = () => {
-      const article = state.articles.find(item => item.id === card.dataset.articleId);
-      if (!article) return;
-      openModal(article);
-    };
+    return `
+      <article class="editorial-card">
+        <div class="editorial-card__media">
+          ${article.image
+            ? `<img src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title || "Articolo")}">`
+            : `<div class="editorial-card__placeholder">${escapeHtml((article.title || "B").slice(0, 1))}</div>`}
+        </div>
+        <div class="editorial-card__body">
+          <div class="editorial-card__meta">
+            <span>${escapeHtml(article.subtitle || "Diario di serata")}</span>
+            <strong>${escapeHtml(formatDate(article.date))}</strong>
+          </div>
+          <h3>${escapeHtml(article.title || "Titolo in arrivo")}</h3>
+          <p class="editorial-card__lead">${escapeHtml(article.description || excerpt(paragraphs[0] || ""))}</p>
+          <div class="editorial-card__text">
+            ${paragraphs.map(paragraph => `<p>${escapeHtml(paragraph)}</p>`).join("")}
+          </div>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
 
-    card.addEventListener("click", open);
-    card.addEventListener("keydown", event => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        open();
-      }
-    });
-
-    const button = card.querySelector(".event-open");
-    if (button) {
-      button.addEventListener("click", event => {
-        event.stopPropagation();
-        open();
-      });
+async function loadAchievementBoard() {
+  try {
+    const response = await fetch(DIARY_AUTO_URL, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error("Riepilogo achievement non disponibile");
     }
-  });
-
-  updateDiaryNav();
-}
-
-function openModal(article) {
-  modalTitle.textContent = article.title || "";
-  modalMeta.textContent = articleMeta(article);
-  modalSnippet.textContent = article.snippet || "";
-  modalText.innerHTML = String(article.body || "")
-    .split(/\n{2,}/)
-    .filter(Boolean)
-    .map(paragraph => `<p>${escapeHtml(paragraph)}</p>`)
-    .join("");
-  if (modalArtShell) {
-    modalArtShell.innerHTML = renderEventArt(article, "event-modal__art");
-    const nextArt = modalArtShell.querySelector(".event-modal__art");
-    if (nextArt) {
-      nextArt.id = "event-modal-art";
-    }
+    const payload = await response.json();
+    renderAchievementSummary(payload);
+  } catch (error) {
+    achievementTotal.textContent = "-";
+    achievementVisible.textContent = "-";
+    achievementLatestDate.textContent = "-";
+    achievementLatestTitle.textContent = "Impossibile leggere gli achievement della gilda.";
+    achievementStream.innerHTML = `<div class="empty-state">Impossibile caricare gli achievement recenti.</div>`;
+    achievementCategories.innerHTML = `<div class="empty-state">Categorie non disponibili.</div>`;
+    diaryNote.textContent = "Il riepilogo achievement non e disponibile al momento.";
   }
-  if (article.sourceUrl) {
-    modalSource.href = article.sourceUrl;
-    modalSource.classList.remove("hidden");
-  } else {
-    modalSource.classList.add("hidden");
-    modalSource.removeAttribute("href");
-  }
-  modal.classList.add("is-open");
-  modal.setAttribute("aria-hidden", "false");
-  document.body.classList.add("modal-open");
 }
 
-function closeModal() {
-  modal.classList.remove("is-open");
-  modal.setAttribute("aria-hidden", "true");
-  document.body.classList.remove("modal-open");
-}
-
-async function loadManualArticles() {
+async function loadManualEntries() {
   try {
     const response = await fetch(DIARY_MANUAL_URL, { cache: "no-store" });
-    if (!response.ok) return [];
-    const payload = await response.json();
-    return Array.isArray(payload.articles) ? payload.articles.map(article => ({ ...article, mode: "manual" })) : [];
-  } catch {
-    return [];
-  }
-}
-
-async function loadOverrides() {
-  try {
-    const response = await fetch(DIARY_OVERRIDES_URL, { cache: "no-store" });
-    if (!response.ok) return {};
-    const payload = await response.json();
-    return payload?.overrides && typeof payload.overrides === "object" ? payload.overrides : {};
-  } catch {
-    return {};
-  }
-}
-
-async function loadAutomaticArticles() {
-  const response = await fetch(DIARY_AUTO_URL, { cache: "no-store" });
-  if (!response.ok) {
-    throw new Error("Feed automatico non disponibile");
-  }
-
-  const payload = await response.json();
-  return Array.isArray(payload.articles) ? payload.articles.map(article => ({ ...article, mode: "auto" })) : [];
-}
-
-async function initDiary() {
-  if (diaryPrev && diaryNext) {
-    diaryPrev.addEventListener("click", () => scrollDiary(-1));
-    diaryNext.addEventListener("click", () => scrollDiary(1));
-    diaryFeed.addEventListener("scroll", updateDiaryNav, { passive: true });
-    window.addEventListener("resize", updateDiaryNav);
-  }
-
-  document.querySelectorAll("[data-close='modal']").forEach(element => {
-    element.addEventListener("click", closeModal);
-  });
-
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape" && modal.classList.contains("is-open")) {
-      closeModal();
+    if (!response.ok) {
+      throw new Error("Articoli manuali non disponibili");
     }
-  });
-
-  const manual = await loadManualArticles();
-  const overrides = await loadOverrides();
-
-  try {
-    const automatic = await loadAutomaticArticles();
-    state.articles = [
-      ...manual,
-      ...automatic
-        .map(article => {
-          const override = overrides[String(article.achievementId)] || overrides[article.id] || null;
-          if (override?.hidden) return null;
-          return override ? { ...article, ...override } : article;
-        })
-        .filter(Boolean)
-    ]
-      .sort((left, right) => {
-        const leftDate = normalizeDate(left.date)?.getTime() || 0;
-        const rightDate = normalizeDate(right.date)?.getTime() || 0;
-        return rightDate - leftDate;
-      });
-
-    renderDiary();
-    diaryNote.textContent = `Articoli caricati: ${state.articles.length}. I testi nuovi possono essere generati lato worker e corretti localmente solo quando serve.`;
-  } catch (error) {
-    state.articles = manual;
-    renderDiary();
-    diaryNote.textContent = manual.length
-      ? "Feed automatico non disponibile al momento. Sto mostrando solo gli articoli manuali locali."
-      : "Feed automatico non disponibile al momento e nessun articolo manuale e stato definito.";
+    const payload = await response.json();
+    renderManualArticles(Array.isArray(payload.articles) ? payload.articles : []);
+  } catch {
+    manualArticles.innerHTML = `<div class="empty-state">Impossibile leggere gli articoli manuali.</div>`;
   }
 }
 
-initDiary();
+loadAchievementBoard();
+loadManualEntries();
 </script>
 
 </body>

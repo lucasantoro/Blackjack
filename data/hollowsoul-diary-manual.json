@@ -1,3 +1,28 @@
 {
-  "articles": []
+  "articles": [
+    {
+      "id": "serata-voidspire-esempio",
+      "date": "2026-03-30",
+      "subtitle": "Progress di gilda | Pinnacolo del Vuoto",
+      "title": "Una serata pulita, senza strappi inutili",
+      "image": "https://render.worldofwarcraft.com/eu/icons/56/inv_achievement_raid_voidspire.jpg",
+      "description": "Un esempio di articolo manuale: ritmo buono, chiamate ordinate e una serata che ha lasciato la sensazione di aver costruito qualcosa di solido pull dopo pull.",
+      "body": [
+        "La serata al Pinnacolo del Vuoto e partita senza fretta ma con un'idea chiara del ritmo da tenere. I primi boss sono serviti a trovare subito una cadenza stabile, mentre sulle pull piu pesanti il gruppo ha dato l'impressione di sapersi ricompattare velocemente senza perdere lucidita.",
+        "La parte migliore non e stata il singolo numero, ma il modo in cui il raid e rimasto leggibile per tutta la sessione. Poche correzioni urlate, movimenti piu puliti del solito e quella sensazione rara di serata ordinata che ti fa chiudere il log con la voglia di tornare subito dentro."
+      ]
+    },
+    {
+      "id": "serata-community-esempio",
+      "date": "2026-04-11",
+      "subtitle": "Community night | Alt run e chiacchiere",
+      "title": "Quando la serata gira bene anche senza inseguire il risultato",
+      "image": "https://render.worldofwarcraft.com/eu/icons/56/inv_120_raid_dreamwell_malformedmanifestation.jpg",
+      "description": "Secondo esempio: una serata piu leggera, fatta di alt, risate e qualche pull improvvisato, ma abbastanza riuscita da meritare comunque uno spazio nel diario.",
+      "body": [
+        "Non tutte le serate hanno bisogno di un first kill per lasciare qualcosa. Questa e stata una di quelle notti in cui il gruppo si e allargato bene, tra alt run, persone entrate e uscite dal Discord e quella confusione sana che fa capire che la gilda e viva anche fuori dal progress vero e proprio.",
+        "Il valore di una pagina come questa sta proprio qui: tenere traccia anche delle sere piu semplici, quelle che magari non finiscono nei log ma restano nella memoria del gruppo. Se vuoi usare il diario in modo piu editoriale, questo e il tipo di articolo che puo funzionare bene."
+      ]
+    }
+  ]
 }
