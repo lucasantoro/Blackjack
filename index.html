@@ -38,12 +38,12 @@
 
     <div class="hero-stats">
       <div class="stat-chip">
-        <span class="stat-chip__value">1</span>
-        <span class="stat-chip__label">raid team core</span>
+        <span class="stat-chip__value">Lunedi</span>
+        <span class="stat-chip__label">21:30 - 23:30</span>
       </div>
       <div class="stat-chip">
-        <span class="stat-chip__value">2</span>
-        <span class="stat-chip__label">anime della gilda</span>
+        <span class="stat-chip__value">Mercoledi</span>
+        <span class="stat-chip__label">21:30 - 23:30</span>
       </div>
       <div class="stat-chip">
         <span class="stat-chip__value">HC</span>
@@ -54,6 +54,7 @@
         <span class="stat-chip__label">progress con continuita</span>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -386,6 +387,7 @@ function openVodModal(video) {
     </iframe>
   `;
   modal.classList.remove("hidden");
+  modal.classList.add("is-open");
   document.body.classList.add("modal-open");
 }
 
@@ -393,6 +395,7 @@ function closeVodModal() {
   const modal = document.getElementById("home-vod-modal");
   const player = document.getElementById("home-vod-player");
   if (!modal || !player) return;
+  modal.classList.remove("is-open");
   modal.classList.add("hidden");
   player.innerHTML = "";
   document.body.classList.remove("modal-open");

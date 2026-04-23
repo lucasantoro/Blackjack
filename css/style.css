@@ -1166,6 +1166,53 @@ header nav a.active {
   justify-content: center;
 }
 
+.apply-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.turnstile-shell {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  margin-top: 8px;
+}
+
+.turnstile-container {
+  min-height: 66px;
+}
+
+.apply-note,
+.apply-status {
+  margin: 0;
+  text-align: center;
+}
+
+.apply-note {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.apply-status {
+  min-height: 24px;
+  font-weight: 700;
+}
+
+.apply-status.is-success {
+  color: var(--accent);
+}
+
+.apply-status.is-error {
+  color: #ffb4ae;
+}
+
+.apply-status.is-pending {
+  color: var(--accent-2);
+}
+
 /* =========================================================
    STATUTO
    ========================================================= */

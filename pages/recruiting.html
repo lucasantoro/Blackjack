@@ -6,6 +6,7 @@
 <title>Reclutamento - Blackjack</title>
 <link rel="stylesheet" href="../css/style.css">
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 </head>
 
 <body class="page-transition blackjack-bg">
@@ -77,8 +78,20 @@
       <label for="motivationInput">Cosa cerchi nei Blackjack</label>
       <textarea id="motivationInput" name="Motivazione" placeholder="Obiettivi, aspettative e tipo di ambiente che vuoi trovare" required></textarea>
 
+      <div class="apply-honeypot" aria-hidden="true">
+        <label for="websiteInput">Website</label>
+        <input id="websiteInput" type="text" name="Website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="turnstile-shell">
+        <div id="turnstile-container" class="turnstile-container"></div>
+        <p class="apply-note" id="turnstile-note">Verifica anti-bot in caricamento...</p>
+      </div>
+
+      <p class="apply-status" id="apply-status" role="status" aria-live="polite"></p>
+
       <div class="apply-actions">
-        <button type="submit" class="apply-button">Invia candidatura</button>
+        <button type="submit" class="apply-button" id="apply-submit">Invia candidatura</button>
       </div>
     </form>
 
@@ -107,28 +120,6 @@ document.querySelectorAll("a").forEach(link => {
 </script>
 
 <script>
-document.getElementById("applyForm").addEventListener("submit", async function(event) {
-  event.preventDefault();
-
-  const webhookURL = "https://discord.com/api/webhooks/1439257704198832194/KIM82-eZUORCNmAYRBTZwjatEASiltvNvZ-0hAvp2_bjUw_BB0kTPo3ITRJDz-RisJnM";
-  const formData = new FormData(this);
-  const message = Array.from(formData.entries())
-    .map(([key, value]) => `**${key}:** ${value}`)
-    .join("\n");
-
-  await fetch(webhookURL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ content: message })
-  });
-
-  alert("Candidatura inviata con successo.");
-  this.reset();
-  document.getElementById("specSelect").innerHTML = `<option value="">Seleziona prima una classe...</option>`;
-});
-</script>
-
-<script>
 const specByClass = {
   "Death Knight": ["Blood", "Frost", "Unholy"],
   "Demon Hunter": ["Devourer", "Havoc", "Vengeance"],
@@ -145,8 +136,15 @@ const specByClass = {
   "Warrior": ["Arms", "Fury", "Protection"]
 };
 
+const RECRUITING_WORKER = "https://blackjack-recruiting.lucasantoro2905.workers.dev";
 const classSelect = document.getElementById("classSelect");
 const specSelect = document.getElementById("specSelect");
+const applyForm = document.getElementById("applyForm");
+const applyStatus = document.getElementById("apply-status");
+const applySubmit = document.getElementById("apply-submit");
+const turnstileNote = document.getElementById("turnstile-note");
+
+let turnstileWidgetId = null;
 
 classSelect.addEventListener("change", () => {
   const selectedClass = classSelect.value;
@@ -165,6 +163,114 @@ classSelect.addEventListener("change", () => {
     specSelect.appendChild(option);
   });
 });
+
+function setApplyStatus(message, kind = "") {
+  applyStatus.textContent = message || "";
+  applyStatus.className = kind ? `apply-status is-${kind}` : "apply-status";
+}
+
+async function loadTurnstile() {
+  try {
+    const response = await fetch(`${RECRUITING_WORKER}/config`, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error("Config Turnstile non disponibile");
+    }
+
+    const payload = await response.json();
+    if (!payload?.siteKey) {
+      throw new Error("TURNSTILE_SITE_KEY non configurata");
+    }
+
+    const container = document.getElementById("turnstile-container");
+    const renderWidget = () => {
+      if (!window.turnstile || !container || turnstileWidgetId !== null) return;
+      turnstileWidgetId = window.turnstile.render(container, {
+        sitekey: payload.siteKey,
+        theme: "dark"
+      });
+      turnstileNote.textContent = "Completa la verifica anti-bot prima di inviare la candidatura.";
+    };
+
+    if (window.turnstile) {
+      renderWidget();
+      return;
+    }
+
+    let attempts = 0;
+    const timer = setInterval(() => {
+      attempts += 1;
+      if (window.turnstile) {
+        clearInterval(timer);
+        renderWidget();
+      } else if (attempts > 50) {
+        clearInterval(timer);
+        turnstileNote.textContent = "Impossibile caricare la verifica anti-bot.";
+      }
+    }, 200);
+  } catch (error) {
+    turnstileNote.textContent = error instanceof Error ? error.message : "Impossibile caricare la verifica anti-bot.";
+  }
+}
+
+applyForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  setApplyStatus("");
+
+  if (turnstileWidgetId === null || !window.turnstile) {
+    setApplyStatus("La verifica anti-bot non e pronta. Ricarica la pagina e riprova.", "error");
+    return;
+  }
+
+  const turnstileToken = window.turnstile.getResponse(turnstileWidgetId);
+  if (!turnstileToken) {
+    setApplyStatus("Completa la verifica anti-bot prima di inviare la candidatura.", "error");
+    return;
+  }
+
+  const payload = {
+    discord: document.getElementById("discordInput").value,
+    character: document.getElementById("characterInput").value,
+    className: classSelect.value,
+    spec: specSelect.value,
+    logs: document.getElementById("logsInput").value,
+    availability: document.getElementById("availabilityInput").value,
+    motivation: document.getElementById("motivationInput").value,
+    website: document.getElementById("websiteInput").value,
+    turnstileToken
+  };
+
+  applySubmit.disabled = true;
+  setApplyStatus("Invio candidatura in corso...", "pending");
+
+  try {
+    const response = await fetch(RECRUITING_WORKER, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || !result?.ok) {
+      throw new Error(result?.details || result?.error || "Invio candidatura non riuscito");
+    }
+
+    applyForm.reset();
+    specSelect.innerHTML = `<option value="">Seleziona prima una classe...</option>`;
+    window.turnstile.reset(turnstileWidgetId);
+    setApplyStatus("Candidatura inviata con successo.", "success");
+  } catch (error) {
+    if (window.turnstile && turnstileWidgetId !== null) {
+      window.turnstile.reset(turnstileWidgetId);
+    }
+    setApplyStatus(error instanceof Error ? error.message : "Invio candidatura non riuscito.", "error");
+  } finally {
+    applySubmit.disabled = false;
+  }
+});
+
+loadTurnstile();
 </script>
 
 </body>
