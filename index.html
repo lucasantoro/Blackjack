@@ -312,7 +312,7 @@ function renderHomeTwitch(payload) {
     liveDescription.textContent = liveBits.join(" - ");
     livePlayer.innerHTML = `
       <iframe
-        src="https://player.twitch.tv/?channel=${encodeURIComponent(HOME_TWITCH_CHANNEL)}&parent=${window.location.hostname}"
+        src="https://player.twitch.tv/?channel=${encodeURIComponent(HOME_TWITCH_CHANNEL)}&parent=${window.location.hostname}&autoplay=false"
         frameborder="0"
         allowfullscreen="true"
         scrolling="no"
@@ -379,7 +379,7 @@ function openVodModal(video) {
   meta.textContent = video.date ? `Pubblicato il ${video.date}` : "Archivio Twitch";
   player.innerHTML = `
     <iframe
-      src="https://player.twitch.tv/?video=v${encodeURIComponent(video.id)}&parent=${window.location.hostname}"
+      src="https://player.twitch.tv/?video=v${encodeURIComponent(video.id)}&parent=${window.location.hostname}&autoplay=false"
       frameborder="0"
       allowfullscreen="true"
       scrolling="no"
