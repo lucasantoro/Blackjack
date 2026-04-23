@@ -276,6 +276,21 @@ function formatVodDate(value) {
   });
 }
 
+function buildTwitchEmbedUrl({ channel, video }) {
+  const parents = Array.from(new Set([
+    window.location.hostname,
+    "lucasantoro.github.io",
+    "localhost",
+    "127.0.0.1"
+  ].filter(Boolean)));
+  const params = new URLSearchParams();
+  parents.forEach(parent => params.append("parent", parent));
+  params.set("autoplay", "false");
+  if (channel) params.set("channel", channel);
+  if (video) params.set("video", `v${video}`);
+  return `https://player.twitch.tv/?${params.toString()}`;
+}
+
 function updateHomeVodButtons() {
   const container = document.getElementById("home-vod-grid");
   const prev = document.getElementById("home-vod-prev");
@@ -312,8 +327,9 @@ function renderHomeTwitch(payload) {
     liveDescription.textContent = liveBits.join(" - ");
     livePlayer.innerHTML = `
       <iframe
-        src="https://player.twitch.tv/?channel=${encodeURIComponent(HOME_TWITCH_CHANNEL)}&parent=${window.location.hostname}&autoplay=false"
+        src="${buildTwitchEmbedUrl({ channel: HOME_TWITCH_CHANNEL })}"
         frameborder="0"
+        allow="fullscreen"
         allowfullscreen="true"
         scrolling="no"
         title="Live Twitch ${escapeHtml(HOME_TWITCH_CHANNEL)}">
@@ -377,18 +393,22 @@ function openVodModal(video) {
 
   title.textContent = video.title || "VOD Twitch";
   meta.textContent = video.date ? `Pubblicato il ${video.date}` : "Archivio Twitch";
-  player.innerHTML = `
-    <iframe
-      src="https://player.twitch.tv/?video=v${encodeURIComponent(video.id)}&parent=${window.location.hostname}&autoplay=false"
-      frameborder="0"
-      allowfullscreen="true"
-      scrolling="no"
-      title="${escapeHtml(video.title || "VOD Twitch")}">
-    </iframe>
-  `;
   modal.classList.remove("hidden");
   modal.classList.add("is-open");
   document.body.classList.add("modal-open");
+  player.innerHTML = "";
+  requestAnimationFrame(() => {
+    player.innerHTML = `
+      <iframe
+        src="${buildTwitchEmbedUrl({ video: video.id })}"
+        frameborder="0"
+        allow="fullscreen"
+        allowfullscreen="true"
+        scrolling="no"
+        title="${escapeHtml(video.title || "VOD Twitch")}">
+      </iframe>
+    `;
+  });
 }
 
 function closeVodModal() {
