@@ -232,6 +232,9 @@
       <h3 id="home-vod-modal-title" class="widget-title">VOD Twitch</h3>
       <p class="widget-desc" id="home-vod-modal-meta"></p>
       <div class="live-player-shell" id="home-vod-player"></div>
+      <div class="button-row">
+        <a href="#" class="button-secondary" id="home-vod-open-link" target="_blank" rel="noopener noreferrer">Apri su Twitch</a>
+      </div>
     </div>
   </div>
 </div>
@@ -329,7 +332,6 @@ function renderHomeTwitch(payload) {
       <iframe
         src="${buildTwitchEmbedUrl({ channel: HOME_TWITCH_CHANNEL })}"
         frameborder="0"
-        allow="fullscreen"
         allowfullscreen="true"
         scrolling="no"
         title="Live Twitch ${escapeHtml(HOME_TWITCH_CHANNEL)}">
@@ -362,6 +364,7 @@ function renderHomeTwitch(payload) {
               type="button"
               class="vod-button"
               data-vod-id="${escapeHtml(video.id || "")}"
+              data-vod-url="${escapeHtml(video.url || "")}"
               data-vod-title="${escapeHtml(video.title || "VOD Twitch")}"
               data-vod-date="${escapeHtml(formatVodDate(video.published_at) || "")}">
               Guarda qui
@@ -375,6 +378,7 @@ function renderHomeTwitch(payload) {
     button.addEventListener("click", () => {
       openVodModal({
         id: button.getAttribute("data-vod-id"),
+        url: button.getAttribute("data-vod-url"),
         title: button.getAttribute("data-vod-title"),
         date: button.getAttribute("data-vod-date")
       });
@@ -389,10 +393,12 @@ function openVodModal(video) {
   const title = document.getElementById("home-vod-modal-title");
   const meta = document.getElementById("home-vod-modal-meta");
   const player = document.getElementById("home-vod-player");
-  if (!modal || !title || !meta || !player || !video?.id) return;
+  const openLink = document.getElementById("home-vod-open-link");
+  if (!modal || !title || !meta || !player || !openLink || !video?.id) return;
 
   title.textContent = video.title || "VOD Twitch";
   meta.textContent = video.date ? `Pubblicato il ${video.date}` : "Archivio Twitch";
+  openLink.href = video.url || `https://www.twitch.tv/videos/${encodeURIComponent(video.id)}`;
   modal.classList.remove("hidden");
   modal.classList.add("is-open");
   document.body.classList.add("modal-open");
@@ -402,7 +408,6 @@ function openVodModal(video) {
       <iframe
         src="${buildTwitchEmbedUrl({ video: video.id })}"
         frameborder="0"
-        allow="fullscreen"
         allowfullscreen="true"
         scrolling="no"
         title="${escapeHtml(video.title || "VOD Twitch")}">
