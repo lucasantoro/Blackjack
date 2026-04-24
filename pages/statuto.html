@@ -95,99 +95,107 @@ document.querySelectorAll("a").forEach(link => {
 const statuteSections = [
   {
     id: "identita",
-    label: "Identita",
-    title: "Identita del tavolo",
-    intro: "Blackjack nasce per creare un gruppo maturo, affiatato e appassionato di World of Warcraft.",
+    label: "Identità",
+    title: "Identità del tavolo",
+    intro: "Blackjack è una gilda nata per unire esperienza, maturità e voglia di giocare insieme.",
     rules: [
-      "Molti membri arrivano da esperienze hardcore, semi-hardcore e softcore, ma qui contano prima di tutto rispetto, gioco di squadra e divertimento.",
-      "Attitudine e comportamento hanno lo stesso peso del risultato: qui si scherza, si ride e si osa, ma la tossicita resta fuori dal casino."
+      "Accogliamo giocatori con esperienze diverse: hardcore, semi-hardcore, softcore e social. Il valore di un membro non si misura solo dal risultato, ma anche da atteggiamento, rispetto e spirito di squadra.",
+      "Si scherza, si ride e si osa, ma la tossicità resta fuori dal tavolo. Il clima della gilda viene prima dell'ego del singolo."
     ]
   },
   {
     id: "struttura",
     label: "Struttura",
     title: "Struttura della gilda",
-    intro: "Ogni ruolo ha una funzione precisa e leggibile.",
+    intro: "Ogni ruolo ha una funzione precisa all'interno del tavolo.",
     rules: [
-      "Casino Royale - Guild Master: decide la direzione della gilda e ha l'ultima parola su ogni mano.",
-      "Pit Boss - Vice GM: supporta il Banco e coordina staff e attivita.",
-      "Jack - Officer Raid: gestisce raid, roster e progress, analisi fight, meccaniche, build e ottimizzazione.",
-      "Dealer - Officer Eventi & Social: segue mount run, achievement ed eventi community.",
-      "High Roller - Raider attivi nel progress: presenza costante e affidabilita.",
-      "Buy-In - Nuovi membri in prova: pronti a dimostrare il proprio valore.",
-      "Split - Ruolo di default per tutti gli alt dei membri della gilda.",
-      "Spettatore - Membri casual, social e alt: parte del tavolo senza obblighi di puntata."
+      "Casino Royale - Guild Master: guida la direzione della gilda e ha l'ultima parola sulle decisioni principali.",
+      "Pit Boss - Vice GM: supporta il Guild Master, coordina lo staff e mantiene ordine nelle attività.",
+      "Jack - Officer Raid: gestisce raid, roster, progress, analisi dei fight, meccaniche, build e ottimizzazione.",
+      "Dealer - Officer Eventi & Social: organizza eventi community, mount run, achievement e attività social.",
+      "High Roller - Raider: membro attivo del roster progress, presente, preparato e affidabile.",
+      "Buy-In - Trial: nuovo membro in prova, valutato per presenza, atteggiamento e integrazione.",
+      "Split - Alt: ruolo dedicato agli alt dei membri della gilda.",
+      "Spettatore - Social: membro casual o social, parte della community senza obblighi di raid."
     ]
   },
   {
     id: "obiettivi",
     label: "Obiettivi",
     title: "Obiettivi di gilda",
-    intro: "L'obiettivo principale e divertirsi insieme.",
+    intro: "L'obiettivo principale è divertirsi, crescere e costruire un gruppo stabile.",
     rules: [
-      "Blackjack e una gilda di giocatori cresciuti, ma con lo spirito da bambini, e vuole conoscere e integrare tutti i membri nel tempo.",
-      "Discord e gli altri canali non sono obbligatori ma fortemente consigliati: chi gioca senza interagire e il benvenuto, ma perdera parte della socialita della gilda."
+      "Blackjack vuole essere una gilda di persone adulte, ma con lo spirito giusto per divertirsi insieme senza prendersi troppo sul serio.",
+      "La partecipazione alla vita di gilda è importante: chi interagisce, partecipa e si fa conoscere diventa davvero parte del gruppo.",
+      "Discord è il centro della comunicazione di gilda. Fuori raid non è obbligatorio, ma è fortemente consigliato per restare aggiornati e integrarsi."
     ]
   },
   {
     id: "comportamento",
     label: "Comportamento",
     title: "Comportamento in gilda",
-    intro: "La convivenza deve restare pacifica anche quando nascono antipatie personali.",
+    intro: "Il rispetto viene prima della performance.",
     rules: [
-      "Rispetto verso tutti, niente flame, offese o comportamenti tossici.",
-      "Non tolleriamo atteggiamenti aggressivi, polemici o da 'so tutto io' che possano minare l'atmosfera generale."
+      "Sono richiesti educazione, rispetto e buon senso verso tutti i membri.",
+      "Non sono tollerati flame, insulti, provocazioni, atteggiamenti tossici o comportamenti che rovinano il clima della gilda.",
+      "Le antipatie personali non devono diventare un problema per il gruppo. Se c'è un conflitto, va gestito con maturità o portato allo staff.",
+      "L'atteggiamento da 'so tutto io', la polemica continua e l'aggressività gratuita sono incompatibili con lo spirito della gilda."
     ]
   },
   {
     id: "raid",
     label: "Raid",
     title: "Raid e progress",
-    intro: "Le regole raid sono valide per il main e vanno rispettate con chiarezza.",
+    intro: "Il raid richiede rispetto del gruppo, preparazione e comunicazione chiara.",
     rules: [
-      "I giorni di raid sono lunedi e mercoledi, dalle 21:30 alle 23:30.",
-      "Il progress con il main e vietato dal mercoledi al lunedi inclusi; il martedi pre-reset e libero, mentre gli alt sono sempre ammessi durante la settimana.",
-      "Se intendi provare boss nella difficolta successiva con il main devi avvisare sempre rasal95 o mc_donald_: progress in Normal per tentativi in HC, progress in HC per tentativi in Mythic.",
-      "E vietato raidare con altre gilde negli stessi giorni e orari del raid di gilda.",
-      "Discord e obbligatorio almeno in ascolto durante il raid, e chiarimenti o strategie vanno chiusi prima del pull con gli officer.",
-      "UI e keybind restano liberi, ma se emergono problemi lo staff puo proporre ottimizzazioni ed e richiesta disponibilita al confronto.",
-      "Agli inviti su Discord si risponde sempre, sia per confermare sia per declinare."
+      "I giorni ufficiali di raid sono lunedì e mercoledì, dalle 21:30 alle 23:30.",
+      "Durante i giorni e gli orari di raid ufficiale non è consentito raidare con altre gilde se si fa parte del roster di gilda.",
+      "Il progress con il main è riservato alla gilda dal mercoledì al lunedì inclusi.",
+      "Il martedì pre-reset il main è libero. Gli alt sono sempre liberi durante tutta la settimana.",
+      "Chi vuole provare con il main una difficoltà superiore deve avvisare prima rasal95 o mc_donald_: Normal per tentativi in HC, HC per tentativi in Mythic.",
+      "Discord è obbligatorio almeno in ascolto durante il raid.",
+      "Dubbi, chiarimenti e strategie vanno discussi prima del pull, non durante il fight.",
+      "UI e keybind sono liberi, ma se emergono problemi evidenti lo staff può proporre modifiche. È richiesta disponibilità al confronto.",
+      "Agli inviti raid su Discord si risponde sempre, sia per confermare sia per declinare."
     ]
   },
   {
     id: "loot",
     label: "Loot",
-    title: "Loot e priorita",
-    intro: "Il loot e del gruppo, non del singolo.",
+    title: "Loot e priorità",
+    intro: "Il loot serve al progresso del gruppo, non al tornaconto del singolo.",
     rules: [
-      "Nei BIS si considerano attendance e performance in modo equilibrato, con priorita a tank e healer.",
-      "Per i set la priorita va a chi completa bonus x2 o x4.",
-      "I loot vanno sempre passati al giocatore incaricato tramite RC Loot Council."
+      "Il loot viene gestito con una logica di utilità per il raid.",
+      "Per i BIS vengono considerati attendance, performance, impatto sul gruppo e ruolo, con attenzione particolare a tank e healer quando necessario.",
+      "Per i tier set la priorità va a chi completa bonus x2 o x4.",
+      "I loot assegnabili vanno sempre passati al giocatore incaricato tramite RC Loot Council.",
+      "Discussioni, pressioni o lamentele sul loot non sono accettate durante il raid. Eventuali dubbi si chiariscono a fine serata con lo staff."
     ]
   },
   {
     id: "ruoli",
     label: "Accesso ruoli",
     title: "Accesso ai ruoli",
-    intro: "I passaggi di ruolo non sono automatici.",
+    intro: "I ruoli si guadagnano con presenza, atteggiamento e affidabilità.",
     rules: [
-      "Da Buy-In a High Roller servono almeno 4 serate organizzate, atteggiamento positivo e spirito di squadra.",
-      "Nomina Officer o Conta Carte: scelta dal Banco e dal Pit Boss."
+      "Il passaggio da Buy-In a High Roller richiede almeno 4 serate organizzate, presenza affidabile, atteggiamento positivo e spirito di squadra.",
+      "Il ruolo High Roller non dipende solo dalla performance: contano anche puntualità, preparazione, comunicazione e comportamento.",
+      "Le nomine a Officer o Conta Carte sono decise dal Casino Royale e dal Pit Boss in base alle necessità della gilda."
     ]
   },
   {
     id: "sanzioni",
     label: "Sanzioni",
     title: "Sanzioni",
-    intro: "Quando serve intervenire, la scala e diretta.",
+    intro: "Quando una regola viene ignorata, lo staff interviene in modo proporzionato.",
     rules: [
-      "Richiamo verbale.",
-      "Declassamento a Giocatore Social.",
-      "Sospensione dal tavolo."
+      "Primo intervento: richiamo verbale o confronto privato.",
+      "Secondo intervento: declassamento, esclusione temporanea dal raid o limitazione della partecipazione agli eventi.",
+      "Nei casi gravi o ripetuti: sospensione dalla gilda o rimozione definitiva.",
+      "Lo staff si riserva di intervenire subito nei casi di tossicità grave, mancanza di rispetto o comportamento dannoso per il gruppo."
     ]
   }
 ];
-
 const statuteState = { activeIndex: 0 };
 
 function escapeHtml(value) {
