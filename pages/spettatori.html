@@ -8,14 +8,18 @@
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 
-<body class="page-transition blackjack-bg">
+<body class="page-transition blackjack-bg blackjack-bg--social">
 
 <header>
   <nav class="mainnav">
+    <a href="../index.html" class="nav-brand" aria-label="Blackjack Home">
+      <img src="../img/blackjack-mark.svg" alt="Blackjack">
+      <span>Blackjack</span>
+    </a>
     <ul>
       <li><a href="../index.html">Home</a></li>
       <li><a href="raider.html">Raider</a></li>
-      <li><a href="hollowsoul.html" class="active">Spettatori</a></li>
+      <li><a href="spettatori.html" class="active">Spettatori</a></li>
       <li><a href="recruiting.html">Reclutamento</a></li>
       <li><a href="statuto.html">Statuto</a></li>
     </ul>
@@ -24,9 +28,9 @@
 
 <nav class="subnav">
   <ul>
-    <li><a href="hollowsoul.html" class="active">Community</a></li>
-    <li><a href="hollowsoul-video.html">Video divertenti</a></li>
-    <li><a href="hollowsoul-eventi.html">Diario</a></li>
+    <li><a href="spettatori.html" class="active">Community</a></li>
+    <li><a href="spettatori-video.html">Video divertenti</a></li>
+    <li><a href="spettatori-diario.html">Diario</a></li>
   </ul>
 </nav>
 
@@ -43,11 +47,13 @@
 <div class="bg-container bg-main-logo">
   <main class="panel">
 
-    <h2 class="section-title">La nostra community</h2>
-    <p class="section-subtitle">
-      Gli Spettatori sono la voce piu libera e creativa della gilda:
-      qui contano le persone, la presenza e il piacere di giocare insieme.
-    </p>
+    <div class="section-head section-head--center">
+      <div class="eyebrow">Community</div>
+      <h2 class="section-title">La nostra community</h2>
+      <p class="section-subtitle">
+        Gli Spettatori tengono viva la gilda ogni giorno: serate leggere, gruppi improvvisati e compagnia costante.
+      </p>
+    </div>
 
     <p class="description-long">
       Gli <strong>Spettatori</strong> rappresentano l'anima quotidiana della gilda. Sono i giocatori
@@ -57,10 +63,13 @@
     </p>
 
     <section>
-      <h2 class="section-title">Cosa facciamo</h2>
-      <p class="section-subtitle">
-        Attivita leggere ma curate: gioco sociale, eventi interni e compagnia costante.
-      </p>
+      <div class="section-head section-head--center">
+        <div class="eyebrow">Attivita</div>
+        <h2 class="section-title">Cosa facciamo</h2>
+        <p class="section-subtitle">
+          Attivita leggere ma curate: gioco sociale, eventi interni e un posto dove trovare sempre qualcuno.
+        </p>
+      </div>
 
       <div class="grid-cards">
         <div class="card">
@@ -91,8 +100,9 @@
 
     <section>
       <div class="section-head section-head--center">
+        <div class="eyebrow">Panoramica</div>
         <h2 class="section-title">Numeri della community</h2>
-        <p class="section-subtitle">Dati community e Mythic+ letti dai worker della gilda.</p>
+        <p class="section-subtitle">Una lettura rapida dell'attivita che gravita attorno alla gilda.</p>
       </div>
 
       <div class="stats-grid stats-grid--duo">
@@ -100,30 +110,30 @@
         <div class="stat-card stat-card--feature">
           <div class="stat-label">Profili Raider.IO tracciati</div>
           <div class="stat-value" id="stat-tracked">-</div>
-          <div class="stat-hint" id="stat-tracked-hint">Personaggi della gilda letti con score Mythic+ disponibile.</div>
+          <div class="stat-hint" id="stat-tracked-hint">Profili con attivita Mythic+ registrata.</div>
         </div>
 
         <div class="stat-card stat-card--feature">
           <div class="stat-label">Miglior score M+</div>
           <div class="stat-value" id="stat-peak-score">-</div>
-          <div class="stat-hint" id="stat-peak-score-hint">Il profilo piu alto del roster tracciato.</div>
+          <div class="stat-hint" id="stat-peak-score-hint">Il punteggio piu alto visto nella rosa tracciata.</div>
         </div>
 
         <div class="stat-card">
           <div class="stat-label">Punteggio medio M+ (Top 10)</div>
           <div class="stat-value" id="stat-avg-score">-</div>
-          <div class="stat-hint">Media del punteggio Mythic+ dei top 10 profili tracciati.</div>
+          <div class="stat-hint">Media del punteggio Mythic+ dei profili piu alti.</div>
         </div>
 
         <div class="stat-card">
           <div class="stat-label">Run M+ (ultimi 30 giorni)</div>
           <div class="stat-value" id="stat-guild-runs">-</div>
-          <div class="stat-hint">Totale delle Mythic+ completate dai membri della gilda.</div>
+          <div class="stat-hint">Totale delle chiavi chiuse dal gruppo nell'ultimo mese.</div>
         </div>
 
       </div>
 
-      <p class="stats-note" id="stats-note">Dati aggiornati dal worker della gilda.</p>
+      <p class="stats-note" id="stats-note">Panoramica aggiornata di recente.</p>
     </section>
 
   </main>
@@ -150,7 +160,7 @@ document.querySelectorAll("a").forEach(a => {
 </script>
 
 <script>
-async function loadHollowSoulStats() {
+async function loadSpettatoriStats() {
   const elTracked = document.getElementById("stat-tracked");
   const elTrackedHint = document.getElementById("stat-tracked-hint");
   const elPeakScore = document.getElementById("stat-peak-score");
@@ -177,17 +187,17 @@ async function loadHollowSoulStats() {
     elAvg10.textContent = payload.avgScoreTop10 ?? "-";
     elRuns.textContent = payload.guildRunsLast30 ?? "-";
 
-    note.textContent = "Statistiche aggiornate via Worker ogni 6 ore.";
+    note.textContent = "Panoramica aggiornata periodicamente.";
   } catch (e) {
     console.error("Errore stats:", e);
     elTracked.textContent = elPeakScore.textContent = elAvg10.textContent = elRuns.textContent = "-";
     elTrackedHint.textContent = "Impossibile leggere i profili tracciati.";
     elPeakScoreHint.textContent = "Impossibile leggere il leader score.";
-    note.textContent = "Impossibile caricare le statistiche al momento.";
+    note.textContent = "Statistiche non disponibili al momento.";
   }
 }
 
-loadHollowSoulStats();
+loadSpettatoriStats();
 </script>
 
 </body>

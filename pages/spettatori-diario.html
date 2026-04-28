@@ -8,14 +8,18 @@
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 
-<body class="page-transition blackjack-bg">
+<body class="page-transition blackjack-bg blackjack-bg--social">
 
 <header>
   <nav class="mainnav">
+    <a href="../index.html" class="nav-brand" aria-label="Blackjack Home">
+      <img src="../img/blackjack-mark.svg" alt="Blackjack">
+      <span>Blackjack</span>
+    </a>
     <ul>
       <li><a href="../index.html">Home</a></li>
       <li><a href="raider.html">Raider</a></li>
-      <li><a href="hollowsoul.html">Spettatori</a></li>
+      <li><a href="spettatori.html">Spettatori</a></li>
       <li><a href="recruiting.html">Reclutamento</a></li>
       <li><a href="statuto.html">Statuto</a></li>
     </ul>
@@ -24,9 +28,9 @@
 
 <nav class="subnav">
   <ul>
-    <li><a href="hollowsoul.html">Community</a></li>
-    <li><a href="hollowsoul-video.html">Video divertenti</a></li>
-    <li><a href="hollowsoul-eventi.html" class="active">Diario</a></li>
+    <li><a href="spettatori.html">Community</a></li>
+    <li><a href="spettatori-video.html">Video divertenti</a></li>
+    <li><a href="spettatori-diario.html" class="active">Diario</a></li>
   </ul>
 </nav>
 
@@ -34,7 +38,7 @@
   <div class="hero-content">
     <h2>Diario degli Spettatori</h2>
     <p>
-      Riepilogo achievement della gilda e, sotto, articoli manuali delle serate da mettere in evidenza.
+      Achievement della gilda in alto, articoli di serata in basso.
     </p>
   </div>
 </section>
@@ -44,9 +48,9 @@
 
     <section class="section-shell">
       <div class="section-head section-head--center">
-        <div class="eyebrow">Achievement board</div>
-        <h2 class="section-title">Panoramica achievement di gilda</h2>
-        <p class="section-subtitle">Categorie e progressione della gilda.</p>
+        <div class="eyebrow">Achievement</div>
+        <h2 class="section-title">Panoramica di gilda</h2>
+        <p class="section-subtitle">Le stesse categorie usate nella pagina Blizzard, con percentuale, conteggio e punti.</p>
       </div>
 
       <div class="achievement-summary-grid">
@@ -59,7 +63,7 @@
         <article class="stat-card">
           <div class="stat-label">Ultimo sblocco</div>
           <div class="stat-value stat-value--compact" id="achievement-latest-date">-</div>
-          <div class="stat-hint" id="achievement-latest-title">Sto leggendo gli ultimi dati Blizzard.</div>
+          <div class="stat-hint" id="achievement-latest-title">Ultimo sblocco in arrivo.</div>
         </article>
       </div>
 
@@ -67,16 +71,14 @@
         <div class="empty-state">Caricamento categorie achievement...</div>
       </div>
 
-      <p class="stats-note" id="diary-note">
-        Dati letti dal worker Blizzard della gilda.
-      </p>
+      <p class="stats-note" id="diary-note">Panoramica aggiornata con gli achievement della gilda.</p>
     </section>
 
     <section class="section-shell">
       <div class="section-head section-head--center">
-        <div class="eyebrow">Achievement history</div>
+        <div class="eyebrow">Storico</div>
         <h2 class="section-title">Storico per categorie</h2>
-        <p class="section-subtitle">Archivio completo per categoria.</p>
+        <p class="section-subtitle">Apri una categoria per vedere gli achievement registrati al suo interno.</p>
       </div>
 
       <div class="achievement-category-board" id="achievement-category-board">
@@ -86,7 +88,7 @@
 
     <section class="section-shell">
       <div class="section-head section-head--center">
-        <div class="eyebrow">Manual stories</div>
+        <div class="eyebrow">Articoli</div>
         <h2 class="section-title">Articoli di serata</h2>
         <p class="section-subtitle">
           Progress, eventi community e serate da tenere in primo piano.
@@ -128,7 +130,7 @@ document.querySelectorAll("a").forEach(link => {
 
 <script>
 const DIARY_AUTO_URL = "https://blackjack-community-diary.lucasantoro2905.workers.dev?limit=8";
-const DIARY_MANUAL_URL = "../data/hollowsoul-diary-manual.json";
+const DIARY_MANUAL_URL = "../data/spettatori-diary-manual.json";
 
 const achievementTotal = document.getElementById("achievement-total");
 const achievementLatestDate = document.getElementById("achievement-latest-date");
@@ -186,7 +188,9 @@ function renderAchievementSummary(payload) {
           id: item.id,
           category: item.name,
           count: item.completedCount,
+          totalAvailable: item.totalAvailable,
           points: item.totalPoints,
+          totalPointsAvailable: item.totalPointsAvailable,
           percent: item.percent,
           latestDate: item.latestDate
         }))
@@ -208,14 +212,15 @@ function renderAchievementSummary(payload) {
           </div>
           <h3>${escapeHtml(item.category || "Categoria")}</h3>
           <div class="achievement-panel-meta">
-            <strong>${escapeHtml(item.points ?? item.count ?? 0)} pt</strong>
-            <span>${escapeHtml(item.latestDate ? `Ultimo ${formatDate(item.latestDate)}` : "Nessun unlock registrato")}</span>
+            <strong>${escapeHtml(`${item.count ?? 0}/${item.totalAvailable ?? 0}`)}</strong>
+            <span>${escapeHtml(`${item.points ?? 0}/${item.totalPointsAvailable ?? 0} pt`)}</span>
+            <span>${escapeHtml(item.latestDate ? `Ultimo ${formatDate(item.latestDate)}` : "Nessuno sblocco registrato")}</span>
           </div>
         </article>
       `).join("")
     : `<div class="empty-state">Categorie non disponibili.</div>`;
 
-  diaryNote.textContent = `Snapshot Blizzard attuale: ${totalCompleted ?? 0} achievement completati dalla gilda.`;
+  diaryNote.textContent = `${totalCompleted ?? 0} achievement completati nella pagina di gilda.`;
 }
 
 function renderAchievementCategories(payload) {
@@ -237,8 +242,8 @@ function renderAchievementCategories(payload) {
       </summary>
       <div class="achievement-history-card__body">
         <div class="achievement-history-card__stats">
-          <span>${escapeHtml(category.totalPoints ?? 0)} punti categoria</span>
-          <span>${escapeHtml(formatPanelPercent(category.percent))} completamento categoria</span>
+          <span>${escapeHtml(`${category.completedCount ?? 0}/${category.totalAvailable ?? 0} achievement`)}</span>
+          <span>${escapeHtml(`${category.totalPoints ?? 0}/${category.totalPointsAvailable ?? 0} pt`)}</span>
         </div>
         ${(Array.isArray(category.achievements) && category.achievements.length)
           ? category.achievements.map(item => `
@@ -250,7 +255,7 @@ function renderAchievementCategories(payload) {
                 </div>
                 <div class="achievement-history-row__copy">
                   <h4>${escapeHtml(item.title || "Achievement")}</h4>
-                  <p>${escapeHtml(item.description || "Dettaglio non disponibile.")}</p>
+                  <p>${escapeHtml(item.description || "Obiettivo di gilda registrato.")}</p>
                 </div>
                 <div class="achievement-history-row__meta">
                   <span>${escapeHtml(formatDate(item.date))}</span>

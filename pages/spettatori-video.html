@@ -3,19 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Blackjack – Video divertenti</title>
+  <title>Blackjack - Video divertenti</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 
-<body class="page-transition blackjack-bg">
+<body class="page-transition blackjack-bg blackjack-bg--social">
 
 <header>
   <nav class="mainnav">
+    <a href="../index.html" class="nav-brand" aria-label="Blackjack Home">
+      <img src="../img/blackjack-mark.svg" alt="Blackjack">
+      <span>Blackjack</span>
+    </a>
     <ul>
       <li><a href="../index.html">Home</a></li>
       <li><a href="raider.html">Raider</a></li>
-      <li><a href="hollowsoul.html">Spettatori</a></li>
+      <li><a href="spettatori.html">Spettatori</a></li>
       <li><a href="recruiting.html">Reclutamento</a></li>
       <li><a href="statuto.html">Statuto</a></li>
     </ul>
@@ -24,9 +28,9 @@
 
 <nav class="subnav">
   <ul>
-    <li><a href="hollowsoul.html">Community</a></li>
-    <li><a href="hollowsoul-video.html" class="active">Video divertenti</a></li>
-    <li><a href="hollowsoul-eventi.html">Diario</a></li>
+    <li><a href="spettatori.html">Community</a></li>
+    <li><a href="spettatori-video.html" class="active">Video divertenti</a></li>
+    <li><a href="spettatori-diario.html">Diario</a></li>
   </ul>
 </nav>
 
@@ -34,7 +38,7 @@
   <div class="hero-content">
     <h2>Video divertenti della gilda</h2>
     <p>
-      Clip leggere, wipe epici e momenti da ridere insieme: il lato più creativo degli Spettatori.
+      Clip leggere, wipe epici e momenti da riguardare insieme senza trasformare tutto in una bacheca infinita.
     </p>
   </div>
 </section>
@@ -42,11 +46,13 @@
 <div class="bg-container bg-main-logo">
   <main class="panel">
 
-    <h2 class="section-title">La nostra videoteca</h2>
-    <p class="section-subtitle">
-      Una selezione dal feed ufficiale di YouTube con i video che contengono “Blackjack” nel titolo
-      o nella descrizione, presentati in un comodo carosello.
-    </p>
+    <div class="section-head section-head--center">
+      <div class="eyebrow">Video</div>
+      <h2 class="section-title">La nostra videoteca</h2>
+      <p class="section-subtitle">
+        Una selezione dei contenuti pubblicati sul canale, raccolti in un carosello unico.
+      </p>
+    </div>
 
     <div class="media-carousel-wrapper" aria-live="polite">
       <button class="carousel-nav" type="button" data-direction="prev" aria-label="Scorri indietro">&#8249;</button>
@@ -101,7 +107,7 @@ function extractVideoId(item) {
       if (id) {
         return id;
       }
-    } catch (error) {
+    } catch (_error) {
       return "";
     }
   }
@@ -203,7 +209,7 @@ async function loadVideos() {
     }
 
     renderVideos(data.items);
-  } catch (error) {
+  } catch (_error) {
     statusEl.textContent = "Impossibile caricare i video in questo momento.";
   }
 }

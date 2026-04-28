@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OVERRIDES_PATH = ROOT / "data" / "hollowsoul-diary-overrides.json"
+OVERRIDES_PATH = ROOT / "data" / "spettatori-diary-overrides.json"
 DEFAULT_SOURCE_URL = "https://blackjack-community-diary.lucasantoro2905.workers.dev"
 ALLOWED_ART = {"achievement", "legends", "tour", "treasure", "transmog", "pvp"}
 

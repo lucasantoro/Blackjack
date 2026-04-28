@@ -8,14 +8,18 @@
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 
-<body class="page-transition blackjack-bg">
+<body class="page-transition blackjack-bg blackjack-bg--home">
 
 <header>
   <nav class="mainnav">
+    <a href="index.html" class="nav-brand" aria-label="Blackjack Home">
+      <img src="img/blackjack-mark.svg" alt="Blackjack">
+      <span>Blackjack</span>
+    </a>
     <ul>
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="pages/raider.html">Raider</a></li>
-      <li><a href="pages/hollowsoul.html">Spettatori</a></li>
+      <li><a href="pages/spettatori.html">Spettatori</a></li>
       <li><a href="pages/recruiting.html">Reclutamento</a></li>
       <li><a href="pages/statuto.html">Statuto</a></li>
     </ul>
@@ -25,7 +29,7 @@
 <section class="hero">
   <div class="hero-content hero-content--wide">
     <div class="hero-tagline">Gilda italiana | Nemesis EU</div>
-    <h1>Blackjack</h1>
+    <h1 class="hero-logo"><img src="img/blackjack-wordmark.svg" alt="Blackjack"></h1>
     <p class="hero-lead">
       Una gilda costruita per giocare bene insieme: comunicazione pulita, serate organizzate,
       progress serio e un ambiente che rimane umano anche quando il pull conta davvero.
@@ -141,15 +145,15 @@
           <p>
             Mythic+ senza stress, alt run, serate chill e tutto cio che rende una gilda viva anche fuori dal raid.
           </p>
-          <a href="pages/hollowsoul.html" class="team-btn">Scopri la community</a>
+          <a href="pages/spettatori.html" class="team-btn">Scopri la community</a>
         </article>
       </div>
     </section>
 
     <section>
       <div class="section-head section-head--center">
-        <div class="eyebrow">Hub</div>
-        <h2 class="section-title">Hub della gilda</h2>
+        <div class="eyebrow">Accessi rapidi</div>
+        <h2 class="section-title">Le pagine che apri piu spesso</h2>
         <p class="section-subtitle">
           Roster, progress e candidatura nella stessa area.
         </p>
@@ -365,7 +369,7 @@ async function loadHomeTwitch() {
       cache: "no-store"
     });
     if (!response.ok) {
-      throw new Error("Worker Twitch non disponibile");
+      throw new Error("Diretta Twitch non disponibile");
     }
     const payload = await response.json();
     renderHomeTwitch(payload);

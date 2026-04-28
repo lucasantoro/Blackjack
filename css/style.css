@@ -56,11 +56,45 @@ body {
   color: var(--text);
   font-family: "Manrope", "Segoe UI", sans-serif;
   line-height: 1.6;
+  background: var(--bg-deep);
+  position: relative;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+body::before {
+  z-index: -2;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.94;
+}
+
+body::after {
+  z-index: -1;
   background:
-    radial-gradient(circle at top, rgba(126, 255, 168, 0.12), transparent 28%),
-    radial-gradient(circle at 18% 18%, rgba(240, 200, 104, 0.1), transparent 24%),
-    linear-gradient(180deg, rgba(3, 7, 7, 0.3), rgba(3, 7, 7, 0.82)),
-    var(--bg-deep);
+    radial-gradient(circle at 16% 14%, rgba(240, 200, 104, 0.08), transparent 22%),
+    radial-gradient(circle at 78% 8%, rgba(126, 255, 168, 0.1), transparent 28%),
+    linear-gradient(180deg, rgba(3, 7, 7, 0.16), rgba(3, 7, 7, 0.84));
+}
+
+body.blackjack-bg--home::before,
+body.blackjack-bg::before {
+  background-image: url("../img/blackjack-bg-main.svg");
+}
+
+body.blackjack-bg--raid::before {
+  background-image: url("../img/blackjack-bg-raid.svg");
+}
+
+body.blackjack-bg--social::before {
+  background-image: url("../img/blackjack-bg-social.svg");
 }
 
 main {
@@ -184,6 +218,7 @@ h2,
   margin: 0 auto;
   color: var(--muted);
   font-size: 1.02rem;
+  text-align: center;
 }
 
 .section-subtitle--compact {
@@ -191,7 +226,9 @@ h2,
 }
 
 .panel > .section-title,
-.panel > .section-subtitle {
+.panel > .section-subtitle,
+.panel section > .section-title,
+.panel section > .section-subtitle {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -249,8 +286,6 @@ header {
   position: sticky;
   top: 0;
   z-index: 30;
-  display: flex;
-  justify-content: center;
   padding: 14px 20px;
   background: rgba(3, 8, 7, 0.78);
   backdrop-filter: blur(14px);
@@ -261,13 +296,44 @@ header {
 .mainnav {
   width: 100%;
   max-width: var(--content-max);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+}
+
+.nav-brand,
+.nav-brand:visited {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--white);
+  flex: 0 0 auto;
+}
+
+.nav-brand:hover {
+  color: var(--white);
+}
+
+.nav-brand img {
+  width: 42px;
+  height: 42px;
+  display: block;
+}
+
+.nav-brand span {
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 1.08rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .mainnav ul,
 header nav ul {
   list-style: none;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
@@ -399,6 +465,18 @@ header nav a.active {
 
 .hero h1 {
   font-size: clamp(3.3rem, 9vw, 6rem);
+}
+
+.hero-logo {
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+}
+
+.hero-logo img {
+  width: min(100%, 760px);
+  height: auto;
+  display: block;
 }
 
 .hero h2 {
@@ -538,9 +616,8 @@ header nav a.active {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(3, 7, 7, 0.32), rgba(3, 7, 7, 0.88)),
-    radial-gradient(circle at 50% 10%, rgba(126, 255, 168, 0.08), transparent 32%);
-  backdrop-filter: blur(2px);
+    linear-gradient(180deg, rgba(3, 7, 7, 0.06), rgba(3, 7, 7, 0.34)),
+    radial-gradient(circle at 50% 10%, rgba(126, 255, 168, 0.05), transparent 34%);
   z-index: 1;
 }
 
@@ -552,7 +629,7 @@ header nav a.active {
 .bg-main-logo,
 .bg-main-logo-home,
 .bg-aceofspades-logo {
-  background: url("../img/blackjack_logo.png") center/cover no-repeat;
+  background: none;
 }
 
 .bg-abyss-logo {
@@ -564,8 +641,7 @@ header nav a.active {
 }
 
 .blackjack-bg {
-  background: url("../img/blackjack_logo.png") no-repeat center center fixed;
-  background-size: cover;
+  background: var(--bg-deep);
 }
 
 .abyss-bg {
@@ -643,6 +719,8 @@ header nav a.active {
 .path-grid,
 .hub-grid {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  align-items: stretch;
+  grid-auto-rows: 1fr;
 }
 
 .card,
@@ -2703,12 +2781,30 @@ header nav a.active {
   justify-content: space-between;
   gap: 18px;
   align-items: center;
-  padding: 20px 22px;
+  padding: 20px 54px 20px 22px;
   cursor: pointer;
+  position: relative;
 }
 
 .achievement-history-card__summary::-webkit-details-marker {
   display: none;
+}
+
+.achievement-history-card__summary::after {
+  content: "";
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid rgba(240, 200, 104, 0.92);
+  border-bottom: 2px solid rgba(240, 200, 104, 0.92);
+  transform: translateY(-60%) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.achievement-history-card[open] .achievement-history-card__summary::after {
+  transform: translateY(-40%) rotate(225deg);
 }
 
 .achievement-history-card__summary h3 {
@@ -3022,6 +3118,15 @@ footer {
    ========================================================= */
 
 @media (max-width: 980px) {
+  .mainnav {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .mainnav ul {
+    justify-content: center;
+  }
+
   main {
     padding: 0 20px;
   }
@@ -3167,6 +3272,10 @@ footer {
 }
 
 @media (max-width: 520px) {
+  .nav-brand {
+    justify-content: center;
+  }
+
   .mainnav a,
   .subnav a {
     width: 100%;
