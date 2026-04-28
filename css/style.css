@@ -481,14 +481,39 @@ header nav a.active {
   margin-bottom: 18px;
 }
 
+.hero-logo--lockup {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 18px 28px;
+  border-radius: 30px;
+  background: linear-gradient(145deg, rgba(9, 15, 15, 0.94), rgba(7, 11, 11, 0.9));
+  border: 1px solid rgba(240, 200, 104, 0.16);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.24);
+}
+
 .hero-logo img {
-  width: min(100%, 820px);
-  max-height: 260px;
-  height: auto;
+  width: 120px;
+  height: 120px;
   display: block;
-  object-fit: contain;
-  object-position: center;
-  filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.28));
+  object-fit: cover;
+  object-position: center 18%;
+  border-radius: 26px;
+  border: 1px solid rgba(240, 200, 104, 0.32);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
+.hero-logo--lockup span {
+  display: block;
+  font-family: "Cinzel", Georgia, serif;
+  font-size: clamp(3.2rem, 7vw, 5.8rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  text-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
 }
 
 .hero h2 {
@@ -3204,6 +3229,17 @@ footer {
     padding: 18px;
   }
 
+  .hero-logo--lockup {
+    gap: 14px;
+    padding: 14px 18px;
+  }
+
+  .hero-logo img {
+    width: 84px;
+    height: 84px;
+    border-radius: 20px;
+  }
+
   .button-row,
   .hero-actions,
   .hero-cta {
@@ -3296,6 +3332,10 @@ footer {
 
   .hero h1 {
     font-size: 2.9rem;
+  }
+
+  .hero-logo--lockup {
+    flex-direction: column;
   }
 
   .hero h2 {
