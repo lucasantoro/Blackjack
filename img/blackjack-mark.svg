@@ -1,55 +1,33 @@
 <svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <radialGradient id="bgGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(128 110) rotate(90) scale(132)">
-      <stop stop-color="#1DF56C" stop-opacity="0.32"/>
-      <stop offset="1" stop-color="#04110B" stop-opacity="0"/>
+    <clipPath id="badgeClip">
+      <circle cx="128" cy="128" r="94"/>
+    </clipPath>
+    <linearGradient id="outerRing" x1="36" y1="34" x2="214" y2="224" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7DE97"/>
+      <stop offset="0.42" stop-color="#C8932B"/>
+      <stop offset="1" stop-color="#5E3B12"/>
+    </linearGradient>
+    <linearGradient id="innerRing" x1="64" y1="58" x2="192" y2="198" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#23211C"/>
+      <stop offset="1" stop-color="#090B0B"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(128 88) rotate(90) scale(112)">
+      <stop stop-color="#34F56E" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#34F56E" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="ring" x1="36" y1="32" x2="220" y2="228" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F5D686"/>
-      <stop offset="1" stop-color="#7B531B"/>
-    </linearGradient>
-    <linearGradient id="hat" x1="128" y1="26" x2="128" y2="108" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#232323"/>
-      <stop offset="1" stop-color="#050505"/>
-    </linearGradient>
-    <linearGradient id="hatBand" x1="77" y1="106" x2="179" y2="106" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#6A0904"/>
-      <stop offset="0.5" stop-color="#C61F12"/>
-      <stop offset="1" stop-color="#5B0603"/>
-    </linearGradient>
-    <linearGradient id="skull" x1="128" y1="74" x2="128" y2="214" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F5E6B8"/>
-      <stop offset="1" stop-color="#B49969"/>
-    </linearGradient>
   </defs>
 
-  <rect width="256" height="256" rx="56" fill="#040807"/>
-  <rect width="256" height="256" rx="56" fill="url(#bgGlow)"/>
-  <circle cx="128" cy="128" r="101" fill="#0A0E0D" stroke="url(#ring)" stroke-width="10"/>
-  <path d="M76 82L45 55L94 55L111 93L76 82Z" fill="#F5F0DE" stroke="#151515" stroke-width="4" stroke-linejoin="round"/>
-  <path d="M73 61C73 58.8 74.8 57 77 57H81C83.2 57 85 58.8 85 61V79C85 81.2 83.2 83 81 83H77C74.8 83 73 81.2 73 79V61Z" fill="#111"/>
-  <path d="M54 84L25 149" stroke="#7C5120" stroke-width="16" stroke-linecap="round"/>
-  <path d="M202 84L231 149" stroke="#7C5120" stroke-width="16" stroke-linecap="round"/>
-  <path d="M18 155L58 138L75 166L18 155Z" fill="#5D5D5D" stroke="#1D1D1D" stroke-width="4" stroke-linejoin="round"/>
-  <path d="M238 155L181 166L198 138L238 155Z" fill="#5D5D5D" stroke="#1D1D1D" stroke-width="4" stroke-linejoin="round"/>
+  <rect width="256" height="256" rx="56" fill="#030707"/>
+  <circle cx="128" cy="128" r="104" fill="url(#outerRing)"/>
+  <circle cx="128" cy="128" r="95" fill="url(#innerRing)"/>
+  <circle cx="128" cy="128" r="92" fill="url(#glow)"/>
 
-  <path d="M92 36C92 29.4 97.4 24 104 24H152C158.6 24 164 29.4 164 36V95H92V36Z" fill="url(#hat)" stroke="#2A2A2A" stroke-width="4"/>
-  <path d="M76 94C76 87.4 81.4 82 88 82H168C174.6 82 180 87.4 180 94V99C180 105.6 174.6 111 168 111H88C81.4 111 76 105.6 76 99V94Z" fill="url(#hatBand)"/>
-  <ellipse cx="128" cy="96" rx="61" ry="18" fill="#101010" stroke="#2A2A2A" stroke-width="4"/>
+  <g clip-path="url(#badgeClip)">
+    <image href="blackjack_logo.png" x="14" y="8" width="228" height="228" preserveAspectRatio="xMidYMid slice"/>
+    <rect x="34" y="34" width="188" height="188" fill="url(#glow)"/>
+  </g>
 
-  <path d="M128 74C97.1 74 79 94.8 79 126C79 151.7 91.9 173.8 110.9 186.8V209L128 226L145.1 209V186.8C164.1 173.8 177 151.7 177 126C177 94.8 158.9 74 128 74Z" fill="url(#skull)" stroke="#5B4C32" stroke-width="4"/>
-  <path d="M99 119C99 109.1 106.4 101 115.5 101H118.5C127.6 101 135 109.1 135 119V122L119 132H103L99 122V119Z" fill="#090B0B"/>
-  <path d="M157 119C157 109.1 149.6 101 140.5 101H137.5C128.4 101 121 109.1 121 119V122L137 132H153L157 122V119Z" fill="#090B0B"/>
-  <ellipse cx="111" cy="116" rx="11" ry="9" fill="#42FF76" fill-opacity="0.92"/>
-  <ellipse cx="145" cy="116" rx="11" ry="9" fill="#42FF76" fill-opacity="0.92"/>
-  <path d="M119 155L128 139L137 155H119Z" fill="#090B0B"/>
-  <path d="M114 172C121.2 178.3 134.8 178.3 142 172" stroke="#6E5433" stroke-width="4" stroke-linecap="round"/>
-  <path d="M103 186H153" stroke="#6E5433" stroke-width="4" stroke-linecap="round"/>
-  <path d="M106 186V198M114 186V201M122 186V203M130 186V203M138 186V201M146 186V198" stroke="#6E5433" stroke-width="4" stroke-linecap="round"/>
-
-  <circle cx="67" cy="188" r="20" fill="#C61913" stroke="#F8EADA" stroke-width="7"/>
-  <circle cx="189" cy="188" r="20" fill="#EFEFEF" stroke="#262626" stroke-width="7"/>
-  <circle cx="96" cy="208" r="16" fill="#F2C84F" stroke="#A66E15" stroke-width="7"/>
-  <rect x="66" y="196" width="124" height="36" rx="12" fill="#0B0F0E" stroke="url(#ring)" stroke-width="4"/>
-  <path d="M98 207H157" stroke="#F4D07A" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="128" cy="128" r="94" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+  <path d="M70 214C86 201 104 194 128 194C152 194 170 201 186 214" stroke="#F0C868" stroke-opacity="0.42" stroke-width="4" stroke-linecap="round"/>
 </svg>

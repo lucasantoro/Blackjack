@@ -1,35 +1,43 @@
-<svg width="960" height="280" viewBox="0 0 960 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="1180" height="320" viewBox="0 0 1180 320" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="wordGold" x1="326" y1="82" x2="326" y2="188" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFF2BF"/>
-      <stop offset="0.55" stop-color="#F0C868"/>
-      <stop offset="1" stop-color="#8A5C1D"/>
+    <clipPath id="badgeClip">
+      <circle cx="154" cy="160" r="108"/>
+    </clipPath>
+    <linearGradient id="outerRing" x1="44" y1="38" x2="248" y2="262" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7DE97"/>
+      <stop offset="0.42" stop-color="#C8932B"/>
+      <stop offset="1" stop-color="#5E3B12"/>
     </linearGradient>
-    <linearGradient id="plate" x1="272" y1="22" x2="944" y2="258" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#171E1C"/>
-      <stop offset="1" stop-color="#070A0A"/>
+    <linearGradient id="innerRing" x1="86" y1="76" x2="226" y2="236" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#26241F"/>
+      <stop offset="1" stop-color="#080A0A"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(154 118) rotate(90) scale(124)">
+      <stop stop-color="#35F36D" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#35F36D" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="plate" x1="282" y1="48" x2="1128" y2="290" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#161B1A"/>
+      <stop offset="1" stop-color="#060808"/>
+    </linearGradient>
+    <linearGradient id="letter" x1="705" y1="76" x2="705" y2="212" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF4CB"/>
+      <stop offset="0.5" stop-color="#F0C868"/>
+      <stop offset="1" stop-color="#85581C"/>
     </linearGradient>
   </defs>
 
-  <rect x="248" y="42" width="690" height="196" rx="42" fill="url(#plate)" stroke="rgba(255,255,255,0.12)"/>
-  <g transform="translate(34 12)">
-    <circle cx="128" cy="128" r="104" fill="#08100E" stroke="#F0C868" stroke-width="8"/>
-    <circle cx="128" cy="128" r="95" fill="url(#bgGlow)" opacity="0.75"/>
-    <path d="M92 40C92 33.4 97.4 28 104 28H152C158.6 28 164 33.4 164 40V94H92V40Z" fill="#151515"/>
-    <path d="M78 93C78 87 82.9 82 89 82H167C173.1 82 178 87 178 93V98C178 104 173.1 109 167 109H89C82.9 109 78 104 78 98V93Z" fill="#B91E12"/>
-    <ellipse cx="128" cy="96" rx="58" ry="18" fill="#0E0E0E"/>
-    <path d="M128 80C98 80 82 99 82 126C82 149 94 169 111 182V202L128 218L145 202V182C162 169 174 149 174 126C174 99 158 80 128 80Z" fill="#E4D3A7" stroke="#5B4C32" stroke-width="4"/>
-    <path d="M101 118C101 109 107.8 102 116.2 102H119.4C127.8 102 134.6 109 134.6 118V121L118 132H103L101 121V118Z" fill="#090B0B"/>
-    <path d="M155 118C155 109 148.2 102 139.8 102H136.6C128.2 102 121.4 109 121.4 118V121L138 132H153L155 121V118Z" fill="#090B0B"/>
-    <ellipse cx="111" cy="117" rx="10" ry="8" fill="#42FF76"/>
-    <ellipse cx="145" cy="117" rx="10" ry="8" fill="#42FF76"/>
-    <path d="M119 155L128 141L137 155H119Z" fill="#090B0B"/>
-    <path d="M112 171C119 176 137 176 144 171" stroke="#705937" stroke-width="4" stroke-linecap="round"/>
-    <path d="M102 184H154" stroke="#705937" stroke-width="4" stroke-linecap="round"/>
-    <path d="M108 184V196M116 184V198M124 184V200M132 184V200M140 184V198M148 184V196" stroke="#705937" stroke-width="4" stroke-linecap="round"/>
-    <path d="M74 77L46 52H92L108 88L74 77Z" fill="#F6F1E1" stroke="#131313" stroke-width="4" stroke-linejoin="round"/>
+  <rect width="1180" height="320" rx="64" fill="rgba(3,7,7,0.24)"/>
+  <circle cx="154" cy="160" r="118" fill="url(#outerRing)"/>
+  <circle cx="154" cy="160" r="108" fill="url(#innerRing)"/>
+  <circle cx="154" cy="160" r="105" fill="url(#glow)"/>
+
+  <g clip-path="url(#badgeClip)">
+    <image href="blackjack_logo.png" x="28" y="30" width="252" height="252" preserveAspectRatio="xMidYMid slice"/>
+    <rect x="46" y="46" width="216" height="216" fill="url(#glow)"/>
   </g>
 
-  <text x="300" y="148" fill="url(#wordGold)" font-family="Cinzel, Georgia, serif" font-size="118" font-weight="800" letter-spacing="4">BLACKJACK</text>
-  <text x="305" y="198" fill="#D8D3C4" font-family="Manrope, Segoe UI, sans-serif" font-size="26" font-weight="700" letter-spacing="7">GILDA WOW  |  NEMESIS EU</text>
+  <rect x="300" y="54" width="844" height="212" rx="46" fill="url(#plate)" stroke="rgba(255,255,255,0.12)"/>
+  <text x="346" y="190" fill="url(#letter)" font-family="Cinzel, Georgia, serif" font-size="128" font-weight="800" letter-spacing="4">BLACKJACK</text>
+  <path d="M350 222H1110" stroke="#F0C868" stroke-opacity="0.34" stroke-width="3" stroke-linecap="round"/>
 </svg>
