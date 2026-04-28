@@ -33,11 +33,11 @@
   <circle cx="154" cy="160" r="105" fill="url(#glow)"/>
 
   <g clip-path="url(#badgeClip)">
-    <image href="blackjack_logo.png" x="28" y="30" width="252" height="252" preserveAspectRatio="xMidYMid slice"/>
+    <image href="blackjack_logo.png" x="20" y="6" width="268" height="268" preserveAspectRatio="xMidYMin slice"/>
     <rect x="46" y="46" width="216" height="216" fill="url(#glow)"/>
   </g>
 
   <rect x="300" y="54" width="844" height="212" rx="46" fill="url(#plate)" stroke="rgba(255,255,255,0.12)"/>
-  <text x="346" y="190" fill="url(#letter)" font-family="Cinzel, Georgia, serif" font-size="128" font-weight="800" letter-spacing="4">BLACKJACK</text>
+  <text x="346" y="184" fill="url(#letter)" font-family="Cinzel, Georgia, serif" font-size="128" font-weight="800" letter-spacing="4">BLACKJACK</text>
   <path d="M350 222H1110" stroke="#F0C868" stroke-opacity="0.34" stroke-width="3" stroke-linecap="round"/>
 </svg>

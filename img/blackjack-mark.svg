@@ -24,7 +24,7 @@
   <circle cx="128" cy="128" r="92" fill="url(#glow)"/>
 
   <g clip-path="url(#badgeClip)">
-    <image href="blackjack_logo.png" x="14" y="8" width="228" height="228" preserveAspectRatio="xMidYMid slice"/>
+    <image href="blackjack_logo.png" x="10" y="-10" width="236" height="236" preserveAspectRatio="xMidYMin slice"/>
     <rect x="34" y="34" width="188" height="188" fill="url(#glow)"/>
   </g>
 
