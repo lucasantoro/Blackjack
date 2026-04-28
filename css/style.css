@@ -317,10 +317,15 @@ header {
 }
 
 .nav-brand img {
-  width: 42px;
-  height: 42px;
+  width: 56px;
+  height: 56px;
   display: block;
-  transform: translateY(-2px);
+  object-fit: cover;
+  object-position: center 18%;
+  border-radius: 16px;
+  border: 1px solid rgba(240, 200, 104, 0.35);
+  background: rgba(5, 10, 9, 0.92);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
 }
 
 .nav-brand span {
@@ -477,10 +482,13 @@ header nav a.active {
 }
 
 .hero-logo img {
-  width: min(100%, 760px);
+  width: min(100%, 820px);
+  max-height: 260px;
   height: auto;
   display: block;
-  transform: translateY(-6px);
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.28));
 }
 
 .hero h2 {
