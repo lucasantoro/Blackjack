@@ -179,12 +179,36 @@ function formatPanelPercent(value) {
   return `${Math.max(0, Math.min(100, Math.round(percent)))}%`;
 }
 
+function deriveTotalFromPercent(count, percent) {
+  const safeCount = Number(count || 0) || 0;
+  const safePercent = Number(percent || 0) || 0;
+  if (!safeCount || !safePercent) return 0;
+  return Math.max(safeCount, Math.round((safeCount * 100) / safePercent));
+}
+
+function normalizePanelMetrics(item) {
+  const count = Number(item?.count ?? item?.completedCount ?? 0) || 0;
+  const percent = Number(item?.percent || 0) || 0;
+  const totalAvailable = Number(item?.totalAvailable || 0) || deriveTotalFromPercent(count, percent);
+  const points = Number(item?.points ?? item?.totalPoints ?? 0) || 0;
+  const totalPointsAvailable = Number(item?.totalPointsAvailable || 0) || 0;
+
+  return {
+    ...item,
+    count,
+    percent,
+    totalAvailable,
+    points,
+    totalPointsAvailable
+  };
+}
+
 function renderAchievementSummary(payload) {
   const summary = payload?.summary || {};
   const categories = Array.isArray(summary.categoryPanels) && summary.categoryPanels.length
-    ? summary.categoryPanels
+    ? summary.categoryPanels.map(normalizePanelMetrics)
     : Array.isArray(payload?.categories)
-      ? payload.categories.map(item => ({
+      ? payload.categories.map(item => normalizePanelMetrics({
           id: item.id,
           category: item.name,
           count: item.completedCount,
@@ -224,7 +248,7 @@ function renderAchievementSummary(payload) {
 }
 
 function renderAchievementCategories(payload) {
-  const categories = Array.isArray(payload?.categories) ? payload.categories : [];
+  const categories = Array.isArray(payload?.categories) ? payload.categories.map(normalizePanelMetrics) : [];
 
   if (!categories.length) {
     achievementCategoryBoard.innerHTML = `<div class="empty-state">Storico categorie non disponibile.</div>`;

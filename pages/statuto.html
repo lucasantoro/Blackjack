@@ -144,10 +144,17 @@ const statuteSections = [
     title: "Raid e progress",
     intro: "Il raid richiede rispetto del gruppo, preparazione e comunicazione chiara.",
     rules: [
-      "I giorni ufficiali di raid sono lunedi e mercoledi, dalle 21:30 alle 23:30. In quei giorni e in quegli orari chi fa parte del roster non raida con altre gilde.",
-      "Il progress con il main resta riservato alla gilda dal mercoledi al lunedi inclusi. Il martedi pre-reset il main e libero. Gli alt possono essere usati liberamente durante la settimana.",
-      "Se vuoi provare con il main una difficolta superiore rispetto a quella che stai facendo con la gilda, devi avvisare prima rasal95 o mc_donald_. Esempio: se sei in progress Normal e vuoi provare HC, va comunicato; lo stesso vale da HC verso Mythic.",
-      "Discord e obbligatorio almeno in ascolto durante il raid. Dubbi, chiarimenti e strategie si sistemano prima del pull. UI e keybind restano liberi, ma se emergono problemi evidenti lo staff puo chiedere un confronto serio. Agli inviti raid su Discord si risponde sempre, anche solo per declinare."
+      "I giorni ufficiali di raid sono lunedi e mercoledi, dalle 21:30 alle 23:30. Alle 21:30 si pulla: la puntualita non e opzionale, perche il ritardo di pochi rallenta l'intera serata. Chi sa gia di arrivare tardi deve avvisare il raid leader e, quando e pronto davanti all'istanza, resta in attesa del group senza interrompere il ritmo del raid.",
+      "Chi entra in raid deve arrivare preparato. Le meccaniche base dei fight farmati devono essere gia note, gli addon richiesti dalla gilda sono obbligatori, e gli strumenti indicati dallo staff come WowAudit e RC Loot Council non sono facoltativi. Lo stesso vale per socket, enchant e consumabili: presentarsi senza il minimo indispensabile penalizza tutto il gruppo e puo incidere anche sulle priorita di loot, salvo casi in cui si sia l'unico richiedente.",
+      {
+        body: "Il progress con il main resta riservato alla gilda dal mercoledi al lunedi inclusi. Il martedi pre-reset il main e libero. Gli alt possono invece essere usati liberamente durante la settimana. Se vuoi provare con il main una difficolta superiore rispetto a quella affrontata con la gilda, devi avvisare il raid leader prima di farlo.",
+        bullets: [
+          "Se sei in progress Normal e vuoi provare Heroic con il main, va comunicato prima.",
+          "Se sei in progress Heroic e vuoi provare Mythic con il main, va comunicato prima.",
+          "Nei giorni e negli orari ufficiali di raid non si raida con altre gilde con il personaggio coinvolto nel roster."
+        ]
+      },
+      "Discord e obbligatorio almeno in ascolto durante il raid. Dubbi, chiarimenti e strategie si sistemano prima del pull. UI e keybind restano liberi, ma se emergono problemi evidenti lo staff puo chiedere un confronto serio e disponibilita ad adattarsi per il bene del gruppo."
     ]
   },
   {
@@ -223,13 +230,36 @@ function renderStatuteCard() {
       <p class="section-subtitle">${escapeHtml(section.intro)}</p>
     </div>
     <div class="statute-rule-list">
-      ${section.rules.map((rule, index) => `
-        <article class="statute-rule-item">
-          <span class="statute-rule-index">${index + 1}</span>
-          <p>${escapeHtml(rule)}</p>
-        </article>
-      `).join("")}
+      ${section.rules.map((rule, index) => renderStatuteRule(rule, index)).join("")}
     </div>
+  `;
+}
+
+function renderStatuteRule(rule, index) {
+  if (typeof rule === "string") {
+    return `
+      <article class="statute-rule-item">
+        <span class="statute-rule-index">${index + 1}</span>
+        <div class="statute-rule-copy">
+          <p>${escapeHtml(rule)}</p>
+        </div>
+      </article>
+    `;
+  }
+
+  const body = escapeHtml(rule?.body || "");
+  const bullets = Array.isArray(rule?.bullets)
+    ? `<ul class="statute-rule-bullets">${rule.bullets.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+    : "";
+
+  return `
+    <article class="statute-rule-item">
+      <span class="statute-rule-index">${index + 1}</span>
+      <div class="statute-rule-copy">
+        <p>${body}</p>
+        ${bullets}
+      </div>
+    </article>
   `;
 }
 
