@@ -1029,8 +1029,13 @@ header nav a.active {
 .member-card__top {
   display: flex;
   justify-content: space-between;
-  align-items: start;
+  align-items: flex-start;
   gap: 16px;
+}
+
+.member-card__heading {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .member-card__name {
@@ -1048,9 +1053,11 @@ header nav a.active {
 .member-card__tags,
 .footer-left {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px;
   align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 auto;
 }
 
 .member-card__snippet {
@@ -3304,6 +3311,10 @@ footer {
   .progress-boss-row {
     flex-direction: column;
     align-items: start;
+  }
+
+  .member-card__tags {
+    justify-content: flex-start;
   }
 
   .achievement-row {

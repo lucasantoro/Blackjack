@@ -83,6 +83,7 @@ def find_member(data: dict, name: str) -> dict | None:
 
 def update_custom_fields(target: dict, args: argparse.Namespace, interactive: bool) -> None:
     current_tagline = target.get("customTagline", "")
+    current_summary = target.get("customSummary", "")
     current_bio = target.get("customBio", "")
     current_image = target.get("customImage", "")
     current_active = bool(target.get("active", True))
@@ -94,12 +95,19 @@ def update_custom_fields(target: dict, args: argparse.Namespace, interactive: bo
     elif interactive:
         target["customTagline"] = prompt_text("Tagline personalizzata (vuoto = nessuna)", current_tagline)
 
+    if args.clear_summary:
+        target["customSummary"] = ""
+    elif args.summary is not None:
+        target["customSummary"] = args.summary
+    elif interactive:
+        target["customSummary"] = prompt_text("Testo breve personalizzato (vuoto = nessuno)", current_summary)
+
     if args.clear_bio:
         target["customBio"] = ""
     elif args.bio is not None:
         target["customBio"] = args.bio
     elif interactive:
-        target["customBio"] = prompt_text("Bio personalizzata (vuoto = nessuna)", current_bio)
+        target["customBio"] = prompt_text("Testo lungo personalizzato (vuoto = nessuno)", current_bio)
 
     if args.clear_image:
         target["customImage"] = ""
@@ -114,7 +122,7 @@ def update_custom_fields(target: dict, args: argparse.Namespace, interactive: bo
         target["active"] = prompt_bool("Profilo attivo", current_active)
 
     target["profileStatus"] = "custom" if any(
-        target.get(field) for field in ("customTagline", "customBio", "customImage")
+        target.get(field) for field in ("customTagline", "customSummary", "customBio", "customImage")
     ) else "generated"
 
 
@@ -148,7 +156,9 @@ def build_placeholder_member(args: argparse.Namespace) -> dict:
         "rio": args.rio or raider_io_url(args.name, server),
         "sourceImage": "",
         "tagline": "",
+        "summary": "",
         "customTagline": "",
+        "customSummary": "",
         "bio": "",
         "customBio": "",
         "customImage": "",
@@ -164,9 +174,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--armory-url", help="URL Armory Blizzard del personaggio")
     parser.add_argument("--name", help="Nome del personaggio, usato se non passi armory-url o come override")
     parser.add_argument("--tagline")
+    parser.add_argument("--summary")
     parser.add_argument("--bio")
     parser.add_argument("--image")
     parser.add_argument("--clear-tagline", action="store_true")
+    parser.add_argument("--clear-summary", action="store_true")
     parser.add_argument("--clear-bio", action="store_true")
     parser.add_argument("--clear-image", action="store_true")
     parser.add_argument("--role", choices=["tank", "healer", "dps", "unknown"])
@@ -229,6 +241,7 @@ def main() -> None:
     print(f"Profilo aggiornato: {target['name']}")
     print(f"- armory: {target.get('armoryUrl') or 'non impostato'}")
     print(f"- tagline custom: {'si' if target.get('customTagline') else 'no'}")
+    print(f"- testo breve custom: {'si' if target.get('customSummary') else 'no'}")
     print(f"- bio custom: {'si' if target.get('customBio') else 'no'}")
     print(f"- immagine custom: {'si' if target.get('customImage') else 'no'}")
 

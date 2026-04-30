@@ -122,196 +122,22 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
-function firstSentence(value) {
-  const text = String(value || "").trim();
-  const match = text.match(/^.*?[.!?](?:\s|$)/);
-  const sentence = match ? match[0].trim() : text;
-  return sentence.length > 155 ? `${sentence.slice(0, 152)}...` : sentence;
-}
-
 function hasCustomProfile(member) {
-  return Boolean(member.customTagline || member.customBio || member.customImage || member.profileStatus === "custom");
-}
-
-function stableIndex(seed, length) {
-  const value = String(seed || "");
-  let total = 0;
-  for (let index = 0; index < value.length; index += 1) {
-    total += value.charCodeAt(index);
-  }
-  return length ? total % length : 0;
-}
-
-const generatedProfiles = {
-  "retribution|paladin|dps": {
-    taglines: [
-      "Burst pulito e utility sempre pronta",
-      "Pressione costante e mani ferme"
-    ],
-    bios: [
-      "Retribution Paladin dal profilo ordinato: entra nel pull con ritmo chiaro, tiene alto il danno quando serve davvero e usa utility e immunita con testa. E il tipo di melee che non riempie la serata di rumore, ma si nota ogni volta che il raid ha bisogno di chiudere bene una finestra importante.",
-      "Gioca Retribution con un'impostazione molto concreta: presenza stabile in melee, cooldown allineati con criterio e quel senso del tempo che evita sprechi. Porta pressione dove serve, aiuta il gruppo con utility affidabile e resta leggibile anche nei fight piu affollati."
-    ]
-  },
-  "devourer|demon hunter|dps": {
-    taglines: [
-      "Mobilita alta, esecuzione secca",
-      "Velocita e controllo nello stesso pull"
-    ],
-    bios: [
-      "Demon Hunter aggressivo ma disciplinato: si muove tanto, perde poco uptime e tiene il focus anche quando il fight cambia passo in pochi secondi. E utile quando serve reagire in fretta, riposizionarsi senza panico e trasformare la mobilita in valore vero per il raid.",
-      "Ha il classico vantaggio del Demon Hunter usato bene: ritmo alto, transizioni pulite e lettura rapida del fight. Non gioca per fare scena, ma per stare sempre dove serve e convertire ogni finestra utile in danno e ordine."
-    ]
-  },
-  "frost|mage|dps": {
-    taglines: [
-      "Controllo freddo e cast puliti",
-      "Gelo preciso, zero sprechi"
-    ],
-    bios: [
-      "Frost Mage con approccio molto pulito: cast stabili, posizionamento ordinato e una gestione del fight che aiuta il gruppo a non scomporsi. Tiene bene il ritmo, non spreca finestre importanti e porta quella sensazione di controllo che rende la serata piu leggibile.",
-      "Gioca Frost con precisione tranquilla: non forza, non sporca, ma rimane costante per tutto il fight. Tra danno affidabile, micro-utility e lettura dei momenti chiave, e uno di quei ranged che tengono in piedi la qualita del pull."
-    ]
-  },
-  "subtlety|rogue|dps": {
-    taglines: [
-      "Entrate pulite, impatto immediato",
-      "Precisione rapida, presenza costante"
-    ],
-    bios: [
-      "Subtlety Rogue dal profilo tecnico: entra bene nelle finestre di danno, gestisce i movimenti senza perdere lucidita e sa dare valore anche quando il fight premia chi sporca meno. E un melee che resta difficile da leggere per il boss, ma molto facile da apprezzare per il raid.",
-      "Gioca Subtlety in modo ordinato e molto presente: burst messo al momento giusto, transizioni pulite e attenzione continua ai dettagli del fight. Quando il raid ha bisogno di una esecuzione rapida senza confusione, questa spec fa il suo lavoro."
-    ]
-  },
-  "unholy|death knight|dps": {
-    taglines: [
-      "Pressione costante, ritmo pesante",
-      "Dannazione ordinata e uptime serio"
-    ],
-    bios: [
-      "Unholy Death Knight con presenza forte e molto stabile: porta pressione continua, sa stare bene nel caos dei melee e usa il kit con buon senso invece di inseguire numeri vuoti. Il risultato e un dps che pesa davvero quando il fight si allunga.",
-      "Gioca Unholy con ritmo pieno ma leggibile: tiene il boss sotto pressione, non molla terreno nei momenti sporchi e resta utile anche quando la pull smette di essere lineare. E il tipo di profilo che lavora bene per tutta la durata del fight."
-    ]
-  },
-  "augmentation|evoker|dps": {
-    taglines: [
-      "Supporto offensivo fatto bene",
-      "Buff giusti, tempismo alto"
-    ],
-    bios: [
-      "Augmentation Evoker che rende migliore il raid senza appesantirlo: buff messi con criterio, buona lettura dei momenti chiave e una presenza costante che aiuta il gruppo a salire di livello. Si nota soprattutto quando la pull richiede sincronia vera.",
-      "Gioca Augmentation con ordine e attenzione al gruppo: non pensa solo al proprio frame, ma a come tenere il raid piu forte e piu stabile nello stesso momento. In progress questa spec vale quando il timing e fatto con precisione."
-    ]
-  },
-  "affliction|warlock|dps": {
-    taglines: [
-      "Controllo lungo e danno affidabile",
-      "Calma totale, pressione continua"
-    ],
-    bios: [
-      "Affliction Warlock che lavora bene sui tempi lunghi: tiene ordine nei momenti complessi, costruisce pressione senza farsi trascinare dalla fretta e rimane molto utile quando il fight richiede pazienza. E un ranged che non si perde quando la pull diventa pesante.",
-      "Gioca Affliction con impostazione lucida: cast puliti, gestione del danno progressiva e ottima tenuta mentale nei try lunghi. Quando il raid ha bisogno di continuita invece che picchi disordinati, questa spec fa la differenza."
-    ]
-  },
-  "demonology|warlock|dps": {
-    taglines: [
-      "Ordine perfetto dentro al caos",
-      "Setup solido, pressione continua"
-    ],
-    bios: [
-      "Demonology Warlock con esecuzione metodica: prepara bene i momenti importanti, tiene il controllo del fight e non perde struttura anche quando il boss cambia ritmo. Porta una presenza molto solida, soprattutto nelle pull che premiano continuita e sangue freddo.",
-      "Gioca Demonology con una mano molto stabile: costruzione chiara del danno, ottima resa sui fight lunghi e poca dispersione nei momenti che contano. E uno di quei ranged che danno serenita al gruppo mentre fanno il loro lavoro."
-    ]
-  },
-  "restoration|shaman|healer": {
-    taglines: [
-      "Cure lucide e grande stabilita",
-      "Totem giusti, raid sereno"
-    ],
-    bios: [
-      "Restoration Shaman con profilo molto affidabile: tiene il raid leggibile, gestisce i picchi di danno senza irrigidire la serata e usa il kit con tempismo. E il tipo di healer che aiuta il gruppo a restare composto anche quando il fight accelera.",
-      "Gioca Restoration con buon senso e presenza costante: non insegue la heal inutile, ma rimette ordine quando il raid ne ha davvero bisogno. Tra utilita e gestione dei momenti critici, porta sicurezza concreta."
-    ]
-  },
-  "holy|paladin|healer": {
-    taglines: [
-      "Difesa pulita, tempi molto stretti",
-      "Supporto diretto, errori ridotti"
-    ],
-    bios: [
-      "Holy Paladin molto concreto: cura con precisione, presidia i momenti pericolosi e sa portare stabilita senza rallentare il raid. Funziona bene soprattutto quando la pull chiede decisioni rapide e un supporto molto presente sui target giusti.",
-      "Gioca Holy con mano ferma e impostazione pratica: poca dispersione, tanta attenzione alle finestre importanti e un senso del timing che tiene in piedi il gruppo nei punti piu delicati. E una presenza che si sente subito."
-    ]
-  },
-  "discipline|priest|healer": {
-    taglines: [
-      "Assorbe il caos prima che arrivi",
-      "Ordine mentale e grande anticipo"
-    ],
-    bios: [
-      "Discipline Priest dal profilo tecnico e molto ordinato: lavora bene in anticipo, prepara i momenti chiave e aiuta il raid a non arrivare mai scoperto nelle fasi pesanti. Quando il fight richiede pianificazione vera, questa spec alza la qualita del gruppo.",
-      "Gioca Discipline con grande controllo del ritmo: legge i danni prima che esplodano, prepara il raid con criterio e tiene alta la pulizia della serata. E il tipo di healer che fa sembrare piu semplice un pull difficile."
-    ]
-  },
-  "restoration|druid|healer": {
-    taglines: [
-      "Cure morbide, copertura totale",
-      "Continuita vera per il gruppo"
-    ],
-    bios: [
-      "Restoration Druid che tiene insieme il raid con continuita: accompagna bene i fight lunghi, smussa gli errori e aiuta il gruppo a non perdere forma nei momenti disordinati. E una presenza molto utile quando serve stabilita invece di panico.",
-      "Gioca Restoration con ritmo fluido e molto leggibile: copre bene il raid, non spreca e si muove con naturalezza tra danno, reposition e recupero. Il valore si vede soprattutto quando il boss prova a spezzare il gruppo."
-    ]
-  },
-  "brewmaster|monk|tank": {
-    taglines: [
-      "Mobilita alta, pull sotto controllo",
-      "Davanti con ritmo e lucidita"
-    ],
-    bios: [
-      "Brewmaster Monk che imposta i pull con ordine: si muove bene, prende spazio quando serve e tiene il fight leggibile per tutto il gruppo. E un tank utile quando il raid ha bisogno di fluidita, controllo e nessuna esitazione davanti.",
-      "Gioca Brewmaster con buon timing e presenza costante: gestisce la pressione senza irrigidire il ritmo del raid e aiuta il gruppo a seguire una linea chiara dal primo pull. Il valore e soprattutto nella pulizia."
-    ]
-  },
-  "protection|warrior|tank": {
-    taglines: [
-      "Linea dura, ritmo chiarissimo",
-      "Apre il pull e tiene la forma"
-    ],
-    bios: [
-      "Protection Warrior con impronta molto chiara: apre bene, regge pressione e rende il pull facile da leggere anche per il resto del gruppo. E il tipo di tank che da struttura alla serata e toglie incertezza gia dai primi secondi.",
-      "Gioca Protection con decisione e buon senso: linee pulite, gestione solida dei momenti pesanti e molta presenza davanti al boss. Quando il fight richiede stabilita vera, questo profilo tiene il raid al suo posto."
-    ]
-  }
-};
-
-function generatedProfileKey(member) {
-  return [
-    String(member.spec || "").trim().toLowerCase(),
-    String(member.class || "").trim().toLowerCase(),
-    String(member.role || "").trim().toLowerCase()
-  ].join("|");
-}
-
-function getGeneratedProfile(member) {
-  return generatedProfiles[generatedProfileKey(member)] || null;
+  return Boolean(member.customTagline || member.customSummary || member.customBio || member.customImage || member.profileStatus === "custom");
 }
 
 function getMemberTagline(member) {
   if (member.customTagline) return member.customTagline;
-  const generated = getGeneratedProfile(member);
-  if (generated?.taglines?.length) {
-    return generated.taglines[stableIndex(member.name, generated.taglines.length)];
-  }
   return member.tagline || "Presenza del roster";
+}
+
+function getMemberSummary(member) {
+  if (member.customSummary) return member.customSummary;
+  return member.summary || "Profilo rapido in aggiornamento.";
 }
 
 function getMemberBio(member) {
   if (member.customBio) return member.customBio;
-  const generated = getGeneratedProfile(member);
-  if (generated?.bios?.length) {
-    return generated.bios[stableIndex(member.name, generated.bios.length)];
-  }
   return member.bio || "Profilo in aggiornamento.";
 }
 
@@ -362,7 +188,7 @@ function renderMemberCard(member) {
   const safeName = escapeHtml(member.name);
   const safeTagline = escapeHtml(getMemberTagline(member));
   const safeBio = escapeHtml(getMemberBio(member));
-  const safeSnippet = escapeHtml(firstSentence(getMemberBio(member)));
+  const safeSummary = escapeHtml(getMemberSummary(member));
   const safeClass = escapeHtml(member.class || "Classe in aggiornamento");
   const safeSpec = escapeHtml(member.spec || "");
   const safeServer = escapeHtml(member.server || "");
@@ -390,7 +216,7 @@ function renderMemberCard(member) {
 
       <div class="member-card__body">
         <div class="member-card__top">
-          <div>
+          <div class="member-card__heading">
             <h3 class="member-card__name">${safeName}</h3>
             <p class="tagline">${safeTagline}</p>
           </div>
@@ -402,7 +228,7 @@ function renderMemberCard(member) {
         </div>
 
         <p class="member-card__class">${[safeSpec, hasKnownClass ? safeClass : "Classe in aggiornamento"].filter(Boolean).join(" | ")}</p>
-        <p class="member-card__snippet">${safeSnippet}</p>
+        <p class="member-card__snippet">${safeSummary}</p>
 
         <details class="member-details">
           <summary>${hasCustomProfile(member) ? "Apri profilo completo" : "Apri scheda"}</summary>

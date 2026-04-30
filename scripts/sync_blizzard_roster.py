@@ -18,6 +18,7 @@ TAGLINES = {
     "aqualara": "Calma, acqua e cure giuste",
     "axlidan": "Taglia corto, poi rifinisce",
     "babayagaa": "La scopa vola, il danno pure",
+    "belluccio": "Colpi puliti, ritmo costante",
     "blakthorn": "Luce ferma, tempi feroci",
     "dephias": "Eleganza losca, utilita vera",
     "drbobo": "Il caos giusto al momento giusto",
@@ -71,6 +72,149 @@ CLOSING_COPY = {
     "unknown": " E anche per questo e facile immaginarselo come una presenza preziosa nelle serate che contano.",
 }
 
+PROFILE_COPY = {
+    "retribution|paladin|dps": {
+        "summaries": [
+            "Retribution ordinato, utility presente e danno pulito nelle finestre che contano.",
+            "Presenza stabile in melee, cooldown messi bene e supporto vero al ritmo del raid.",
+        ],
+        "bios": [
+            "Gioca Retribution con un'impostazione molto ordinata: entra bene nelle finestre di danno, tiene il ritmo senza sprecare utility e resta leggibile anche nei fight piu affollati. E uno di quei melee che non portano rumore, ma danno struttura al pull e chiudono bene i momenti importanti.",
+            "Il suo Retribution ha un taglio concreto: uptime serio, supporto al gruppo quando serve e una buona lettura del fight nelle fasi che puniscono gli errori. Non cerca scena gratuita, ma rendimento stabile e presenza chiara in ogni pull.",
+        ],
+    },
+    "devourer|demon hunter|dps": {
+        "summaries": [
+            "Mobilita alta, ingresso rapido nel fight e grande continuita sulle transizioni.",
+            "Velocita, pressione e movimenti puliti senza perdere lucidita nei momenti sporchi.",
+        ],
+        "bios": [
+            "Gioca Devourer con un profilo molto dinamico: sa entrare subito nel ritmo del fight, copre bene le transizioni e sfrutta la mobilita per stare dove serve senza perdere uptime. Il valore si vede soprattutto quando il pull cambia passo e il raid ha bisogno di una risposta rapida ma ordinata.",
+            "Il suo Demon Hunter porta velocita senza confusione: pochi movimenti sprecati, pressione costante e buon controllo dei momenti in cui il boss costringe il gruppo a reagire in fretta. E un profilo utile quando servono iniziativa e disciplina nello stesso pull.",
+        ],
+    },
+    "frost|mage|dps": {
+        "summaries": [
+            "Cast puliti, grande controllo del ritmo e presenza costante da ranged.",
+            "Frost molto ordinato: poco spreco, buon posizionamento e fight sempre leggibile.",
+        ],
+        "bios": [
+            "Gioca Frost con un'impostazione pulita: buon posizionamento, cast stabili e una lettura del fight che aiuta il gruppo a non scomporsi. Si nota soprattutto nei try lunghi, dove la costanza e la disciplina da ranged valgono piu di un picco isolato.",
+            "Il suo Frost Mage tiene insieme controllo e continuita: non forza, non sporca e sfrutta bene le finestre utili senza perdere compostezza. E il tipo di ranged che rende la serata piu ordinata mentre continua a fare il proprio lavoro con precisione.",
+        ],
+    },
+    "subtlety|rogue|dps": {
+        "summaries": [
+            "Entrate pulite, burst ben allineato e grande presenza nei momenti chiave.",
+            "Subtlety preciso: fa poco rumore ma pesa sempre quando il fight si stringe.",
+        ],
+        "bios": [
+            "Gioca Subtlety con una mano molto precisa: entra bene nelle finestre di burst, gestisce i movimenti senza perdere lucidita e resta efficace anche quando il fight si sporca. E un melee tecnico che da valore al raid soprattutto nei passaggi in cui l'esecuzione deve restare pulita.",
+            "Il suo Rogue lavora bene nei dettagli: danno messo al momento giusto, transizioni ordinate e una buona capacita di restare utile anche nei fight piu irregolari. Quando il gruppo ha bisogno di precisione e presenza rapida, questo profilo si sente.",
+        ],
+    },
+    "unholy|death knight|dps": {
+        "summaries": [
+            "Pressione costante, ritmo pesante e grande tenuta nei try lunghi.",
+            "Unholy solido: presenza continua, buona tenuta e ottimo valore nei fight estesi.",
+        ],
+        "bios": [
+            "Gioca Unholy con un'impronta molto stabile: tiene il boss sotto pressione, regge bene i momenti sporchi e non perde struttura quando il fight si allunga. E un dps che lavora bene sulla continuita e che tende a farsi sentire davvero sulla durata della serata.",
+            "Il suo Death Knight porta peso senza disordine: poche esitazioni, buon uptime e una presenza che resta utile anche quando la pull smette di essere lineare. In progress questo tipo di costanza ha sempre un valore molto concreto.",
+        ],
+    },
+    "augmentation|evoker|dps": {
+        "summaries": [
+            "Supporto offensivo fatto bene, buff ben messi e grande lettura del gruppo.",
+            "Augmentation lucido: alza il livello del raid senza appesantire il pull.",
+        ],
+        "bios": [
+            "Gioca Augmentation con una lettura molto orientata al gruppo: buff usati con criterio, buona percezione dei momenti chiave e una presenza che aumenta la qualita generale del raid. Il valore emerge soprattutto quando serve far rendere meglio il team invece di inseguire il singolo numero.",
+            "Il suo Evoker lavora bene sulla sincronia del raid: resta lucido, gestisce i tempi con buon senso e aiuta il gruppo a salire di tono nelle finestre davvero importanti. E un profilo utile quando il progress richiede coordinazione oltre alla pura esecuzione individuale.",
+        ],
+    },
+    "affliction|warlock|dps": {
+        "summaries": [
+            "Controllo lungo, danno affidabile e ottima tenuta nei fight piu pesanti.",
+            "Affliction composto: costruisce pressione senza perdere ordine o lucidita.",
+        ],
+        "bios": [
+            "Gioca Affliction con grande calma: tiene bene i tempi lunghi, costruisce pressione senza strafare e resta molto leggibile quando il fight chiede pazienza. E uno di quei ranged che aiutano il raid a non perdere forma nei try che si trascinano.",
+            "Il suo Warlock punta tutto sulla continuita: poco spreco, buona disciplina e un ritmo che resta affidabile anche quando la pull si appesantisce. In progress questo tipo di presenza stabilizza molto la serata.",
+        ],
+    },
+    "demonology|warlock|dps": {
+        "summaries": [
+            "Setup metodico, pressione continua e ottima struttura nei try lunghi.",
+            "Demonology ordinato: costruisce bene il danno e regge il fight senza scomporsi.",
+        ],
+        "bios": [
+            "Gioca Demonology con un'impostazione molto metodica: prepara bene i momenti importanti, mantiene ordine nel setup e regge bene i fight che premiano continuita e sangue freddo. E un ranged che da sicurezza al gruppo mentre fa crescere il pull.",
+            "Il suo Warlock ha una struttura molto solida: danno costruito con criterio, buona costanza e poca dispersione nei passaggi che contano davvero. Quando il boss richiede disciplina e presenza lunga, questo profilo aiuta parecchio.",
+        ],
+    },
+    "restoration|shaman|healer": {
+        "summaries": [
+            "Cure lucide, ottima stabilita del raid e buon tempismo sui picchi.",
+            "Healing molto ordinato: rimette insieme il gruppo senza rallentare la serata.",
+        ],
+        "bios": [
+            "Gioca Restoration con una mano molto affidabile: tiene il raid leggibile, regge bene i picchi di danno e usa il kit con buon tempismo invece di rincorrere la cura inutile. E il tipo di healer che aiuta la serata a restare composta anche quando il fight accelera.",
+            "Il suo Shaman porta stabilita vera: pochi sprechi, buon senso sui cooldown e una presenza costante che rimette ordine quando il raid rischia di scomporsi. In progress e una base molto utile per dare continuita ai try.",
+        ],
+    },
+    "holy|paladin|healer": {
+        "summaries": [
+            "Supporto diretto, tempi stretti e grande presenza sui target che contano.",
+            "Holy concreto: cura con precisione e tiene i momenti pesanti sotto controllo.",
+        ],
+        "bios": [
+            "Gioca Holy con un profilo molto concreto: presidia bene i momenti pericolosi, cura con precisione e non spreca attenzione sui target sbagliati. E una presenza utile soprattutto quando il raid ha bisogno di decisioni rapide e supporto molto leggibile.",
+            "Il suo Paladin punta su lucidita e presenza: tempi buoni, ottima resa nei passaggi critici e una gestione molto pratica del fight. Quando la pull si fa tesa, questo tipo di healer aiuta a tenere il gruppo al suo posto.",
+        ],
+    },
+    "discipline|priest|healer": {
+        "summaries": [
+            "Ottimo anticipo, grande ordine nei danni in arrivo e raid piu stabile.",
+            "Discipline tecnico: prepara bene i momenti chiave e tiene il gruppo coperto.",
+        ],
+        "bios": [
+            "Gioca Discipline con un taglio molto tecnico: lavora bene in anticipo, prepara i momenti chiave e fa in modo che il raid non arrivi scoperto nelle fasi pesanti. E un healer che alza la qualita complessiva del gruppo quando il fight richiede pianificazione.",
+            "Il suo Priest gestisce il danno prima che esploda: buona lettura del ritmo, tempi ordinati e tanta disciplina nei momenti in cui la pull va costruita con precisione. Questo profilo si nota soprattutto nelle serate di progress vero.",
+        ],
+    },
+    "restoration|druid|healer": {
+        "summaries": [
+            "Copertura continua, movimento pulito e grande tenuta del raid nel lungo periodo.",
+            "Restoration fluido: accompagna il gruppo bene anche quando il fight si sporca.",
+        ],
+        "bios": [
+            "Gioca Restoration con un ritmo molto fluido: accompagna bene i fight lunghi, smussa gli errori e aiuta il gruppo a non perdere tenuta quando la pull si complica. E una presenza molto utile quando serve continuita invece di reazione nervosa.",
+            "Il suo Druid tiene insieme copertura e mobilita: resta pulito nei movimenti, non spreca e rimane affidabile anche quando il boss prova a spezzare il raid. Questo tipo di healer fa crescere la stabilita generale della serata.",
+        ],
+    },
+    "brewmaster|monk|tank": {
+        "summaries": [
+            "Mobilita alta, pull sotto controllo e linea chiara per tutto il gruppo.",
+            "Brewmaster pulito: prende spazio bene e tiene il fight molto leggibile.",
+        ],
+        "bios": [
+            "Gioca Brewmaster con una presenza molto pulita: si muove bene, prende spazio quando serve e imposta il pull in modo leggibile per tutto il gruppo. E un tank che aiuta il raid a seguire una linea chiara fin dai primi secondi della pull.",
+            "Il suo Monk tiene insieme mobilita e ordine: regge la pressione senza irrigidire il ritmo del raid e rende piu semplice leggere il fight nei passaggi piu scomodi. Quando serve fluidita davanti al boss, questo profilo e molto utile.",
+        ],
+    },
+    "protection|warrior|tank": {
+        "summaries": [
+            "Apre il pull con decisione e tiene la forma del fight molto chiara.",
+            "Protection solido: linea pulita, buona gestione dei pesi e grande presenza davanti.",
+        ],
+        "bios": [
+            "Gioca Protection con una presenza molto netta: apre bene il pull, tiene ordine davanti e rende il fight piu facile da leggere anche per il resto del gruppo. E il tipo di tank che da struttura alla serata gia dai primi secondi.",
+            "Il suo Warrior regge bene i momenti pesanti senza sporcare il ritmo: linee pulite, decisioni chiare e una grande presenza davanti al boss. Quando il raid ha bisogno di stabilita vera, questo profilo si sente subito.",
+        ],
+    },
+}
+
 
 def clean_text(value: str) -> str:
     if not value:
@@ -83,6 +227,15 @@ def clean_text(value: str) -> str:
     return value
 
 
+def sanitize_custom_text(value: str) -> str:
+    text = clean_text(str(value or "")).strip()
+    if not text:
+        return ""
+    if text.lower().startswith(("http://", "https://")):
+        return ""
+    return text
+
+
 def normalize_name(value: str) -> str:
     ascii_value = unicodedata.normalize("NFKD", clean_text(value or "")).encode("ascii", "ignore").decode("ascii").lower()
     return re.sub(r"[^a-z0-9]", "", ascii_value)
@@ -90,6 +243,15 @@ def normalize_name(value: str) -> str:
 
 def slugify(value: str) -> str:
     return normalize_name(value) or "membro"
+
+
+def stable_index(seed: str, length: int) -> int:
+    if length <= 0:
+        return 0
+    total = 0
+    for char in str(seed or ""):
+        total += ord(char)
+    return total % length
 
 
 def raider_io_url(name: str, server: str) -> str:
@@ -163,14 +325,43 @@ def fetch_armory_profile(url: str) -> dict:
 
 
 def generate_bio(member: dict) -> str:
-    key = normalize_name(member["name"])
-    flavor = FLAVOR.get(key, f"{member['name']} porta in raid presenza, ordine e un buon istinto per i momenti che contano.")
+    key = generated_profile_key(member)
+    profile = PROFILE_COPY.get(key)
+    if profile and profile.get("bios"):
+        return profile["bios"][stable_index(member["name"], len(profile["bios"]))]
+
+    name_key = normalize_name(member["name"])
+    flavor = FLAVOR.get(name_key, f"{member['name']} porta in raid presenza, ordine e un buon istinto per i momenti che contano.")
     spec_bits = [member.get("spec"), member.get("class")]
     spec_label = " ".join(bit for bit in spec_bits if bit).strip()
     role = member["role"]
     role_line = ROLE_COPY.get(role, ROLE_COPY["unknown"])
     closing = CLOSING_COPY.get(role, CLOSING_COPY["unknown"])
     return f"{member['name']} gioca come un {spec_label} che non cerca scena gratuita ma impatto vero. {flavor}{role_line}{closing}"
+
+
+def generate_summary(member: dict) -> str:
+    key = generated_profile_key(member)
+    profile = PROFILE_COPY.get(key)
+    if profile and profile.get("summaries"):
+        return profile["summaries"][stable_index(member["name"], len(profile["summaries"]))]
+
+    role = member.get("role", "unknown")
+    fallback = {
+        "tank": "Tiene il pull ordinato e rende il fight facile da leggere.",
+        "healer": "Tiene il raid stabile e risponde bene ai momenti pesanti.",
+        "dps": "Porta continuita, danno pulito e buon ritmo di fight.",
+        "unknown": "Resta una presenza utile e affidabile nel roster.",
+    }
+    return fallback.get(role, fallback["unknown"])
+
+
+def generated_profile_key(member: dict) -> str:
+    return "|".join([
+        str(member.get("spec", "")).strip().lower(),
+        str(member.get("class", "")).strip().lower(),
+        str(member.get("role", "")).strip().lower(),
+    ])
 
 
 def load_existing_customizations() -> dict[str, dict]:
@@ -181,9 +372,10 @@ def load_existing_customizations() -> dict[str, dict]:
     members = payload.get("members", [])
     return {
         normalize_name(member["name"]): {
-            "customTagline": member.get("customTagline", ""),
-            "customBio": member.get("customBio", ""),
-            "customImage": member.get("customImage", ""),
+            "customTagline": sanitize_custom_text(member.get("customTagline", "")),
+            "customSummary": sanitize_custom_text(member.get("customSummary", "")),
+            "customBio": sanitize_custom_text(member.get("customBio", "")),
+            "customImage": clean_text(member.get("customImage", "")).strip(),
             "active": member.get("active", True),
         }
         for member in members
@@ -198,11 +390,13 @@ def build_member(url: str, customizations: dict[str, dict]) -> dict:
     member.update(
         {
             "tagline": TAGLINES.get(key, "Presenza pulita nel roster"),
+            "summary": generate_summary(member),
             "customTagline": preserved.get("customTagline", ""),
+            "customSummary": preserved.get("customSummary", ""),
             "bio": generate_bio(member),
             "customBio": preserved.get("customBio", ""),
             "customImage": preserved.get("customImage", ""),
-            "profileStatus": "custom" if any(preserved.get(field) for field in ("customTagline", "customBio", "customImage")) else "generated",
+            "profileStatus": "custom" if any(preserved.get(field) for field in ("customTagline", "customSummary", "customBio", "customImage")) else "generated",
             "active": preserved.get("active", True),
         }
     )
