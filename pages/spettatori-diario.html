@@ -91,7 +91,7 @@
         <div class="eyebrow">Articoli</div>
         <h2 class="section-title">Articoli di serata</h2>
         <p class="section-subtitle">
-          Progress, eventi community e serate da tenere in primo piano.
+          Articoli caricati dalla libreria del diario.
         </p>
       </div>
 
@@ -130,7 +130,7 @@ document.querySelectorAll("a").forEach(link => {
 
 <script>
 const DIARY_AUTO_URL = "https://blackjack-community-diary.lucasantoro2905.workers.dev?limit=8";
-const DIARY_MANUAL_URL = "../data/spettatori-diary-manual.json";
+const DIARY_ARTICLES_URL = "../data/spettatori-diary-manual.json";
 
 const achievementTotal = document.getElementById("achievement-total");
 const achievementLatestDate = document.getElementById("achievement-latest-date");
@@ -365,14 +365,14 @@ async function loadAchievementBoard() {
 
 async function loadManualEntries() {
   try {
-    const response = await fetch(DIARY_MANUAL_URL, { cache: "no-store" });
+    const response = await fetch(DIARY_ARTICLES_URL, { cache: "no-store" });
     if (!response.ok) {
-      throw new Error("Articoli manuali non disponibili");
+      throw new Error("Articoli non disponibili");
     }
     const payload = await response.json();
     renderManualArticles(Array.isArray(payload.articles) ? payload.articles : []);
   } catch {
-    manualArticles.innerHTML = `<div class="empty-state">Impossibile leggere gli articoli manuali.</div>`;
+    manualArticles.innerHTML = `<div class="empty-state">Impossibile leggere gli articoli del diario.</div>`;
     updateManualCarouselButtons();
   }
 }
