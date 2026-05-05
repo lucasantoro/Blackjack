@@ -382,8 +382,8 @@
       "customSummary": "",
       "bio": "Il suo Warrior regge bene i momenti pesanti senza sporcare il ritmo: linee pulite, decisioni chiare e una grande presenza davanti al boss. Quando il raid ha bisogno di stabilita vera, questo profilo si sente subito.",
       "customBio": "",
-      "customImage": "",
-      "profileStatus": "generated",
+      "customImage": "..\\..\\members\\img\\gearstrike.png",
+      "profileStatus": "custom",
       "active": true
     }
   ]
