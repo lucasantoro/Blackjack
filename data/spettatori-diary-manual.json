@@ -1,39 +1,30 @@
 {
   "articles": [
     {
-      "id": "serata-mplus-esempio",
-      "date": "2026-04-16",
-      "subtitle": "Mythic+ night | Chiavi e rotazioni",
-      "title": "Una sera di chiavi giocata bene, senza perdere ritmo",
-      "image": "../content/spettatori-diario/articles/2026-04-16-mplus-night/images/cover.svg",
-      "description": "Terzo esempio: una serata dedicata alle chiavi, con gruppi che si sono mossi bene e una rotazione abbastanza fluida da reggere tutta la notte.",
-      "body": [
-        "La serata Mythic+ e partita con gruppi gia abbastanza chiari e questo ha evitato il solito tempo perso tra inviti, cambi improvvisi e chiavi lasciate ferme. Non tutte le run sono state perfette, ma il tono generale e rimasto ordinato e il ritmo non si e mai spezzato davvero.",
-        "Quando una notte di chiavi funziona bene si vede soprattutto nelle pause corte, nelle sostituzioni semplici e nel fatto che il gruppo resta acceso anche dopo le run migliori. E stata una di quelle sere in cui la community ha girato con naturalezza, e per questo valeva la pena fissarla qui."
-      ]
-    },
-    {
-      "id": "serata-community-esempio",
+      "id": "glory-ulduar",
       "date": "2026-04-11",
-      "subtitle": "Community night | Alt run e chiacchiere",
-      "title": "Quando la serata gira bene anche senza inseguire il risultato",
-      "image": "../content/spettatori-diario/articles/2026-04-11-community-night/images/cover.svg",
-      "description": "Secondo esempio: una serata piu leggera, fatta di alt, risate e qualche pull improvvisato, ma abbastanza riuscita da meritare comunque uno spazio nel diario.",
+      "subtitle": "Achievement Run | Ulduar",
+      "title": "Glory of the Ulduar Raider: ordine, caos e una foto perfetta",
+      "image": "../content/spettatori-diario/articles/2026-03-30-ulduar/images/ulduar.png",
+      "description": "Serata dedicata a Ulduar per il meta-achievement Glory of the Ulduar Raider. Tra meccaniche eseguite al limite e il solito caos controllato in voice, la Blackjack porta a casa il risultato con stile. Immancabile la lineup finale sui mount… e il pensiero a Ejlin, che probabilmente lo avrebbe fatto in nude run.",
       "body": [
-        "Questa e stata una di quelle notti in cui il gruppo si e allargato bene, tra alt run, persone entrate e uscite dal Discord e quella confusione sana che fa capire che la gilda e viva anche fuori dal progress vero e proprio.",
-        "La serata non aveva bisogno di numeri speciali per meritare spazio. Ha funzionato per ritmo, presenza e leggerezza, ed e proprio questo il tipo di appuntamento che spesso tiene insieme una community piu di qualsiasi singolo boss."
+        "Serata titanica per la Blackjack con il completamento del **Glory of the Ulduar Raider**. Tra costrutti, guardiani e meccaniche che non perdonano errori, il gruppo ha tirato fuori concentrazione e coordinazione, portando a casa uno degli achievement più iconici del gioco.",
+        "Ogni fight è stata una danza precisa: esecuzioni pulite, qualche tentativo di troppo (come da tradizione 😄) e alla fine la soddisfazione di vedere tutto completato. La foto finale sulle scale è il simbolo perfetto della serata: ordinati, fieri… e insolitamente composti.",
+        "Nota di merito speciale per il morale del raid, mantenuto alto anche grazie ai soliti momenti di caos firmati Blackjack. E ovviamente, immancabile il pensiero al nostro **Ejlin**, che probabilmente avrebbe completato tutto in **nude run** al primo try."
       ]
     },
     {
-      "id": "serata-voidspire-esempio",
-      "date": "2026-03-30",
-      "subtitle": "Progress di gilda | Pinnacolo del Vuoto",
-      "title": "Una serata pulita, senza strappi inutili",
-      "image": "../content/spettatori-diario/articles/2026-03-30-voidspire/images/cover.svg",
-      "description": "Un esempio di articolo manuale: ritmo buono, chiamate ordinate e una serata che ha lasciato la sensazione di aver costruito qualcosa di solido pull dopo pull.",
+      "id": "serata-cataclysm-achievements",
+      "date": "2026-04-11",
+      "subtitle": "Achievement Run | Cataclysm",
+      "title": "Notte Cataclysm: glow, draghi e qualche scelta discutibile",
+      "image": "../content/spettatori-diario/articles/2026-04-11-cataclysm/images/cataclysm.png",
+      "description": "Run dedicata agli achievement di Cataclysm tra fight tecniche, drake spettacolari e momenti di puro Blackjack style. Non sempre pulita, ma decisamente efficace: risultato portato a casa e screenshot obbligatorio. Da qualche parte, Ejlin sta già preparando la prossima nude run.",
       "body": [
-        "La serata al Pinnacolo del Vuoto e partita senza fretta ma con un'idea chiara del ritmo da tenere. I primi boss sono serviti a trovare subito una cadenza stabile, mentre sulle pull piu pesanti il gruppo ha dato l'impressione di sapersi ricompattare velocemente senza perdere lucidita.",
-        "La parte migliore non e stata il singolo numero, ma il modo in cui il raid e rimasto leggibile per tutta la sessione. Poche correzioni urlate, movimenti piu puliti del solito e quella sensazione rara di serata ordinata che ti fa chiudere il log con la voglia di tornare subito dentro."
+        "Notte infuocata (letteralmente) per la Blackjack, impegnata in una run dedicata agli achievement di **Cataclysm**. Tra draghi, fight tecniche e qualche imprevisto, il gruppo ha dimostrato ancora una volta solidità e spirito di squadra.",
+        "La lineup finale dei drake parla da sola: ordine perfetto, mount spettacolari e quel classico tocco estetico che non manca mai quando la gilda decide di fare le cose “per bene”. Una di quelle serate dove tutto gira… o quasi.",
+        "Tra call sbagliate, risate in voice e clutch inaspettati, il risultato è stato portato a casa con stile. E anche qui, impossibile non citare **Ejlin**, che da qualche parte starà già pianificando la prossima run… rigorosamente **senza equip**.",
+        "Blackjack style: achievement presi, dignità persa, divertimento massimo."
       ]
     }
   ]
