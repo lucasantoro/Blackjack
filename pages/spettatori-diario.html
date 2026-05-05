@@ -192,12 +192,6 @@ function formatDate(value, options = {}) {
   });
 }
 
-function excerpt(value) {
-  const text = String(value || "").trim();
-  if (text.length <= 220) return text;
-  return `${text.slice(0, 217).trim()}...`;
-}
-
 function formatPanelPercent(value) {
   const percent = Number(value || 0);
   return `${Math.max(0, Math.min(100, Math.round(percent)))}%`;
