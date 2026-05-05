@@ -2992,6 +2992,18 @@ header nav a.active {
   scroll-snap-align: start;
 }
 
+.editorial-card__button {
+  appearance: none;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  display: grid;
+}
+
 .editorial-card__body {
   display: grid;
   gap: 14px;
@@ -3047,6 +3059,16 @@ header nav a.active {
   line-height: 1.7;
 }
 
+.editorial-card__button:hover .editorial-card__media img,
+.editorial-card__button:focus-visible .editorial-card__media img {
+  transform: scale(1.04);
+}
+
+.editorial-card__button:focus-visible {
+  outline: 2px solid rgba(240, 200, 104, 0.7);
+  outline-offset: -2px;
+}
+
 .editorial-card__text {
   display: grid;
   gap: 12px;
@@ -3084,6 +3106,7 @@ header nav a.active {
 
 .editorial-card__media img {
   object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
 .editorial-card__placeholder {
@@ -3135,6 +3158,26 @@ header nav a.active {
 .editorial-card__text p {
   margin: 0;
   color: var(--text);
+}
+
+.editorial-modal__content {
+  max-width: 1040px;
+}
+
+.editorial-modal__art {
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(18, 31, 40, 0.94), rgba(10, 13, 20, 0.98));
+}
+
+.editorial-modal__art img,
+.editorial-modal__art .editorial-card__placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+.editorial-modal__art img {
+  display: block;
+  object-fit: cover;
 }
 
 /* =========================================================

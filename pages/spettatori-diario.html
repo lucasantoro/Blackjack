@@ -98,13 +98,30 @@
       <div class="media-carousel-wrapper diary-carousel-shell">
         <button class="carousel-nav" id="manual-prev" type="button" aria-label="Articolo precedente">&#10094;</button>
         <div class="media-carousel diary-editorial-carousel" id="manual-articles">
-          <div class="empty-state">Caricamento articoli manuali...</div>
+          <div class="empty-state">Caricamento articoli del diario...</div>
         </div>
         <button class="carousel-nav" id="manual-next" type="button" aria-label="Articolo successivo">&#10095;</button>
       </div>
     </section>
 
   </main>
+</div>
+
+<div class="event-modal diary-article-modal" id="diary-article-modal" aria-hidden="true">
+  <div class="event-modal__overlay" data-close-diary-modal></div>
+  <article class="event-modal__content editorial-modal__content">
+    <button class="event-modal__close" type="button" id="diary-article-close" aria-label="Chiudi articolo">&times;</button>
+    <div class="event-modal__art editorial-modal__art" id="diary-article-art"></div>
+    <div class="event-modal__body">
+      <div class="event-modal__meta">
+        <span id="diary-article-subtitle">Diario di serata</span>
+        <strong id="diary-article-date">-</strong>
+      </div>
+      <h3 id="diary-article-title">Titolo articolo</h3>
+      <p class="event-modal__snippet" id="diary-article-description"></p>
+      <div class="event-modal__text" id="diary-article-body"></div>
+    </div>
+  </article>
 </div>
 
 <footer>
@@ -141,6 +158,15 @@ const manualArticles = document.getElementById("manual-articles");
 const manualPrev = document.getElementById("manual-prev");
 const manualNext = document.getElementById("manual-next");
 const diaryNote = document.getElementById("diary-note");
+const diaryArticleModal = document.getElementById("diary-article-modal");
+const diaryArticleClose = document.getElementById("diary-article-close");
+const diaryArticleArt = document.getElementById("diary-article-art");
+const diaryArticleSubtitle = document.getElementById("diary-article-subtitle");
+const diaryArticleDate = document.getElementById("diary-article-date");
+const diaryArticleTitle = document.getElementById("diary-article-title");
+const diaryArticleDescription = document.getElementById("diary-article-description");
+const diaryArticleBody = document.getElementById("diary-article-body");
+let diaryArticlesState = [];
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -297,17 +323,16 @@ function renderAchievementCategories(payload) {
 function renderManualArticles(items) {
   if (!Array.isArray(items) || !items.length) {
     manualArticles.innerHTML = `<div class="empty-state">Nessun articolo manuale disponibile.</div>`;
+    diaryArticlesState = [];
     updateManualCarouselButtons();
     return;
   }
 
-  manualArticles.innerHTML = items.map(article => {
-    const paragraphs = Array.isArray(article.body)
-      ? article.body
-      : String(article.body || "").split(/\n{2,}/).filter(Boolean);
-
+  diaryArticlesState = items;
+  manualArticles.innerHTML = items.map((article, index) => {
     return `
       <article class="editorial-card editorial-card--carousel">
+        <button class="editorial-card__button" type="button" data-diary-article-index="${index}" aria-label="Apri articolo ${escapeHtml(article.title || "Articolo")}">
         <div class="editorial-card__media">
           ${article.image
             ? `<img src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title || "Articolo")}">`
@@ -319,16 +344,51 @@ function renderManualArticles(items) {
             <strong>${escapeHtml(formatDate(article.date))}</strong>
           </div>
           <h3>${escapeHtml(article.title || "Titolo in arrivo")}</h3>
-          <p class="editorial-card__lead">${escapeHtml(article.description || excerpt(paragraphs[0] || ""))}</p>
-          <div class="editorial-card__text">
-            ${paragraphs.map(paragraph => `<p>${escapeHtml(paragraph)}</p>`).join("")}
-          </div>
         </div>
+        </button>
       </article>
     `;
   }).join("");
 
+  manualArticles.querySelectorAll("[data-diary-article-index]").forEach(button => {
+    button.addEventListener("click", () => openDiaryArticleModal(Number(button.getAttribute("data-diary-article-index"))));
+  });
+
   updateManualCarouselButtons();
+}
+
+function renderDiaryArticleArt(article) {
+  if (!diaryArticleArt) return;
+  diaryArticleArt.innerHTML = article?.image
+    ? `<img src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title || "Articolo")}">`
+    : `<div class="editorial-card__placeholder">${escapeHtml((article?.title || "B").slice(0, 1))}</div>`;
+}
+
+function openDiaryArticleModal(index) {
+  const article = diaryArticlesState[index];
+  if (!article || !diaryArticleModal) return;
+
+  const paragraphs = Array.isArray(article.body)
+    ? article.body
+    : String(article.body || "").split(/\n{2,}/).filter(Boolean);
+
+  renderDiaryArticleArt(article);
+  diaryArticleSubtitle.textContent = article.subtitle || "Diario di serata";
+  diaryArticleDate.textContent = formatDate(article.date);
+  diaryArticleTitle.textContent = article.title || "Titolo in arrivo";
+  diaryArticleDescription.textContent = article.description || excerpt(paragraphs[0] || "");
+  diaryArticleBody.innerHTML = paragraphs.map(paragraph => `<p>${escapeHtml(paragraph)}</p>`).join("");
+
+  diaryArticleModal.classList.add("is-open");
+  diaryArticleModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+}
+
+function closeDiaryArticleModal() {
+  if (!diaryArticleModal) return;
+  diaryArticleModal.classList.remove("is-open");
+  diaryArticleModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
 }
 
 function scrollManualCarousel(direction) {
@@ -385,6 +445,20 @@ if (manualPrev && manualNext) {
 if (manualArticles) {
   manualArticles.addEventListener("scroll", updateManualCarouselButtons, { passive: true });
 }
+
+if (diaryArticleClose) {
+  diaryArticleClose.addEventListener("click", closeDiaryArticleModal);
+}
+
+document.querySelectorAll("[data-close-diary-modal]").forEach(node => {
+  node.addEventListener("click", closeDiaryArticleModal);
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && diaryArticleModal?.classList.contains("is-open")) {
+    closeDiaryArticleModal();
+  }
+});
 
 window.addEventListener("resize", updateManualCarouselButtons);
 
