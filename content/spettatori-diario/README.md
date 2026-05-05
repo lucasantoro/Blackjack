@@ -26,7 +26,6 @@ content/spettatori-diario/articles/
   "date": "2026-04-16",
   "subtitle": "Mythic+ night | Chiavi e rotazioni",
   "title": "Una sera di chiavi giocata bene, senza perdere ritmo",
-  "description": "Testo breve usato nella card del carosello.",
   "image": "cover.svg"
 }
 ```

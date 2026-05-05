@@ -56,8 +56,6 @@ def build_article(article_dir: Path) -> dict:
     title = metadata.get("title", "").strip()
     subtitle = metadata.get("subtitle", "").strip()
     date = metadata.get("date", "").strip()
-    description = metadata.get("description", "").strip() or body[0]
-
     if not title:
         raise ValueError(f"Titolo mancante in {metadata_path}")
     if not subtitle:
@@ -71,7 +69,6 @@ def build_article(article_dir: Path) -> dict:
         "subtitle": subtitle,
         "title": title,
         "image": resolve_image_path(article_dir, metadata),
-        "description": description,
         "body": body,
     }
 

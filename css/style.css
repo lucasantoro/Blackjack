@@ -3020,7 +3020,9 @@ header nav a.active {
 .editorial-card__media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
+  background: linear-gradient(145deg, rgba(18, 31, 40, 0.94), rgba(10, 13, 20, 0.98));
 }
 
 .editorial-card__placeholder {
@@ -3061,7 +3063,7 @@ header nav a.active {
 
 .editorial-card__button:hover .editorial-card__media img,
 .editorial-card__button:focus-visible .editorial-card__media img {
-  transform: scale(1.04);
+  transform: scale(1.02);
 }
 
 .editorial-card__button:focus-visible {
@@ -3144,6 +3146,23 @@ header nav a.active {
   line-height: 1.16;
 }
 
+.editorial-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent-2);
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.editorial-card__cta::after {
+  content: "↗";
+  font-size: 1rem;
+  line-height: 1;
+}
+
 .editorial-card__lead {
   margin: 0;
   color: #e3ece7;
@@ -3177,7 +3196,9 @@ header nav a.active {
 
 .editorial-modal__art img {
   display: block;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
+  background: linear-gradient(145deg, rgba(18, 31, 40, 0.94), rgba(10, 13, 20, 0.98));
 }
 
 /* =========================================================

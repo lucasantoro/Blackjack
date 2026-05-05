@@ -118,7 +118,6 @@
         <strong id="diary-article-date">-</strong>
       </div>
       <h3 id="diary-article-title">Titolo articolo</h3>
-      <p class="event-modal__snippet" id="diary-article-description"></p>
       <div class="event-modal__text" id="diary-article-body"></div>
     </div>
   </article>
@@ -164,7 +163,6 @@ const diaryArticleArt = document.getElementById("diary-article-art");
 const diaryArticleSubtitle = document.getElementById("diary-article-subtitle");
 const diaryArticleDate = document.getElementById("diary-article-date");
 const diaryArticleTitle = document.getElementById("diary-article-title");
-const diaryArticleDescription = document.getElementById("diary-article-description");
 const diaryArticleBody = document.getElementById("diary-article-body");
 let diaryArticlesState = [];
 
@@ -344,6 +342,7 @@ function renderManualArticles(items) {
             <strong>${escapeHtml(formatDate(article.date))}</strong>
           </div>
           <h3>${escapeHtml(article.title || "Titolo in arrivo")}</h3>
+          <span class="editorial-card__cta">Apri articolo</span>
         </div>
         </button>
       </article>
@@ -376,7 +375,6 @@ function openDiaryArticleModal(index) {
   diaryArticleSubtitle.textContent = article.subtitle || "Diario di serata";
   diaryArticleDate.textContent = formatDate(article.date);
   diaryArticleTitle.textContent = article.title || "Titolo in arrivo";
-  diaryArticleDescription.textContent = article.description || excerpt(paragraphs[0] || "");
   diaryArticleBody.innerHTML = paragraphs.map(paragraph => `<p>${escapeHtml(paragraph)}</p>`).join("");
 
   diaryArticleModal.classList.add("is-open");
