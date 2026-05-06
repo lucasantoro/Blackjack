@@ -95,7 +95,7 @@
       <p class="apply-status" id="apply-status" role="status" aria-live="polite"></p>
 
       <div class="apply-actions">
-        <button type="submit" class="apply-button" id="apply-submit">Invia candidatura</button>
+        <button type="submit" class="apply-button" id="apply-submit" disabled aria-disabled="true">Invia candidatura</button>
       </div>
     </form>
 
@@ -149,6 +149,8 @@ const applySubmit = document.getElementById("apply-submit");
 const turnstileNote = document.getElementById("turnstile-note");
 
 let turnstileWidgetId = null;
+let turnstileToken = "";
+let turnstileReady = false;
 
 classSelect.addEventListener("change", () => {
   const selectedClass = classSelect.value;
@@ -173,6 +175,21 @@ function setApplyStatus(message, kind = "") {
   applyStatus.className = kind ? `apply-status is-${kind}` : "apply-status";
 }
 
+function syncSubmitState() {
+  const enabled = turnstileReady && Boolean(turnstileToken);
+  applySubmit.disabled = !enabled;
+  applySubmit.setAttribute("aria-disabled", enabled ? "false" : "true");
+}
+
+function resetTurnstileState(message) {
+  turnstileReady = true;
+  turnstileToken = "";
+  if (message) {
+    turnstileNote.textContent = message;
+  }
+  syncSubmitState();
+}
+
 async function loadTurnstile() {
   try {
     const response = await fetch(`${RECRUITING_WORKER}/config`, { cache: "no-store" });
@@ -190,9 +207,29 @@ async function loadTurnstile() {
       if (!window.turnstile || !container || turnstileWidgetId !== null) return;
       turnstileWidgetId = window.turnstile.render(container, {
         sitekey: payload.siteKey,
-        theme: "dark"
+        theme: "dark",
+        callback(token) {
+          turnstileReady = true;
+          turnstileToken = token || "";
+          turnstileNote.textContent = "Verifica completata. Ora puoi inviare la candidatura.";
+          syncSubmitState();
+        },
+        "expired-callback"() {
+          resetTurnstileState("La verifica anti-bot e scaduta. Completala di nuovo.");
+        },
+        "timeout-callback"() {
+          resetTurnstileState("La verifica anti-bot e scaduta. Completala di nuovo.");
+        },
+        "error-callback"(code) {
+          turnstileReady = false;
+          turnstileToken = "";
+          turnstileNote.textContent = `Errore verifica anti-bot (${code || "sconosciuto"}). Ricarica la pagina oppure riprova tra poco.`;
+          syncSubmitState();
+        }
       });
+      turnstileReady = true;
       turnstileNote.textContent = "Completa la verifica anti-bot prima di inviare la candidatura.";
+      syncSubmitState();
     };
 
     if (window.turnstile) {
@@ -208,11 +245,17 @@ async function loadTurnstile() {
         renderWidget();
       } else if (attempts > 50) {
         clearInterval(timer);
+        turnstileReady = false;
+        turnstileToken = "";
         turnstileNote.textContent = "Impossibile caricare la verifica anti-bot.";
+        syncSubmitState();
       }
     }, 200);
   } catch (error) {
+    turnstileReady = false;
+    turnstileToken = "";
     turnstileNote.textContent = error instanceof Error ? error.message : "Impossibile caricare la verifica anti-bot.";
+    syncSubmitState();
   }
 }
 
@@ -225,7 +268,6 @@ applyForm.addEventListener("submit", async event => {
     return;
   }
 
-  const turnstileToken = window.turnstile.getResponse(turnstileWidgetId);
   if (!turnstileToken) {
     setApplyStatus("Completa la verifica anti-bot prima di inviare la candidatura.", "error");
     return;
@@ -244,6 +286,7 @@ applyForm.addEventListener("submit", async event => {
   };
 
   applySubmit.disabled = true;
+  applySubmit.setAttribute("aria-disabled", "true");
   setApplyStatus("Invio candidatura in corso...", "pending");
 
   try {
@@ -263,17 +306,20 @@ applyForm.addEventListener("submit", async event => {
     applyForm.reset();
     specSelect.innerHTML = `<option value="">Seleziona prima una classe...</option>`;
     window.turnstile.reset(turnstileWidgetId);
+    resetTurnstileState("Completa di nuovo la verifica anti-bot se vuoi inviare un'altra candidatura.");
     setApplyStatus("Candidatura inviata con successo.", "success");
   } catch (error) {
     if (window.turnstile && turnstileWidgetId !== null) {
       window.turnstile.reset(turnstileWidgetId);
     }
+    resetTurnstileState("Completa di nuovo la verifica anti-bot prima di riprovare.");
     setApplyStatus(error instanceof Error ? error.message : "Invio candidatura non riuscito.", "error");
   } finally {
-    applySubmit.disabled = false;
+    syncSubmitState();
   }
 });
 
+syncSubmitState();
 loadTurnstile();
 </script>
 
