@@ -3175,6 +3175,227 @@ header nav a.active {
 }
 
 /* =========================================================
+   GUIDE
+   ========================================================= */
+
+.guide-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+.guide-card {
+  overflow: hidden;
+  display: grid;
+  align-content: start;
+  background: rgba(12, 18, 18, 0.84);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.guide-card--feature {
+  grid-column: span 2;
+}
+
+.guide-card__media {
+  display: block;
+  aspect-ratio: 16 / 8;
+  overflow: hidden;
+  background: rgba(8, 13, 13, 0.92);
+}
+
+.guide-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.guide-card__media:hover img {
+  transform: scale(1.02);
+}
+
+.guide-card__body {
+  display: grid;
+  gap: 14px;
+  padding: 24px;
+}
+
+.guide-card__body h3 {
+  margin: 0;
+  font-size: 1.45rem;
+}
+
+.guide-card__body p {
+  margin: 0;
+}
+
+.guide-card--placeholder {
+  border-style: dashed;
+}
+
+.guide-article {
+  display: grid;
+  gap: 56px;
+}
+
+.guide-article section + section {
+  margin-top: 0;
+}
+
+.guide-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(320px, 1.08fr);
+  gap: 26px;
+  align-items: center;
+}
+
+.guide-feature__copy,
+.guide-feature__media,
+.guide-boss-card,
+.guide-check-grid,
+.guide-gallery {
+  background: rgba(12, 18, 18, 0.82);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.guide-feature__copy {
+  padding: clamp(22px, 3vw, 32px);
+}
+
+.guide-feature__copy p {
+  margin: 14px 0 0;
+}
+
+.guide-feature__media {
+  overflow: hidden;
+  margin: 0;
+}
+
+.guide-feature__media img {
+  width: 100%;
+  display: block;
+}
+
+.guide-feature__media figcaption {
+  padding: 14px 18px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.guide-check-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  padding: 18px;
+}
+
+.guide-check-grid a {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(8, 13, 13, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  font-weight: 800;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.guide-check-grid a:hover,
+.guide-check-grid a:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(126, 255, 168, 0.42);
+  background: rgba(126, 255, 168, 0.14);
+  color: var(--white);
+}
+
+.guide-boss-list {
+  display: grid;
+  gap: 18px;
+}
+
+.guide-boss-card {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  overflow: hidden;
+  scroll-margin-top: 140px;
+}
+
+.guide-boss-card--wide {
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+}
+
+.guide-boss-card__media {
+  min-height: 220px;
+  background: linear-gradient(145deg, rgba(18, 31, 40, 0.94), rgba(10, 13, 20, 0.98));
+}
+
+.guide-boss-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.guide-boss-card__body {
+  display: grid;
+  gap: 12px;
+  align-content: center;
+  padding: 24px;
+}
+
+.guide-boss-card__body h3 {
+  margin: 0;
+  font-size: 1.32rem;
+}
+
+.guide-boss-card__body p {
+  margin: 0;
+}
+
+.guide-waypoints {
+  display: grid;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.guide-waypoints code,
+.guide-boss-card code {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(4, 8, 8, 0.88);
+  color: var(--accent-2);
+  padding: 4px 8px;
+}
+
+.guide-waypoints code {
+  display: block;
+  width: 100%;
+}
+
+.guide-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  padding: 14px;
+}
+
+.guide-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 13, 13, 0.92);
+}
+
+/* =========================================================
    TRANSIZIONE PAGINA
    ========================================================= */
 
@@ -3241,6 +3462,7 @@ footer {
   }
 
   .split-layout,
+  .guide-feature,
   .statute-toolbar,
   .achievement-summary-grid,
   .achievement-overview-grid,
@@ -3248,6 +3470,15 @@ footer {
   .diary-editorial-grid,
   .event-modal__content,
   .event-card {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-card--feature {
+    grid-column: span 1;
+  }
+
+  .guide-boss-card,
+  .guide-boss-card--wide {
     grid-template-columns: 1fr;
   }
 

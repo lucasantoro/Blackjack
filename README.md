@@ -1,5 +1,25 @@
 # Blackjack
 
+## Guide Glory of the Raider
+
+La sezione guide parte da:
+
+`pages/guide.html`
+
+La prima guida completa e:
+
+`pages/guide/firelands.html`
+
+Le immagini della guida Firelands sono in:
+
+`img/guides/firelands/`
+
+Il formato pensato per ogni guida e:
+
+- hub generale con card per espansione/raid
+- pagina dettaglio con introduzione, checklist, boss per boss e immagini
+- contenuto riscritto in italiano partendo dalle guide Drive della gilda
+
 ## Diario degli Spettatori
 
 Gli articoli del diario stanno in:

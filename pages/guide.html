@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blackjack - Guide Glory of the Raider</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+
+<body class="page-transition blackjack-bg blackjack-bg--raid">
+
+<header>
+  <nav class="mainnav">
+    <a href="../index.html" class="nav-brand" aria-label="Blackjack Home">
+      <img src="../img/blackjack_logo.png" alt="Blackjack">
+      <span>Blackjack</span>
+    </a>
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="raider.html">Raider</a></li>
+      <li><a href="spettatori.html">Spettatori</a></li>
+      <li><a href="guide.html" class="active">Guide</a></li>
+      <li><a href="recruiting.html">Reclutamento</a></li>
+      <li><a href="statuto.html">Statuto</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-content hero-content--wide">
+    <div class="hero-tagline">Hub di gilda</div>
+    <h2>Guide Glory of the Raider</h2>
+    <p>
+      Una raccolta ordinata delle nostre guide achievement: boss, criteri,
+      note pratiche e immagini utili per organizzare run pulite.
+    </p>
+  </div>
+</section>
+
+<div class="bg-container bg-main-logo">
+  <main class="panel">
+
+    <section class="split-layout">
+      <div class="section-shell">
+        <div class="section-head">
+          <div class="eyebrow">Obiettivo</div>
+          <h2 class="section-title">Un archivio consultabile prima della run</h2>
+          <p class="section-subtitle">
+            Ogni guida raccoglie achievement richiesti, percorso consigliato,
+            accorgimenti da raid leader e passaggi da non sbagliare.
+          </p>
+        </div>
+        <p class="description-long">
+          L'idea e trasformare i documenti Drive in pagine pubblicabili sul sito,
+          mantenendo il taglio pratico delle note di gilda ma con una struttura piu leggibile.
+        </p>
+      </div>
+
+      <aside class="panel-callout">
+        <div class="eyebrow">Formato</div>
+        <h3>Cosa trovi in ogni guida</h3>
+        <ul class="check-list">
+          <li><strong>Checklist rapida</strong> per capire cosa serve prima di partire.</li>
+          <li><strong>Boss per boss</strong> con achievement e istruzioni operative.</li>
+          <li><strong>Mappe e immagini</strong> recuperate dalle guide originali.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section>
+      <div class="section-head section-head--center">
+        <div class="eyebrow">Cataclysm</div>
+        <h2 class="section-title">Guide disponibili</h2>
+        <p class="section-subtitle">
+          Firelands e il primo modello completo della sezione. Le altre guide possono seguire la stessa struttura.
+        </p>
+      </div>
+
+      <div class="guide-card-grid">
+        <article class="guide-card guide-card--feature">
+          <a href="guide/firelands.html" class="guide-card__media" aria-label="Apri la guida Glory of the Firelands Raider">
+            <img src="../img/guides/firelands/firelands-09.jpg" alt="Mappa Firelands con aree Bucket List">
+          </a>
+          <div class="guide-card__body">
+            <div class="editorial-card__meta">
+              <span>Cataclysm</span>
+              <strong>Firelands</strong>
+            </div>
+            <h3>Glory of the Firelands Raider</h3>
+            <p>
+              Guida per completare i 12 criteri del meta achievement e ottenere il
+              Corrupted Egg of Millagazor.
+            </p>
+            <a href="guide/firelands.html" class="team-btn">Apri guida</a>
+          </div>
+        </article>
+
+        <article class="guide-card guide-card--placeholder">
+          <div class="guide-card__body">
+            <div class="editorial-card__meta">
+              <span>Cataclysm</span>
+              <strong>In arrivo</strong>
+            </div>
+            <h3>Glory of the Cataclysm Raider</h3>
+            <p>Documento Drive rilevato. Da riscrivere e impaginare con lo stesso formato.</p>
+          </div>
+        </article>
+
+        <article class="guide-card guide-card--placeholder">
+          <div class="guide-card__body">
+            <div class="editorial-card__meta">
+              <span>Wrath</span>
+              <strong>In arrivo</strong>
+            </div>
+            <h3>Ulduar e Icecrown</h3>
+            <p>Guide presenti nel Drive e pronte per essere trasformate nelle prossime pagine.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <p>&copy; 2026 Blackjack | Guide</p>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.body.classList.add("page-loaded");
+});
+
+document.querySelectorAll("a").forEach(link => {
+  if (link.hostname === window.location.hostname) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      const href = this.getAttribute("href");
+      document.body.classList.remove("page-loaded");
+      setTimeout(() => { window.location.href = href; }, 300);
+    });
+  }
+});
+</script>
+
+</body>
+</html>
