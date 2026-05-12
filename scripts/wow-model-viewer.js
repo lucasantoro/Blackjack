@@ -3,7 +3,8 @@
 // The viewer depends on Wowhead/Zam model assets and falls back to static images when unavailable.
 (function () {
   const CONTENT_PATH = window.BLACKJACK_MODEL_CONTENT_PATH || "https://blackjack-wow-model-assets.lucasantoro2905.workers.dev/modelviewer/live/";
-  const VIEWER_SCRIPT = `${CONTENT_PATH}viewer/viewer.min.js`;
+  const VIEWER_VERSION = window.BLACKJACK_MODEL_VIEWER_VERSION || "f634d65";
+  const VIEWER_SCRIPT = new URL(`deployment/viewer/${VIEWER_VERSION}/viewer.min.js`, CONTENT_PATH).toString();
   const JQUERY_SCRIPT = "https://code.jquery.com/jquery-3.7.1.min.js";
   const MODEL_TYPES = {
     item: 1,
@@ -107,7 +108,7 @@
   }
 
   async function hasModelGeometry(modelId) {
-    const response = await fetch(buildContentUrl(`_exists/mo3/${modelId}.mo3`), {
+    const response = await fetch(buildContentUrl(`_exists/m2/${modelId}.m2`), {
       cache: "force-cache"
     });
 
