@@ -18,6 +18,15 @@
     itemvisual: 512,
     collection: 1024
   };
+  const MODEL_META_PATHS = {
+    [MODEL_TYPES.item]: "item",
+    [MODEL_TYPES.helm]: "item",
+    [MODEL_TYPES.shoulder]: "item",
+    [MODEL_TYPES.npc]: "npc",
+    [MODEL_TYPES.humanoidnpc]: "npc",
+    [MODEL_TYPES.object]: "object",
+    [MODEL_TYPES.collection]: "collection"
+  };
   const loadedModels = new WeakSet();
   let dependencyPromise = null;
 
@@ -80,6 +89,49 @@
     container.parentElement?.querySelector("[data-model-fallback]")?.classList.remove("is-hidden");
   }
 
+  function buildContentUrl(path) {
+    return new URL(path, CONTENT_PATH).toString();
+  }
+
+  async function fetchModelMeta(displayId, modelType) {
+    const metaPath = MODEL_META_PATHS[modelType] || "npc";
+    const response = await fetch(buildContentUrl(`meta/${metaPath}/${displayId}.json`), {
+      cache: "force-cache"
+    });
+
+    if (!response.ok) {
+      throw new Error(`Model metadata unavailable: ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  async function hasModelGeometry(modelId) {
+    const response = await fetch(buildContentUrl(`_exists/mo3/${modelId}.mo3`), {
+      cache: "force-cache"
+    });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    const payload = await response.json();
+    return Boolean(payload.ok);
+  }
+
+  async function verifyModelAssets(displayId, modelType) {
+    const meta = await fetchModelMeta(displayId, modelType);
+    const modelId = Number(meta?.Model || 0);
+    if (!modelId) {
+      throw new Error("Model metadata did not include a geometry id");
+    }
+
+    const geometryAvailable = await hasModelGeometry(modelId);
+    if (!geometryAvailable) {
+      throw new Error(`Model geometry unavailable: ${modelId}`);
+    }
+  }
+
   async function createModel(container) {
     if (loadedModels.has(container)) return;
 
@@ -94,6 +146,7 @@
     setStatus(container, "Caricamento modello 3D...");
 
     try {
+      await verifyModelAssets(displayId, modelType);
       await loadDependencies();
       if (!window.ZamModelViewer || !window.jQuery) {
         throw new Error("Wowhead model viewer unavailable");
@@ -117,7 +170,9 @@
       container.parentElement?.querySelector("[data-model-fallback]")?.classList.add("is-hidden");
       setStatus(container, "Modello 3D");
     } catch (error) {
-      console.warn("Model viewer fallback:", error);
+      if (window.BLACKJACK_MODEL_DEBUG) {
+        console.warn("Model viewer fallback:", error);
+      }
       showFallback(container);
       setStatus(container, "Immagine statica");
     }

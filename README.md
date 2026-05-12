@@ -28,6 +28,8 @@ Nome Worker suggerito:
 
 Il proxy evita i blocchi CORS sugli asset `https://wow.zamimg.com/modelviewer/live/`. Se il viewer o il proxy
 non sono disponibili, la guida resta leggibile tramite immagine statica di fallback.
+Il loader controlla anche la presenza della geometria `.mo3` prima di inizializzare il canvas 3D: alcuni display ID
+hanno metadati pubblici ma non espongono il modello 3D completo, quindi in quel caso il sito usa direttamente il fallback.
 
 Il formato pensato per ogni guida e:
 
