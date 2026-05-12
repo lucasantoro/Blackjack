@@ -3208,9 +3208,12 @@ header nav a.active {
 .guide-card__media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   transition: transform 0.3s ease;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(240, 200, 104, 0.14), transparent 42%),
+    linear-gradient(145deg, rgba(18, 31, 40, 0.94), rgba(10, 13, 20, 0.98));
 }
 
 .guide-card__media:hover img {
@@ -3345,7 +3348,7 @@ header nav a.active {
 
 .guide-boss-card {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-columns: 260px minmax(0, 1fr);
   overflow: hidden;
   scroll-margin-top: 140px;
 }
@@ -3359,15 +3362,63 @@ header nav a.active {
 }
 
 .guide-boss-card__media {
-  min-height: 220px;
+  min-height: 100%;
   background: linear-gradient(145deg, rgba(18, 31, 40, 0.94), rgba(10, 13, 20, 0.98));
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
 }
 
-.guide-boss-card__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.guide-model-viewer {
+  width: min(100%, 220px);
+  height: 220px;
+}
+
+.guide-model-viewer canvas {
+  width: 100% !important;
+  height: 100% !important;
   display: block;
+}
+
+.guide-model-fallback {
+  width: min(100%, 220px);
+  height: 220px;
+  object-fit: contain;
+  display: block;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(4, 8, 8, 0.72);
+  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.28);
+}
+
+.guide-model-viewer.is-loaded + .guide-model-fallback,
+.guide-model-fallback.is-hidden {
+  display: none;
+}
+
+.guide-model-viewer.is-failed {
+  display: none;
+}
+
+.guide-model-status {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(4, 8, 8, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--accent-2);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .guide-boss-card__body {
@@ -3555,6 +3606,17 @@ footer {
   .guide-boss-card,
   .guide-boss-card--wide {
     grid-template-columns: 1fr;
+  }
+
+  .guide-boss-card__media {
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .guide-model-viewer,
+  .guide-model-fallback {
+    width: min(100%, 220px);
+    height: 220px;
   }
 
   .progress-toolbar {

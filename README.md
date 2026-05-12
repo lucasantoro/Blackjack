@@ -14,6 +14,13 @@ Le immagini della guida Firelands sono in:
 
 `img/guides/firelands/`
 
+Il loader 3D opzionale per i boss e:
+
+`scripts/wow-model-viewer.js`
+
+Usa i metodi di `Miorey/wow-model-viewer` e il viewer Wowhead/Zam. Se gli asset esterni non sono disponibili,
+la guida resta leggibile tramite immagine statica di fallback.
+
 Il formato pensato per ogni guida e:
 
 - hub generale con card per espansione/raid

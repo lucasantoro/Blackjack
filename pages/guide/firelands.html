@@ -105,7 +105,9 @@
       <div class="guide-boss-panels">
       <article class="guide-boss-card is-active" id="panel-rhyolith" role="tabpanel" data-guide-panel="rhyolith">
         <div class="guide-boss-card__media">
-          <img src="../../img/guides/firelands/firelands-03.jpg" alt="Lord Rhyolith">
+          <div class="guide-model-viewer" data-wow-model data-display-id="38414" data-aspect="1" aria-label="Modello 3D Lord Rhyolith"></div>
+          <img class="guide-model-fallback" data-model-fallback src="../../img/guides/firelands/firelands-03.jpg" alt="Lord Rhyolith">
+          <span class="guide-model-status" data-model-status>Modello 3D</span>
         </div>
         <div class="guide-boss-card__body">
           <div class="eyebrow">Lord Rhyolith</div>
@@ -128,7 +130,9 @@
 
       <article class="guide-boss-card" id="panel-shannox" role="tabpanel" data-guide-panel="shannox" hidden>
         <div class="guide-boss-card__media">
-          <img src="../../img/guides/firelands/firelands-08.jpg" alt="Shannox">
+          <div class="guide-model-viewer" data-wow-model data-display-id="38448" data-aspect="1" aria-label="Modello 3D Shannox"></div>
+          <img class="guide-model-fallback" data-model-fallback src="../../img/guides/firelands/firelands-08.jpg" alt="Shannox">
+          <span class="guide-model-status" data-model-status>Modello 3D</span>
         </div>
         <div class="guide-boss-card__body">
           <div class="eyebrow">Shannox</div>
@@ -165,7 +169,9 @@
 
       <article class="guide-boss-card" id="panel-beth-tilac" role="tabpanel" data-guide-panel="beth-tilac" hidden>
         <div class="guide-boss-card__media">
-          <img src="../../img/guides/firelands/firelands-07.jpg" alt="Beth'tilac">
+          <div class="guide-model-viewer" data-wow-model data-display-id="38227" data-aspect="1" aria-label="Modello 3D Beth'tilac"></div>
+          <img class="guide-model-fallback" data-model-fallback src="../../img/guides/firelands/firelands-07.jpg" alt="Beth'tilac">
+          <span class="guide-model-status" data-model-status>Modello 3D</span>
         </div>
         <div class="guide-boss-card__body">
           <div class="eyebrow">Beth'tilac</div>
@@ -188,7 +194,9 @@
 
       <article class="guide-boss-card" id="panel-alysrazor" role="tabpanel" data-guide-panel="alysrazor" hidden>
         <div class="guide-boss-card__media">
-          <img src="../../img/guides/firelands/firelands-05.jpg" alt="Alysrazor">
+          <div class="guide-model-viewer" data-wow-model data-display-id="38446" data-aspect="1" aria-label="Modello 3D Alysrazor"></div>
+          <img class="guide-model-fallback" data-model-fallback src="../../img/guides/firelands/firelands-05.jpg" alt="Alysrazor">
+          <span class="guide-model-status" data-model-status>Modello 3D</span>
         </div>
         <div class="guide-boss-card__body">
           <div class="eyebrow">Alysrazor</div>
@@ -211,7 +219,9 @@
 
       <article class="guide-boss-card" id="panel-baleroc" role="tabpanel" data-guide-panel="baleroc" hidden>
         <div class="guide-boss-card__media">
-          <img src="../../img/guides/firelands/firelands-06.jpg" alt="Baleroc">
+          <div class="guide-model-viewer" data-wow-model data-display-id="38621" data-aspect="1" aria-label="Modello 3D Baleroc"></div>
+          <img class="guide-model-fallback" data-model-fallback src="../../img/guides/firelands/firelands-06.jpg" alt="Baleroc">
+          <span class="guide-model-status" data-model-status>Modello 3D</span>
         </div>
         <div class="guide-boss-card__body">
           <div class="eyebrow">Baleroc</div>
@@ -234,7 +244,9 @@
 
       <article class="guide-boss-card" id="panel-majordomo" role="tabpanel" data-guide-panel="majordomo" hidden>
         <div class="guide-boss-card__media">
-          <img src="../../img/guides/firelands/firelands-01.jpg" alt="Majordomo Fandral Staghelm">
+          <div class="guide-model-viewer" data-wow-model data-display-id="37953" data-aspect="1" aria-label="Modello 3D Majordomo Fandral Staghelm"></div>
+          <img class="guide-model-fallback" data-model-fallback src="../../img/guides/firelands/firelands-01.jpg" alt="Majordomo Fandral Staghelm">
+          <span class="guide-model-status" data-model-status>Modello 3D</span>
         </div>
         <div class="guide-boss-card__body">
           <div class="eyebrow">Majordomo Fandral Staghelm</div>
@@ -303,6 +315,7 @@ function initGuideBossTabs() {
       panel.classList.toggle("is-active", isActive);
       panel.hidden = !isActive;
     });
+    window.BlackjackWowModels?.loadActiveGuideModel();
     if (updateHash) {
       history.replaceState(null, "", `#${selectedKey}`);
     }
@@ -327,6 +340,7 @@ document.querySelectorAll("a").forEach(link => {
   }
 });
 </script>
+<script src="../../scripts/wow-model-viewer.js"></script>
 
 </body>
 </html>
