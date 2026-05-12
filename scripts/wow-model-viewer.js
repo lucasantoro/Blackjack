@@ -3,7 +3,7 @@
 // The viewer depends on Wowhead/Zam model assets and falls back to static images when unavailable.
 (function () {
   const CONTENT_PATH = window.BLACKJACK_MODEL_CONTENT_PATH || "https://blackjack-wow-model-assets.lucasantoro2905.workers.dev/modelviewer/live/";
-  const VIEWER_SCRIPT = "https://wow.zamimg.com/modelviewer/live/viewer/viewer.min.js";
+  const VIEWER_SCRIPT = `${CONTENT_PATH}viewer/viewer.min.js`;
   const JQUERY_SCRIPT = "https://code.jquery.com/jquery-3.7.1.min.js";
   const MODEL_TYPES = {
     item: 1,
