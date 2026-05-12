@@ -3271,6 +3271,14 @@ header nav a.active {
   margin: 14px 0 0;
 }
 
+.guide-feature__copy code {
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(4, 8, 8, 0.88);
+  color: var(--accent-2);
+  padding: 2px 7px;
+}
+
 .guide-feature__media {
   overflow: hidden;
   margin: 0;
@@ -3287,32 +3295,47 @@ header nav a.active {
   font-size: 0.92rem;
 }
 
-.guide-check-grid {
+.guide-boss-tabs {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 10px;
-  padding: 18px;
+  margin-bottom: 20px;
 }
 
-.guide-check-grid a {
+.guide-boss-tab {
+  appearance: none;
   min-height: 46px;
   display: inline-flex;
+  justify-content: center;
   align-items: center;
   padding: 10px 14px;
   border-radius: 14px;
   background: rgba(8, 13, 13, 0.86);
   border: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--white);
+  font: inherit;
   font-weight: 800;
+  cursor: pointer;
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
 
-.guide-check-grid a:hover,
-.guide-check-grid a:focus-visible {
+.guide-boss-tab:hover,
+.guide-boss-tab:focus-visible,
+.guide-boss-tab.is-active {
   transform: translateY(-1px);
   border-color: rgba(126, 255, 168, 0.42);
   background: rgba(126, 255, 168, 0.14);
   color: var(--white);
+}
+
+.guide-boss-tab.is-active {
+  color: #08100d;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 12px 24px rgba(126, 255, 168, 0.2);
+}
+
+.guide-boss-panels {
+  display: grid;
 }
 
 .guide-boss-list {
@@ -3325,6 +3348,10 @@ header nav a.active {
   grid-template-columns: 220px minmax(0, 1fr);
   overflow: hidden;
   scroll-margin-top: 140px;
+}
+
+.guide-boss-card[hidden] {
+  display: none;
 }
 
 .guide-boss-card--wide {
@@ -3355,8 +3382,26 @@ header nav a.active {
   font-size: 1.32rem;
 }
 
-.guide-boss-card__body p {
+.guide-boss-card__body p,
+.guide-achievement p,
+.guide-visual-reference p {
   margin: 0;
+}
+
+.guide-achievement {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 13, 13, 0.74);
+}
+
+.guide-achievement h4,
+.guide-visual-reference h4 {
+  margin: 0;
+  color: var(--accent-2);
+  font-size: 1rem;
 }
 
 .guide-waypoints {
@@ -3377,6 +3422,36 @@ header nav a.active {
 .guide-waypoints code {
   display: block;
   width: 100%;
+}
+
+.guide-visual-reference {
+  display: grid;
+  gap: 12px;
+  margin-top: 4px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.guide-visual-reference figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 13, 13, 0.84);
+}
+
+.guide-visual-reference img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  display: block;
+  background: rgba(4, 8, 8, 0.88);
+}
+
+.guide-visual-reference figcaption {
+  padding: 12px 14px;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
 .guide-gallery {

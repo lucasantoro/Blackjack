@@ -1,6 +1,6 @@
 # Blackjack
 
-## Guide Glory of the Raider
+## Guide Achievement e Collezioni
 
 La sezione guide parte da:
 

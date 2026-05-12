@@ -68,178 +68,204 @@
         <div class="eyebrow">Preparazione</div>
         <h2 class="section-title">Prima di entrare</h2>
         <p>
-          Il meta achievement e composto da 12 obiettivi. Sei si ottengono uccidendo i boss in Heroic,
-          mentre gli altri richiedono attenzione a meccaniche specifiche o a un ordine preciso.
+          Glory of the Firelands Raider e il meta achievement di Firelands legato alla ricompensa
+          <strong>Corrupted Egg of Millagazor</strong>. La run attraversa i sei boss principali del raid:
+          per ognuno c'e almeno un criterio Heroic e, in alcuni casi, una condizione aggiuntiva da rispettare.
         </p>
         <p>
-          A livello alto la difficolta non e il danno subito: il rischio principale e uccidere il boss
-          troppo velocemente o ignorare una condizione dell'achievement.
+          Porta una macro <code>/kneel</code> per Majordomo, un addon coordinate come TomTom per
+          Bucket List e riduci il danno AoE quando serve controllare il boss invece di eliminarlo subito.
         </p>
       </div>
 
       <figure class="guide-feature__media">
-        <img src="../../img/guides/firelands/firelands-09.jpg" alt="Mappa Firelands con percorso per Bucket List">
-        <figcaption>Mappa utile per Bucket List: porta Shannox in tutte le aree prima della kill.</figcaption>
+        <img src="../../img/guides/firelands/firelands-04.jpg" alt="Corrupted Fire Hawk, ricompensa Firelands">
+        <figcaption>Ricompensa: Corrupted Egg of Millagazor.</figcaption>
       </figure>
     </section>
 
     <section>
       <div class="section-head section-head--center">
-        <div class="eyebrow">Checklist</div>
-        <h2 class="section-title">Criteri del meta achievement</h2>
+        <div class="eyebrow">Boss</div>
+        <h2 class="section-title">Seleziona il boss</h2>
         <p class="section-subtitle">
-          Completa questi achievement per chiudere Glory of the Firelands Raider.
+          Ogni bottone apre la card con gli achievement collegati a quel boss.
         </p>
       </div>
 
-      <div class="guide-check-grid">
-        <a href="#beth-tilac">Heroic: Beth'tilac</a>
-        <a href="#shannox">Heroic: Shannox</a>
-        <a href="#baleroc">Heroic: Baleroc</a>
-        <a href="#lord-rhyolith">Heroic: Lord Rhyolith</a>
-        <a href="#alysrazor">Heroic: Alysrazor</a>
-        <a href="#majordomo">Heroic: Majordomo Fandral Staghelm</a>
-        <a href="#beth-tilac">Death from Above</a>
-        <a href="#alysrazor">Do a Barrel Roll!</a>
-        <a href="#baleroc">Share the Pain</a>
-        <a href="#lord-rhyolith">Not an Ambi-Turner</a>
-        <a href="#shannox">Bucket List</a>
-        <a href="#majordomo">Only the Penitent...</a>
+      <div class="guide-boss-tabs" role="tablist" aria-label="Boss Firelands">
+        <button class="guide-boss-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="panel-rhyolith" data-guide-boss="rhyolith">Lord Rhyolith</button>
+        <button class="guide-boss-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-shannox" data-guide-boss="shannox">Shannox</button>
+        <button class="guide-boss-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-beth-tilac" data-guide-boss="beth-tilac">Beth'tilac</button>
+        <button class="guide-boss-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-alysrazor" data-guide-boss="alysrazor">Alysrazor</button>
+        <button class="guide-boss-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-baleroc" data-guide-boss="baleroc">Baleroc</button>
+        <button class="guide-boss-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-majordomo" data-guide-boss="majordomo">Majordomo</button>
       </div>
-    </section>
 
-    <section class="guide-boss-list">
-      <article class="guide-boss-card" id="lord-rhyolith">
+      <div class="guide-boss-panels">
+      <article class="guide-boss-card is-active" id="panel-rhyolith" role="tabpanel" data-guide-panel="rhyolith">
         <div class="guide-boss-card__media">
           <img src="../../img/guides/firelands/firelands-03.jpg" alt="Lord Rhyolith">
         </div>
         <div class="guide-boss-card__body">
           <div class="eyebrow">Lord Rhyolith</div>
-          <h3>Heroic: Lord Rhyolith + Not an Ambi-Turner</h3>
-          <p>
-            Per l'achievement Heroic basta uccidere il boss in modalita Heroic.
-            Per <strong>Not an Ambi-Turner</strong>, colpisci solo la gamba destra con attacchi single target.
-          </p>
-          <p>
-            Evita danno AoE e burst incontrollato: se il boss muore subito senza rispettare la condizione,
-            l'achievement puo non essere assegnato.
-          </p>
-        </div>
-      </article>
-
-      <article class="guide-boss-card" id="shannox">
-        <div class="guide-boss-card__media">
-          <img src="../../img/guides/firelands/firelands-09.jpg" alt="Aree Firelands per Bucket List">
-        </div>
-        <div class="guide-boss-card__body">
-          <div class="eyebrow">Shannox</div>
-          <h3>Heroic: Shannox + Bucket List</h3>
-          <p>
-            Uccidi Shannox in Heroic per il criterio base. Per <strong>Bucket List</strong>,
-            tienilo in vita e portalo in tutte le aree richieste prima della kill.
-          </p>
-          <div class="guide-waypoints">
-            <code>/way 32.67 76.93 Flamebreach</code>
-            <code>/way 29.94 42.03 Beth'tilac's Lair</code>
-            <code>/way 35.04 36.82 Path of Corruption</code>
-            <code>/way 64.39 52.62 Shatterstone</code>
-            <code>/way 64.37 56.62 The Ridge of Ancient Flame</code>
+          <h3>Achievement del boss</h3>
+          <div class="guide-achievement">
+            <h4>Heroic: Lord Rhyolith</h4>
+            <p>
+              Uccidi Lord Rhyolith in modalita Heroic.
+            </p>
+          </div>
+          <div class="guide-achievement">
+            <h4>Not an Ambi-Turner</h4>
+            <p>
+              Colpisci solo la gamba destra con attacchi single target. Evita danno AoE e burst incontrollato:
+              se il boss muore subito senza rispettare la condizione, l'achievement puo non essere assegnato.
+            </p>
           </div>
         </div>
       </article>
 
-      <article class="guide-boss-card" id="beth-tilac">
+      <article class="guide-boss-card" id="panel-shannox" role="tabpanel" data-guide-panel="shannox" hidden>
         <div class="guide-boss-card__media">
-          <img src="../../img/guides/firelands/firelands-04.jpg" alt="Beth'tilac">
+          <img src="../../img/guides/firelands/firelands-08.jpg" alt="Shannox">
         </div>
         <div class="guide-boss-card__body">
-          <div class="eyebrow">Beth'tilac</div>
-          <h3>Heroic: Beth'tilac + Death from Above</h3>
-          <p>
-            L'achievement Heroic si ottiene con la kill in Heroic. Per <strong>Death from Above</strong>,
-            la guida originale consiglia di ingaggiare il boss e lasciar partire la fase superiore prima di chiudere.
-          </p>
-          <p>
-            Non forzare una kill istantanea appena entri: dai tempo all'incontro di attivare la meccanica necessaria.
-          </p>
+          <div class="eyebrow">Shannox</div>
+          <h3>Achievement del boss</h3>
+          <div class="guide-achievement">
+            <h4>Heroic: Shannox</h4>
+            <p>
+              Uccidi Shannox in modalita Heroic.
+            </p>
+          </div>
+          <div class="guide-achievement">
+            <h4>Bucket List</h4>
+            <p>
+              Tieni Shannox in vita, tauntalo e portalo in tutte le aree richieste del raid prima della kill.
+              Quando tutte le zone sono state visitate, puoi chiudere il combattimento.
+            </p>
+            <div class="guide-waypoints">
+              <code>/way 32.67 76.93 Flamebreach</code>
+              <code>/way 29.94 42.03 Beth'tilac's Lair</code>
+              <code>/way 35.04 36.82 Path of Corruption</code>
+              <code>/way 64.39 52.62 Shatterstone</code>
+              <code>/way 64.37 56.62 The Ridge of Ancient Flame</code>
+            </div>
+          </div>
+          <div class="guide-visual-reference">
+            <h4>Riferimenti visivi</h4>
+            <figure>
+              <img src="../../img/guides/firelands/firelands-09.jpg" alt="Mappa Firelands con aree Bucket List">
+              <figcaption>Mappa delle aree richieste per Bucket List.</figcaption>
+            </figure>
+          </div>
         </div>
       </article>
 
-      <article class="guide-boss-card" id="alysrazor">
+      <article class="guide-boss-card" id="panel-beth-tilac" role="tabpanel" data-guide-panel="beth-tilac" hidden>
+        <div class="guide-boss-card__media">
+          <img src="../../img/guides/firelands/firelands-07.jpg" alt="Beth'tilac">
+        </div>
+        <div class="guide-boss-card__body">
+          <div class="eyebrow">Beth'tilac</div>
+          <h3>Achievement del boss</h3>
+          <div class="guide-achievement">
+            <h4>Heroic: Beth'tilac</h4>
+            <p>
+              Uccidi Beth'tilac in modalita Heroic.
+            </p>
+          </div>
+          <div class="guide-achievement">
+            <h4>Death from Above</h4>
+            <p>
+              Ingaggia il boss e lascia partire la fase superiore prima di chiudere il combattimento.
+              Non forzare una kill istantanea appena entri: dai tempo all'incontro di attivare la meccanica necessaria.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <article class="guide-boss-card" id="panel-alysrazor" role="tabpanel" data-guide-panel="alysrazor" hidden>
         <div class="guide-boss-card__media">
           <img src="../../img/guides/firelands/firelands-05.jpg" alt="Alysrazor">
         </div>
         <div class="guide-boss-card__body">
           <div class="eyebrow">Alysrazor</div>
-          <h3>Heroic: Alysrazor + Do a Barrel Roll!</h3>
-          <p>
-            Completa l'incontro in Heroic. Nel documento di gilda questo criterio viene trattato come ottenibile
-            con la normale kill Heroic al livello attuale.
-          </p>
-          <p>
-            Se stai guidando una run con personaggi molto forti, controlla sempre che l'achievement venga assegnato
-            prima di uscire dall'istanza.
-          </p>
+          <h3>Achievement del boss</h3>
+          <div class="guide-achievement">
+            <h4>Heroic: Alysrazor</h4>
+            <p>
+              Uccidi Alysrazor in modalita Heroic.
+            </p>
+          </div>
+          <div class="guide-achievement">
+            <h4>Do a Barrel Roll!</h4>
+            <p>
+              Nel documento di gilda questo criterio viene trattato come ottenibile con la normale kill Heroic
+              al livello attuale. Controlla comunque che l'achievement venga assegnato prima di uscire dall'istanza.
+            </p>
+          </div>
         </div>
       </article>
 
-      <article class="guide-boss-card" id="baleroc">
+      <article class="guide-boss-card" id="panel-baleroc" role="tabpanel" data-guide-panel="baleroc" hidden>
         <div class="guide-boss-card__media">
           <img src="../../img/guides/firelands/firelands-06.jpg" alt="Baleroc">
         </div>
         <div class="guide-boss-card__body">
           <div class="eyebrow">Baleroc</div>
-          <h3>Heroic: Baleroc + Share the Pain</h3>
-          <p>
-            Uccidi Baleroc in Heroic. Anche <strong>Share the Pain</strong>, nella guida originale,
-            viene indicato come completabile con la kill Heroic al livello attuale.
-          </p>
-          <p>
-            Regola pratica: evita di allungare inutilmente il combattimento e chiudi appena il pull e stabile.
-          </p>
+          <h3>Achievement del boss</h3>
+          <div class="guide-achievement">
+            <h4>Heroic: Baleroc</h4>
+            <p>
+              Uccidi Baleroc in modalita Heroic.
+            </p>
+          </div>
+          <div class="guide-achievement">
+            <h4>Share the Pain</h4>
+            <p>
+              Nel documento di gilda questo criterio viene indicato come completabile con la kill Heroic
+              al livello attuale. Evita di allungare inutilmente il combattimento e chiudi appena il pull e stabile.
+            </p>
+          </div>
         </div>
       </article>
 
-      <article class="guide-boss-card guide-boss-card--wide" id="majordomo">
+      <article class="guide-boss-card" id="panel-majordomo" role="tabpanel" data-guide-panel="majordomo" hidden>
         <div class="guide-boss-card__media">
-          <img src="../../img/guides/firelands/firelands-02.jpg" alt="Sfera di magma per Only the Penitent">
+          <img src="../../img/guides/firelands/firelands-01.jpg" alt="Majordomo Fandral Staghelm">
         </div>
         <div class="guide-boss-card__body">
           <div class="eyebrow">Majordomo Fandral Staghelm</div>
-          <h3>Heroic: Majordomo Fandral Staghelm + Only the Penitent...</h3>
-          <p>
-            Questo e il passaggio piu delicato della run. Devi attivare le due sfere di magma ai lati di Fandral
-            senza farti colpire da <strong>Kneel to the Flame</strong>.
-          </p>
-          <p>
-            Il cast dura 5 secondi e parte in continuazione. Quando Fandral lancia la spell, usa
-            <code>/kneel</code>, muoviti durante la finestra di cast, poi inginocchiati di nuovo al cast successivo.
-            Ripeti fino ad attivare entrambe le sfere, poi uccidi il boss.
-          </p>
-          <p>
-            In gruppo tutti devono seguire lo stesso ritmo: muoversi, inginocchiarsi, muoversi, inginocchiarsi.
-            Un solo player colpito puo far fallire l'achievement.
-          </p>
+          <h3>Achievement del boss</h3>
+          <div class="guide-achievement">
+            <h4>Heroic: Majordomo Fandral Staghelm</h4>
+            <p>
+              Uccidi Majordomo Fandral Staghelm in modalita Heroic.
+            </p>
+          </div>
+          <div class="guide-achievement">
+            <h4>Only the Penitent...</h4>
+            <p>
+              Devi attivare le due sfere di magma ai lati di Fandral senza farti colpire da
+              <strong>Kneel to the Flame</strong>. Quando Fandral lancia la spell, usa <code>/kneel</code>,
+              muoviti durante i 5 secondi di cast, poi inginocchiati di nuovo al cast successivo.
+              Ripeti fino ad attivare entrambe le sfere, poi uccidi il boss.
+            </p>
+            <p>
+              In gruppo tutti devono seguire lo stesso ritmo. Un solo player colpito puo far fallire l'achievement.
+            </p>
+          </div>
+          <div class="guide-visual-reference">
+            <h4>Riferimenti visivi</h4>
+            <figure>
+              <img src="../../img/guides/firelands/firelands-02.jpg" alt="Sfera di magma per Only the Penitent">
+              <figcaption>Una delle sfere da attivare senza essere colpiti da Kneel to the Flame.</figcaption>
+            </figure>
+          </div>
         </div>
       </article>
-    </section>
-
-    <section>
-      <div class="section-head section-head--center">
-        <div class="eyebrow">Immagini</div>
-        <h2 class="section-title">Riferimenti visivi</h2>
-        <p class="section-subtitle">Screenshot recuperati dalla guida Drive originale.</p>
-      </div>
-
-      <div class="guide-gallery">
-        <img src="../../img/guides/firelands/firelands-01.jpg" alt="Firelands screenshot 1">
-        <img src="../../img/guides/firelands/firelands-02.jpg" alt="Firelands screenshot 2">
-        <img src="../../img/guides/firelands/firelands-03.jpg" alt="Firelands screenshot 3">
-        <img src="../../img/guides/firelands/firelands-04.jpg" alt="Firelands screenshot 4">
-        <img src="../../img/guides/firelands/firelands-05.jpg" alt="Firelands screenshot 5">
-        <img src="../../img/guides/firelands/firelands-06.jpg" alt="Firelands screenshot 6">
-        <img src="../../img/guides/firelands/firelands-07.jpg" alt="Firelands screenshot 7">
-        <img src="../../img/guides/firelands/firelands-08.jpg" alt="Firelands screenshot 8">
       </div>
     </section>
 
@@ -257,7 +283,37 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   document.body.classList.add("page-loaded");
+  initGuideBossTabs();
 });
+
+function initGuideBossTabs() {
+  const tabs = Array.from(document.querySelectorAll("[data-guide-boss]"));
+  const panels = Array.from(document.querySelectorAll("[data-guide-panel]"));
+  if (!tabs.length || !panels.length) return;
+
+  function showBoss(key, updateHash = true) {
+    const selectedKey = panels.some(panel => panel.dataset.guidePanel === key) ? key : tabs[0].dataset.guideBoss;
+    tabs.forEach(tab => {
+      const isActive = tab.dataset.guideBoss === selectedKey;
+      tab.classList.toggle("is-active", isActive);
+      tab.setAttribute("aria-selected", isActive ? "true" : "false");
+    });
+    panels.forEach(panel => {
+      const isActive = panel.dataset.guidePanel === selectedKey;
+      panel.classList.toggle("is-active", isActive);
+      panel.hidden = !isActive;
+    });
+    if (updateHash) {
+      history.replaceState(null, "", `#${selectedKey}`);
+    }
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => showBoss(tab.dataset.guideBoss));
+  });
+
+  showBoss(window.location.hash.replace("#", "") || tabs[0].dataset.guideBoss, false);
+}
 
 document.querySelectorAll("a").forEach(link => {
   if (link.hostname === window.location.hostname) {
