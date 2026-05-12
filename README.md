@@ -18,8 +18,16 @@ Il loader 3D opzionale per i boss e:
 
 `scripts/wow-model-viewer.js`
 
-Usa i metodi di `Miorey/wow-model-viewer` e il viewer Wowhead/Zam. Se gli asset esterni non sono disponibili,
-la guida resta leggibile tramite immagine statica di fallback.
+Usa i metodi di `Miorey/wow-model-viewer` e il viewer Wowhead/Zam. In produzione deve usare il proxy:
+
+`workers/cloudflare/blackjack-wow-model-assets.js`
+
+Nome Worker suggerito:
+
+`blackjack-wow-model-assets`
+
+Il proxy evita i blocchi CORS sugli asset `https://wow.zamimg.com/modelviewer/live/`. Se il viewer o il proxy
+non sono disponibili, la guida resta leggibile tramite immagine statica di fallback.
 
 Il formato pensato per ogni guida e:
 

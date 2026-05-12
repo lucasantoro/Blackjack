@@ -74,9 +74,11 @@
 
       <div class="guide-card-grid">
         <article class="guide-card guide-card--feature">
-          <a href="guide/firelands.html" class="guide-card__media" aria-label="Apri la guida Glory of the Firelands Raider">
-            <img src="../img/guides/firelands/firelands-04.jpg" alt="Corrupted Fire Hawk, ricompensa Firelands">
-          </a>
+          <div class="guide-card__media guide-card__media--model">
+            <div class="guide-model-viewer guide-model-viewer--cover" data-wow-model data-wow-model-autoload data-model-type="npc" data-display-id="38046" data-aspect="1" aria-label="Modello 3D Corrupted Fire Hawk"></div>
+            <img class="guide-model-fallback" data-model-fallback src="../img/guides/firelands/firelands-04.jpg" alt="Corrupted Fire Hawk, ricompensa Firelands">
+            <span class="guide-model-status" data-model-status>Modello 3D</span>
+          </div>
           <div class="guide-card__body">
             <div class="editorial-card__meta">
               <span>Cataclysm</span>
@@ -138,6 +140,7 @@ document.querySelectorAll("a").forEach(link => {
   }
 });
 </script>
+<script src="../scripts/wow-model-viewer.js"></script>
 
 </body>
 </html>

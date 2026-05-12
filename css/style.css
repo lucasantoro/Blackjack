@@ -3203,6 +3203,15 @@ header nav a.active {
   aspect-ratio: 16 / 8;
   overflow: hidden;
   background: rgba(8, 13, 13, 0.92);
+  position: relative;
+}
+
+.guide-card__media--model {
+  display: grid;
+  place-items: center;
+  min-height: 280px;
+  aspect-ratio: 16 / 9;
+  padding: 18px;
 }
 
 .guide-card__media img {
@@ -3285,6 +3294,9 @@ header nav a.active {
 .guide-feature__media {
   overflow: hidden;
   margin: 0;
+  position: relative;
+  display: grid;
+  place-items: center;
 }
 
 .guide-feature__media img {
@@ -3376,6 +3388,16 @@ header nav a.active {
   height: 220px;
 }
 
+.guide-model-viewer--cover,
+.guide-model-viewer--reward {
+  width: min(100%, 420px);
+  height: 280px;
+}
+
+.guide-model-viewer--reward {
+  margin: 18px;
+}
+
 .guide-model-viewer canvas {
   width: 100% !important;
   height: 100% !important;
@@ -3391,6 +3413,12 @@ header nav a.active {
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(4, 8, 8, 0.72);
   box-shadow: 0 16px 28px rgba(0, 0, 0, 0.28);
+}
+
+.guide-card__media .guide-model-fallback,
+.guide-feature__media .guide-model-fallback {
+  width: min(100%, 420px);
+  height: 280px;
 }
 
 .guide-model-viewer.is-loaded + .guide-model-fallback,

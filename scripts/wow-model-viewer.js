@@ -2,10 +2,22 @@
 // Source: https://github.com/Miorey/wow-model-viewer
 // The viewer depends on Wowhead/Zam model assets and falls back to static images when unavailable.
 (function () {
-  const CONTENT_PATH = "https://wow.zamimg.com/modelviewer/live/";
-  const VIEWER_SCRIPT = `${CONTENT_PATH}viewer/viewer.min.js`;
+  const CONTENT_PATH = window.BLACKJACK_MODEL_CONTENT_PATH || "https://blackjack-wow-model-assets.lucasantoro2905.workers.dev/modelviewer/live/";
+  const VIEWER_SCRIPT = "https://wow.zamimg.com/modelviewer/live/viewer/viewer.min.js";
   const JQUERY_SCRIPT = "https://code.jquery.com/jquery-3.7.1.min.js";
-  const NPC_TYPE = 8;
+  const MODEL_TYPES = {
+    item: 1,
+    helm: 2,
+    shoulder: 4,
+    npc: 8,
+    character: 16,
+    humanoidnpc: 32,
+    object: 64,
+    armor: 128,
+    path: 256,
+    itemvisual: 512,
+    collection: 1024
+  };
   const loadedModels = new WeakSet();
   let dependencyPromise = null;
 
@@ -68,10 +80,11 @@
     container.parentElement?.querySelector("[data-model-fallback]")?.classList.remove("is-hidden");
   }
 
-  async function createNpcModel(container) {
+  async function createModel(container) {
     if (loadedModels.has(container)) return;
 
     const displayId = Number(container.dataset.displayId || 0);
+    const modelType = MODEL_TYPES[String(container.dataset.modelType || "npc").toLowerCase()] || MODEL_TYPES.npc;
     if (!displayId) {
       showFallback(container);
       return;
@@ -94,7 +107,7 @@
         hd: true,
         models: {
           id: displayId,
-          type: NPC_TYPE
+          type: modelType
         }
       };
 
@@ -114,14 +127,24 @@
     const activePanel = root.querySelector(".guide-boss-card:not([hidden])");
     const modelContainer = activePanel?.querySelector("[data-wow-model]");
     if (modelContainer) {
-      createNpcModel(modelContainer);
+      createModel(modelContainer);
     }
+  }
+
+  function loadAutoloadModels(root = document) {
+    root.querySelectorAll("[data-wow-model][data-wow-model-autoload]").forEach(container => {
+      createModel(container);
+    });
   }
 
   window.BlackjackWowModels = {
     loadActiveGuideModel,
-    createNpcModel
+    loadAutoloadModels,
+    createModel
   };
 
-  document.addEventListener("DOMContentLoaded", () => loadActiveGuideModel());
+  document.addEventListener("DOMContentLoaded", () => {
+    loadAutoloadModels();
+    loadActiveGuideModel();
+  });
 })();
