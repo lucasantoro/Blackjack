@@ -25,6 +25,11 @@ TAGLINES = {
     "durst": "Fiato lungo e sangue freddo",
     "ejlin": "Passi leggeri, mani veloci",
     "gearstrike": "Primo sul pull, ultimo a cadere",
+    "hadarn": "Ride poco, impatta molto",
+    "huntrx": "Occhio lungo, entrata secca",
+    "kushking": "Resta calmo e fa male",
+    "kxevy": "Precisione rapida, pull puliti",
+    "lynneria": "Linea chiara, danno stabile",
     "michele": "Precisione con accento elegante",
     "odetta": "Taglio netto, chiusura pulita",
     "ponzqt": "Numeri seri, aria rilassata",
@@ -32,6 +37,7 @@ TAGLINES = {
     "resal": "Affila il setup e non spreca niente",
     "siodexiel": "Controllo fine, zero scene",
     "takamura": "Entra piano, lascia il segno",
+    "tarla": "Movimento pulito, pressione vera",
     "trolluido": "Radici salde, tempismo morbido",
     "zepyrot": "Gelo pulito, testa lucida",
 }
@@ -47,6 +53,11 @@ FLAVOR = {
     "durst": "Sembra sempre avere una marcia in piu quando il fight si allunga e la precisione diventa tutto.",
     "ejlin": "Gioca con una pulizia che si nota subito: pochi sprechi, movimenti rapidi e tanta disciplina silenziosa.",
     "gearstrike": "Quando la pull parte, la sua presenza si sente subito: ordine davanti, ritmo chiaro per tutto il gruppo.",
+    "hadarn": "Ha un modo asciutto di stare nel fight: fa il necessario bene e lascia che sia l'esecuzione a parlare.",
+    "huntrx": "Si muove con buona lettura del fight e tende a trovare subito la posizione utile senza appesantire il gruppo.",
+    "kushking": "Ha un taglio molto pratico: poche cose dette, molte cose sistemate bene nel momento giusto.",
+    "kxevy": "Da l'idea di uno che non vuole complicare il fight: entra pulito, tiene ritmo e lascia poco spazio agli sprechi.",
+    "lynneria": "Ha un approccio composto e regolare, utile quando la serata richiede continuita invece di picchi casuali.",
     "michele": "Ha un gusto pulito per il gioco bene eseguito e quell'eleganza rara di chi non forza mai la mano.",
     "odetta": "Porta una calma quasi sospetta: sembra rilassato e intanto ha gia messo tutto nella posizione giusta.",
     "ponzqt": "Ha il profilo del player che non fa rumore ma ti ritrovi sempre tra quelli che tengono insieme il fight.",
@@ -54,6 +65,7 @@ FLAVOR = {
     "resal": "Ha il gusto delle scelte pulite e il talento di far sembrare semplice anche quello che semplice non e.",
     "siodexiel": "Resta composto anche quando gli altri stanno gia raccontando il wipe prima della fine del tentativo.",
     "takamura": "Ha un'impronta sobria ma incisiva: poche parole, molte cose fatte bene e sempre al momento giusto.",
+    "tarla": "Tiene un passo molto lineare: anche quando il fight si muove, resta leggibile e utile senza perdere forma.",
     "trolluido": "Tiene un ritmo morbido ma costante, di quelli che aiutano il gruppo a non scivolare nel caos.",
     "zepyrot": "Ha quella precisione tranquilla di chi preferisce un fight pulito a un picco bello solo sul meter.",
 }
@@ -324,14 +336,15 @@ def fetch_armory_profile(url: str) -> dict:
     }
 
 
-def generate_bio(member: dict) -> str:
+def generate_bio(member: dict, variant_index: int | None = None) -> str:
+    name_key = normalize_name(member["name"])
+    flavor = FLAVOR.get(name_key, f"{member['name']} porta in raid presenza, ordine e un buon istinto per i momenti che contano.")
     key = generated_profile_key(member)
     profile = PROFILE_COPY.get(key)
     if profile and profile.get("bios"):
-        return profile["bios"][stable_index(member["name"], len(profile["bios"]))]
+        index = stable_index(member["name"], len(profile["bios"])) if variant_index is None else variant_index % len(profile["bios"])
+        return f"{flavor} {profile['bios'][index]}"
 
-    name_key = normalize_name(member["name"])
-    flavor = FLAVOR.get(name_key, f"{member['name']} porta in raid presenza, ordine e un buon istinto per i momenti che contano.")
     spec_bits = [member.get("spec"), member.get("class")]
     spec_label = " ".join(bit for bit in spec_bits if bit).strip()
     role = member["role"]
@@ -340,18 +353,20 @@ def generate_bio(member: dict) -> str:
     return f"{member['name']} gioca come un {spec_label} che non cerca scena gratuita ma impatto vero. {flavor}{role_line}{closing}"
 
 
-def generate_summary(member: dict) -> str:
+def generate_summary(member: dict, variant_index: int | None = None) -> str:
     key = generated_profile_key(member)
     profile = PROFILE_COPY.get(key)
     if profile and profile.get("summaries"):
-        return profile["summaries"][stable_index(member["name"], len(profile["summaries"]))]
+        index = stable_index(member["name"], len(profile["summaries"])) if variant_index is None else variant_index % len(profile["summaries"])
+        return profile["summaries"][index]
 
     role = member.get("role", "unknown")
+    spec_label = member.get("spec") or member.get("class") or "Profilo"
     fallback = {
-        "tank": "Tiene il pull ordinato e rende il fight facile da leggere.",
-        "healer": "Tiene il raid stabile e risponde bene ai momenti pesanti.",
-        "dps": "Porta continuita, danno pulito e buon ritmo di fight.",
-        "unknown": "Resta una presenza utile e affidabile nel roster.",
+        "tank": f"{spec_label} ordinato: tiene il pull pulito e rende il fight piu leggibile.",
+        "healer": f"{spec_label} affidabile: tiene il raid stabile e risponde bene ai momenti pesanti.",
+        "dps": f"{spec_label} con buon ritmo: porta continuita e danno pulito nel fight.",
+        "unknown": f"{spec_label} utile e affidabile nelle serate di roster.",
     }
     return fallback.get(role, fallback["unknown"])
 
@@ -390,10 +405,10 @@ def build_member(url: str, customizations: dict[str, dict]) -> dict:
     member.update(
         {
             "tagline": TAGLINES.get(key, "Presenza pulita nel roster"),
-            "summary": generate_summary(member),
+            "summary": "",
             "customTagline": preserved.get("customTagline", ""),
             "customSummary": preserved.get("customSummary", ""),
-            "bio": generate_bio(member),
+            "bio": "",
             "customBio": preserved.get("customBio", ""),
             "customImage": preserved.get("customImage", ""),
             "profileStatus": "custom" if any(preserved.get(field) for field in ("customTagline", "customSummary", "customBio", "customImage")) else "generated",
@@ -403,11 +418,22 @@ def build_member(url: str, customizations: dict[str, dict]) -> dict:
     return member
 
 
+def assign_generated_profiles(members: list[dict]) -> None:
+    grouped_counts: dict[str, int] = {}
+    for member in members:
+        key = generated_profile_key(member)
+        variant_index = grouped_counts.get(key, 0)
+        grouped_counts[key] = variant_index + 1
+        member["summary"] = generate_summary(member, variant_index)
+        member["bio"] = generate_bio(member, variant_index)
+
+
 def main() -> None:
     urls = load_urls()
     customizations = load_existing_customizations()
     members = [build_member(url, customizations) for url in urls]
     members.sort(key=lambda member: (member["role"], member["name"].lower()))
+    assign_generated_profiles(members)
 
     payload = {
         "team": {
