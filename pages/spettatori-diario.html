@@ -167,6 +167,7 @@ const diaryArticleDate = document.getElementById("diary-article-date");
 const diaryArticleTitle = document.getElementById("diary-article-title");
 const diaryArticleBody = document.getElementById("diary-article-body");
 let diaryArticlesState = [];
+let diaryArticlePendingId = null;
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -350,6 +351,7 @@ function renderManualArticles(items) {
   });
 
   updateManualCarouselButtons();
+  openPendingDiaryArticle();
 }
 
 function renderDiaryArticleArt(article) {
@@ -376,6 +378,25 @@ function openDiaryArticleModal(index) {
   diaryArticleModal.classList.add("is-open");
   diaryArticleModal.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
+}
+
+function findDiaryArticleIndexById(articleId) {
+  if (!articleId) return -1;
+  return diaryArticlesState.findIndex(article => article?.id === articleId);
+}
+
+function openPendingDiaryArticle() {
+  if (!diaryArticlePendingId || !diaryArticlesState.length) return;
+  const index = findDiaryArticleIndexById(diaryArticlePendingId);
+  if (index === -1) return;
+  openDiaryArticleModal(index);
+  diaryArticlePendingId = null;
+}
+
+function readDiaryArticleFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const articleId = params.get("article");
+  diaryArticlePendingId = articleId ? articleId.trim() : null;
 }
 
 function closeDiaryArticleModal() {
@@ -456,6 +477,7 @@ document.addEventListener("keydown", event => {
 
 window.addEventListener("resize", updateManualCarouselButtons);
 
+readDiaryArticleFromUrl();
 loadAchievementBoard();
 loadManualEntries();
 </script>
