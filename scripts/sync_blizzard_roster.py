@@ -391,16 +391,33 @@ def load_existing_customizations() -> dict[str, dict]:
             "customSummary": sanitize_custom_text(member.get("customSummary", "")),
             "customBio": sanitize_custom_text(member.get("customBio", "")),
             "customImage": clean_text(member.get("customImage", "")).strip(),
+            "overrideClass": clean_text(member.get("overrideClass", "")).strip(),
+            "overrideSpec": clean_text(member.get("overrideSpec", "")).strip(),
+            "overrideRole": clean_text(member.get("overrideRole", "")).strip().lower(),
             "active": member.get("active", True),
         }
         for member in members
     }
 
 
+def apply_member_overrides(member: dict, preserved: dict) -> None:
+    override_class = preserved.get("overrideClass", "")
+    override_spec = preserved.get("overrideSpec", "")
+    override_role = preserved.get("overrideRole", "")
+
+    if override_class:
+        member["class"] = override_class
+    if override_spec:
+        member["spec"] = override_spec
+    if override_role in {"tank", "healer", "dps", "unknown"}:
+        member["role"] = override_role
+
+
 def build_member(url: str, customizations: dict[str, dict]) -> dict:
     member = fetch_armory_profile(url)
     key = normalize_name(member["name"])
     preserved = customizations.get(key, {})
+    apply_member_overrides(member, preserved)
 
     member.update(
         {
@@ -411,7 +428,13 @@ def build_member(url: str, customizations: dict[str, dict]) -> dict:
             "bio": "",
             "customBio": preserved.get("customBio", ""),
             "customImage": preserved.get("customImage", ""),
-            "profileStatus": "custom" if any(preserved.get(field) for field in ("customTagline", "customSummary", "customBio", "customImage")) else "generated",
+            "overrideClass": preserved.get("overrideClass", ""),
+            "overrideSpec": preserved.get("overrideSpec", ""),
+            "overrideRole": preserved.get("overrideRole", ""),
+            "profileStatus": "custom" if any(
+                preserved.get(field)
+                for field in ("customTagline", "customSummary", "customBio", "customImage", "overrideClass", "overrideSpec", "overrideRole")
+            ) else "generated",
             "active": preserved.get("active", True),
         }
     )

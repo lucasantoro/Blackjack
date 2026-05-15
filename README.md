@@ -91,6 +91,16 @@ La pagina coinvolta e:
 
 `pages/spettatori-diario.html`
 
+### Come appare il diario
+
+- nel carosello vedi solo `immagine`, `sottotitolo`, `data` e `titolo`
+- cliccando la card si apre un overlay con il testo completo
+- se aggiungi o modifichi articoli, devi sempre rigenerare l'indice con:
+
+```powershell
+python .\scripts\build_spettatori_diary.py
+```
+
 ## Roster Ace of Spades
 
 ### Aggiungere un nuovo raider
@@ -115,6 +125,32 @@ Metodo diretto:
 python .\scripts\add_raider_profile.py --armory-url "https://worldofwarcraft.blizzard.com/en-gb/character/eu/nemesis/nomepg"
 ```
 
+### Cosa aggiorna davvero il roster
+
+Il roster finale letto dal sito e:
+
+`data/aceofspades-roster.json`
+
+La lista sorgente degli armory e:
+
+`data/aceofspades-armory-urls.txt`
+
+La pagina coinvolta e:
+
+`pages/high-roller/roster-aceofspades.html`
+
+Lo script di sync completo e:
+
+```powershell
+python .\scripts\sync_blizzard_roster.py
+```
+
+Nota:
+
+- il sync completo interroga tutti gli Armory e puo richiedere un po' di tempo
+- se un player in game logga una offspec o un ruolo secondario, puoi forzare spec e ruolo manualmente con gli override sotto
+- summary e bio generate vengono ricostruite dal sync; i campi `custom*` e `override*` invece vengono preservati
+
 ### Modificare bio, testo breve o foto di un raider
 
 Usa lo stesso script cercando il player per nome:
@@ -129,6 +165,9 @@ Campi disponibili:
 - `customSummary` = testo breve nella card
 - `customBio` = testo lungo nell'overlay / scheda
 - `customImage` = immagine custom
+- `overrideClass` = forza la classe mostrata nel roster
+- `overrideSpec` = forza la spec mostrata nel roster
+- `overrideRole` = forza il ruolo mostrato nel roster (`tank`, `healer`, `dps`, `unknown`)
 
 Esempio non interattivo:
 
@@ -136,11 +175,59 @@ Esempio non interattivo:
 python .\scripts\add_raider_profile.py --name "Ejlin" --summary "Testo breve" --bio "Testo lungo" --image "../../members/img/ejlin.jpg" --no-prompt
 ```
 
+### Modificare solo un campo specifico
+
+Lo script cambia solo i campi che passi. Tutto il resto resta invariato.
+
+Solo testo breve:
+
+```powershell
+python .\scripts\add_raider_profile.py --name "Ejlin" --summary "Tank mobile, pull puliti e ritmo chiaro." --no-prompt
+```
+
+Solo bio lunga:
+
+```powershell
+python .\scripts\add_raider_profile.py --name "Ejlin" --bio "Testo lungo nuovo..." --no-prompt
+```
+
+Solo foto:
+
+```powershell
+python .\scripts\add_raider_profile.py --name "Ejlin" --image "../../members/img/ejlin.jpg" --no-prompt
+```
+
+Solo tagline:
+
+```powershell
+python .\scripts\add_raider_profile.py --name "Ejlin" --tagline "Prima sul pull, calma sul fight" --no-prompt
+```
+
 Per cancellare un override:
 
 ```powershell
 python .\scripts\add_raider_profile.py --name "Ejlin" --clear-summary --clear-bio --clear-image --no-prompt
 ```
+
+### Forzare spec o ruolo quando l'Armory mostra una offspec
+
+Esempio: healer che in game ha loggato dps, o tank che ha fatto contenuto in offspec.
+
+```powershell
+python .\scripts\add_raider_profile.py --name "Aqualara" --override-class "Shaman" --override-spec "Restoration" --override-role healer --no-prompt
+```
+
+```powershell
+python .\scripts\add_raider_profile.py --name "Michelè" --override-class "Death Knight" --override-spec "Unholy" --override-role dps --no-prompt
+```
+
+Per rimuovere gli override e tornare ai valori letti da Armory:
+
+```powershell
+python .\scripts\add_raider_profile.py --name "Aqualara" --clear-override-class --clear-override-spec --clear-override-role --no-prompt
+```
+
+Gli override vengono salvati nel JSON finale e vengono riapplicati automaticamente ad ogni sync successivo.
 
 ### Disattivare o rimuovere un raider
 
@@ -162,19 +249,21 @@ Puoi usare anche l'URL Armory:
 python .\scripts\remove_raider_profile.py --armory-url "https://worldofwarcraft.blizzard.com/en-gb/character/eu/nemesis/ejlin" --remove --no-prompt
 ```
 
-### Rigenerare tutto il roster
+### Flusso pratico consigliato per il roster
 
-```powershell
-python .\scripts\sync_blizzard_roster.py
-```
+Nuovo player:
 
-Il file generato e:
+1. aggiungi l'Armory con `add_raider_profile.py` oppure metti l'URL in `data/aceofspades-armory-urls.txt`
+2. lancia il sync
+3. se serve, aggiungi `customTagline`, `customSummary`, `customBio`, `customImage`
+4. se serve, aggiungi `overrideClass`, `overrideSpec`, `overrideRole`
 
-`data/aceofspades-roster.json`
+Player gia presente:
 
-La pagina coinvolta e:
-
-`pages/high-roller/roster-aceofspades.html`
+1. se devi cambiare solo un testo o la foto, usa `add_raider_profile.py --name "..."`
+2. se devi forzare il ruolo/spec perche l'Armory mostra una offspec, usa gli override
+3. se devi solo nasconderlo, usa `remove_raider_profile.py --disable`
+4. se devi eliminarlo davvero, usa `remove_raider_profile.py --remove`
 
 ## File chiave
 

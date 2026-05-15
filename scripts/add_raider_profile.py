@@ -87,6 +87,9 @@ def update_custom_fields(target: dict, args: argparse.Namespace, interactive: bo
     current_bio = target.get("customBio", "")
     current_image = target.get("customImage", "")
     current_active = bool(target.get("active", True))
+    current_override_class = target.get("overrideClass", "")
+    current_override_spec = target.get("overrideSpec", "")
+    current_override_role = target.get("overrideRole", "")
 
     if args.clear_tagline:
         target["customTagline"] = ""
@@ -121,8 +124,29 @@ def update_custom_fields(target: dict, args: argparse.Namespace, interactive: bo
     elif interactive:
         target["active"] = prompt_bool("Profilo attivo", current_active)
 
+    if args.clear_override_class:
+        target["overrideClass"] = ""
+    elif args.override_class is not None:
+        target["overrideClass"] = args.override_class
+    elif interactive:
+        target["overrideClass"] = prompt_text("Override classe (vuoto = usa Armory)", current_override_class)
+
+    if args.clear_override_spec:
+        target["overrideSpec"] = ""
+    elif args.override_spec is not None:
+        target["overrideSpec"] = args.override_spec
+    elif interactive:
+        target["overrideSpec"] = prompt_text("Override spec (vuoto = usa Armory)", current_override_spec)
+
+    if args.clear_override_role:
+        target["overrideRole"] = ""
+    elif args.override_role is not None:
+        target["overrideRole"] = args.override_role
+    elif interactive:
+        target["overrideRole"] = prompt_text("Override ruolo [tank/healer/dps] (vuoto = usa Armory)", current_override_role)
+
     target["profileStatus"] = "custom" if any(
-        target.get(field) for field in ("customTagline", "customSummary", "customBio", "customImage")
+        target.get(field) for field in ("customTagline", "customSummary", "customBio", "customImage", "overrideClass", "overrideSpec", "overrideRole")
     ) else "generated"
 
 
@@ -162,6 +186,9 @@ def build_placeholder_member(args: argparse.Namespace) -> dict:
         "bio": "",
         "customBio": "",
         "customImage": "",
+        "overrideClass": "",
+        "overrideSpec": "",
+        "overrideRole": "",
         "profileStatus": "generated",
         "active": True,
     }
@@ -181,6 +208,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--clear-summary", action="store_true")
     parser.add_argument("--clear-bio", action="store_true")
     parser.add_argument("--clear-image", action="store_true")
+    parser.add_argument("--override-class")
+    parser.add_argument("--override-spec")
+    parser.add_argument("--override-role", choices=["tank", "healer", "dps", "unknown"])
+    parser.add_argument("--clear-override-class", action="store_true")
+    parser.add_argument("--clear-override-spec", action="store_true")
+    parser.add_argument("--clear-override-role", action="store_true")
     parser.add_argument("--role", choices=["tank", "healer", "dps", "unknown"])
     parser.add_argument("--class", dest="class_name")
     parser.add_argument("--spec")
