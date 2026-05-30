@@ -3845,3 +3845,69 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+/* --- Inno della gilda: clic sul logo home --- */
+.anthem-logo-btn {
+	display: inline-block;
+	padding: 0;
+	border: 0;
+	background: none;
+	cursor: pointer;
+	line-height: 0;
+	border-radius: 14px;
+	transition: filter .3s ease, transform .3s ease;
+}
+.anthem-logo-btn:hover,
+.anthem-logo-btn:focus-visible {
+	filter: drop-shadow(0 0 18px var(--glow-gold));
+	transform: scale(1.03);
+	outline: none;
+}
+.anthem-logo-btn.is-playing {
+	filter: drop-shadow(0 0 24px var(--accent-2));
+}
+
+.anthem-hint {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin: 0 auto 1.6rem;
+	padding: 0.4rem 1rem;
+	border: 1px solid var(--glow-gold);
+	border-radius: 999px;
+	background: rgba(240, 200, 104, 0.08);
+	color: var(--accent-2);
+	font-size: 0.78rem;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.anthem-eq {
+	display: none;
+	align-items: flex-end;
+	gap: 2px;
+	height: 14px;
+}
+.anthem-hint.is-playing .anthem-eq {
+	display: inline-flex;
+}
+.anthem-eq i {
+	display: block;
+	width: 3px;
+	height: 100%;
+	background: var(--accent-2);
+	border-radius: 1px;
+	transform-origin: bottom;
+	animation: anthem-eq 0.9s ease-in-out infinite;
+}
+.anthem-eq i:nth-child(2) { animation-delay: 0.15s; }
+.anthem-eq i:nth-child(3) { animation-delay: 0.30s; }
+.anthem-eq i:nth-child(4) { animation-delay: 0.45s; }
+@keyframes anthem-eq {
+	0%, 100% { transform: scaleY(0.3); }
+	50%      { transform: scaleY(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+	.anthem-eq i { animation: none; }
+	.anthem-logo-btn { transition: none; }
+}

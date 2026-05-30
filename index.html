@@ -32,9 +32,18 @@
   <div class="hero-content hero-content--wide">
     <div class="hero-tagline">Gilda italiana | Nemesis EU</div>
     <h1 class="hero-logo hero-logo--lockup">
-      <img src="img/blackjack_logo.png" alt="Blackjack">
+      <button type="button" id="anthem-toggle" class="anthem-logo-btn" aria-pressed="false"
+              aria-label="Riproduci l'inno dei Blackjack"
+              title="Clicca per ascoltare l'inno dei Blackjack">
+        <img src="img/blackjack_logo.png" alt="Blackjack">
+      </button>
       <span>Blackjack</span>
     </h1>
+    <p class="anthem-hint" id="anthem-hint">
+      <span class="anthem-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span class="anthem-hint__label">&#9654;&#xFE0E; Clicca il logo per ascoltare l'inno dei Blackjack</span>
+    </p>
+    <audio id="anthem-audio" src="audio/blackjack-anthem.mp3" preload="none" loop></audio>
     <p class="hero-lead">
       Una gilda costruita su organizzazione, spirito di squadra e voglia di migliorare insieme: raid seri, comunicazione chiara e un ambiente tranquillo anche nei momenti più intensi del progress.
 
@@ -209,6 +218,45 @@
 document.addEventListener("DOMContentLoaded", function () {
   document.body.classList.add("page-loaded");
 });
+
+// --- Inno della gilda: il logo della home fa play/pausa della colonna sonora ---
+(function () {
+  var btn = document.getElementById("anthem-toggle");
+  var audio = document.getElementById("anthem-audio");
+  var hint = document.getElementById("anthem-hint");
+  var label = hint ? hint.querySelector(".anthem-hint__label") : null;
+  if (!btn || !audio) return;
+
+  // Volume basso: l'inno fa da sottofondo, non deve dare fastidio.
+  audio.volume = 0.2;
+
+  var PLAY_TEXT = "▶︎ Clicca il logo per ascoltare l'inno dei Blackjack";
+  var STOP_TEXT = "⏸︎ In riproduzione – clicca il logo per fermare";
+
+  btn.addEventListener("click", function () {
+    if (audio.paused) {
+      audio.play().catch(function () {});
+    } else {
+      audio.pause();
+    }
+  });
+
+  audio.addEventListener("play", function () {
+    btn.classList.add("is-playing");
+    btn.setAttribute("aria-pressed", "true");
+    if (hint) hint.classList.add("is-playing");
+    if (label) label.textContent = STOP_TEXT;
+  });
+
+  function reset() {
+    btn.classList.remove("is-playing");
+    btn.setAttribute("aria-pressed", "false");
+    if (hint) hint.classList.remove("is-playing");
+    if (label) label.textContent = PLAY_TEXT;
+  }
+  audio.addEventListener("pause", reset);
+  audio.addEventListener("ended", reset);
+})();
 
 document.querySelectorAll("a").forEach(link => {
   if (link.hostname === window.location.hostname) {
