@@ -11,6 +11,48 @@
 
 <body class="page-transition blackjack-bg blackjack-bg--home">
 
+<div id="intro-overlay" class="intro-overlay" hidden>
+  <div class="intro-backdrop"></div>
+  <div class="intro-modal" role="dialog" aria-modal="true" aria-labelledby="intro-title">
+    <button type="button" class="intro-close" id="intro-close" aria-label="Chiudi l'introduzione">&times;</button>
+    <div class="intro-scroll">
+      <p class="intro-eyebrow">Benvenuto al tavolo</p>
+      <h2 id="intro-title" class="intro-title">La Divina Gilda</h2>
+      <p class="intro-subtitle">Canto d'apertura dei Blackjack</p>
+      <div class="intro-poem">
+        <p>Nel mezzo del cammin di nostra vita<br>mi ritrovai in una gilda oscura,<br>ché la diritta via era smarrita.</p>
+        <p>Ahi quanto a dir qual era è cosa dura<br>esta gilda selvaggia, aspra e forte,<br>che nel pensier rinova la paura!</p>
+        <p>Tant'è amara che poco è più morte,<br>ché wipe e raid vi son sì mal condotti,<br>ch'ogni speranza par cader di sorte.</p>
+        <p>E come quei che con lena affannata,<br>uscito fuor del dungeon a la riva,<br>si volge al boss che l'alma ha fracassata,</p>
+        <p>così l'animo mio, che ancor fuggiva,<br>si volse indietro a rimirar lo passo<br>che non lasciò giammai persona viva.</p>
+        <p>Vidi là tank con l'ira dentro al petto,<br>healer smarriti in lagrimoso affanno,<br>e dps ch'avean l'aggro maledetto.</p>
+        <p>Nel Mythic Plus, tra chiavi e riose pene,<br>l'affisso empio facea tremar le mani,<br>e il tempo divorava ogni mio bene.</p>
+        <p>Quand'io vidi costui nel gran deserto,<br>«Miserere di me», gridai a lui,<br>«qual che tu sie, o ombra o uomo certo».</p>
+        <p>«Raid Leader fui, e cantai d'antichi raid,<br>di boss caduti e d'arme ben forgiate,<br>poi che il Nerf superbo il danno trasse.</p>
+        <p>Conobbi gilde in gloria coronate,<br>e vidi pug cadere in gran ruina,<br>per cure tarde e tattiche sbagliate.</p>
+        <p>Io fui colui che al tank diede dottrina,<br>che al rogue insegnò il passo silenzioso,<br>e al mago il foco che la notte inchina».</p>
+        <p>«Or se' tu quel Raid Leader, e quella fonte<br>che spandi di parlar sì largo fiume?»<br>rispuos'io lui con vergognosa fronte.</p>
+        <p>«Tu se' lo duce d'ogni sacro lume,<br>che ai nabbi trasse fuor di mala sorte<br>e fé del wipe disciplina e costume».</p>
+        <p>Ond'io per lo tuo me' penso e discerno<br>che tu mi segui, e io sarò tua guida,<br>e trarrotti di qui per loco eterno,</p>
+        <p>ove udirai le disperate strida<br>di chi lasciò la chiave consumare,<br>e in seconda morte ognun si sfida.</p>
+        <p>Vedrai gli antichi spiriti dolenti,<br>che senza flask entrarono al cimento,<br>e pianser poi fra i boss onnipossenti.</p>
+        <p>Vedrai colui che pullò senza aviso,<br>e quel che stette fermo ne la fiamma,<br>dicendo: "lag", con pallido sorriso.</p>
+        <p>E poi vedrai, se l'anima non trema,<br>la sala ove il loot vien disputato,<br>e l'amistà si spezza e si disgrega».</p>
+        <p>Per me si va nella città dolente,<br>per me si va nell'etterno wipe,<br>per me si va tra la perduta gente.</p>
+        <p>Giustizia mosse il Raid Leader possente,<br>fecemi il gear, la santa rotazione,<br>la somma skill e il cooldown sapiente.</p>
+        <p>Dinanzi a me non fur cose create<br>se non pull eterni, ed io eterna duro:<br>lasciate ogni speranza, voi ch'entrate.</p>
+        <p>Qui son le chiavi rotte e consumate,<br>qui piange il tank che invan cercò difesa,<br>qui son le cure tarde e mal mandate.</p>
+        <p>Qui trema il dps ch'ebbe baldanza accesa,<br>e in cerchio corre, folle e senza scudo,<br>mentre la morte ride a bocca tesa.</p>
+        <p>E sopra l'uscio, in carattere oscuro,<br>stava scritto con fuoco e gran minaccia:<br>"Chi entra in pug, non torna mai sicuro".</p>
+      </div>
+    </div>
+    <div class="intro-actions">
+      <button type="button" class="button-primary" id="intro-enter">Entra nella gilda &#9654;&#xFE0E;</button>
+      <button type="button" class="intro-silent" id="intro-enter-silent">Entra in silenzio</button>
+    </div>
+  </div>
+</div>
+
 <header>
   <nav class="mainnav">
     <a href="index.html" class="nav-brand" aria-label="Blackjack Home">
@@ -36,6 +78,7 @@
               aria-label="Riproduci l'inno dei Blackjack"
               title="Clicca per ascoltare l'inno dei Blackjack">
         <img src="img/blackjack_logo.png" alt="Blackjack">
+        <span class="anthem-badge" aria-hidden="true">&#9654;&#xFE0E;</span>
       </button>
       <span>Blackjack</span>
     </h1>
@@ -212,6 +255,7 @@
 
 <footer>
   <p>&copy; 2026 Blackjack | Sito ufficiale</p>
+  <button type="button" class="intro-replay" id="intro-replay">Rivedi il canto d'apertura</button>
 </footer>
 
 <script>
@@ -225,6 +269,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var audio = document.getElementById("anthem-audio");
   var hint = document.getElementById("anthem-hint");
   var label = hint ? hint.querySelector(".anthem-hint__label") : null;
+  var badge = btn ? btn.querySelector(".anthem-badge") : null;
   if (!btn || !audio) return;
 
   // Volume basso: l'inno fa da sottofondo, non deve dare fastidio.
@@ -246,6 +291,7 @@ document.addEventListener("DOMContentLoaded", function () {
     btn.setAttribute("aria-pressed", "true");
     if (hint) hint.classList.add("is-playing");
     if (label) label.textContent = STOP_TEXT;
+    if (badge) badge.textContent = "⏸︎";
   });
 
   function reset() {
@@ -253,9 +299,60 @@ document.addEventListener("DOMContentLoaded", function () {
     btn.setAttribute("aria-pressed", "false");
     if (hint) hint.classList.remove("is-playing");
     if (label) label.textContent = PLAY_TEXT;
+    if (badge) badge.textContent = "▶︎";
   }
   audio.addEventListener("pause", reset);
   audio.addEventListener("ended", reset);
+})();
+
+// --- Intro: canto d'apertura della gilda (solo al primo accesso) ---
+(function () {
+  var overlay = document.getElementById("intro-overlay");
+  if (!overlay) return;
+
+  var KEY = "blackjack-intro-seen";
+  var scroll = overlay.querySelector(".intro-scroll");
+  var audio = document.getElementById("anthem-audio");
+  var enterBtn = document.getElementById("intro-enter");
+  var silentBtn = document.getElementById("intro-enter-silent");
+  var closeBtn = document.getElementById("intro-close");
+  var replayBtn = document.getElementById("intro-replay");
+
+  function open() {
+    overlay.hidden = false;
+    document.body.classList.add("intro-open");
+    if (scroll) scroll.scrollTop = 0;
+    if (closeBtn) { try { closeBtn.focus(); } catch (e) {} }
+  }
+
+  function close(startAudio) {
+    overlay.classList.add("is-leaving");
+    document.body.classList.remove("intro-open");
+    try { localStorage.setItem(KEY, "1"); } catch (e) {}
+    if (startAudio && audio) { audio.play().catch(function () {}); }
+    setTimeout(function () {
+      overlay.hidden = true;
+      overlay.classList.remove("is-leaving");
+    }, 450);
+  }
+
+  var seen = null;
+  try { seen = localStorage.getItem(KEY); } catch (e) {}
+  if (!seen) open();
+
+  if (enterBtn) enterBtn.addEventListener("click", function () { close(true); });
+  if (silentBtn) silentBtn.addEventListener("click", function () { close(false); });
+  if (closeBtn) closeBtn.addEventListener("click", function () { close(false); });
+  if (replayBtn) replayBtn.addEventListener("click", open);
+
+  overlay.addEventListener("click", function (e) {
+    if (e.target === overlay || (e.target.classList && e.target.classList.contains("intro-backdrop"))) {
+      close(false);
+    }
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !overlay.hidden) close(false);
+  });
 })();
 
 document.querySelectorAll("a").forEach(link => {
