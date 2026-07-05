@@ -3847,3 +3847,270 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+/* --- Inno della gilda: clic sul logo home --- */
+.anthem-logo-btn {
+	position: relative;
+	display: inline-block;
+	padding: 0;
+	border: 0;
+	background: none;
+	cursor: pointer;
+	line-height: 0;
+	border-radius: 14px;
+	transition: filter .3s ease, transform .3s ease;
+}
+
+/* Anello che pulsa per segnalare che il logo è cliccabile */
+.anthem-logo-btn::after {
+	content: "";
+	position: absolute;
+	inset: -8px;
+	border-radius: 22px;
+	border: 2px solid var(--accent-2);
+	opacity: 0;
+	pointer-events: none;
+	animation: anthem-ring 2.6s ease-out infinite;
+}
+.anthem-logo-btn:hover::after,
+.anthem-logo-btn.is-playing::after {
+	animation: none;
+	opacity: 0;
+}
+@keyframes anthem-ring {
+	0%        { opacity: .55; transform: scale(.9); }
+	70%, 100% { opacity: 0;   transform: scale(1.18); }
+}
+
+/* Badge play/pausa nell'angolo interno del logo */
+.anthem-badge {
+	position: absolute;
+	right: 16px;
+	bottom: 16px;
+	width: 22px;
+	height: 22px;
+	display: grid;
+	place-items: center;
+	border-radius: 50%;
+	background: linear-gradient(135deg, var(--accent), var(--accent-2));
+	color: #08100d;
+	font-size: 0.6rem;
+	line-height: 1;
+	border: 2px solid var(--bg-deep);
+	box-shadow: 0 3px 8px rgba(0, 0, 0, .5);
+	pointer-events: none;
+	transition: transform .25s ease;
+}
+.anthem-logo-btn:hover .anthem-badge,
+.anthem-logo-btn:focus-visible .anthem-badge {
+	transform: scale(1.12);
+}
+.anthem-logo-btn:hover,
+.anthem-logo-btn:focus-visible {
+	filter: drop-shadow(0 0 18px var(--glow-gold));
+	transform: scale(1.03);
+	outline: none;
+}
+.anthem-logo-btn.is-playing {
+	filter: drop-shadow(0 0 24px var(--accent-2));
+}
+
+.anthem-hint {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin: 0 auto 1.6rem;
+	padding: 0.4rem 1rem;
+	border: 1px solid var(--glow-gold);
+	border-radius: 999px;
+	background: rgba(240, 200, 104, 0.08);
+	color: var(--accent-2);
+	font-size: 0.78rem;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.anthem-eq {
+	display: none;
+	align-items: flex-end;
+	gap: 2px;
+	height: 14px;
+}
+.anthem-hint.is-playing .anthem-eq {
+	display: inline-flex;
+}
+.anthem-eq i {
+	display: block;
+	width: 3px;
+	height: 100%;
+	background: var(--accent-2);
+	border-radius: 1px;
+	transform-origin: bottom;
+	animation: anthem-eq 0.9s ease-in-out infinite;
+}
+.anthem-eq i:nth-child(2) { animation-delay: 0.15s; }
+.anthem-eq i:nth-child(3) { animation-delay: 0.30s; }
+.anthem-eq i:nth-child(4) { animation-delay: 0.45s; }
+@keyframes anthem-eq {
+	0%, 100% { transform: scaleY(0.3); }
+	50%      { transform: scaleY(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+	.anthem-eq i { animation: none; }
+	.anthem-logo-btn { transition: none; }
+	.anthem-logo-btn::after { animation: none; opacity: 0; }
+}
+
+/* --- Intro: canto d'apertura della gilda --- */
+.intro-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 1000;
+	display: grid;
+	place-items: center;
+	padding: 24px;
+}
+.intro-overlay[hidden] {
+	display: none;
+}
+body.intro-open {
+	overflow: hidden;
+}
+.intro-backdrop {
+	position: absolute;
+	inset: 0;
+	background: radial-gradient(circle at 50% 30%, rgba(12, 20, 20, .82), rgba(2, 5, 5, .96));
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+}
+.intro-modal {
+	position: relative;
+	width: min(680px, 100%);
+	max-height: min(86vh, 920px);
+	display: flex;
+	flex-direction: column;
+	border-radius: var(--radius-lg);
+	border: 1px solid var(--glow-gold);
+	background: linear-gradient(160deg, rgba(22, 18, 11, .97), rgba(7, 10, 10, .98));
+	box-shadow: var(--shadow), 0 0 70px rgba(240, 200, 104, .14);
+	overflow: hidden;
+	animation: intro-in .7s cubic-bezier(.2, .8, .2, 1) both;
+}
+.intro-overlay.is-leaving .intro-modal {
+	animation: intro-out .4s ease-in both;
+}
+.intro-overlay.is-leaving .intro-backdrop {
+	animation: intro-fade-out .4s ease-in both;
+}
+@keyframes intro-in {
+	from { opacity: 0; transform: translateY(18px) scale(.96); }
+	to   { opacity: 1; transform: none; }
+}
+@keyframes intro-out {
+	to { opacity: 0; transform: translateY(10px) scale(.97); }
+}
+@keyframes intro-fade-out {
+	to { opacity: 0; }
+}
+.intro-close {
+	position: absolute;
+	top: 12px;
+	right: 14px;
+	z-index: 2;
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	border: 1px solid var(--line-strong);
+	background: rgba(0, 0, 0, .4);
+	color: var(--white);
+	font-size: 1.5rem;
+	line-height: 1;
+	cursor: pointer;
+	transition: background .2s ease, transform .25s ease;
+}
+.intro-close:hover {
+	background: rgba(255, 106, 99, .22);
+	transform: rotate(90deg);
+}
+.intro-scroll {
+	overflow-y: auto;
+	padding: clamp(30px, 5vw, 48px) clamp(22px, 5vw, 48px) 12px;
+	text-align: center;
+}
+.intro-eyebrow {
+	margin: 0 0 10px;
+	text-transform: uppercase;
+	letter-spacing: .18em;
+	font-size: .78rem;
+	color: var(--accent-2);
+}
+.intro-title {
+	margin: 0;
+	font-family: "Cinzel", Georgia, serif;
+	font-size: clamp(1.9rem, 5vw, 2.8rem);
+	font-weight: 800;
+	letter-spacing: .04em;
+	color: var(--white);
+}
+.intro-subtitle {
+	margin: 6px 0 24px;
+	color: var(--muted);
+	font-style: italic;
+}
+.intro-poem {
+	color: #e9e3d3;
+	font-size: clamp(.98rem, 2.2vw, 1.08rem);
+	line-height: 1.7;
+}
+.intro-poem p {
+	margin: 0 0 1.05em;
+}
+.intro-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	justify-content: center;
+	align-items: center;
+	padding: 16px clamp(22px, 5vw, 48px) clamp(24px, 5vw, 40px);
+	border-top: 1px solid var(--line);
+	background: rgba(0, 0, 0, .25);
+}
+.intro-silent {
+	background: none;
+	border: 0;
+	color: var(--muted);
+	font: inherit;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	cursor: pointer;
+	transition: color .2s ease;
+}
+.intro-silent:hover {
+	color: var(--white);
+}
+
+/* Link nel footer per rivedere l'intro */
+.intro-replay {
+	margin-top: 10px;
+	background: none;
+	border: 0;
+	color: var(--accent-2);
+	font: inherit;
+	font-size: .9rem;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	cursor: pointer;
+	opacity: .85;
+	transition: opacity .2s ease, color .2s ease;
+}
+.intro-replay:hover {
+	opacity: 1;
+	color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.intro-modal { animation: none; }
+	.intro-overlay.is-leaving .intro-modal,
+	.intro-overlay.is-leaving .intro-backdrop { animation: none; }
+	.intro-close { transition: none; }
+}
