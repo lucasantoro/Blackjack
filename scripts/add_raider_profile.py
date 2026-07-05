@@ -86,6 +86,7 @@ def update_custom_fields(target: dict, args: argparse.Namespace, interactive: bo
     current_summary = target.get("customSummary", "")
     current_bio = target.get("customBio", "")
     current_image = target.get("customImage", "")
+    current_video = target.get("customVideo", "")
     current_active = bool(target.get("active", True))
     current_override_class = target.get("overrideClass", "")
     current_override_spec = target.get("overrideSpec", "")
@@ -119,6 +120,13 @@ def update_custom_fields(target: dict, args: argparse.Namespace, interactive: bo
     elif interactive:
         target["customImage"] = prompt_text("Immagine personalizzata URL/path (vuoto = nessuna)", current_image)
 
+    if args.clear_video:
+        target["customVideo"] = ""
+    elif args.video is not None:
+        target["customVideo"] = args.video
+    elif interactive:
+        target["customVideo"] = prompt_text("Video personalizzato URL/path (vuoto = nessuno)", current_video)
+
     if args.active is not None:
         target["active"] = args.active == "true"
     elif interactive:
@@ -146,7 +154,7 @@ def update_custom_fields(target: dict, args: argparse.Namespace, interactive: bo
         target["overrideRole"] = prompt_text("Override ruolo [tank/healer/dps] (vuoto = usa Armory)", current_override_role)
 
     target["profileStatus"] = "custom" if any(
-        target.get(field) for field in ("customTagline", "customSummary", "customBio", "customImage", "overrideClass", "overrideSpec", "overrideRole")
+        target.get(field) for field in ("customTagline", "customSummary", "customBio", "customImage", "customVideo", "overrideClass", "overrideSpec", "overrideRole")
     ) else "generated"
 
 
@@ -186,6 +194,7 @@ def build_placeholder_member(args: argparse.Namespace) -> dict:
         "bio": "",
         "customBio": "",
         "customImage": "",
+        "customVideo": "",
         "overrideClass": "",
         "overrideSpec": "",
         "overrideRole": "",
@@ -204,10 +213,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--summary")
     parser.add_argument("--bio")
     parser.add_argument("--image")
+    parser.add_argument("--video")
     parser.add_argument("--clear-tagline", action="store_true")
     parser.add_argument("--clear-summary", action="store_true")
     parser.add_argument("--clear-bio", action="store_true")
     parser.add_argument("--clear-image", action="store_true")
+    parser.add_argument("--clear-video", action="store_true")
     parser.add_argument("--override-class")
     parser.add_argument("--override-spec")
     parser.add_argument("--override-role", choices=["tank", "healer", "dps", "unknown"])
@@ -277,6 +288,7 @@ def main() -> None:
     print(f"- testo breve custom: {'si' if target.get('customSummary') else 'no'}")
     print(f"- bio custom: {'si' if target.get('customBio') else 'no'}")
     print(f"- immagine custom: {'si' if target.get('customImage') else 'no'}")
+    print(f"- video custom: {'si' if target.get('customVideo') else 'no'}")
 
 
 if __name__ == "__main__":

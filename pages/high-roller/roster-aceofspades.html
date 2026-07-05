@@ -147,6 +147,10 @@ function getMemberImage(member) {
   return member.customImage || member.sourceImage || member.image || "";
 }
 
+function getMemberVideo(member) {
+  return member.customVideo || "";
+}
+
 function getActiveMembers() {
   return state.members.filter(member => member.active !== false);
 }
@@ -196,8 +200,11 @@ function renderMemberCard(member) {
   const safeServer = escapeHtml(member.server || "");
   const roleInfo = roleConfig[member.role] || roleConfig.dps;
   const hasKnownClass = member.class && member.class !== "Unknown";
+  const video = getMemberVideo(member);
   const image = getMemberImage(member);
+  const hasVideo = Boolean(video);
   const hasImage = Boolean(image);
+  const safeVideo = escapeHtml(video);
   const safeImage = escapeHtml(image);
   const safeArmoryUrl = member.armoryUrl ? escapeHtml(member.armoryUrl) : "";
   const safeRioUrl = member.rio ? escapeHtml(member.rio) : "";
@@ -211,7 +218,9 @@ function renderMemberCard(member) {
   return `
     <article class="member-card member-card--compact">
       <div class="member-card__media">
-        ${hasImage
+        ${hasVideo
+          ? `<video src="${safeVideo}" muted loop autoplay playsinline preload="metadata"></video>`
+          : hasImage
           ? `<img src="${safeImage}" alt="${safeName}">`
           : `<div class="member-card__fallback" aria-hidden="true">${safeName.slice(0, 1)}</div>`}
       </div>

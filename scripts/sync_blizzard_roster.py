@@ -391,6 +391,7 @@ def load_existing_customizations() -> dict[str, dict]:
             "customSummary": sanitize_custom_text(member.get("customSummary", "")),
             "customBio": sanitize_custom_text(member.get("customBio", "")),
             "customImage": clean_text(member.get("customImage", "")).strip(),
+            "customVideo": clean_text(member.get("customVideo", "")).strip(),
             "overrideClass": clean_text(member.get("overrideClass", "")).strip(),
             "overrideSpec": clean_text(member.get("overrideSpec", "")).strip(),
             "overrideRole": clean_text(member.get("overrideRole", "")).strip().lower(),
@@ -428,12 +429,13 @@ def build_member(url: str, customizations: dict[str, dict]) -> dict:
             "bio": "",
             "customBio": preserved.get("customBio", ""),
             "customImage": preserved.get("customImage", ""),
+            "customVideo": preserved.get("customVideo", ""),
             "overrideClass": preserved.get("overrideClass", ""),
             "overrideSpec": preserved.get("overrideSpec", ""),
             "overrideRole": preserved.get("overrideRole", ""),
             "profileStatus": "custom" if any(
                 preserved.get(field)
-                for field in ("customTagline", "customSummary", "customBio", "customImage", "overrideClass", "overrideSpec", "overrideRole")
+                for field in ("customTagline", "customSummary", "customBio", "customImage", "customVideo", "overrideClass", "overrideSpec", "overrideRole")
             ) else "generated",
             "active": preserved.get("active", True),
         }

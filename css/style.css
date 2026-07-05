@@ -996,12 +996,14 @@ header nav a.active {
 }
 
 .member-card__media img,
+.member-card__media video,
 .member img {
   width: 100%;
   height: 112px;
   border-radius: 18px;
   object-fit: cover;
   border: 1px solid rgba(126, 255, 168, 0.2);
+  background: rgba(8, 12, 12, 0.92);
 }
 
 .member-card__fallback {
