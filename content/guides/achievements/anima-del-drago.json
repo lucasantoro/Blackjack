@@ -1,0 +1,227 @@
+{
+  "id": "anima-del-drago",
+  "title": "Gloria dell'incursore dell'Anima del Drago",
+  "subtitle": "Guida rapida per completare il meta achievement in modalità Eroica e ottenere le Redini dell'Araldo del Crepuscolo.",
+  "summary": "Guida per completare i 13 criteri del meta achievement e ottenere le Redini dell'Araldo del Crepuscolo.",
+  "expansion": "Cataclysm",
+  "instance": "Anima del Drago",
+  "badge": "Gloria",
+  "updated": "2026-10-04",
+  "cover": {
+    "image": "",
+    "alt": "Redini dell'Araldo del Crepuscolo, ricompensa Dragon Soul",
+    "modelType": "npc",
+    "modelDisplayId": 39562
+  },
+  "stats": [
+    {
+      "value": "13",
+      "label": "criteri richiesti"
+    },
+    {
+      "value": "6",
+      "label": "uccisioni eroiche dirette"
+    },
+    {
+      "value": "Redini",
+      "label": "dell'Araldo del Crepuscolo"
+    }
+  ],
+  "preparation": {
+    "title": "Prima di entrare",
+    "paragraphs": [
+      "Gloria dell'incursore dell'Anima del Drago è il meta achievement di Cataclysm legato alla ricompensa Redini dell'Araldo del Crepuscolo. La run attraversa gli 8 boss principali del raid: per ognuno c'e almeno un criterio Heroic e, in alcuni casi, una condizione aggiuntiva da rispettare."
+    ],
+    "checklist": []
+  },
+  "bosses": [
+    {
+      "id": "morchok",
+      "name": "Morchok",
+      "image": "",
+      "imageAlt": "Morchok",
+      "modelType": "npc",
+      "modelDisplayId": 39094,
+      "intro": "",
+      "achievements": [
+        {
+          "name": "Eroica: Morchok",
+          "description": "Uccidi Lord Morchok in modalita Eroica.",
+          "steps": [],
+          "waypoints": []
+        },
+        {
+          "name": "Non mi stare addosso",
+          "description": "Uccidi Lord Morchok in modalita Eroica.",
+          "steps": [],
+          "waypoints": []
+        }
+      ],
+      "notes": [],
+      "references": []
+    },
+    {
+      "id": "zonozz",
+      "name": "Zon'ozz il Signore della Guerra",
+      "image": "",
+      "imageAlt": "Zon'ozz il Signore della Guerra",
+      "modelType": "npc",
+      "modelDisplayId": 39138,
+      "intro": "",
+      "achievements": [
+        {
+          "name": "Eroica: Zon'ozz il Signore della Guerra",
+          "description": "Uccidi Zon'ozz il Signore della Guerra in modalita Eroica.",
+          "steps": [],
+          "waypoints": []
+        },
+        {
+          "name": "Campione di Ping Pong",
+          "description": "L’obiettivo e far rimbalzare la sfera che creerà Zon'ozz il Signore della Guerra 10 volte prima di ucciderlo. Aggrare/tauntare il boss, attendere lo spawn della sfera, per farla rimbalzare sarà sufficiente passarci attraverso, dopodichè lei si muoverà e andrà seguita per poter ripetere questo “ping pon”. E’ fondamentale cercare di far rimbalzare la sfera nel centro della stanza in quanto se uscirà della stanza sarà necessario ricominciare l’intero processo.",
+          "steps": [],
+          "waypoints": []
+        }
+      ],
+      "notes": [],
+      "references": []
+    },
+    {
+      "id": "yorsahj",
+      "name": "Yor'sahj il Senza Sonno",
+      "image": "",
+      "imageAlt": "Yor'sahj il Senza Sonno",
+      "modelType": "npc",
+      "modelDisplayId": 39101,
+      "intro": "",
+      "achievements": [
+        {
+          "name": "Eroica: Yor'sahj il Senza Sonno",
+          "description": "Yor'sahj il Senza Sonno in modalità Eroica.",
+          "steps": [],
+          "waypoints": []
+        },
+        {
+          "name": "Assaggia l'arcobaleno!",
+          "description": "dopo aver aggrato il boss Yor’sahj il Senza sonno inizierà a creare delle melme le quali si muoveranno verso di lui fino a quando, una volta raggiunto, le assorbirà. L’impresa consiste nel fargli assorbire le melme in queste combinazioni di colori:\n-Nero e Giallo\n-Nero e Blu \n-Rosso e Verde\n-Viola e Giallo\nUna volta fatto sarà possibile uccidere il boss. L’addon “Instance Achievement Tracker” si rivela molto utile in quanto una volta verificatesi le condizioni per l’ottenimento dell’impresa vi informerà del soddisfacimento dei requisiti.",
+          "steps": [],
+          "waypoints": []
+        }
+      ],
+      "notes": [],
+      "references": []
+    },
+    {
+      "id": "hagara",
+      "name": "Hagara la Tempestosa",
+      "image": "",
+      "imageAlt": "Hagara la Tempestosa",
+      "modelType": "npc",
+      "modelDisplayId": 39318,
+      "intro": "",
+      "achievements": [
+        {
+          "name": "Hagara la Tempestosa",
+          "description": "Uccidi Hagara la Tempestosa in modalità Eroica.",
+          "steps": [],
+          "waypoints": []
+        }
+      ],
+      "notes": [],
+      "references": []
+    },
+    {
+      "id": "ultraxion",
+      "name": "Ultraxion",
+      "image": "",
+      "imageAlt": "Ultraxion",
+      "modelType": "npc",
+      "modelDisplayId": 39099,
+      "intro": "",
+      "achievements": [
+        {
+          "name": "Eroica: Ultraxion",
+          "description": "Uccidi Ultraxion in modalità Eroica.",
+          "steps": [],
+          "waypoints": []
+        },
+        {
+          "name": "Due minuti a mezzanotte",
+          "description": "Uccidi Ultraxion in modalità Eroica.",
+          "steps": [],
+          "waypoints": []
+        }
+      ],
+      "notes": [],
+      "references": []
+    },
+    {
+      "id": "corno-nero",
+      "name": "Maestro di Guerra Corno Nero",
+      "image": "",
+      "imageAlt": "Maestro di Guerra Corno Nero",
+      "modelType": "npc",
+      "modelDisplayId": 39399,
+      "intro": "",
+      "achievements": [
+        {
+          "name": "Eroica: Maestro di Guerra Corno Nero",
+          "description": "Uccidi Maestro di Guerra Corno Nero.",
+          "steps": [],
+          "waypoints": []
+        },
+        {
+          "name": "Difensore del Ponte",
+          "description": "in questa semplice fight bisogna evitare che la nave Fuoco Celeste subisca danno, per evitare ciò sarà sufficiente uccidere i due draghi del crepuscolo che spawneranno ai lati della parte posteriore della nave e ricordarsi di soakare il grosso e ben visibile cerchio viola in mezzo al \nponte.",
+          "steps": [],
+          "waypoints": []
+        }
+      ],
+      "notes": [],
+      "references": []
+    },
+    {
+      "id": "spina-dorsale-di-alamorte",
+      "name": "Spina dorsale di Alamorte Il Distruttore",
+      "image": "",
+      "imageAlt": "Spina dorsale di Alamorte Il Distruttore",
+      "modelType": "npc",
+      "modelDisplayId": 39355,
+      "intro": "",
+      "achievements": [
+        {
+          "name": "Speriamo che gli venga il capogiro…",
+          "description": "Vinci lo scontro sulla Spina Dorsale di Alamorte nell'Anima del Drago in modalità Normale o Eroica dopo aver costretto Alamorte a effettuare le seguenti rotazioni: sinistra, destra, sinistra, destra: la prima cosa da fare è uccidere uno dei tentacoli che compariranno sulla SINISTRA ed aspettare sopra il punto in cui il tentacolo è stato ucciso, dopo che sarà comparso il messaggio “Alamorte ruota a sinistra!” sarà il momento di spostarsi sul suo lato destro e ripetere il procedimento fino a farlo ruotare 4 volte (SINISTRA, DESTRA, SINISTRA, DESTRA).\nPer terminare l’incontro è sufficiente uccidere i vari tentacoli e add che compariranno: fondamentale è non stare fermi fermi ma continuare a spostarsi da destra a sinistra e viceversa onde evitare che Alamorte faccia altre rotazioni ed invalidi i prerequisiti per l’ottenimento dell’archivio. \nDovranno essere distrutte 3 placche presenti sulla schiena di Alamorte e per farlo dovranno essere uccisi vari blob che compariranno vicino ad esse.\n.",
+          "steps": [],
+          "waypoints": []
+        }
+      ],
+      "notes": [],
+      "references": []
+    },
+    {
+      "id": "alamorte",
+      "name": "Alamorte Il Distruttore",
+      "image": "",
+      "imageAlt": "Alamorte Il Distruttore",
+      "modelType": "npc",
+      "modelDisplayId": 39355,
+      "intro": "",
+      "achievements": [
+        {
+          "name": "Campione Cromatico",
+          "description": "Distruggi Alamorte nell'incursione Anima del Drago in modalità Normale o Eroica dopo aver iniziato l'incontro sulla piattaforma di ogni Aspetto e aver permesso ad Alamorte di attaccare quell'Aspetto.\nSarà sufficiente iniziare l’incontro parlando con Thrall e poi recarsi sulla piattaforma di uno dei 4 aspetti e attendere che l’aspetto desiderato venga impalato, dopodichè si potrà procedere con l’uccisione di Alamorte. Questo achievement richiede 4 settimane differenti per essere completato o, in alternativa, l’utilizzo di altri 3 alts oltre al personaggio principale in quanto il completamento anche solo parziale degli archivi è ormai account-bound.",
+          "steps": [],
+          "waypoints": []
+        }
+      ],
+      "notes": [],
+      "references": []
+    }
+  ],
+  "links": [
+    {
+      "label": "Articolo della serata",
+      "url": "pages/spettatori-diario.html?article=serata-cataclysm-achievements"
+    }
+  ]
+}

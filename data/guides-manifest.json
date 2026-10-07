@@ -14,6 +14,20 @@
   ],
   "guides": [
     {
+      "id": "anima-del-drago",
+      "type": "achievement",
+      "title": "Gloria dell'incursore dell'Anima del Drago",
+      "subtitle": "Guida rapida per completare il meta achievement in modalità Eroica e ottenere le Redini dell'Araldo del Crepuscolo.",
+      "summary": "Guida per completare i 13 criteri del meta achievement e ottenere le Redini dell'Araldo del Crepuscolo.",
+      "expansion": "Cataclysm",
+      "instance": "Anima del Drago",
+      "updated": "2026-10-04",
+      "badge": "Gloria",
+      "coverImage": "",
+      "source": "content/guides/achievements/anima-del-drago.json",
+      "href": "pages/guide-detail.html?id=anima-del-drago"
+    },
+    {
       "id": "firelands",
       "type": "achievement",
       "title": "Glory of the Firelands Raider",
