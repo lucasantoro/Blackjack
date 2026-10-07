@@ -25,6 +25,7 @@
     [MODEL_TYPES.shoulder]: "item",
     [MODEL_TYPES.npc]: "npc",
     [MODEL_TYPES.humanoidnpc]: "npc",
+    [MODEL_TYPES.character]: "character",
     [MODEL_TYPES.object]: "object",
     [MODEL_TYPES.collection]: "collection"
   };
@@ -121,7 +122,12 @@
   }
 
   async function verifyModelAssets(displayId, modelType) {
-    const meta = await fetchModelMeta(displayId, modelType);
+    let meta = await fetchModelMeta(displayId, modelType);
+    // Humanoid NPCs use a character body plus equipment/customizations.
+    // Their NPC metadata legitimately has Model: 0.
+    if (!meta?.Model && meta?.Character?.ChrModelId) {
+      meta = await fetchModelMeta(meta.Character.ChrModelId, MODEL_TYPES.character);
+    }
     const modelId = Number(meta?.Model || 0);
     if (!modelId) {
       throw new Error("Model metadata did not include a geometry id");
@@ -166,6 +172,12 @@
       };
 
       const model = new window.ZamModelViewer(options);
+      // The pinned viewer initializes its far clipping plane at 500 units.
+      // Its resize path uses 5000, which also accommodates raid-sized models.
+      const width = container.clientWidth;
+      if (width > 0) {
+        model.renderer?.onResize?.(width, Math.round(width / options.aspect), options.aspect);
+      }
       container.__wowModel = model;
       container.classList.add("is-loaded");
       container.parentElement?.querySelector("[data-model-fallback]")?.classList.add("is-hidden");
