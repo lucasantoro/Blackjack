@@ -64,13 +64,13 @@ function renderGuide(guide) {
 
 function renderGuideCover(cover) {
   const model = cover.modelDisplayId ? `<div class="guide-model-viewer guide-model-viewer--reward" data-wow-model data-wow-model-autoload data-model-type="${escapeHtml(cover.modelType || "npc")}" data-display-id="${Number(cover.modelDisplayId)}" data-aspect="1"></div>` : "";
-  const image = cover.image ? `<img class="guide-model-fallback" data-model-fallback src="${escapeHtml(resolveAsset(cover.image))}" alt="${escapeHtml(cover.alt || activeGuide.title)}">` : '<div class="guide-media-placeholder">BJ</div>';
+  const image = cover.image ? `<img class="guide-model-fallback" data-model-fallback src="${escapeHtml(resolveAsset(cover.image))}" alt="${escapeHtml(cover.alt || activeGuide.title)}">` : '<div class="guide-media-placeholder" data-model-fallback>BJ</div>';
   return `<figure class="guide-feature__media">${model}${image}${model ? '<span class="guide-model-status" data-model-status>Modello 3D</span>' : ""}<figcaption>${escapeHtml(activeGuide.title)}</figcaption></figure>`;
 }
 
 function renderBoss(boss, index) {
   const model = boss.modelDisplayId ? `<div class="guide-model-viewer" data-wow-model data-model-type="${escapeHtml(boss.modelType || "npc")}" data-display-id="${Number(boss.modelDisplayId)}" data-aspect="1"></div>` : "";
-  const image = boss.image ? `<img class="guide-model-fallback" data-model-fallback src="${escapeHtml(resolveAsset(boss.image))}" alt="${escapeHtml(boss.imageAlt || boss.name)}">` : '<div class="guide-media-placeholder">BJ</div>';
+  const image = boss.image ? `<img class="guide-model-fallback" data-model-fallback src="${escapeHtml(resolveAsset(boss.image))}" alt="${escapeHtml(boss.imageAlt || boss.name)}">` : '<div class="guide-media-placeholder" data-model-fallback>BJ</div>';
   return `<article class="guide-boss-card ${index === 0 ? "is-active" : ""}" role="tabpanel" data-guide-panel="${escapeHtml(boss.id)}" ${index === 0 ? "" : "hidden"}>
     <div class="guide-boss-card__media">${model}${image}${model ? '<span class="guide-model-status" data-model-status>Modello 3D</span>' : ""}</div>
     <div class="guide-boss-card__body"><div class="eyebrow">${escapeHtml(boss.name)}</div><h3>Achievement del boss</h3>${boss.intro ? `<p>${escapeHtml(boss.intro)}</p>` : ""}

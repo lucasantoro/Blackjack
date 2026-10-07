@@ -3432,7 +3432,8 @@ header nav a.active {
 }
 
 .guide-model-viewer.is-loaded + .guide-model-fallback,
-.guide-model-fallback.is-hidden {
+.guide-model-fallback.is-hidden,
+.guide-media-placeholder[data-model-fallback].is-hidden {
   display: none;
 }
 
