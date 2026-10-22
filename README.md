@@ -1,5 +1,164 @@
 # Blackjack
 
+Sito della gilda Blackjack (Nemesis EU). Sito statico su GitHub Pages +
+Cloudflare Workers per i dati live.
+
+## Struttura del sito
+
+```text
+index.html                home: bacheca "Ultime attività" + video della gilda
+pages/                    pagine interne
+media/videos/             i video caricati dalla gilda
+css/style.css             unico foglio di stile
+data/guild-videos.json    elenco dei video del carosello
+js/config.js              UNICO posto dove stanno endpoint e link esterni
+js/boot.js                script bloccante minimo (classe .js + redirect HTTPS)
+js/site.js                utility condivise (window.BJ), menu mobile, footer
+js/home.js                bacheca, carosello video e player
+js/page-*.js              uno script per pagina
+scripts/serve.py          anteprima locale
+scripts/add_guild_video.py aggiunge/rimuove i video della home
+scripts/build_layout.py   rigenera head/header/footer di tutte le pagine
+scripts/build_sitemap.mjs rigenera sitemap.xml
+workers/cloudflare/       i Worker
+```
+
+## Vedere il sito in locale prima di pubblicare
+
+```powershell
+python .\scripts\serve.py
+```
+
+Apre `http://127.0.0.1:4173` nel browser e serve la cartella del progetto.
+Ctrl+C per fermare. Dopo ogni modifica basta ricaricare la pagina: la cache è
+disattivata, quindi vedi sempre l'ultima versione.
+
+**Usa sempre la porta 4173.** I Cloudflare Worker accettano richieste solo da
+origini note e `127.0.0.1:4173` è fra quelle. Su un'altra porta il browser
+blocca le chiamate per CORS e vedresti la home senza bacheca, senza progress e
+senza statistiche. Se ti serve davvero un'altra porta, aggiungila in
+`DEFAULT_ALLOWED_ORIGINS` dei worker e ridistribuiscili.
+
+Il server gestisce anche le richieste Range, quindi i video si possono
+scorrere nella timeline esattamente come sul sito pubblicato.
+
+## Video della gilda (carosello in home)
+
+I video stanno in `media/videos/`, l'elenco in `data/guild-videos.json`.
+Compaiono sia nel carosello sia fra le card della bacheca.
+
+### Aggiungere un video
+
+Da un file locale (serve `ffmpeg`: `winget install Gyan.FFmpeg`):
+
+```powershell
+python .\scripts\add_guild_video.py "C:\Users\lucas\Downloads\clip.mp4"
+```
+
+Lo script comprime il video per il web, mette il `moov` in testa (parte subito
+senza scaricare tutto), estrae la copertina e ti chiede titolo, autore,
+etichetta e descrizione.
+
+Senza domande:
+
+```powershell
+python .\scripts\add_guild_video.py "C:\...\clip.mp4" --title "Primo kill di Ula'tek" --author "Gearstrike" --tag "Kill" --description "La serata del first kill." --poster-at 42 --no-prompt
+```
+
+Se il video è già su YouTube o Twitch non viene copiato niente nel repo:
+
+```powershell
+python .\scripts\add_guild_video.py --youtube dQw4w9WgXcQ --title "Montaggio stagione 2"
+python .\scripts\add_guild_video.py --twitch 2907028647 --title "Serata completa"
+```
+
+### Gestire i video
+
+```powershell
+python .\scripts\add_guild_video.py --list
+python .\scripts\add_guild_video.py --remove ulatek-cinematic
+```
+
+`--remove` cancella anche i file in `media/videos/`; con `--keep-files` li
+lascia dove sono.
+
+### Occhio al peso
+
+Ogni video caricato resta nel repository. Un paio di minuti a 1280px pesa
+15-20 MB: va benissimo per qualche video all'anno, meno per decine. Quando
+inizia a diventare tanta roba, carica i montaggi lunghi su YouTube e aggiungili
+con `--youtube`: il sito li mostra allo stesso modo senza appesantire il repo.
+
+### Modificare menu, footer o meta tag
+
+Non si toccano le 15 pagine a mano. Si modifica **`scripts/build_layout.py`**
+(voci di menu, titoli, descrizioni, CSP, colonne del footer) e si lancia:
+
+```powershell
+python .\scripts\build_layout.py
+```
+
+Lo script riscrive solo le zone fra i marcatori `<!--#bj:head-->`,
+`<!--#bj:header-->` e `<!--#bj:footer-->`: il contenuto delle pagine non viene
+toccato.
+
+Dopo aver aggiunto o rimosso una pagina:
+
+```powershell
+node .\scripts\build_sitemap.mjs
+```
+
+### Link e endpoint
+
+Tutti gli URL esterni e i Worker stanno in **`js/config.js`**. Il link Discord
+e `links.discord`: finché resta `null`, i bottoni "Entra in gilda" portano alla
+pagina di reclutamento. Appena incolli l'invito, tutti i bottoni del sito lo
+usano automaticamente.
+
+### Bacheca "Ultime attività" (home)
+
+`js/home.js` unisce in una sola lista ordinata per data:
+
+- kill e progress dei boss (worker `blackjack-raid-progress`, ultimo report)
+- achievement di gilda (worker `blackjack-community-diary`, Armory Blizzard)
+- dirette e VOD Twitch (worker `blackjack-twitch-status`)
+- guide nuove (`data/guides-manifest.json`)
+- articoli del diario (`data/spettatori-diary-manual.json`)
+
+Le card sono costruite con `createElement`/`textContent`: nessun `innerHTML` su
+dati remoti.
+
+### Sicurezza
+
+- Content-Security-Policy in ogni pagina (generata da `build_layout.py`):
+  `script-src 'self'` + soli domini necessari, `object-src 'none'`,
+  `base-uri 'self'`, `upgrade-insecure-requests`.
+- Nessuno script inline e nessun attributo `onclick`: tutto in file esterni.
+- Ogni URL che finisce in `href`/`src` passa da `BJ.safeUrl`, che blocca
+  `javascript:`, `data:` e `vbscript:`.
+- Embed YouTube su `youtube-nocookie.com`.
+
+### Da fare dopo questa revisione
+
+1. **Redeploy di `blackjack-recruiting`**: l'etichetta del messaggio Discord ora
+   è "Disponibilità" con l'accento.
+
+   Attenzione: `workers/cloudflare/` è in `.gitignore`, quindi i Worker non
+   finiscono nel repository. La correzione esiste solo nella copia locale: se
+   lavori da un'altra macchina non la trovi, e senza redeploy il messaggio su
+   Discord resta quello vecchio.
+
+2. **Invito Discord** in `js/config.js` (`links.discord`).
+
+3. **Autore del cinematic**: in `data/guild-videos.json` il campo `author` del
+   video di Ula'tek è vuoto perché non so chi l'ha montato. Riempilo con:
+
+   ```powershell
+   python .\scripts\add_guild_video.py --list
+   ```
+
+   e poi modifica il campo a mano nel JSON.
+
 ## Guide Achievement e Collezioni
 
 La sezione guide parte da:

@@ -47,4 +47,4 @@ Per aggiornare l'indice in locale:
 node .\scripts\build_guides_manifest.mjs
 ```
 
-Se il generatore segnala un errore, il file JSON non rispetta il template oppure esiste gia una guida con lo stesso `id`.
+Se il generatore segnala un errore, il file JSON non rispetta il template oppure esiste già una guida con lo stesso `id`.

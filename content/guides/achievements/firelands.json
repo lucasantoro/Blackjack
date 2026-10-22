@@ -1,7 +1,7 @@
 {
   "id": "firelands",
   "title": "Glory of the Firelands Raider",
-  "subtitle": "Guida rapida per completare il meta achievement in modalita Heroic e ottenere il Corrupted Egg of Millagazor.",
+  "subtitle": "Guida rapida per completare il meta achievement in modalità Heroic e ottenere il Corrupted Egg of Millagazor.",
   "summary": "Guida per completare i 12 criteri del meta achievement e ottenere il Corrupted Egg of Millagazor.",
   "expansion": "Cataclysm",
   "instance": "Firelands",
@@ -14,14 +14,23 @@
     "modelDisplayId": 38046
   },
   "stats": [
-    { "value": "12", "label": "criteri richiesti" },
-    { "value": "6", "label": "kill Heroic dirette" },
-    { "value": "Egg", "label": "Corrupted Egg of Millagazor" }
+    {
+      "value": "12",
+      "label": "criteri richiesti"
+    },
+    {
+      "value": "6",
+      "label": "kill Heroic dirette"
+    },
+    {
+      "value": "Egg",
+      "label": "Corrupted Egg of Millagazor"
+    }
   ],
   "preparation": {
     "title": "Prima di entrare",
     "paragraphs": [
-      "Glory of the Firelands Raider e il meta achievement di Firelands legato alla ricompensa Corrupted Egg of Millagazor. La run attraversa i sei boss principali del raid: per ognuno c'e almeno un criterio Heroic e, in alcuni casi, una condizione aggiuntiva da rispettare.",
+      "Glory of the Firelands Raider è il meta achievement di Firelands legato alla ricompensa Corrupted Egg of Millagazor. La run attraversa i sei boss principali del raid: per ognuno c'è almeno un criterio Heroic e, in alcuni casi, una condizione aggiuntiva da rispettare.",
       "Porta una macro /kneel per Majordomo, un addon coordinate come TomTom per Bucket List e riduci il danno AoE quando serve controllare il boss invece di eliminarlo subito."
     ],
     "checklist": [
@@ -42,13 +51,13 @@
       "achievements": [
         {
           "name": "Heroic: Lord Rhyolith",
-          "description": "Uccidi Lord Rhyolith in modalita Heroic.",
+          "description": "Uccidi Lord Rhyolith in modalità Heroic.",
           "steps": [],
           "waypoints": []
         },
         {
           "name": "Not an Ambi-Turner",
-          "description": "Colpisci solo la gamba destra con attacchi single target. Evita danno AoE e burst incontrollato: se il boss muore subito senza rispettare la condizione, l'achievement puo non essere assegnato.",
+          "description": "Colpisci solo la gamba destra con attacchi single target. Evita danno AoE e burst incontrollato: se il boss muore subito senza rispettare la condizione, l'achievement può non essere assegnato.",
           "steps": [],
           "waypoints": []
         }
@@ -67,7 +76,7 @@
       "achievements": [
         {
           "name": "Heroic: Shannox",
-          "description": "Uccidi Shannox in modalita Heroic.",
+          "description": "Uccidi Shannox in modalità Heroic.",
           "steps": [],
           "waypoints": []
         },
@@ -104,7 +113,7 @@
       "achievements": [
         {
           "name": "Heroic: Beth'tilac",
-          "description": "Uccidi Beth'tilac in modalita Heroic.",
+          "description": "Uccidi Beth'tilac in modalità Heroic.",
           "steps": [],
           "waypoints": []
         },
@@ -129,7 +138,7 @@
       "achievements": [
         {
           "name": "Heroic: Alysrazor",
-          "description": "Uccidi Alysrazor in modalita Heroic.",
+          "description": "Uccidi Alysrazor in modalità Heroic.",
           "steps": [],
           "waypoints": []
         },
@@ -154,7 +163,7 @@
       "achievements": [
         {
           "name": "Heroic: Baleroc",
-          "description": "Uccidi Baleroc in modalita Heroic.",
+          "description": "Uccidi Baleroc in modalità Heroic.",
           "steps": [],
           "waypoints": []
         },
@@ -179,7 +188,7 @@
       "achievements": [
         {
           "name": "Heroic: Majordomo Fandral Staghelm",
-          "description": "Uccidi Majordomo Fandral Staghelm in modalita Heroic.",
+          "description": "Uccidi Majordomo Fandral Staghelm in modalità Heroic.",
           "steps": [],
           "waypoints": []
         },
@@ -188,7 +197,7 @@
           "description": "Attiva le due sfere di magma ai lati di Fandral senza farti colpire da Kneel to the Flame. Quando Fandral lancia la spell, usa /kneel, muoviti durante i 5 secondi di cast, poi inginocchiati di nuovo al cast successivo. Ripeti fino ad attivare entrambe le sfere, poi uccidi il boss.",
           "steps": [
             "Tutti i giocatori devono seguire lo stesso ritmo.",
-            "Un solo player colpito puo far fallire l'achievement."
+            "Un solo player colpito può far fallire l'achievement."
           ],
           "waypoints": []
         }

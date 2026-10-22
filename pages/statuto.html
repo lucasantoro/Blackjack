@@ -1,309 +1,152 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="../js/force-https.js"></script>
-<title>Statuto - Blackjack</title>
-<link rel="stylesheet" href="../css/style.css">
-<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<!--#bj:head-->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; upgrade-insecure-requests; base-uri 'self'; object-src 'none'; form-action 'self'; manifest-src 'self'; script-src 'self' https://challenges.cloudflare.com https://code.jquery.com https://cdn.jsdelivr.net https://blackjack-wow-model-assets.lucasantoro2905.workers.dev; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://wow.zamimg.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://render.worldofwarcraft.com https://render-eu.worldofwarcraft.com https://render-us.worldofwarcraft.com https://static-cdn.jtvnw.net https://wow.zamimg.com https://i.ytimg.com; media-src 'self' blob:; worker-src 'self' blob: https://cdn.jsdelivr.net; connect-src 'self' https://blackjack-twitch-status.lucasantoro2905.workers.dev https://blackjack-raid-progress.lucasantoro2905.workers.dev https://blackjack-community-stats.lucasantoro2905.workers.dev https://blackjack-community-diary.lucasantoro2905.workers.dev https://blackjack-recruiting.lucasantoro2905.workers.dev https://blackjack-wow-model-assets.lucasantoro2905.workers.dev https://wow.zamimg.com https://cdn.jsdelivr.net; frame-src https://player.twitch.tv https://challenges.cloudflare.com https://www.youtube-nocookie.com https://www.youtube.com">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Statuto della gilda | Blackjack</title>
+  <meta name="description" content="Le regole dei Blackjack: comportamento, raid, loot e vita di gilda in un documento unico.">
+  <meta name="theme-color" content="#07110f">
+  <link rel="canonical" href="https://www.blackjackguild.it/pages/statuto.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Blackjack">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:title" content="Statuto della gilda | Blackjack">
+  <meta property="og:description" content="Le regole dei Blackjack: comportamento, raid, loot e vita di gilda in un documento unico.">
+  <meta property="og:url" content="https://www.blackjackguild.it/pages/statuto.html">
+  <meta property="og:image" content="https://www.blackjackguild.it/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Blackjack, gilda italiana su Nemesis EU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Statuto della gilda | Blackjack">
+  <meta name="twitter:description" content="Le regole dei Blackjack: comportamento, raid, loot e vita di gilda in un documento unico.">
+  <meta name="twitter:image" content="https://www.blackjackguild.it/img/og-cover.jpg">
+  <link rel="icon" href="../img/icons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../img/icons/icon-32.png">
+  <link rel="apple-touch-icon" href="../img/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap">
+  <link rel="stylesheet" href="../css/style.css?v=23">
+  <script src="../js/boot.js"></script>
+  <script src="../js/config.js" defer></script>
+  <script src="../js/site.js" defer></script>
+  <script src="../js/page-statuto.js" defer></script>
+<!--#/bj:head-->
 </head>
 
-<body class="page-transition blackjack-bg blackjack-bg--raid">
+<body data-nav="statuto" class="blackjack-bg blackjack-bg--raid">
 
-<header>
-  <nav class="mainnav">
-    <a href="../index.html" class="nav-brand" aria-label="Blackjack Home">
-      <img src="../img/blackjack_logo.png" alt="Blackjack">
+<!--#bj:header-->
+<a class="skip-link" href="#contenuto">Salta al contenuto</a>
+<header class="site-header">
+  <nav class="mainnav" aria-label="Navigazione principale">
+    <a href="../index.html" class="nav-brand">
+      <img src="../img/blackjack_logo.png" alt="" width="56" height="56" decoding="async">
       <span>Blackjack</span>
     </a>
-    <ul>
-      <li><a href="../index.html">Home</a></li>
-      <li><a href="raider.html">Raider</a></li>
-      <li><a href="spettatori.html">Spettatori</a></li>
-      <li><a href="guide.html">Guide</a></li>
-      <li><a href="recruiting.html">Reclutamento</a></li>
-      <li><a href="statuto.html" class="active">Statuto</a></li>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mainnav-list">
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+      <span class="nav-toggle__text">Menu</span>
+    </button>
+    <ul class="mainnav__list" id="mainnav-list">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../pages/raider.html">Raider</a></li>
+        <li><a href="../pages/spettatori.html">Spettatori</a></li>
+        <li><a href="../pages/guide.html">Guide</a></li>
+        <li><a href="../pages/recruiting.html">Reclutamento</a></li>
+        <li><a href="../pages/statuto.html" class="active" aria-current="page">Statuto</a></li>
     </ul>
   </nav>
 </header>
+<!--#/bj:header-->
 
 <section class="hero">
   <div class="hero-content">
-    <h2>Statuto della gilda</h2>
+    <h1 class="hero-title">Statuto della gilda</h1>
     <p>Ruoli, regole e raid rules dei Blackjack in un pannello ordinato e leggibile.</p>
   </div>
 </section>
 
 <div class="bg-container bg-main-logo">
-  <main class="panel statuto">
+  <main id="contenuto" class="panel statuto">
 
-    <div class="section-head section-head--center">
-      <div class="eyebrow">Regolamento</div>
-      <h2 class="section-title">Blackjack</h2>
-      <p class="section-subtitle">Seleziona una sezione, scorri le regole e tieni sotto mano il conteggio del blocco attivo.</p>
-    </div>
-
-    <section class="statute-shell">
-      <div class="statute-toolbar">
-        <div class="statute-summary-card">
-          <div class="stat-label">Sezioni</div>
-          <div class="stat-value" id="statute-section-count">-</div>
-          <div class="stat-hint">Blocchi disponibili nello statuto.</div>
-        </div>
-        <div class="statute-summary-card">
-          <div class="stat-label">Regole visibili</div>
-          <div class="stat-value" id="statute-rule-count">-</div>
-          <div class="stat-hint">Voci contenute nella sezione aperta.</div>
-        </div>
-        <div class="statute-summary-card">
-          <div class="stat-label">Categoria attiva</div>
-          <div class="stat-value statute-summary-card__value--compact" id="statute-active-label">-</div>
-          <div class="stat-hint">Sezione che stai leggendo adesso.</div>
-        </div>
+    <section class="band">
+      <div class="band-head">
+        <p class="eyebrow">Indice</p>
+        <h2 class="section-title">Otto sezioni, nessuna sorpresa</h2>
       </div>
+      <nav class="statute-index" id="statute-index" aria-label="Sezioni dello statuto"></nav>
+    </section>
 
-      <div class="statute-filter-bar" id="statute-filter-bar"></div>
+    <div class="statute-body" id="statute-body"></div>
 
-      <div class="statute-nav">
-        <button type="button" class="button-secondary" id="statute-prev">Sezione precedente</button>
-        <button type="button" class="button-secondary" id="statute-next">Sezione successiva</button>
+    <section class="cta-final">
+      <h2 class="section-title">Ci stai?</h2>
+      <p class="lead">Se queste righe ti sembrano ragionevoli, siamo già d'accordo.</p>
+      <div class="hero-actions">
+        <a class="button-primary" href="recruiting.html">Vai al reclutamento</a>
       </div>
-
-      <article class="statute-card" id="statute-card"></article>
     </section>
 
   </main>
 </div>
 
-<footer>
-  <p>&copy; 2026 Blackjack</p>
-</footer>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  document.body.classList.add("page-loaded");
-});
-
-document.querySelectorAll("a").forEach(link => {
-  if (link.hostname === window.location.hostname) {
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
-      const href = link.getAttribute("href");
-      document.body.classList.remove("page-loaded");
-      setTimeout(() => { window.location.href = href; }, 300);
-    });
-  }
-});
-</script>
-
-<script>
-const statuteSections = [
-  {
-    id: "identita",
-    label: "Identita",
-    title: "Identita del tavolo",
-    intro: "Blackjack nasce per tenere insieme maturita, esperienza e voglia di giocare bene con altre persone.",
-    rules: [
-      "La gilda accoglie giocatori con storie molto diverse, dal progress piu spinto al gioco piu rilassato. Quello che conta davvero e l'atteggiamento: rispetto, affidabilita e spirito di squadra vengono prima del personaggio e del log.",
-      "Qui si scherza, si ride e si osa, ma la tossicita resta fuori dal casino. Se il tono di una persona rovina l'ambiente, il problema non e il wipe o il risultato del raid: e il comportamento."
-    ]
-  },
-  {
-    id: "struttura",
-    label: "Struttura",
-    title: "Struttura della gilda",
-    intro: "Ogni ruolo ha una responsabilita precisa all'interno del tavolo.",
-    rules: [
-      "Casino Royale e il Guild Master: definisce la direzione della gilda e chiude le decisioni importanti. Pit Boss e il Vice GM: supporta il banco, coordina lo staff e tiene la macchina in ordine.",
-      "Jack e l'Officer Raid: segue roster, progress, analisi dei fight, meccaniche, build e disciplina del gruppo. Dealer e l'Officer Eventi & Social: organizza mount run, achievement, eventi community e serate leggere.",
-      "High Roller identifica i raider attivi del progress. Buy-In e il grado di prova per i nuovi membri. Split e il ruolo degli alt. Spettatore e il grado social per chi vive la community senza obblighi di roster."
-    ]
-  },
-  {
-    id: "obiettivi",
-    label: "Obiettivi",
-    title: "Obiettivi di gilda",
-    intro: "Il nostro obiettivo principale resta semplice: divertirci insieme in un ambiente stabile.",
-    rules: [
-      "Blackjack vuole essere una gilda di persone adulte, ma con lo spirito giusto per ridere, giocare e costruire un gruppo che duri nel tempo. Vincere conta, ma non vale mai la pena farlo bruciando il clima interno.",
-      "Discord non e obbligatorio fuori raid, ma e fortemente consigliato. Chi entra nella vita della gilda si integra molto piu facilmente; chi resta sempre ai margini puo comunque giocare con noi, ma inevitabilmente vivra meno la parte sociale."
-    ]
-  },
-  {
-    id: "comportamento",
-    label: "Comportamento",
-    title: "Comportamento in gilda",
-    intro: "Il rispetto viene prima della performance.",
-    rules: [
-      "Sono richiesti educazione, rispetto e buon senso verso tutti i membri. Non sono tollerati flame, insulti, provocazioni, atteggiamenti tossici o il classico atteggiamento da 'so tutto io'.",
-      "Le antipatie personali non devono mai trasformarsi in un problema di gilda. Se nasce un conflitto, va gestito con maturita o portato allo staff prima che diventi rumore per tutto il gruppo."
-    ]
-  },
-  {
-    id: "raid",
-    label: "Raid",
-    title: "Raid e progress",
-    intro: "Il raid richiede rispetto del gruppo, preparazione e comunicazione chiara.",
-    rules: [
-      "I giorni ufficiali di raid sono lunedi e mercoledi, dalle 21:30 alle 23:30. Alle 21:30 si pulla: la puntualita non e opzionale, perche il ritardo di pochi rallenta l'intera serata. Chi sa gia di arrivare tardi deve avvisare il raid leader e, quando e pronto davanti all'istanza, resta in attesa del group senza interrompere il ritmo del raid.",
-      "Chi entra in raid deve arrivare preparato. Le meccaniche base dei fight farmati devono essere gia note, gli addon richiesti dalla gilda sono obbligatori, e gli strumenti indicati dallo staff come WowAudit e RC Loot Council non sono facoltativi. Lo stesso vale per socket, enchant e consumabili: presentarsi senza il minimo indispensabile penalizza tutto il gruppo e puo incidere anche sulle priorita di loot, salvo casi in cui si sia l'unico richiedente.",
-      {
-        body: "Il progress con il main resta riservato alla gilda dal mercoledi al lunedi inclusi. Il martedi pre-reset il main e libero. Gli alt possono invece essere usati liberamente durante la settimana. Se vuoi provare con il main una difficolta superiore rispetto a quella affrontata con la gilda, devi avvisare il raid leader prima di farlo.",
-        bullets: [
-          "Se sei in progress Normal e vuoi provare Heroic con il main, va comunicato prima.",
-          "Se sei in progress Heroic e vuoi provare Mythic con il main, va comunicato prima.",
-          "Nei giorni e negli orari ufficiali di raid non si raida con altre gilde con il personaggio coinvolto nel roster."
-        ]
-      },
-      "Discord e obbligatorio almeno in ascolto durante il raid. Dubbi, chiarimenti e strategie si sistemano prima del pull. UI e keybind restano liberi, ma se emergono problemi evidenti lo staff puo chiedere un confronto serio e disponibilita ad adattarsi per il bene del gruppo."
-    ]
-  },
-  {
-    id: "loot",
-    label: "Loot",
-    title: "Loot e priorita",
-    intro: "Il loot serve al progresso del gruppo, non al tornaconto del singolo.",
-    rules: [
-      "Nei BIS contano attendance, performance e impatto sul raid, sempre in modo equilibrato. Quando serve, tank e healer possono avere priorita. Per i set, la precedenza va a chi chiude bonus x2 o x4.",
-      "Il loot assegnabile va sempre passato al giocatore incaricato tramite RC Loot Council. Discussioni, pressioni o lamentele durante il raid non sono accettate: se c'e un dubbio, si chiarisce a fine serata con lo staff."
-    ]
-  },
-  {
-    id: "ruoli",
-    label: "Accesso ruoli",
-    title: "Accesso ai ruoli",
-    intro: "I ruoli si guadagnano con presenza, atteggiamento e affidabilita.",
-    rules: [
-      "Il passaggio da Buy-In a High Roller richiede almeno quattro serate organizzate, presenza affidabile, atteggiamento positivo e spirito di squadra. La promozione non dipende solo dal danno o dall'hps: contano anche puntualita, preparazione e comportamento.",
-      "Le nomine a Officer o Conta Carte vengono decise dal Casino Royale e dal Pit Boss in base alle necessita della gilda e alla fiducia costruita nel tempo."
-    ]
-  },
-  {
-    id: "sanzioni",
-    label: "Sanzioni",
-    title: "Sanzioni",
-    intro: "Quando una regola viene ignorata, lo staff interviene in modo proporzionato.",
-    rules: [
-      "Il primo passo e sempre il confronto: richiamo verbale o chiarimento privato. Se il problema continua, si puo arrivare a declassamento, esclusione temporanea dal raid o limitazione della partecipazione agli eventi.",
-      "Nei casi gravi o ripetuti, lo staff puo sospendere o rimuovere definitivamente un membro. Tossicita seria, mancanza di rispetto e comportamenti che danneggiano il gruppo possono portare a un intervento diretto senza passaggi intermedi."
-    ]
-  }
-];
-
-const statuteState = { activeIndex: 0 };
-
-function escapeHtml(value) {
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
-
-function renderStatuteFilters() {
-  const container = document.getElementById("statute-filter-bar");
-  if (!container) return;
-
-  container.innerHTML = statuteSections.map((section, index) => `
-    <button type="button" class="filter-chip ${index === statuteState.activeIndex ? "is-active" : ""}" data-statute-index="${index}">
-      ${escapeHtml(section.label)}
-    </button>
-  `).join("");
-
-  container.querySelectorAll("[data-statute-index]").forEach(button => {
-    button.addEventListener("click", () => {
-      statuteState.activeIndex = Number(button.getAttribute("data-statute-index"));
-      renderStatute();
-    });
-  });
-}
-
-function renderStatuteCard() {
-  const card = document.getElementById("statute-card");
-  const section = statuteSections[statuteState.activeIndex];
-  if (!card || !section) return;
-
-  card.innerHTML = `
-    <div class="section-head section-head--center">
-      <div class="eyebrow">${escapeHtml(section.label)}</div>
-      <h3 class="section-title">${escapeHtml(section.title)}</h3>
-      <p class="section-subtitle">${escapeHtml(section.intro)}</p>
-    </div>
-    <div class="statute-rule-list">
-      ${section.rules.map((rule, index) => renderStatuteRule(rule, index)).join("")}
-    </div>
-  `;
-}
-
-function renderStatuteRule(rule, index) {
-  if (typeof rule === "string") {
-    return `
-      <article class="statute-rule-item">
-        <span class="statute-rule-index">${index + 1}</span>
-        <div class="statute-rule-copy">
-          <p>${escapeHtml(rule)}</p>
-        </div>
-      </article>
-    `;
-  }
-
-  const body = escapeHtml(rule?.body || "");
-  const bullets = Array.isArray(rule?.bullets)
-    ? `<ul class="statute-rule-bullets">${rule.bullets.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
-    : "";
-
-  return `
-    <article class="statute-rule-item">
-      <span class="statute-rule-index">${index + 1}</span>
-      <div class="statute-rule-copy">
-        <p>${body}</p>
-        ${bullets}
+<!--#bj:footer-->
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__brand">
+      <img src="../img/blackjack_logo.png" alt="" width="48" height="48" loading="lazy" decoding="async">
+      <div>
+        <strong>Blackjack</strong>
+        <p>Gilda italiana su Nemesis EU. Raid progress, Mythic+ e una community attiva tutti i giorni.</p>
       </div>
-    </article>
-  `;
-}
-
-function renderStatuteSummary() {
-  const active = statuteSections[statuteState.activeIndex];
-  document.getElementById("statute-section-count").textContent = statuteSections.length;
-  document.getElementById("statute-rule-count").textContent = active.rules.length;
-  document.getElementById("statute-active-label").textContent = active.label;
-}
-
-function renderStatuteNav() {
-  const prev = document.getElementById("statute-prev");
-  const next = document.getElementById("statute-next");
-  if (!prev || !next) return;
-
-  prev.disabled = statuteState.activeIndex === 0;
-  next.disabled = statuteState.activeIndex === statuteSections.length - 1;
-
-  prev.onclick = () => {
-    if (statuteState.activeIndex > 0) {
-      statuteState.activeIndex -= 1;
-      renderStatute();
-    }
-  };
-
-  next.onclick = () => {
-    if (statuteState.activeIndex < statuteSections.length - 1) {
-      statuteState.activeIndex += 1;
-      renderStatute();
-    }
-  };
-}
-
-function renderStatute() {
-  renderStatuteFilters();
-  renderStatuteSummary();
-  renderStatuteCard();
-  renderStatuteNav();
-}
-
-renderStatute();
-</script>
+    </div>
+    <nav class="site-footer__nav" aria-label="Mappa del sito">
+      <div>
+        <h2 class="site-footer__title">Gilda</h2>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../pages/statuto.html">Statuto</a></li>
+          <li><a href="../pages/recruiting.html">Reclutamento</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Raid</h2>
+        <ul>
+          <li><a href="../pages/high-roller/aceofspades.html">Ace of Spades</a></li>
+          <li><a href="../pages/high-roller/roster-aceofspades.html">Roster</a></li>
+          <li><a href="../pages/recruiting.html">Candidati</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Community</h2>
+        <ul>
+          <li><a href="../pages/spettatori.html">Spettatori</a></li>
+          <li><a href="../pages/spettatori.html#diario">Diario</a></li>
+          <li><a href="../pages/guide.html">Guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Fuori dal sito</h2>
+        <ul>
+          <li><a href="https://raider.io/guilds/eu/nemesis/Blackjack" target="_blank" rel="noopener noreferrer">Raider.IO</a></li>
+          <li><a href="https://www.warcraftlogs.com/guild/id/808206" target="_blank" rel="noopener noreferrer">Warcraft Logs</a></li>
+          <li><a href="https://www.twitch.tv/londe83" target="_blank" rel="noopener noreferrer">Twitch</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="site-footer__bottom">
+    <p>&copy; <span data-current-year>2026</span> Blackjack &middot; Gilda italiana su Nemesis EU</p>
+    <a class="button-ghost" data-discord-link data-root-prefix="../" href="../pages/recruiting.html">Entra in gilda</a>
+  </div>
+</footer>
+<!--#/bj:footer-->
 
 </body>
 </html>

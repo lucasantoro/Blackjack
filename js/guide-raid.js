@@ -5,7 +5,6 @@ const SITE_ROOT = new URL("../", window.location.href);
 const guideId = new URLSearchParams(window.location.search).get("id");
 const state = { pdf: null, entry: null, page: 1, zoom: 1, spread: false, renderToken: 0 };
 
-document.body.classList.add("page-loaded");
 initRaidGuide();
 
 async function initRaidGuide() {
@@ -33,9 +32,9 @@ async function initRaidGuide() {
 
 function renderHeader(entry, pdfUrl) {
   document.title = `Blackjack - ${entry.title}`;
-  document.getElementById("raid-guide-footer").textContent = `© 2026 Blackjack | ${entry.title}`;
+  // Il footer e condiviso fra tutte le pagine (vedi scripts/build_layout.py).
   document.getElementById("raid-guide-hero").innerHTML = `<div class="hero-content hero-content--wide">
-    <div class="hero-tagline">Raid | Manuale PDF</div><h2>${escapeHtml(entry.title)}</h2>
+    <div class="hero-tagline">Raid | Manuale PDF</div><h1 class="hero-title">${escapeHtml(entry.title)}</h1>
     <p>${escapeHtml(entry.summary || "Guida raid consultabile direttamente dal sito.")}</p>
     <div class="hero-stats"><div class="stat-chip"><span class="stat-chip__value">${escapeHtml(entry.pages || "PDF")}</span><span class="stat-chip__label">pagine</span></div><div class="stat-chip"><span class="stat-chip__value">${escapeHtml(formatSize(entry.sizeBytes))}</span><span class="stat-chip__label">documento originale</span></div></div>
   </div>`;

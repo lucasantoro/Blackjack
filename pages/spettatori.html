@@ -1,206 +1,245 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="../js/force-https.js"></script>
-<title>Blackjack - Spettatori</title>
-<link rel="stylesheet" href="../css/style.css">
-<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<!--#bj:head-->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; upgrade-insecure-requests; base-uri 'self'; object-src 'none'; form-action 'self'; manifest-src 'self'; script-src 'self' https://challenges.cloudflare.com https://code.jquery.com https://cdn.jsdelivr.net https://blackjack-wow-model-assets.lucasantoro2905.workers.dev; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://wow.zamimg.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://render.worldofwarcraft.com https://render-eu.worldofwarcraft.com https://render-us.worldofwarcraft.com https://static-cdn.jtvnw.net https://wow.zamimg.com https://i.ytimg.com; media-src 'self' blob:; worker-src 'self' blob: https://cdn.jsdelivr.net; connect-src 'self' https://blackjack-twitch-status.lucasantoro2905.workers.dev https://blackjack-raid-progress.lucasantoro2905.workers.dev https://blackjack-community-stats.lucasantoro2905.workers.dev https://blackjack-community-diary.lucasantoro2905.workers.dev https://blackjack-recruiting.lucasantoro2905.workers.dev https://blackjack-wow-model-assets.lucasantoro2905.workers.dev https://wow.zamimg.com https://cdn.jsdelivr.net; frame-src https://player.twitch.tv https://challenges.cloudflare.com https://www.youtube-nocookie.com https://www.youtube.com">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Spettatori | Blackjack</title>
+  <meta name="description" content="La community dei Blackjack: Mythic+ senza stress, alt run, eventi social, achievement di gilda e il diario delle serate.">
+  <meta name="theme-color" content="#07110f">
+  <link rel="canonical" href="https://www.blackjackguild.it/pages/spettatori.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Blackjack">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:title" content="Spettatori | Blackjack">
+  <meta property="og:description" content="La community dei Blackjack: Mythic+ senza stress, alt run, eventi social, achievement di gilda e il diario delle serate.">
+  <meta property="og:url" content="https://www.blackjackguild.it/pages/spettatori.html">
+  <meta property="og:image" content="https://www.blackjackguild.it/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Blackjack, gilda italiana su Nemesis EU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Spettatori | Blackjack">
+  <meta name="twitter:description" content="La community dei Blackjack: Mythic+ senza stress, alt run, eventi social, achievement di gilda e il diario delle serate.">
+  <meta name="twitter:image" content="https://www.blackjackguild.it/img/og-cover.jpg">
+  <link rel="icon" href="../img/icons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../img/icons/icon-32.png">
+  <link rel="apple-touch-icon" href="../img/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap">
+  <link rel="stylesheet" href="../css/style.css?v=23">
+  <script src="../js/boot.js"></script>
+  <script src="../js/config.js" defer></script>
+  <script src="../js/site.js" defer></script>
+  <script src="../js/page-spettatori.js" defer></script>
+  <script src="../js/page-diario.js" defer></script>
+<!--#/bj:head-->
 </head>
 
-<body class="page-transition blackjack-bg blackjack-bg--social">
+<body data-nav="spettatori" class="blackjack-bg blackjack-bg--social">
 
-<header>
-  <nav class="mainnav">
-    <a href="../index.html" class="nav-brand" aria-label="Blackjack Home">
-      <img src="../img/blackjack_logo.png" alt="Blackjack">
+<!--#bj:header-->
+<a class="skip-link" href="#contenuto">Salta al contenuto</a>
+<header class="site-header">
+  <nav class="mainnav" aria-label="Navigazione principale">
+    <a href="../index.html" class="nav-brand">
+      <img src="../img/blackjack_logo.png" alt="" width="56" height="56" decoding="async">
       <span>Blackjack</span>
     </a>
-    <ul>
-      <li><a href="../index.html">Home</a></li>
-      <li><a href="raider.html">Raider</a></li>
-      <li><a href="spettatori.html" class="active">Spettatori</a></li>
-      <li><a href="guide.html">Guide</a></li>
-      <li><a href="recruiting.html">Reclutamento</a></li>
-      <li><a href="statuto.html">Statuto</a></li>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mainnav-list">
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+      <span class="nav-toggle__text">Menu</span>
+    </button>
+    <ul class="mainnav__list" id="mainnav-list">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../pages/raider.html">Raider</a></li>
+        <li><a href="../pages/spettatori.html" class="active" aria-current="page">Spettatori</a></li>
+        <li><a href="../pages/guide.html">Guide</a></li>
+        <li><a href="../pages/recruiting.html">Reclutamento</a></li>
+        <li><a href="../pages/statuto.html">Statuto</a></li>
     </ul>
   </nav>
 </header>
-
-<nav class="subnav">
-  <ul>
-    <li><a href="spettatori.html" class="active">Community</a></li>
-    <li><a href="spettatori-video.html">Video divertenti</a></li>
-    <li><a href="spettatori-diario.html">Diario</a></li>
-  </ul>
-</nav>
+<!--#/bj:header-->
 
 <section class="hero">
   <div class="hero-content">
-    <h2>Spettatori</h2>
+    <p class="hero-tagline">La parte sociale della gilda</p>
+    <h1 class="hero-title">Spettatori</h1>
     <p>
-      La parte sociale dei Blackjack: chi riempie il Discord, crea gruppi al volo
-      e trasforma ogni serata in una compagnia vera.
+      Chi riempie il Discord, crea gruppi al volo e tiene viva la gilda
+      anche quando il raid è finito.
     </p>
   </div>
 </section>
 
 <div class="bg-container bg-main-logo">
-  <main class="panel">
+  <main id="contenuto" class="panel">
 
-    <div class="section-head section-head--center">
-      <div class="eyebrow">Community</div>
-      <h2 class="section-title">La nostra community</h2>
-      <p class="section-subtitle">
-        Gli Spettatori tengono viva la gilda ogni giorno: serate leggere, gruppi improvvisati e compagnia costante.
+    <!-- ===================== COLPO D'OCCHIO ===================== -->
+    <section class="band" id="numeri" aria-labelledby="numeri-title">
+      <div class="band-head">
+        <p class="eyebrow">Armory &amp; Raider.IO</p>
+        <h2 class="section-title" id="numeri-title">La gilda in cifre</h2>
+      </div>
+
+      <ul class="figure-row">
+        <li>
+          <strong id="achievement-total">&mdash;</strong>
+          <span>achievement di gilda</span>
+        </li>
+        <li>
+          <strong id="stat-tracked">&mdash;</strong>
+          <span>profili tracciati</span>
+        </li>
+        <li>
+          <strong id="stat-guild-runs">&mdash;</strong>
+          <span>key in 30 giorni</span>
+        </li>
+        <li>
+          <strong id="stat-peak-score">&mdash;</strong>
+          <span id="stat-peak-score-hint">miglior score M+</span>
+        </li>
+        <li>
+          <strong id="stat-avg-score">&mdash;</strong>
+          <span>media top 10</span>
+        </li>
+      </ul>
+      <p class="figure-row__note">
+        Ultimo sblocco <strong id="achievement-latest-date">&mdash;</strong>:
+        <span id="achievement-latest-title"></span>
+        <span id="stat-tracked-hint"></span>
+        <span id="stats-note"></span>
       </p>
-    </div>
 
-    <p class="description-long">
-      Gli <strong>Spettatori</strong> rappresentano l'anima quotidiana della gilda. Sono i giocatori
-      che tengono viva la community con chiacchiere, Mythic+, alt run, PvP improvvisato,
-      eventi interni e supporto ai nuovi arrivati. E il posto giusto per chi vuole vivere WoW
-      in modo rilassato ma con un gruppo vero al fianco.
-    </p>
+      <div class="achievement-panel-grid" id="achievement-panels">
+        <div class="empty-state">Carico le categorie&hellip;</div>
+      </div>
 
-    <section>
-      <div class="section-head section-head--center">
-        <div class="eyebrow">Attivita</div>
-        <h2 class="section-title">Cosa facciamo</h2>
+      <details class="achievement-drawer">
+        <summary>Apri lo storico completo per categoria</summary>
+        <div class="achievement-category-board" id="achievement-category-board">
+          <div class="empty-state">Carico lo storico&hellip;</div>
+        </div>
+      </details>
+
+      <p class="stats-note" id="diary-note" hidden></p>
+    </section>
+
+    <!-- ===================== ARTICOLI ===================== -->
+    <section class="band" id="diario" aria-labelledby="diario-title">
+      <div class="band-head">
+        <p class="eyebrow">Diario</p>
+        <h2 class="section-title" id="diario-title">Le serate raccontate</h2>
         <p class="section-subtitle">
-          Attivita leggere ma curate: gioco sociale, eventi interni e un posto dove trovare sempre qualcuno.
+          Le run che valeva la pena scrivere, dal Glory di Icecrown in poi.
         </p>
       </div>
 
-      <div class="grid-cards">
-        <div class="card">
-          <h3>Mythic+ senza stress</h3>
-          <p>
-            Key in compagnia, clima tranquillo e un ritmo adatto a tutti.
-            Qui si impara e ci si diverte.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>Alt, collezionismo e farming</h3>
-          <p>
-            Mount, transmog, vecchi raid e achievement: sempre qualcuno con cui condividere un obiettivo.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>Eventi social e community</h3>
-          <p>
-            Serate chill, giochi interni e nottate in chat.
-            Gli Spettatori sono il cuore pulsante della gilda.
-          </p>
-          <a href="recruiting.html" class="team-btn">Unisciti agli Spettatori</a>
-        </div>
+      <div class="diary-grid" id="manual-articles">
+        <div class="empty-state">Carico gli articoli&hellip;</div>
       </div>
     </section>
 
-    <section>
-      <div class="section-head section-head--center">
-        <div class="eyebrow">Panoramica</div>
-        <h2 class="section-title">Numeri della community</h2>
-        <p class="section-subtitle">Una lettura rapida dell'attivita che gravita attorno alla gilda.</p>
+    <!-- ===================== COSA FACCIAMO ===================== -->
+    <section class="band" aria-labelledby="attivita-title">
+      <div class="band-head">
+        <p class="eyebrow">Attività</p>
+        <h2 class="section-title" id="attivita-title">Cosa facciamo</h2>
       </div>
 
-      <div class="stats-grid stats-grid--duo">
+      <div class="grid-cards">
+        <article class="card">
+          <h3>Mythic+ senza stress</h3>
+          <p>Key in compagnia, clima tranquillo, ritmo adatto a tutti.</p>
+        </article>
 
-        <div class="stat-card stat-card--feature">
-          <div class="stat-label">Profili Raider.IO tracciati</div>
-          <div class="stat-value" id="stat-tracked">-</div>
-          <div class="stat-hint" id="stat-tracked-hint">Profili con attivita Mythic+ registrata.</div>
-        </div>
+        <article class="card">
+          <h3>Alt, collezionismo e farming</h3>
+          <p>Mount, transmog, vecchi raid: sempre qualcuno con cui condividere un obiettivo.</p>
+        </article>
 
-        <div class="stat-card stat-card--feature">
-          <div class="stat-label">Miglior score M+</div>
-          <div class="stat-value" id="stat-peak-score">-</div>
-          <div class="stat-hint" id="stat-peak-score-hint">Il punteggio piu alto visto nella rosa tracciata.</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-label">Punteggio medio M+ (Top 10)</div>
-          <div class="stat-value" id="stat-avg-score">-</div>
-          <div class="stat-hint">Media del punteggio Mythic+ dei profili piu alti.</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-label">Run M+ (ultimi 30 giorni)</div>
-          <div class="stat-value" id="stat-guild-runs">-</div>
-          <div class="stat-hint">Totale delle chiavi chiuse dal gruppo nell'ultimo mese.</div>
-        </div>
-
+        <article class="card">
+          <h3>Eventi social</h3>
+          <p>Serate chill, giochi interni e nottate in chat.</p>
+        </article>
       </div>
-
-      <p class="stats-note" id="stats-note">Panoramica aggiornata di recente.</p>
     </section>
 
   </main>
 </div>
 
-<footer>
-  <p>&copy; 2026 Blackjack</p>
+<!--#bj:footer-->
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__brand">
+      <img src="../img/blackjack_logo.png" alt="" width="48" height="48" loading="lazy" decoding="async">
+      <div>
+        <strong>Blackjack</strong>
+        <p>Gilda italiana su Nemesis EU. Raid progress, Mythic+ e una community attiva tutti i giorni.</p>
+      </div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Mappa del sito">
+      <div>
+        <h2 class="site-footer__title">Gilda</h2>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../pages/statuto.html">Statuto</a></li>
+          <li><a href="../pages/recruiting.html">Reclutamento</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Raid</h2>
+        <ul>
+          <li><a href="../pages/high-roller/aceofspades.html">Ace of Spades</a></li>
+          <li><a href="../pages/high-roller/roster-aceofspades.html">Roster</a></li>
+          <li><a href="../pages/recruiting.html">Candidati</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Community</h2>
+        <ul>
+          <li><a href="../pages/spettatori.html">Spettatori</a></li>
+          <li><a href="../pages/spettatori.html#diario">Diario</a></li>
+          <li><a href="../pages/guide.html">Guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Fuori dal sito</h2>
+        <ul>
+          <li><a href="https://raider.io/guilds/eu/nemesis/Blackjack" target="_blank" rel="noopener noreferrer">Raider.IO</a></li>
+          <li><a href="https://www.warcraftlogs.com/guild/id/808206" target="_blank" rel="noopener noreferrer">Warcraft Logs</a></li>
+          <li><a href="https://www.twitch.tv/londe83" target="_blank" rel="noopener noreferrer">Twitch</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="site-footer__bottom">
+    <p>&copy; <span data-current-year>2026</span> Blackjack &middot; Gilda italiana su Nemesis EU</p>
+    <a class="button-ghost" data-discord-link data-root-prefix="../" href="../pages/recruiting.html">Entra in gilda</a>
+  </div>
 </footer>
+<!--#/bj:footer-->
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  document.body.classList.add("page-loaded");
-});
-document.querySelectorAll("a").forEach(a => {
-  if (a.hostname === location.hostname) {
-    a.addEventListener("click", e => {
-      e.preventDefault();
-      const href = a.getAttribute("href");
-      document.body.classList.remove("page-loaded");
-      setTimeout(() => { window.location = href; }, 300);
-    });
-  }
-});
-</script>
-
-<script>
-async function loadSpettatoriStats() {
-  const elTracked = document.getElementById("stat-tracked");
-  const elTrackedHint = document.getElementById("stat-tracked-hint");
-  const elPeakScore = document.getElementById("stat-peak-score");
-  const elPeakScoreHint = document.getElementById("stat-peak-score-hint");
-  const elAvg10 = document.getElementById("stat-avg-score");
-  const elRuns = document.getElementById("stat-guild-runs");
-  const note = document.getElementById("stats-note");
-
-  try {
-    const res = await fetch("https://blackjack-community-stats.lucasantoro2905.workers.dev");
-    const data = await res.json();
-    const payload = data?.summary && typeof data.summary === "object" ? data.summary : data;
-    const leaders = Array.isArray(payload.scoreLeaders) ? payload.scoreLeaders : [];
-    const topLeader = leaders[0] || null;
-
-    elTracked.textContent = payload.trackedCharacters ?? "-";
-    elTrackedHint.textContent = payload.activePlayersLast30 != null
-      ? `${payload.activePlayersLast30} con almeno una key negli ultimi 30 giorni.`
-      : "Attivita recente non disponibile.";
-    elPeakScore.textContent = payload.peakScore ?? "-";
-    elPeakScoreHint.textContent = topLeader
-      ? `${topLeader.name} guida il roster tracciato con ${topLeader.score} punti.`
-      : "Nessun leader score disponibile.";
-    elAvg10.textContent = payload.avgScoreTop10 ?? "-";
-    elRuns.textContent = payload.guildRunsLast30 ?? "-";
-
-    note.textContent = "Panoramica aggiornata periodicamente.";
-  } catch (e) {
-    console.error("Errore stats:", e);
-    elTracked.textContent = elPeakScore.textContent = elAvg10.textContent = elRuns.textContent = "-";
-    elTrackedHint.textContent = "Impossibile leggere i profili tracciati.";
-    elPeakScoreHint.textContent = "Impossibile leggere il leader score.";
-    note.textContent = "Statistiche non disponibili al momento.";
-  }
-}
-
-loadSpettatoriStats();
-</script>
+<div class="event-modal diary-article-modal" id="diary-article-modal" aria-hidden="true">
+  <div class="event-modal__overlay" data-close-diary-modal></div>
+  <article class="event-modal__content editorial-modal__content">
+    <button class="event-modal__close" type="button" id="diary-article-close" aria-label="Chiudi articolo">&times;</button>
+    <div class="event-modal__art editorial-modal__art" id="diary-article-art"></div>
+    <div class="event-modal__body">
+      <div class="event-modal__meta">
+        <span id="diary-article-subtitle">Diario di serata</span>
+        <strong id="diary-article-date">-</strong>
+      </div>
+      <h3 id="diary-article-title">Titolo articolo</h3>
+      <div class="event-modal__text" id="diary-article-body"></div>
+    </div>
+  </article>
+</div>
 
 </body>
 </html>

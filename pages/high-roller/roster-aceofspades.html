@@ -1,45 +1,81 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<!--#bj:head-->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="../../js/force-https.js"></script>
-  <title>Ace of Spades | Roster</title>
-  <link rel="stylesheet" href="../../css/style.css">
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; upgrade-insecure-requests; base-uri 'self'; object-src 'none'; form-action 'self'; manifest-src 'self'; script-src 'self' https://challenges.cloudflare.com https://code.jquery.com https://cdn.jsdelivr.net https://blackjack-wow-model-assets.lucasantoro2905.workers.dev; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://wow.zamimg.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://render.worldofwarcraft.com https://render-eu.worldofwarcraft.com https://render-us.worldofwarcraft.com https://static-cdn.jtvnw.net https://wow.zamimg.com https://i.ytimg.com; media-src 'self' blob:; worker-src 'self' blob: https://cdn.jsdelivr.net; connect-src 'self' https://blackjack-twitch-status.lucasantoro2905.workers.dev https://blackjack-raid-progress.lucasantoro2905.workers.dev https://blackjack-community-stats.lucasantoro2905.workers.dev https://blackjack-community-diary.lucasantoro2905.workers.dev https://blackjack-recruiting.lucasantoro2905.workers.dev https://blackjack-wow-model-assets.lucasantoro2905.workers.dev https://wow.zamimg.com https://cdn.jsdelivr.net; frame-src https://player.twitch.tv https://challenges.cloudflare.com https://www.youtube-nocookie.com https://www.youtube.com">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Roster Ace of Spades | Blackjack</title>
+  <meta name="description" content="Il roster completo del team raid Ace of Spades, diviso per ruolo con link ad Armory e Raider.IO.">
+  <meta name="theme-color" content="#07110f">
+  <link rel="canonical" href="https://www.blackjackguild.it/pages/high-roller/roster-aceofspades.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Blackjack">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:title" content="Roster Ace of Spades | Blackjack">
+  <meta property="og:description" content="Il roster completo del team raid Ace of Spades, diviso per ruolo con link ad Armory e Raider.IO.">
+  <meta property="og:url" content="https://www.blackjackguild.it/pages/high-roller/roster-aceofspades.html">
+  <meta property="og:image" content="https://www.blackjackguild.it/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Blackjack, gilda italiana su Nemesis EU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Roster Ace of Spades | Blackjack">
+  <meta name="twitter:description" content="Il roster completo del team raid Ace of Spades, diviso per ruolo con link ad Armory e Raider.IO.">
+  <meta name="twitter:image" content="https://www.blackjackguild.it/img/og-cover.jpg">
+  <link rel="icon" href="../../img/icons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/icons/icon-32.png">
+  <link rel="apple-touch-icon" href="../../img/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap">
+  <link rel="stylesheet" href="../../css/style.css?v=23">
+  <script src="../../js/boot.js"></script>
+  <script src="../../js/config.js" defer></script>
+  <script src="../../js/site.js" defer></script>
+  <script src="../../js/page-roster.js" defer></script>
+<!--#/bj:head-->
 </head>
 
-<body class="page-transition blackjack-bg blackjack-bg--raid">
+<body data-nav="raider" class="blackjack-bg blackjack-bg--raid">
 
-<header>
-  <nav class="mainnav">
-    <a href="../../index.html" class="nav-brand" aria-label="Blackjack Home">
-      <img src="../../img/blackjack_logo.png" alt="Blackjack">
+<!--#bj:header-->
+<a class="skip-link" href="#contenuto">Salta al contenuto</a>
+<header class="site-header">
+  <nav class="mainnav" aria-label="Navigazione principale">
+    <a href="../../index.html" class="nav-brand">
+      <img src="../../img/blackjack_logo.png" alt="" width="56" height="56" decoding="async">
       <span>Blackjack</span>
     </a>
-    <ul>
-      <li><a href="../../index.html">Home</a></li>
-      <li><a href="../raider.html">Raider</a></li>
-      <li><a href="../spettatori.html">Spettatori</a></li>
-      <li><a href="../guide.html">Guide</a></li>
-      <li><a href="../recruiting.html">Reclutamento</a></li>
-      <li><a href="../statuto.html">Statuto</a></li>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mainnav-list">
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+      <span class="nav-toggle__text">Menu</span>
+    </button>
+    <ul class="mainnav__list" id="mainnav-list">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../../pages/raider.html" class="active" aria-current="page">Raider</a></li>
+        <li><a href="../../pages/spettatori.html">Spettatori</a></li>
+        <li><a href="../../pages/guide.html">Guide</a></li>
+        <li><a href="../../pages/recruiting.html">Reclutamento</a></li>
+        <li><a href="../../pages/statuto.html">Statuto</a></li>
     </ul>
   </nav>
 </header>
+<!--#/bj:header-->
 
 <nav class="subnav">
   <ul>
-    <li><a href="aceofspades.html">Home Team</a></li>
-    <li><a href="roster-aceofspades.html" class="active">Roster</a></li>
-    <li><a href="aceofspades-progress.html">Progress</a></li>
+    <li><a href="aceofspades.html">Ace of Spades</a></li>
+    <li><a href="roster-aceofspades.html" class="active" aria-current="page">Roster</a></li>
   </ul>
 </nav>
 
 <section class="hero">
   <div class="hero-content">
     <div class="hero-tagline">Roster</div>
-    <h2>Ace of Spades</h2>
+    <h1 class="hero-title">Ace of Spades</h1>
     <p>
       Il roster ufficiale del team, con profili rapidi, immagini dei personaggi e collegamenti diretti alle schede Armory.
     </p>
@@ -47,18 +83,11 @@
 </section>
 
 <div class="bg-container bg-aceofspades-logo">
-  <main class="panel">
+  <main id="contenuto" class="panel">
 
     <section class="section-shell">
-      <div class="section-head">
-        <div class="eyebrow">Team structure</div>
-        <h2 class="section-title">Roster Ace of Spades</h2>
-        <p class="section-subtitle">
-          Ogni Raider ha un profilo compatto con ruolo, specializzazione, presentazione e accesso rapido ai riferimenti esterni del personaggio.
-        </p>
-      </div>
-
       <div class="roster-layout">
+        <div class="roster-composition" id="roster-composition" hidden></div>
         <div class="roster-toolbar">
           <input id="roster-search" class="roster-search" type="search" placeholder="Cerca per nome, classe o server">
           <div class="roster-filters" id="roster-filters"></div>
@@ -71,272 +100,57 @@
   </main>
 </div>
 
-<footer>
-  <p>&copy; 2026 Blackjack | Roster Ace of Spades</p>
+<!--#bj:footer-->
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__brand">
+      <img src="../../img/blackjack_logo.png" alt="" width="48" height="48" loading="lazy" decoding="async">
+      <div>
+        <strong>Blackjack</strong>
+        <p>Gilda italiana su Nemesis EU. Raid progress, Mythic+ e una community attiva tutti i giorni.</p>
+      </div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Mappa del sito">
+      <div>
+        <h2 class="site-footer__title">Gilda</h2>
+        <ul>
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="../../pages/statuto.html">Statuto</a></li>
+          <li><a href="../../pages/recruiting.html">Reclutamento</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Raid</h2>
+        <ul>
+          <li><a href="../../pages/high-roller/aceofspades.html">Ace of Spades</a></li>
+          <li><a href="../../pages/high-roller/roster-aceofspades.html">Roster</a></li>
+          <li><a href="../../pages/recruiting.html">Candidati</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Community</h2>
+        <ul>
+          <li><a href="../../pages/spettatori.html">Spettatori</a></li>
+          <li><a href="../../pages/spettatori.html#diario">Diario</a></li>
+          <li><a href="../../pages/guide.html">Guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Fuori dal sito</h2>
+        <ul>
+          <li><a href="https://raider.io/guilds/eu/nemesis/Blackjack" target="_blank" rel="noopener noreferrer">Raider.IO</a></li>
+          <li><a href="https://www.warcraftlogs.com/guild/id/808206" target="_blank" rel="noopener noreferrer">Warcraft Logs</a></li>
+          <li><a href="https://www.twitch.tv/londe83" target="_blank" rel="noopener noreferrer">Twitch</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="site-footer__bottom">
+    <p>&copy; <span data-current-year>2026</span> Blackjack &middot; Gilda italiana su Nemesis EU</p>
+    <a class="button-ghost" data-discord-link data-root-prefix="../../" href="../../pages/recruiting.html">Entra in gilda</a>
+  </div>
 </footer>
-
-<script>
-const rosterDataUrl = "../../data/aceofspades-roster.json";
-
-const roleConfig = {
-  tank: {
-    label: "Tank",
-    badgeClass: "role-tank",
-    sectionCopy: "Chi apre la strada, detta il ritmo del pull e regge la pressione del fight."
-  },
-  healer: {
-    label: "Healer",
-    badgeClass: "role-healer",
-    sectionCopy: "Chi tiene il team in piedi, rimette ordine e protegge la serata."
-  },
-  dps: {
-    label: "DPS",
-    badgeClass: "role-dps",
-    sectionCopy: "Chi trasforma preparazione e uptime in danno, utility e chiusura dei boss."
-  }
-};
-
-const roleOrder = ["tank", "healer", "dps"];
-
-const state = {
-  members: [],
-  search: "",
-  role: "all"
-};
-
-function normalizeText(value) {
-  return (value || "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-}
-
-function classIcon(name) {
-  return `../../img/classes/${name.toLowerCase().replace(/\s+/g, "")}.png`;
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
-
-function hasCustomProfile(member) {
-  return Boolean(member.customTagline || member.customSummary || member.customBio || member.customImage || member.profileStatus === "custom");
-}
-
-function getMemberTagline(member) {
-  if (member.customTagline) return member.customTagline;
-  return member.tagline || "Presenza del roster";
-}
-
-function getMemberSummary(member) {
-  if (member.customSummary) return member.customSummary;
-  return member.summary || "Profilo rapido in aggiornamento.";
-}
-
-function getMemberBio(member) {
-  if (member.customBio) return member.customBio;
-  return member.bio || "Profilo in aggiornamento.";
-}
-
-function getMemberImage(member) {
-  return member.customImage || member.sourceImage || member.image || "";
-}
-
-function getMemberVideo(member) {
-  return member.customVideo || "";
-}
-
-function getActiveMembers() {
-  return state.members.filter(member => member.active !== false);
-}
-
-function getFilteredMembers() {
-  return getActiveMembers().filter(member => {
-    const matchesRole = state.role === "all" || member.role === state.role;
-    const haystack = normalizeText([member.name, member.class, member.spec, member.server, getMemberTagline(member)].join(" "));
-    const matchesSearch = !state.search || haystack.includes(normalizeText(state.search));
-    return matchesRole && matchesSearch;
-  });
-}
-
-function renderFilters() {
-  const container = document.getElementById("roster-filters");
-  const filters = [
-    { value: "all", label: "Tutti" },
-    { value: "tank", label: "Tank" },
-    { value: "healer", label: "Healer" },
-    { value: "dps", label: "DPS" }
-  ];
-
-  container.innerHTML = filters.map(filter => `
-    <button
-      type="button"
-      class="filter-chip ${state.role === filter.value ? "is-active" : ""}"
-      data-role-filter="${filter.value}">
-      ${filter.label}
-    </button>
-  `).join("");
-
-  container.querySelectorAll("[data-role-filter]").forEach(button => {
-    button.addEventListener("click", () => {
-      state.role = button.getAttribute("data-role-filter");
-      renderRoster();
-    });
-  });
-}
-
-function renderMemberCard(member) {
-  const safeName = escapeHtml(member.name);
-  const safeTagline = escapeHtml(getMemberTagline(member));
-  const safeBio = escapeHtml(getMemberBio(member));
-  const safeSummary = escapeHtml(getMemberSummary(member));
-  const safeClass = escapeHtml(member.class || "Classe in aggiornamento");
-  const safeSpec = escapeHtml(member.spec || "");
-  const safeServer = escapeHtml(member.server || "");
-  const roleInfo = roleConfig[member.role] || roleConfig.dps;
-  const hasKnownClass = member.class && member.class !== "Unknown";
-  const video = getMemberVideo(member);
-  const image = getMemberImage(member);
-  const hasVideo = Boolean(video);
-  const hasImage = Boolean(image);
-  const safeVideo = escapeHtml(video);
-  const safeImage = escapeHtml(image);
-  const safeArmoryUrl = member.armoryUrl ? escapeHtml(member.armoryUrl) : "";
-  const safeRioUrl = member.rio ? escapeHtml(member.rio) : "";
-  const cardMeta = [
-    roleInfo.label,
-    safeSpec,
-    hasKnownClass ? safeClass : "",
-    safeServer
-  ].filter(Boolean).join(" | ");
-
-  return `
-    <article class="member-card member-card--compact">
-      <div class="member-card__media">
-        ${hasVideo
-          ? `<video src="${safeVideo}" muted loop autoplay playsinline preload="metadata"></video>`
-          : hasImage
-          ? `<img src="${safeImage}" alt="${safeName}">`
-          : `<div class="member-card__fallback" aria-hidden="true">${safeName.slice(0, 1)}</div>`}
-      </div>
-
-      <div class="member-card__body">
-        <div class="member-card__top">
-          <div class="member-card__heading">
-            <h3 class="member-card__name">${safeName}</h3>
-            <p class="tagline">${safeTagline}</p>
-          </div>
-
-          <div class="member-card__tags">
-            ${hasKnownClass ? `<img class="class-icon-small" src="${classIcon(member.class)}" alt="${safeClass}">` : ""}
-            <span class="role-badge ${roleInfo.badgeClass}">${roleInfo.label}</span>
-          </div>
-        </div>
-
-        <p class="member-card__class">${[safeSpec, hasKnownClass ? safeClass : "Classe in aggiornamento"].filter(Boolean).join(" | ")}</p>
-        <p class="member-card__snippet">${safeSummary}</p>
-
-        <details class="member-details">
-          <summary>${hasCustomProfile(member) ? "Apri profilo completo" : "Apri scheda"}</summary>
-          <p>${safeBio}</p>
-        </details>
-
-        <div class="member-card__footer">
-          <span class="member-card__class">${cardMeta}</span>
-          <div class="member-card__links">
-            ${safeArmoryUrl ? `
-              <a href="${safeArmoryUrl}" target="_blank" rel="noopener noreferrer" class="armory-link">Armory</a>
-            ` : ""}
-            ${safeRioUrl ? `
-              <a href="${safeRioUrl}" target="_blank" rel="noopener noreferrer" class="rio-btn--compact" aria-label="Apri il profilo Raider.IO di ${safeName}">
-                <img src="../../img/raiderio_logo.png" class="rio-logo" alt="Raider.IO">
-              </a>
-            ` : ""}
-          </div>
-        </div>
-      </div>
-    </article>
-  `;
-}
-
-function renderRoster() {
-  renderFilters();
-
-  const container = document.getElementById("roster-container");
-  const filteredMembers = getFilteredMembers();
-
-  if (!filteredMembers.length) {
-    container.innerHTML = `<div class="empty-state">Nessun Raider corrisponde ai filtri attuali.</div>`;
-    return;
-  }
-
-  container.innerHTML = roleOrder.map(role => {
-    const membersByRole = filteredMembers.filter(member => member.role === role);
-    if (!membersByRole.length) return "";
-
-    const roleInfo = roleConfig[role];
-    return `
-      <section class="roster-role-section">
-        <div class="roster-role-section__header">
-          <div>
-            <h3>${roleInfo.label}</h3>
-            <p>${roleInfo.sectionCopy}</p>
-          </div>
-          <span class="roster-role-section__count">${membersByRole.length} ${membersByRole.length === 1 ? "membro" : "membri"}</span>
-        </div>
-
-        <div class="roster-role-grid">
-          ${membersByRole.map(renderMemberCard).join("")}
-        </div>
-      </section>
-    `;
-  }).join("");
-}
-
-async function loadRoster() {
-  const response = await fetch(rosterDataUrl);
-  if (!response.ok) {
-    throw new Error("Impossibile caricare il file roster.");
-  }
-
-  const payload = await response.json();
-  state.members = payload.members || [];
-  renderRoster();
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.body.classList.add("page-loaded");
-
-  const search = document.getElementById("roster-search");
-  search.addEventListener("input", event => {
-    state.search = event.target.value;
-    renderRoster();
-  });
-
-  loadRoster().catch(error => {
-    console.error(error);
-    document.getElementById("roster-container").innerHTML = `
-      <div class="empty-state">Impossibile caricare il roster in questo momento.</div>
-    `;
-  });
-});
-
-document.querySelectorAll("a").forEach(link => {
-  if (link.hostname === window.location.hostname) {
-    link.addEventListener("click", function (event) {
-      event.preventDefault();
-      const href = this.getAttribute("href");
-      document.body.classList.remove("page-loaded");
-      setTimeout(() => { window.location.href = href; }, 300);
-    });
-  }
-});
-</script>
+<!--#/bj:footer-->
 
 </body>
 </html>

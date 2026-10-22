@@ -30,7 +30,7 @@
   "preparation": {
     "title": "Prima di entrare",
     "paragraphs": [
-      "Gloria dell'incursore dell'Anima del Drago è il meta achievement di Cataclysm legato alla ricompensa Redini dell'Araldo del Crepuscolo. La run attraversa gli 8 boss principali del raid: per ognuno c'e almeno un criterio Heroic e, in alcuni casi, una condizione aggiuntiva da rispettare."
+      "Gloria dell'incursore dell'Anima del Drago è il meta achievement di Cataclysm legato alla ricompensa Redini dell'Araldo del Crepuscolo. La run attraversa gli 8 boss principali del raid: per ognuno c'è almeno un criterio Heroic e, in alcuni casi, una condizione aggiuntiva da rispettare."
     ],
     "checklist": []
   },
@@ -46,13 +46,13 @@
       "achievements": [
         {
           "name": "Eroica: Morchok",
-          "description": "Uccidi Lord Morchok in modalita Eroica.",
+          "description": "Uccidi Lord Morchok in modalità Eroica.",
           "steps": [],
           "waypoints": []
         },
         {
           "name": "Non mi stare addosso",
-          "description": "Uccidi Lord Morchok in modalita Eroica.",
+          "description": "Uccidi Lord Morchok in modalità Eroica.",
           "steps": [],
           "waypoints": []
         }
@@ -71,7 +71,7 @@
       "achievements": [
         {
           "name": "Eroica: Zon'ozz il Signore della Guerra",
-          "description": "Uccidi Zon'ozz il Signore della Guerra in modalita Eroica.",
+          "description": "Uccidi Zon'ozz il Signore della Guerra in modalità Eroica.",
           "steps": [],
           "waypoints": []
         },

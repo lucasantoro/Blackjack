@@ -14,9 +14,18 @@
     "modelDisplayId": null
   },
   "stats": [
-    { "value": "0", "label": "criteri richiesti" },
-    { "value": "0", "label": "boss coinvolti" },
-    { "value": "Ricompensa", "label": "nome ricompensa" }
+    {
+      "value": "0",
+      "label": "criteri richiesti"
+    },
+    {
+      "value": "0",
+      "label": "boss coinvolti"
+    },
+    {
+      "value": "Ricompensa",
+      "label": "nome ricompensa"
+    }
   ],
   "preparation": {
     "title": "Prima di entrare",

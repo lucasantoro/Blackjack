@@ -1,43 +1,80 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="../js/force-https.js"></script>
-<title>Reclutamento - Blackjack</title>
-<link rel="stylesheet" href="../css/style.css">
-<link rel="icon" href="data:;base64,iVBORw0KGgo=">
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+<!--#bj:head-->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; upgrade-insecure-requests; base-uri 'self'; object-src 'none'; form-action 'self'; manifest-src 'self'; script-src 'self' https://challenges.cloudflare.com https://code.jquery.com https://cdn.jsdelivr.net https://blackjack-wow-model-assets.lucasantoro2905.workers.dev; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://wow.zamimg.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://render.worldofwarcraft.com https://render-eu.worldofwarcraft.com https://render-us.worldofwarcraft.com https://static-cdn.jtvnw.net https://wow.zamimg.com https://i.ytimg.com; media-src 'self' blob:; worker-src 'self' blob: https://cdn.jsdelivr.net; connect-src 'self' https://blackjack-twitch-status.lucasantoro2905.workers.dev https://blackjack-raid-progress.lucasantoro2905.workers.dev https://blackjack-community-stats.lucasantoro2905.workers.dev https://blackjack-community-diary.lucasantoro2905.workers.dev https://blackjack-recruiting.lucasantoro2905.workers.dev https://blackjack-wow-model-assets.lucasantoro2905.workers.dev https://wow.zamimg.com https://cdn.jsdelivr.net; frame-src https://player.twitch.tv https://challenges.cloudflare.com https://www.youtube-nocookie.com https://www.youtube.com">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Reclutamento | Blackjack</title>
+  <meta name="description" content="Candidati ai Blackjack: raid lunedì e mercoledì 21:30-23:30 su Nemesis EU. Compila il modulo di ingresso.">
+  <meta name="theme-color" content="#07110f">
+  <link rel="canonical" href="https://www.blackjackguild.it/pages/recruiting.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Blackjack">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:title" content="Reclutamento | Blackjack">
+  <meta property="og:description" content="Candidati ai Blackjack: raid lunedì e mercoledì 21:30-23:30 su Nemesis EU. Compila il modulo di ingresso.">
+  <meta property="og:url" content="https://www.blackjackguild.it/pages/recruiting.html">
+  <meta property="og:image" content="https://www.blackjackguild.it/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Blackjack, gilda italiana su Nemesis EU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Reclutamento | Blackjack">
+  <meta name="twitter:description" content="Candidati ai Blackjack: raid lunedì e mercoledì 21:30-23:30 su Nemesis EU. Compila il modulo di ingresso.">
+  <meta name="twitter:image" content="https://www.blackjackguild.it/img/og-cover.jpg">
+  <link rel="icon" href="../img/icons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../img/icons/icon-32.png">
+  <link rel="apple-touch-icon" href="../img/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap">
+  <link rel="stylesheet" href="../css/style.css?v=23">
+  <script src="../js/boot.js"></script>
+  <script src="../js/config.js" defer></script>
+  <script src="../js/site.js" defer></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+  <script src="../js/page-recruiting.js" defer></script>
+<!--#/bj:head-->
 </head>
 
-<body class="page-transition blackjack-bg blackjack-bg--raid">
+<body data-nav="recruiting" class="blackjack-bg blackjack-bg--raid">
 
-<header>
-  <nav class="mainnav">
-    <a href="../index.html" class="nav-brand" aria-label="Blackjack Home">
-      <img src="../img/blackjack_logo.png" alt="Blackjack">
+<!--#bj:header-->
+<a class="skip-link" href="#contenuto">Salta al contenuto</a>
+<header class="site-header">
+  <nav class="mainnav" aria-label="Navigazione principale">
+    <a href="../index.html" class="nav-brand">
+      <img src="../img/blackjack_logo.png" alt="" width="56" height="56" decoding="async">
       <span>Blackjack</span>
     </a>
-    <ul>
-      <li><a href="../index.html">Home</a></li>
-      <li><a href="raider.html">Raider</a></li>
-      <li><a href="spettatori.html">Spettatori</a></li>
-      <li><a href="guide.html">Guide</a></li>
-      <li><a href="recruiting.html" class="active">Reclutamento</a></li>
-      <li><a href="statuto.html">Statuto</a></li>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mainnav-list">
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+      <span class="nav-toggle__text">Menu</span>
+    </button>
+    <ul class="mainnav__list" id="mainnav-list">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../pages/raider.html">Raider</a></li>
+        <li><a href="../pages/spettatori.html">Spettatori</a></li>
+        <li><a href="../pages/guide.html">Guide</a></li>
+        <li><a href="../pages/recruiting.html" class="active" aria-current="page">Reclutamento</a></li>
+        <li><a href="../pages/statuto.html">Statuto</a></li>
     </ul>
   </nav>
 </header>
+<!--#/bj:header-->
 
 <section class="hero">
   <div class="hero-content">
-    <h2>Reclutamento</h2>
+    <h1 class="hero-title">Reclutamento</h1>
     <p>Compila il modulo con i dati che servono davvero per capire chi sei, come giochi e cosa cerchi in gilda.</p>
   </div>
 </section>
 
 <div class="bg-container bg-main-logo">
-  <main class="panel recruit">
+  <main id="contenuto" class="panel recruit">
 
     <div class="section-head section-head--center">
       <div class="eyebrow">Candidatura</div>
@@ -78,7 +115,7 @@
       <label for="logsInput">Link a Raider.IO o Warcraft Logs</label>
       <input id="logsInput" type="url" name="Logs" placeholder="URL del profilo o del report" required>
 
-      <label for="availabilityInput">Disponibilita</label>
+      <label for="availabilityInput">Disponibilità</label>
       <textarea id="availabilityInput" name="Disponibilita" placeholder="Giorni e orari in cui giochi di solito" required></textarea>
 
       <label for="motivationInput">Cosa cerchi nei Blackjack</label>
@@ -104,226 +141,57 @@
   </main>
 </div>
 
-<footer>
-  <p>&copy; 2026 Blackjack</p>
+<!--#bj:footer-->
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__brand">
+      <img src="../img/blackjack_logo.png" alt="" width="48" height="48" loading="lazy" decoding="async">
+      <div>
+        <strong>Blackjack</strong>
+        <p>Gilda italiana su Nemesis EU. Raid progress, Mythic+ e una community attiva tutti i giorni.</p>
+      </div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Mappa del sito">
+      <div>
+        <h2 class="site-footer__title">Gilda</h2>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../pages/statuto.html">Statuto</a></li>
+          <li><a href="../pages/recruiting.html">Reclutamento</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Raid</h2>
+        <ul>
+          <li><a href="../pages/high-roller/aceofspades.html">Ace of Spades</a></li>
+          <li><a href="../pages/high-roller/roster-aceofspades.html">Roster</a></li>
+          <li><a href="../pages/recruiting.html">Candidati</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Community</h2>
+        <ul>
+          <li><a href="../pages/spettatori.html">Spettatori</a></li>
+          <li><a href="../pages/spettatori.html#diario">Diario</a></li>
+          <li><a href="../pages/guide.html">Guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Fuori dal sito</h2>
+        <ul>
+          <li><a href="https://raider.io/guilds/eu/nemesis/Blackjack" target="_blank" rel="noopener noreferrer">Raider.IO</a></li>
+          <li><a href="https://www.warcraftlogs.com/guild/id/808206" target="_blank" rel="noopener noreferrer">Warcraft Logs</a></li>
+          <li><a href="https://www.twitch.tv/londe83" target="_blank" rel="noopener noreferrer">Twitch</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="site-footer__bottom">
+    <p>&copy; <span data-current-year>2026</span> Blackjack &middot; Gilda italiana su Nemesis EU</p>
+    <a class="button-ghost" data-discord-link data-root-prefix="../" href="../pages/recruiting.html">Entra in gilda</a>
+  </div>
 </footer>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  document.body.classList.add("page-loaded");
-});
-
-document.querySelectorAll("a").forEach(link => {
-  if (link.hostname === window.location.hostname) {
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
-      const href = this.getAttribute("href");
-      document.body.classList.remove("page-loaded");
-      setTimeout(() => { window.location.href = href; }, 300);
-    });
-  }
-});
-</script>
-
-<script>
-const specByClass = {
-  "Death Knight": ["Blood", "Frost", "Unholy"],
-  "Demon Hunter": ["Devourer", "Havoc", "Vengeance"],
-  "Druid": ["Balance", "Feral", "Guardian", "Restoration"],
-  "Evoker": ["Augmentation", "Devastation", "Preservation"],
-  "Hunter": ["Beast Mastery", "Marksmanship", "Survival"],
-  "Mage": ["Arcane", "Fire", "Frost"],
-  "Monk": ["Brewmaster", "Mistweaver", "Windwalker"],
-  "Paladin": ["Holy", "Protection", "Retribution"],
-  "Priest": ["Discipline", "Holy", "Shadow"],
-  "Rogue": ["Assassination", "Outlaw", "Subtlety"],
-  "Shaman": ["Elemental", "Enhancement", "Restoration"],
-  "Warlock": ["Affliction", "Demonology", "Destruction"],
-  "Warrior": ["Arms", "Fury", "Protection"]
-};
-
-const RECRUITING_WORKER = "https://blackjack-recruiting.lucasantoro2905.workers.dev";
-const classSelect = document.getElementById("classSelect");
-const specSelect = document.getElementById("specSelect");
-const applyForm = document.getElementById("applyForm");
-const applyStatus = document.getElementById("apply-status");
-const applySubmit = document.getElementById("apply-submit");
-const turnstileNote = document.getElementById("turnstile-note");
-
-let turnstileWidgetId = null;
-let turnstileToken = "";
-let turnstileReady = false;
-
-classSelect.addEventListener("change", () => {
-  const selectedClass = classSelect.value;
-  specSelect.innerHTML = "";
-
-  if (!selectedClass || !specByClass[selectedClass]) {
-    specSelect.innerHTML = `<option value="">Seleziona prima una classe...</option>`;
-    return;
-  }
-
-  specSelect.innerHTML = `<option value="">Seleziona la specializzazione...</option>`;
-  specByClass[selectedClass].forEach(spec => {
-    const option = document.createElement("option");
-    option.value = spec;
-    option.textContent = spec;
-    specSelect.appendChild(option);
-  });
-});
-
-function setApplyStatus(message, kind = "") {
-  applyStatus.textContent = message || "";
-  applyStatus.className = kind ? `apply-status is-${kind}` : "apply-status";
-}
-
-function syncSubmitState() {
-  const enabled = turnstileReady && Boolean(turnstileToken);
-  applySubmit.disabled = !enabled;
-  applySubmit.setAttribute("aria-disabled", enabled ? "false" : "true");
-}
-
-function resetTurnstileState(message) {
-  turnstileReady = true;
-  turnstileToken = "";
-  if (message) {
-    turnstileNote.textContent = message;
-  }
-  syncSubmitState();
-}
-
-async function loadTurnstile() {
-  try {
-    const response = await fetch(`${RECRUITING_WORKER}/config`, { cache: "no-store" });
-    if (!response.ok) {
-      throw new Error("Config Turnstile non disponibile");
-    }
-
-    const payload = await response.json();
-    if (!payload?.siteKey) {
-      throw new Error("TURNSTILE_SITE_KEY non configurata");
-    }
-
-    const container = document.getElementById("turnstile-container");
-    const renderWidget = () => {
-      if (!window.turnstile || !container || turnstileWidgetId !== null) return;
-      turnstileWidgetId = window.turnstile.render(container, {
-        sitekey: payload.siteKey,
-        theme: "dark",
-        callback(token) {
-          turnstileReady = true;
-          turnstileToken = token || "";
-          turnstileNote.textContent = "Verifica completata. Ora puoi inviare la candidatura.";
-          syncSubmitState();
-        },
-        "expired-callback"() {
-          resetTurnstileState("La verifica anti-bot e scaduta. Completala di nuovo.");
-        },
-        "timeout-callback"() {
-          resetTurnstileState("La verifica anti-bot e scaduta. Completala di nuovo.");
-        },
-        "error-callback"(code) {
-          turnstileReady = false;
-          turnstileToken = "";
-          turnstileNote.textContent = `Errore verifica anti-bot (${code || "sconosciuto"}). Ricarica la pagina oppure riprova tra poco.`;
-          syncSubmitState();
-        }
-      });
-      turnstileReady = true;
-      turnstileNote.textContent = "Completa la verifica anti-bot prima di inviare la candidatura.";
-      syncSubmitState();
-    };
-
-    if (window.turnstile) {
-      renderWidget();
-      return;
-    }
-
-    let attempts = 0;
-    const timer = setInterval(() => {
-      attempts += 1;
-      if (window.turnstile) {
-        clearInterval(timer);
-        renderWidget();
-      } else if (attempts > 50) {
-        clearInterval(timer);
-        turnstileReady = false;
-        turnstileToken = "";
-        turnstileNote.textContent = "Impossibile caricare la verifica anti-bot.";
-        syncSubmitState();
-      }
-    }, 200);
-  } catch (error) {
-    turnstileReady = false;
-    turnstileToken = "";
-    turnstileNote.textContent = error instanceof Error ? error.message : "Impossibile caricare la verifica anti-bot.";
-    syncSubmitState();
-  }
-}
-
-applyForm.addEventListener("submit", async event => {
-  event.preventDefault();
-  setApplyStatus("");
-
-  if (turnstileWidgetId === null || !window.turnstile) {
-    setApplyStatus("La verifica anti-bot non e pronta. Ricarica la pagina e riprova.", "error");
-    return;
-  }
-
-  if (!turnstileToken) {
-    setApplyStatus("Completa la verifica anti-bot prima di inviare la candidatura.", "error");
-    return;
-  }
-
-  const payload = {
-    discord: document.getElementById("discordInput").value,
-    character: document.getElementById("characterInput").value,
-    className: classSelect.value,
-    spec: specSelect.value,
-    logs: document.getElementById("logsInput").value,
-    availability: document.getElementById("availabilityInput").value,
-    motivation: document.getElementById("motivationInput").value,
-    website: document.getElementById("websiteInput").value,
-    turnstileToken
-  };
-
-  applySubmit.disabled = true;
-  applySubmit.setAttribute("aria-disabled", "true");
-  setApplyStatus("Invio candidatura in corso...", "pending");
-
-  try {
-    const response = await fetch(RECRUITING_WORKER, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
-
-    const result = await response.json().catch(() => ({}));
-    if (!response.ok || !result?.ok) {
-      throw new Error(result?.details || result?.error || "Invio candidatura non riuscito");
-    }
-
-    applyForm.reset();
-    specSelect.innerHTML = `<option value="">Seleziona prima una classe...</option>`;
-    window.turnstile.reset(turnstileWidgetId);
-    resetTurnstileState("Completa di nuovo la verifica anti-bot se vuoi inviare un'altra candidatura.");
-    setApplyStatus("Candidatura inviata con successo.", "success");
-  } catch (error) {
-    if (window.turnstile && turnstileWidgetId !== null) {
-      window.turnstile.reset(turnstileWidgetId);
-    }
-    resetTurnstileState("Completa di nuovo la verifica anti-bot prima di riprovare.");
-    setApplyStatus(error instanceof Error ? error.message : "Invio candidatura non riuscito.", "error");
-  } finally {
-    syncSubmitState();
-  }
-});
-
-syncSubmitState();
-loadTurnstile();
-</script>
+<!--#/bj:footer-->
 
 </body>
 </html>

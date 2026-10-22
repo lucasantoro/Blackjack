@@ -4,7 +4,6 @@ const DATA_URL = new URL("content/guides/raid-addons.json", SITE_ROOT);
 document.addEventListener("DOMContentLoaded", loadRaidAddons);
 
 async function loadRaidAddons() {
-  document.body.classList.add("page-loaded");
   try {
     const response = await fetch(DATA_URL, { cache: "no-store" });
     if (!response.ok) throw new Error("Elenco addon non disponibile");
@@ -32,7 +31,7 @@ function renderAddon(addon, position, mandatory) {
         <div class="editorial-card__meta"><span>${mandatory ? "Obbligatorio" : "Strumento pre-raid"}</span><strong>CurseForge</strong></div>
         <h3>${escapeHtml(addon.name)}</h3>
         <p>${escapeHtml(addon.purpose)}</p>
-        <a class="team-btn" href="${escapeHtml(addon.url)}" target="_blank" rel="noopener noreferrer">Apri su CurseForge</a>
+        <a class="team-btn" href="${escapeHtml(safeHref(addon.url))}" target="_blank" rel="noopener noreferrer">Apri su CurseForge</a>
       </div>
     </article>
   `;
@@ -40,4 +39,10 @@ function renderAddon(addon, position, mandatory) {
 
 function escapeHtml(value) {
   return String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;").replace(/'/g, "&#039;");
+}
+
+// Difesa in profondita: blocca javascript:/data:/vbscript: negli URL
+// che arrivano dai worker o dai file di contenuto.
+function safeHref(value) {
+  return (window.BJ && window.BJ.safeUrl) ? window.BJ.safeUrl(value) : "";
 }

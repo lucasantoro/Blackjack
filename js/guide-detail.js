@@ -3,7 +3,6 @@ const guideId = new URLSearchParams(window.location.search).get("id");
 let activeGuide = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
-  document.body.classList.add("page-loaded");
   await loadGuide();
 });
 
@@ -26,11 +25,12 @@ async function loadGuide() {
 
 function renderGuide(guide) {
   document.title = `Blackjack - ${guide.title}`;
-  document.getElementById("guide-footer").textContent = `© 2026 Blackjack | ${guide.title}`;
+  // Il footer e condiviso fra tutte le pagine: il titolo della guida
+  // resta nel <title> del documento.
   document.getElementById("guide-hero").innerHTML = `
     <div class="hero-content hero-content--wide">
       <div class="hero-tagline">${escapeHtml([guide.expansion, guide.instance].filter(Boolean).join(" | ") || "Guida achievement")}</div>
-      <h2>${escapeHtml(guide.title)}</h2>
+      <h1 class="hero-title">${escapeHtml(guide.title)}</h1>
       <p>${escapeHtml(guide.subtitle || guide.summary)}</p>
       <div class="hero-stats">${(guide.stats || []).map(stat => `
         <div class="stat-chip"><span class="stat-chip__value">${escapeHtml(stat.value)}</span><span class="stat-chip__label">${escapeHtml(stat.label)}</span></div>
@@ -64,13 +64,13 @@ function renderGuide(guide) {
 
 function renderGuideCover(cover) {
   const model = cover.modelDisplayId ? `<div class="guide-model-viewer guide-model-viewer--reward" data-wow-model data-wow-model-autoload data-model-type="${escapeHtml(cover.modelType || "npc")}" data-display-id="${Number(cover.modelDisplayId)}" data-aspect="1"></div>` : "";
-  const image = cover.image ? `<img class="guide-model-fallback" data-model-fallback src="${escapeHtml(resolveAsset(cover.image))}" alt="${escapeHtml(cover.alt || activeGuide.title)}">` : '<div class="guide-media-placeholder" data-model-fallback>BJ</div>';
+  const image = cover.image ? `<img class="guide-model-fallback" data-model-fallback src="${escapeHtml(safeHref(resolveAsset(cover.image)))}" alt="${escapeHtml(cover.alt || activeGuide.title)}">` : '<div class="guide-media-placeholder" data-model-fallback>BJ</div>';
   return `<figure class="guide-feature__media">${model}${image}${model ? '<span class="guide-model-status" data-model-status>Modello 3D</span>' : ""}<figcaption>${escapeHtml(activeGuide.title)}</figcaption></figure>`;
 }
 
 function renderBoss(boss, index) {
   const model = boss.modelDisplayId ? `<div class="guide-model-viewer" data-wow-model data-model-type="${escapeHtml(boss.modelType || "npc")}" data-display-id="${Number(boss.modelDisplayId)}" data-aspect="1"></div>` : "";
-  const image = boss.image ? `<img class="guide-model-fallback" data-model-fallback src="${escapeHtml(resolveAsset(boss.image))}" alt="${escapeHtml(boss.imageAlt || boss.name)}">` : '<div class="guide-media-placeholder" data-model-fallback>BJ</div>';
+  const image = boss.image ? `<img class="guide-model-fallback" data-model-fallback src="${escapeHtml(safeHref(resolveAsset(boss.image)))}" alt="${escapeHtml(boss.imageAlt || boss.name)}">` : '<div class="guide-media-placeholder" data-model-fallback>BJ</div>';
   return `<article class="guide-boss-card ${index === 0 ? "is-active" : ""}" role="tabpanel" data-guide-panel="${escapeHtml(boss.id)}" ${index === 0 ? "" : "hidden"}>
     <div class="guide-boss-card__media">${model}${image}${model ? '<span class="guide-model-status" data-model-status>Modello 3D</span>' : ""}</div>
     <div class="guide-boss-card__body"><div class="eyebrow">${escapeHtml(boss.name)}</div><h3>Achievement del boss</h3>${boss.intro ? `<p>${escapeHtml(boss.intro)}</p>` : ""}
@@ -91,11 +91,11 @@ function renderAchievement(item) {
 function renderReferences(items) {
   const available = items.filter(item => item.image);
   if (!available.length) return "";
-  return `<div class="guide-visual-reference"><h4>Riferimenti visivi</h4>${available.map(item => `<figure><img src="${escapeHtml(resolveAsset(item.image))}" alt="${escapeHtml(item.alt || "Riferimento guida")}" loading="lazy"><figcaption>${escapeHtml(item.caption || "")}</figcaption></figure>`).join("")}</div>`;
+  return `<div class="guide-visual-reference"><h4>Riferimenti visivi</h4>${available.map(item => `<figure><img src="${escapeHtml(safeHref(resolveAsset(item.image)))}" alt="${escapeHtml(item.alt || "Riferimento guida")}" loading="lazy"><figcaption>${escapeHtml(item.caption || "")}</figcaption></figure>`).join("")}</div>`;
 }
 
 function renderLinks(links) {
-  return links.filter(link => link.url).map(link => `<a href="${escapeHtml(resolveAsset(link.url))}" class="button-secondary">${escapeHtml(link.label || "Approfondisci")}</a>`).join("");
+  return links.filter(link => link.url).map(link => `<a href="${escapeHtml(safeHref(resolveAsset(link.url)))}" class="button-secondary">${escapeHtml(link.label || "Approfondisci")}</a>`).join("");
 }
 
 function initBossTabs() {
@@ -114,3 +114,9 @@ function initBossTabs() {
 
 function resolveAsset(value) { return new URL(value, SITE_ROOT).href; }
 function escapeHtml(value) { return String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); }
+
+// Difesa in profondita: blocca javascript:/data:/vbscript: negli URL
+// che arrivano dai file di contenuto.
+function safeHref(value) {
+  return (window.BJ && window.BJ.safeUrl) ? window.BJ.safeUrl(value) : "";
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Blackjack - Gilda WoW su Nemesis EU",
+  "short_name": "Blackjack",
+  "description": "Gilda italiana su Nemesis EU: raid progress, Mythic+ e community.",
+  "lang": "it",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#07110f",
+  "theme_color": "#07110f",
+  "icons": [
+    { "src": "/img/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/img/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/img/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

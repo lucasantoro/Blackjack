@@ -1,35 +1,79 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<!--#bj:head-->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="../js/force-https.js"></script>
-  <title>Blackjack - Addon obbligatori</title>
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; upgrade-insecure-requests; base-uri 'self'; object-src 'none'; form-action 'self'; manifest-src 'self'; script-src 'self' https://challenges.cloudflare.com https://code.jquery.com https://cdn.jsdelivr.net https://blackjack-wow-model-assets.lucasantoro2905.workers.dev; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://wow.zamimg.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://render.worldofwarcraft.com https://render-eu.worldofwarcraft.com https://render-us.worldofwarcraft.com https://static-cdn.jtvnw.net https://wow.zamimg.com https://i.ytimg.com; media-src 'self' blob:; worker-src 'self' blob: https://cdn.jsdelivr.net; connect-src 'self' https://blackjack-twitch-status.lucasantoro2905.workers.dev https://blackjack-raid-progress.lucasantoro2905.workers.dev https://blackjack-community-stats.lucasantoro2905.workers.dev https://blackjack-community-diary.lucasantoro2905.workers.dev https://blackjack-recruiting.lucasantoro2905.workers.dev https://blackjack-wow-model-assets.lucasantoro2905.workers.dev https://wow.zamimg.com https://cdn.jsdelivr.net; frame-src https://player.twitch.tv https://challenges.cloudflare.com https://www.youtube-nocookie.com https://www.youtube.com">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Addon obbligatori | Blackjack</title>
+  <meta name="description" content="La configurazione minima di addon richiesta a ogni raider Blackjack prima della serata.">
+  <meta name="theme-color" content="#07110f">
+  <link rel="canonical" href="https://www.blackjackguild.it/pages/guide-raid-addons.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Blackjack">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:title" content="Addon obbligatori | Blackjack">
+  <meta property="og:description" content="La configurazione minima di addon richiesta a ogni raider Blackjack prima della serata.">
+  <meta property="og:url" content="https://www.blackjackguild.it/pages/guide-raid-addons.html">
+  <meta property="og:image" content="https://www.blackjackguild.it/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Blackjack, gilda italiana su Nemesis EU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Addon obbligatori | Blackjack">
+  <meta name="twitter:description" content="La configurazione minima di addon richiesta a ogni raider Blackjack prima della serata.">
+  <meta name="twitter:image" content="https://www.blackjackguild.it/img/og-cover.jpg">
+  <link rel="icon" href="../img/icons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../img/icons/icon-32.png">
+  <link rel="apple-touch-icon" href="../img/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap">
+  <link rel="stylesheet" href="../css/style.css?v=23">
+  <script src="../js/boot.js"></script>
+  <script src="../js/config.js" defer></script>
+  <script src="../js/site.js" defer></script>
+  <script src="../js/guide-raid-addons.js" defer></script>
+<!--#/bj:head-->
 </head>
-<body class="page-transition blackjack-bg blackjack-bg--raid">
-<header>
-  <nav class="mainnav">
-    <a href="../index.html" class="nav-brand" aria-label="Blackjack Home"><img src="../img/blackjack_logo.png" alt="Blackjack"><span>Blackjack</span></a>
-    <ul>
-      <li><a href="../index.html">Home</a></li><li><a href="raider.html">Raider</a></li><li><a href="spettatori.html">Spettatori</a></li>
-      <li><a href="guide.html" class="active">Guide</a></li><li><a href="recruiting.html">Reclutamento</a></li><li><a href="statuto.html">Statuto</a></li>
+<body data-nav="guide" class="blackjack-bg blackjack-bg--raid">
+<!--#bj:header-->
+<a class="skip-link" href="#contenuto">Salta al contenuto</a>
+<header class="site-header">
+  <nav class="mainnav" aria-label="Navigazione principale">
+    <a href="../index.html" class="nav-brand">
+      <img src="../img/blackjack_logo.png" alt="" width="56" height="56" decoding="async">
+      <span>Blackjack</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mainnav-list">
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+      <span class="nav-toggle__text">Menu</span>
+    </button>
+    <ul class="mainnav__list" id="mainnav-list">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../pages/raider.html">Raider</a></li>
+        <li><a href="../pages/spettatori.html">Spettatori</a></li>
+        <li><a href="../pages/guide.html" class="active" aria-current="page">Guide</a></li>
+        <li><a href="../pages/recruiting.html">Reclutamento</a></li>
+        <li><a href="../pages/statuto.html">Statuto</a></li>
     </ul>
   </nav>
 </header>
+<!--#/bj:header-->
 <nav class="subnav"><ul><li><a href="guide.html">Tutte le guide</a></li><li><a href="#mandatory" class="active">Addon obbligatori</a></li></ul></nav>
 
 <section class="hero guide-hero guide-raid-hero">
   <div class="hero-content hero-content--wide">
     <div class="hero-tagline">Raid toolkit</div>
-    <h2 id="addons-title">Addon obbligatori per il raid</h2>
+    <h1 class="hero-title" id="addons-title">Addon obbligatori per il raid</h1>
     <p id="addons-summary">Caricamento della configurazione richiesta...</p>
   </div>
 </section>
 
 <div class="bg-container bg-main-logo">
-  <main class="panel raid-toolkit-shell">
+  <main id="contenuto" class="panel raid-toolkit-shell">
     <section id="mandatory">
       <div class="section-head"><div class="eyebrow">Prima di entrare in raid</div><h2 class="section-title">Installazione obbligatoria</h2></div>
       <div class="raid-addon-grid" id="mandatory-addons"><div class="empty-state">Caricamento addon...</div></div>
@@ -42,7 +86,56 @@
     <div class="guide-detail-actions"><a href="guide.html" class="button-secondary">Torna alla biblioteca</a></div>
   </main>
 </div>
-<footer><p>&copy; 2026 Blackjack | Addon raid</p></footer>
-<script src="../js/guide-raid-addons.js"></script>
+<!--#bj:footer-->
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__brand">
+      <img src="../img/blackjack_logo.png" alt="" width="48" height="48" loading="lazy" decoding="async">
+      <div>
+        <strong>Blackjack</strong>
+        <p>Gilda italiana su Nemesis EU. Raid progress, Mythic+ e una community attiva tutti i giorni.</p>
+      </div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Mappa del sito">
+      <div>
+        <h2 class="site-footer__title">Gilda</h2>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../pages/statuto.html">Statuto</a></li>
+          <li><a href="../pages/recruiting.html">Reclutamento</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Raid</h2>
+        <ul>
+          <li><a href="../pages/high-roller/aceofspades.html">Ace of Spades</a></li>
+          <li><a href="../pages/high-roller/roster-aceofspades.html">Roster</a></li>
+          <li><a href="../pages/recruiting.html">Candidati</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Community</h2>
+        <ul>
+          <li><a href="../pages/spettatori.html">Spettatori</a></li>
+          <li><a href="../pages/spettatori.html#diario">Diario</a></li>
+          <li><a href="../pages/guide.html">Guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Fuori dal sito</h2>
+        <ul>
+          <li><a href="https://raider.io/guilds/eu/nemesis/Blackjack" target="_blank" rel="noopener noreferrer">Raider.IO</a></li>
+          <li><a href="https://www.warcraftlogs.com/guild/id/808206" target="_blank" rel="noopener noreferrer">Warcraft Logs</a></li>
+          <li><a href="https://www.twitch.tv/londe83" target="_blank" rel="noopener noreferrer">Twitch</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="site-footer__bottom">
+    <p>&copy; <span data-current-year>2026</span> Blackjack &middot; Gilda italiana su Nemesis EU</p>
+    <a class="button-ghost" data-discord-link data-root-prefix="../" href="../pages/recruiting.html">Entra in gilda</a>
+  </div>
+</footer>
+<!--#/bj:footer-->
 </body>
 </html>

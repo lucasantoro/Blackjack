@@ -1,149 +1,266 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<!--#bj:head-->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="../../js/force-https.js"></script>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; upgrade-insecure-requests; base-uri 'self'; object-src 'none'; form-action 'self'; manifest-src 'self'; script-src 'self' https://challenges.cloudflare.com https://code.jquery.com https://cdn.jsdelivr.net https://blackjack-wow-model-assets.lucasantoro2905.workers.dev; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://wow.zamimg.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://render.worldofwarcraft.com https://render-eu.worldofwarcraft.com https://render-us.worldofwarcraft.com https://static-cdn.jtvnw.net https://wow.zamimg.com https://i.ytimg.com; media-src 'self' blob:; worker-src 'self' blob: https://cdn.jsdelivr.net; connect-src 'self' https://blackjack-twitch-status.lucasantoro2905.workers.dev https://blackjack-raid-progress.lucasantoro2905.workers.dev https://blackjack-community-stats.lucasantoro2905.workers.dev https://blackjack-community-diary.lucasantoro2905.workers.dev https://blackjack-recruiting.lucasantoro2905.workers.dev https://blackjack-wow-model-assets.lucasantoro2905.workers.dev https://wow.zamimg.com https://cdn.jsdelivr.net; frame-src https://player.twitch.tv https://challenges.cloudflare.com https://www.youtube-nocookie.com https://www.youtube.com">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Ace of Spades | Team raid Blackjack</title>
-  <link rel="stylesheet" href="../../css/style.css">
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <meta name="description" content="Il team raid Ace of Spades: come lavoriamo, progress per difficoltà, ultima sessione e timeline dei boss.">
+  <meta name="theme-color" content="#07110f">
+  <link rel="canonical" href="https://www.blackjackguild.it/pages/high-roller/aceofspades.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Blackjack">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:title" content="Ace of Spades | Team raid Blackjack">
+  <meta property="og:description" content="Il team raid Ace of Spades: come lavoriamo, progress per difficoltà, ultima sessione e timeline dei boss.">
+  <meta property="og:url" content="https://www.blackjackguild.it/pages/high-roller/aceofspades.html">
+  <meta property="og:image" content="https://www.blackjackguild.it/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Blackjack, gilda italiana su Nemesis EU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ace of Spades | Team raid Blackjack">
+  <meta name="twitter:description" content="Il team raid Ace of Spades: come lavoriamo, progress per difficoltà, ultima sessione e timeline dei boss.">
+  <meta name="twitter:image" content="https://www.blackjackguild.it/img/og-cover.jpg">
+  <link rel="icon" href="../../img/icons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../img/icons/icon-32.png">
+  <link rel="apple-touch-icon" href="../../img/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap">
+  <link rel="stylesheet" href="../../css/style.css?v=23">
+  <script src="../../js/boot.js"></script>
+  <script src="../../js/config.js" defer></script>
+  <script src="../../js/site.js" defer></script>
+  <script src="../../js/page-progress.js" defer></script>
+<!--#/bj:head-->
 </head>
 
-<body class="page-transition blackjack-bg blackjack-bg--raid">
+<body data-nav="raider" class="blackjack-bg blackjack-bg--raid">
 
-<header>
-  <nav class="mainnav">
-    <a href="../../index.html" class="nav-brand" aria-label="Blackjack Home">
-      <img src="../../img/blackjack_logo.png" alt="Blackjack">
+<!--#bj:header-->
+<a class="skip-link" href="#contenuto">Salta al contenuto</a>
+<header class="site-header">
+  <nav class="mainnav" aria-label="Navigazione principale">
+    <a href="../../index.html" class="nav-brand">
+      <img src="../../img/blackjack_logo.png" alt="" width="56" height="56" decoding="async">
       <span>Blackjack</span>
     </a>
-    <ul>
-      <li><a href="../../index.html">Home</a></li>
-      <li><a href="../raider.html">Raider</a></li>
-      <li><a href="../spettatori.html">Spettatori</a></li>
-      <li><a href="../guide.html">Guide</a></li>
-      <li><a href="../recruiting.html">Reclutamento</a></li>
-      <li><a href="../statuto.html">Statuto</a></li>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mainnav-list">
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+      <span class="nav-toggle__text">Menu</span>
+    </button>
+    <ul class="mainnav__list" id="mainnav-list">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../../pages/raider.html" class="active" aria-current="page">Raider</a></li>
+        <li><a href="../../pages/spettatori.html">Spettatori</a></li>
+        <li><a href="../../pages/guide.html">Guide</a></li>
+        <li><a href="../../pages/recruiting.html">Reclutamento</a></li>
+        <li><a href="../../pages/statuto.html">Statuto</a></li>
     </ul>
   </nav>
 </header>
+<!--#/bj:header-->
 
 <nav class="subnav">
   <ul>
-    <li><a href="aceofspades.html" class="active">Home Team</a></li>
+    <li><a href="aceofspades.html" class="active" aria-current="page">Ace of Spades</a></li>
     <li><a href="roster-aceofspades.html">Roster</a></li>
-    <li><a href="aceofspades-progress.html">Progress</a></li>
   </ul>
 </nav>
 
 <section class="hero">
-  <div class="hero-content">
-    <div class="hero-tagline">Raid team principale</div>
-    <h2>Ace of Spades</h2>
-    <p>
-      Il team raid dei Blackjack: disciplina, costanza e una cultura di gruppo che punta
-      alla performance senza perdere lucidità e piacere di gioco.
+  <div class="hero-content hero-content--wide">
+    <div class="hero-tagline">Raid Progress</div>
+    <h1 class="hero-title">Ace of Spades</h1>
+    <p id="progress-context">
+      Progress attuale e storico del team, con selezione della campagna raid e dettaglio per difficoltà.
     </p>
 
-    <div class="hero-stats">
-      <div class="stat-chip">
-        <span class="stat-chip__value">Roster</span>
-        <span class="stat-chip__label">compatto e ordinato</span>
-      </div>
-      <div class="stat-chip">
-        <span class="stat-chip__value">Review</span>
-        <span class="stat-chip__label">dopo le sessioni chiave</span>
-      </div>
-      <div class="stat-chip">
-        <span class="stat-chip__value">Focus</span>
-        <span class="stat-chip__label">Heroic rapido e Mythic progress</span>
+    <div class="hero-actions">
+      <a href="https://raider.io/guilds/eu/nemesis/Blackjack" target="_blank" rel="noopener noreferrer" class="button-primary">Raider.IO gilda</a>
+      <a href="https://www.warcraftlogs.com/guild/id/808206" target="_blank" rel="noopener noreferrer" class="button-secondary">Warcraft Logs gilda</a>
+    </div>
+
+    <div class="metric-grid" id="progress-metrics">
+      <div class="metric-card">
+        <span class="metric-card__value">...</span>
+        <span class="metric-card__label">Caricamento progress</span>
       </div>
     </div>
   </div>
 </section>
 
 <div class="bg-container bg-aceofspades-logo">
-  <main class="panel">
+  <main id="contenuto" class="panel progress-panel">
 
-    <section class="split-layout">
-      <div class="section-shell">
-        <div class="section-head">
-          <div class="eyebrow">Chi siamo</div>
-          <h2 class="section-title">Un team costruito per durare</h2>
+    <section class="band" aria-labelledby="chi-siamo-title">
+      <div class="band-head">
+        <p class="eyebrow">Il team</p>
+        <h2 class="section-title" id="chi-siamo-title">Come lavoriamo</h2>
+      </div>
+
+      <div class="grid-cards">
+        <article class="card">
+          <h3>Pull puliti</h3>
+          <p>Responsabilità individuale chiara, niente scuse collettive.</p>
+        </article>
+        <article class="card">
+          <h3>Voice essenziale</h3>
+          <p>Si parla quando serve. Il resto è rumore che costa pull.</p>
+        </article>
+        <article class="card">
+          <h3>Testa ferma</h3>
+          <p>Quando il progress rallenta il tono non cambia.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-shell">
+      <div class="progress-toolbar">
+        <div class="progress-toolbar__copy">
+          <div class="eyebrow">Raid History</div>
+          <h2 class="section-title">Progress del raid</h2>
           <p class="section-subtitle">
-            Un team raid che punta a crescere con continuità, ordine e una identità molto chiara.
+            La pagina apre sempre la campagna raid attuale. Dal menu puoi passare allo storico senza cambiare pagina.
           </p>
         </div>
 
-        <p class="description-long">
-          Gli <strong>Ace of Spades</strong> sono il gruppo raid dei Blackjack:
-          giocatori affidabili che puntano a un clear Heroic veloce e a un progress Mythic coerente,
-          con attenzione alla preparazione, alla review e alla qualità delle chiamate.
-        </p>
+        <div class="progress-picker">
+          <label for="raid-selector">Raid e stagione</label>
+          <select id="raid-selector" class="progress-select" aria-label="Seleziona la campagna raid da visualizzare">
+            <option value="">Caricamento...</option>
+          </select>
+        </div>
       </div>
 
-      <aside class="panel-callout">
-        <div class="eyebrow">Stile di gioco</div>
-        <h3>Cosa ci caratterizza</h3>
-        <ul class="check-list">
-          <li><strong>Pull puliti</strong> e responsabilità individuale chiara.</li>
-          <li><strong>Comunicazione essenziale</strong> per evitare rumore inutile.</li>
-          <li><strong>Mentalità stabile</strong> anche quando la progressione rallenta.</li>
-        </ul>
-      </aside>
+      <div class="progress-switcher" id="progress-view-tabs" role="tablist" aria-label="Vista progress">
+        <button type="button" class="is-active" data-view="overview" role="tab" aria-selected="true">Riepilogo</button>
+        <button type="button" data-view="normal" role="tab" aria-selected="false">Normal</button>
+        <button type="button" data-view="heroic" role="tab" aria-selected="false">Heroic</button>
+        <button type="button" data-view="mythic" role="tab" aria-selected="false">Mythic</button>
+      </div>
+
+      <div class="progress-view-shell" id="progress-view">
+        Sto caricando...
+      </div>
+      <p class="progress-view-explainer" id="progress-view-explainer"></p>
     </section>
 
-    <section>
-      <div class="section-head section-head--center">
-        <div class="eyebrow">Sezioni utili</div>
-        <h2 class="section-title">Segui il team senza perderti</h2>
+    <section class="section-shell">
+      <div class="section-head">
+        <div class="eyebrow">Last Raid</div>
+        <h2 class="section-title" id="last-session-title">Ultima sessione registrata</h2>
         <p class="section-subtitle">
-          Tutto ciò che serve per seguire il team: roster, progress e stato delle ultime serate.
+          Ultimo report disponibile per la campagna selezionata, con timeline dei boss e link rapidi ai riferimenti utili.
         </p>
       </div>
 
-      <div class="hub-grid">
-        <article class="hub-card">
-          <h3>Roster</h3>
-          <p>
-            Mappa del team divisa per ruolo, con profili compatti e accesso rapido ai link dei player.
-          </p>
-          <a href="roster-aceofspades.html" class="team-btn">Apri il roster</a>
+      <div class="progress-session-grid">
+        <article class="session-summary-card" id="last-session-summary">
+          Caricamento sessione...
         </article>
 
-        <article class="hub-card">
-          <h3>Progress</h3>
-          <p>
-            Stato del raid, cronologia delle ultime serate, report e roster registrato dall'ultima sessione.
-          </p>
-          <a href="aceofspades-progress.html" class="team-btn">Apri il progress</a>
+        <article class="widget-card progress-links-card">
+          <h3 class="widget-title">Riferimenti utili</h3>
+          <p class="widget-desc">Link rapidi per il raid visualizzato.</p>
+          <div class="progress-link-list">
+            <a href="https://raider.io/guilds/eu/nemesis/Blackjack" target="_blank" rel="noopener noreferrer" class="armory-link">Raider.IO gilda</a>
+            <a href="https://www.warcraftlogs.com/guild/id/808206" target="_blank" rel="noopener noreferrer" class="armory-link">Warcraft Logs gilda</a>
+            <a id="last-session-report-link" href="#" target="_blank" rel="noopener noreferrer" class="armory-link hidden">Ultimo report</a>
+          </div>
         </article>
+
+        <article class="live-raid-card" id="live-raid-card">
+          <div class="live-status-pill live-status-offline" id="live-status-pill">
+            <span class="live-dot"></span> Offline
+          </div>
+          <h3 class="widget-title">Diretta raid Twitch</h3>
+          <p class="live-description" id="live-description">
+            La diretta appare qui appena il canale va live.
+          </p>
+          <div class="live-player-shell" id="live-player-shell"></div>
+        </article>
+      </div>
+
+      <div class="progress-boss-shell">
+        <div class="progress-boss-shell__header">
+          <h3>Timeline boss dell'ultima serata</h3>
+          <p>Ogni riga mostra i pull in orizzontale. Passa il mouse sui pallini per vedere percentuale, durata e difficoltà del tentativo.</p>
+        </div>
+        <div class="dot-timeline-container" id="dot-timeline"></div>
+      </div>
+    </section>
+
+  
+    <section class="band" aria-labelledby="roster-cta-title">
+      <div class="band-head">
+        <p class="eyebrow">Chi c'è</p>
+        <h2 class="section-title" id="roster-cta-title">I ventinove del tavolo</h2>
+      </div>
+      <div class="hero-actions">
+        <a class="button-primary" href="roster-aceofspades.html">Apri il roster</a>
+        <a class="button-secondary" href="../recruiting.html">Candidati al team</a>
       </div>
     </section>
 
   </main>
 </div>
 
-<footer>
-  <p>&copy; 2026 Blackjack | Ace of Spades</p>
+<!--#bj:footer-->
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__brand">
+      <img src="../../img/blackjack_logo.png" alt="" width="48" height="48" loading="lazy" decoding="async">
+      <div>
+        <strong>Blackjack</strong>
+        <p>Gilda italiana su Nemesis EU. Raid progress, Mythic+ e una community attiva tutti i giorni.</p>
+      </div>
+    </div>
+    <nav class="site-footer__nav" aria-label="Mappa del sito">
+      <div>
+        <h2 class="site-footer__title">Gilda</h2>
+        <ul>
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="../../pages/statuto.html">Statuto</a></li>
+          <li><a href="../../pages/recruiting.html">Reclutamento</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Raid</h2>
+        <ul>
+          <li><a href="../../pages/high-roller/aceofspades.html">Ace of Spades</a></li>
+          <li><a href="../../pages/high-roller/roster-aceofspades.html">Roster</a></li>
+          <li><a href="../../pages/recruiting.html">Candidati</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Community</h2>
+        <ul>
+          <li><a href="../../pages/spettatori.html">Spettatori</a></li>
+          <li><a href="../../pages/spettatori.html#diario">Diario</a></li>
+          <li><a href="../../pages/guide.html">Guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">Fuori dal sito</h2>
+        <ul>
+          <li><a href="https://raider.io/guilds/eu/nemesis/Blackjack" target="_blank" rel="noopener noreferrer">Raider.IO</a></li>
+          <li><a href="https://www.warcraftlogs.com/guild/id/808206" target="_blank" rel="noopener noreferrer">Warcraft Logs</a></li>
+          <li><a href="https://www.twitch.tv/londe83" target="_blank" rel="noopener noreferrer">Twitch</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="site-footer__bottom">
+    <p>&copy; <span data-current-year>2026</span> Blackjack &middot; Gilda italiana su Nemesis EU</p>
+    <a class="button-ghost" data-discord-link data-root-prefix="../../" href="../../pages/recruiting.html">Entra in gilda</a>
+  </div>
 </footer>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  document.body.classList.add("page-loaded");
-});
-
-document.querySelectorAll("a").forEach(link => {
-  if (link.hostname === window.location.hostname) {
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
-      const href = this.getAttribute("href");
-      document.body.classList.remove("page-loaded");
-      setTimeout(() => { window.location.href = href; }, 300);
-    });
-  }
-});
-</script>
+<!--#/bj:footer-->
 
 </body>
 </html>

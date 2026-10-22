@@ -116,7 +116,8 @@ def update_custom_fields(target: dict, args: argparse.Namespace, interactive: bo
     if args.clear_image:
         target["customImage"] = ""
     elif args.image is not None:
-        target["customImage"] = args.image
+        # Sul web il separatore e sempre "/", anche se il path arriva da Windows.
+        target["customImage"] = args.image.replace("\\", "/")
     elif interactive:
         target["customImage"] = prompt_text("Immagine personalizzata URL/path (vuoto = nessuna)", current_image)
 
