@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /content/
+Disallow: /data/
+Disallow: /workers/
+Disallow: /scripts/
+
+Sitemap: https://www.blackjackguild.it/sitemap.xml
