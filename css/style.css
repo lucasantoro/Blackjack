@@ -7281,3 +7281,165 @@ main.panel > section,
 .hero:not(.hero--home) p {
   font-size: clamp(0.98rem, 1.6vw, 1.1rem);
 }
+
+/* =========================================================
+   LISTA "IN ONDA": verticale e in tema
+   Prima a schermo stretto diventava una fila orizzontale da
+   scorrere, con card che non somigliavano al resto del sito.
+   ========================================================= */
+
+.stage-list {
+  gap: 0;
+  max-height: none;
+  overflow: visible;
+  border-top: 1px solid rgba(197, 224, 207, 0.1);
+}
+
+.stage-list__item {
+  border-bottom: 1px solid rgba(197, 224, 207, 0.1);
+}
+
+.stage-list__button {
+  grid-template-columns: 92px 1fr;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 10px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  text-align: left;
+  transition: background 0.2s ease, padding-left 0.2s ease;
+}
+
+.stage-list__button:hover,
+.stage-list__button:focus-visible,
+.stage-list__button.is-current {
+  transform: none;
+  background: rgba(20, 31, 29, 0.85);
+  padding-left: 16px;
+  border: 0;
+}
+
+.stage-list__button.is-current {
+  box-shadow: inset 3px 0 0 var(--accent-2);
+}
+
+.stage-list__thumb {
+  border-radius: 2px;
+}
+
+.stage-list__body {
+  text-align: left;
+  justify-items: start;
+}
+
+.stage-list__title {
+  font-size: 0.88rem;
+}
+
+@media (max-width: 900px) {
+  /* Resta una colonna anche in verticale: niente scorrimento laterale. */
+  .stage-list {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    overflow-x: visible;
+    padding-bottom: 0;
+    margin-top: 18px;
+  }
+
+  .stage-list__button {
+    grid-template-columns: 92px 1fr;
+  }
+}
+
+/* =========================================================
+   "COSA E SUCCESSO": mosaico, non elenco
+   Era una colonna di righe a tutta larghezza: tanta altezza
+   per poca informazione.
+   ========================================================= */
+
+.pulse-feed {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px;
+}
+
+.pulse-tile {
+  display: block;
+}
+
+.pulse-tile.is-revealing {
+  animation: pulseIn 0.45s ease both;
+}
+
+.pulse-tile__link {
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: 7px;
+  height: 100%;
+  padding: 18px 16px;
+  text-align: center;
+  color: inherit;
+  border: 1px solid rgba(197, 224, 207, 0.1);
+  border-radius: 3px;
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  background: var(--ink-2);
+  transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+}
+
+.pulse-tile__link:hover,
+.pulse-tile__link:focus-visible {
+  color: inherit;
+  transform: translateY(-3px);
+  border-color: var(--hairline);
+  background: rgba(20, 31, 29, 0.92);
+}
+
+.pulse-tile__body {
+  display: grid;
+  gap: 3px;
+  justify-items: center;
+}
+
+.pulse-tile__title {
+  font-size: 0.96rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--white);
+}
+
+.pulse-tile__meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.pulse-tile__when {
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(148, 165, 157, 0.85);
+}
+
+/* Il fatto in evidenza diventa una fascia bassa invece di un riquadro alto. */
+.pulse-lead__link {
+  display: grid;
+  gap: 10px;
+  padding: clamp(18px, 2.4vw, 26px);
+}
+
+.pulse-lead__title {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+.pulse-lead__stats {
+  margin-top: 8px;
+}
+
+.pulse-lead__stats li {
+  padding: 7px 14px;
+}
+
+.pulse-lead__stats strong {
+  font-size: 1rem;
+}

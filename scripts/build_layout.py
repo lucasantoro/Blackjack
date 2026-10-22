@@ -162,7 +162,7 @@ def build_head(path, nav, title, desc, scripts):
         '  <link rel="preconnect" href="https://fonts.googleapis.com">',
         '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
         '  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap">',
-        '  <link rel="stylesheet" href="%scss/style.css?v=23">' % r,
+        '  <link rel="stylesheet" href="%scss/style.css?v=24">' % r,
         '  <script src="%sjs/boot.js"></script>' % r,
         '  <script src="%sjs/config.js" defer></script>' % r,
         '  <script src="%sjs/site.js" defer></script>' % r,

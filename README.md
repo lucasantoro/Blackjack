@@ -140,7 +140,16 @@ dati remoti.
 
 ### Da fare dopo questa revisione
 
-1. **Redeploy di `blackjack-recruiting`**: l'etichetta del messaggio Discord ora
+1. **Redeploy di `blackjack-raid-progress`** (il file `-unified`): ho aggiunto
+   **Kith'ix** alla lista boss di *The Venomous Abyss*. Il catalogo delle
+   campagne è scritto a mano nel worker: finché non lo ridistribuisci, i pull
+   su Kith'ix non vengono conteggiati nel progress (in home compare lo stesso,
+   letto dal titolo del report).
+
+   Ogni volta che il tier riceve un boss nuovo va aggiunto lì, in
+   `RAID_CAMPAIGNS`.
+
+2. **Redeploy di `blackjack-recruiting`**: l'etichetta del messaggio Discord ora
    è "Disponibilità" con l'accento.
 
    Attenzione: `workers/cloudflare/` è in `.gitignore`, quindi i Worker non
@@ -148,16 +157,13 @@ dati remoti.
    lavori da un'altra macchina non la trovi, e senza redeploy il messaggio su
    Discord resta quello vecchio.
 
-2. **Invito Discord** in `js/config.js` (`links.discord`).
+3. **Invito Discord** in `js/config.js` (`links.discord`).
 
-3. **Autore del cinematic**: in `data/guild-videos.json` il campo `author` del
-   video di Ula'tek è vuoto perché non so chi l'ha montato. Riempilo con:
+4. ~~Autore del cinematic~~ fatto: Zasty.
 
-   ```powershell
-   python .\scripts\add_guild_video.py --list
-   ```
-
-   e poi modifica il campo a mano nel JSON.
+5. **Vecchio file**: `workers/cloudflare/blackjack-raid-progress.js` è una
+   versione superata (quella in uso è `-unified`, come dichiara
+   `workerVersion` nelle risposte). Si può eliminare.
 
 ## Guide Achievement e Collezioni
 

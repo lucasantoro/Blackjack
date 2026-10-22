@@ -98,7 +98,44 @@
     });
 
     out.sort(function (a, b) { return b.weight - a.weight; });
-    return out.slice(0, 4);
+    if (out.length) return out.slice(0, 4);
+
+    // Nessun boss combacia: succede quando il tier riceve un boss nuovo
+    // che il catalogo del worker non conosce ancora. Il titolo del report
+    // lo dice comunque, quindi la serata non sparisce dalla bacheca.
+    return fromReportTitle(session, when, url);
+  }
+
+  function fromReportTitle(session, when, url) {
+    var title = String((session.latestReport || session.report || {}).title || "");
+    if (!title) return [];
+
+    // Formato tipico: "2026-10-22 The Unbinding of Kith'ix - Kith'ix (Kill, 15 pulls)"
+    var killMatch = title.match(/\((kill|wipe)[^)]*?(\d+)\s*pull/i);
+    var head = title.replace(/^\d{4}-\d{2}-\d{2}\s*/, "").replace(/\s*\([^)]*\)\s*$/, "").trim();
+    var parts = head.split(/\s+-\s+/);
+    var boss = (parts.length > 1 ? parts[parts.length - 1] : head).trim();
+    var place = parts.length > 1 ? parts.slice(0, -1).join(" - ").trim() : "";
+    if (!boss) return [];
+
+    var killed = killMatch && /kill/i.test(killMatch[1]);
+    var pulls = killMatch ? Number(killMatch[2]) : 0;
+    var stats = [];
+    if (pulls) stats.push({ value: String(pulls), label: "pull" });
+    if (killed) stats.push({ value: "Kill", label: "esito" });
+
+    return [{
+      type: "raid",
+      kill: killed,
+      pulls: pulls,
+      weight: killed ? 3 : 1,
+      kicker: killed ? "Boss chiuso" : "Serata di raid",
+      title: killed ? boss + " è andato giù" : boss + ", si continua",
+      meta: place,
+      stats: stats,
+      date: when,
+      href: url
+    }];
   }
 
   // Se l'ultimo report appartiene a un raid diverso dalla campagna aperta,
@@ -563,10 +600,10 @@
   }
 
   function renderRow(item) {
-    var li = el("li", "pulse-row");
+    var li = el("li", "pulse-tile");
     li.setAttribute("data-type", item.type);
 
-    var link = el("a", "pulse-row__link");
+    var link = el("a", "pulse-tile__link");
     setLink(link, item.href);
     if (item.videoId) {
       link.addEventListener("click", function (event) {
@@ -578,16 +615,16 @@
       });
     }
 
-    link.appendChild(el("span", "pulse-pill pulse-row__pill pulse-pill--" + item.type, TYPES[item.type].label));
+    link.appendChild(el("span", "pulse-pill pulse-tile__pill pulse-pill--" + item.type, TYPES[item.type].label));
 
-    var body = el("span", "pulse-row__body");
-    body.appendChild(el("span", "pulse-row__title", item.title));
-    if (item.meta) body.appendChild(el("span", "pulse-row__meta", item.meta));
+    var body = el("span", "pulse-tile__body");
+    body.appendChild(el("span", "pulse-tile__title", item.title));
+    if (item.meta) body.appendChild(el("span", "pulse-tile__meta", item.meta));
     link.appendChild(body);
 
     var when = BJ.relativeTime(item.date);
     if (when) {
-      var time = el("time", "pulse-row__when", when);
+      var time = el("time", "pulse-tile__when", when);
       var parsed = BJ.toDate(item.date);
       if (parsed) {
         time.dateTime = parsed.toISOString();
@@ -676,7 +713,7 @@
     if (!rows.length && !visible.length) {
       feed.appendChild(el("li", "pulse-empty", "Niente da mostrare in questa categoria."));
     } else {
-      rows.slice(0, 7).forEach(function (item, index) {
+      rows.slice(0, 6).forEach(function (item, index) {
         var row = renderRow(item);
         if (motionOk) {
           row.style.animationDelay = (index * 45) + "ms";
