@@ -7443,3 +7443,921 @@ main.panel > section,
 .pulse-lead__stats strong {
   font-size: 1rem;
 }
+
+/* =========================================================
+   RAID ROSTER — PRO TEAM DASHBOARD
+   ========================================================= */
+
+.roster-layout,
+.roster-layout * {
+  box-sizing: border-box;
+}
+
+.roster-layout {
+  gap: clamp(22px, 3vw, 36px);
+  text-align: left;
+}
+
+.roster-overview {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(430px, 0.85fr);
+  gap: clamp(24px, 4vw, 52px);
+  align-items: center;
+  overflow: hidden;
+  padding: clamp(28px, 4vw, 50px);
+  border: 1px solid rgba(197, 224, 207, 0.14);
+  background:
+    linear-gradient(105deg, rgba(9, 16, 15, 0.98) 0%, rgba(11, 24, 20, 0.94) 54%, rgba(16, 31, 26, 0.88) 100%),
+    radial-gradient(circle at 85% 5%, rgba(126, 255, 168, 0.18), transparent 32%);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.3);
+}
+
+.roster-overview::before {
+  content: "A♠";
+  position: absolute;
+  right: clamp(20px, 4vw, 60px);
+  top: 50%;
+  z-index: 0;
+  transform: translateY(-52%) rotate(-7deg);
+  color: rgba(126, 255, 168, 0.035);
+  font-family: "Cinzel", Georgia, serif;
+  font-size: clamp(9rem, 18vw, 18rem);
+  font-weight: 900;
+  line-height: 0.8;
+  pointer-events: none;
+}
+
+.roster-overview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(90deg, transparent, #000 65%, transparent);
+  pointer-events: none;
+}
+
+.roster-overview__identity,
+.roster-overview__metrics {
+  position: relative;
+  z-index: 1;
+}
+
+.roster-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #a8ffc8;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.roster-kicker i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #7effa8;
+  box-shadow: 0 0 0 5px rgba(126, 255, 168, 0.1), 0 0 18px rgba(126, 255, 168, 0.7);
+}
+
+.roster-overview__identity h2 {
+  margin: 12px 0 10px;
+  font-size: clamp(2rem, 4.5vw, 4.25rem);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+}
+
+.roster-overview__identity p {
+  max-width: 680px;
+  margin: 0;
+  color: #b8c8c0;
+  font-size: clamp(0.95rem, 1.3vw, 1.08rem);
+  line-height: 1.65;
+}
+
+.roster-overview__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.roster-overview__metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.roster-metric {
+  position: relative;
+  display: grid;
+  min-height: 126px;
+  align-content: end;
+  padding: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(4, 10, 9, 0.58);
+  backdrop-filter: blur(10px);
+}
+
+.roster-metric::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: var(--metric-color, #7effa8);
+  opacity: 0.78;
+}
+
+.roster-metric--total {
+  grid-column: 1 / -1;
+  min-height: 100px;
+  --metric-color: #f0c868;
+}
+
+.roster-metric--tank { --metric-color: #7bc2ff; }
+.roster-metric--healer { --metric-color: #7effa8; }
+.roster-metric--dps { --metric-color: #f0c868; }
+
+.roster-metric__role {
+  position: absolute;
+  right: 12px;
+  top: 6px;
+  color: var(--metric-color);
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  opacity: 0.09;
+}
+
+.roster-metric__value {
+  color: var(--white);
+  font-family: "Cinzel", Georgia, serif;
+  font-size: clamp(1.9rem, 3vw, 3rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.roster-metric__label {
+  margin-top: 7px;
+  color: #91a69c;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.roster-intelligence {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(350px, 0.85fr);
+  gap: 18px;
+}
+
+.roster-composition,
+.roster-utility {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid rgba(197, 224, 207, 0.12);
+  background: rgba(9, 15, 14, 0.82);
+}
+
+.roster-panel-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.roster-panel-heading span,
+.roster-role-section__title > div > span {
+  color: #70867b;
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.roster-panel-heading h3,
+.roster-role-section__title h3 {
+  margin: 4px 0 0;
+  font-size: 1.35rem;
+}
+
+.roster-panel-heading > strong {
+  color: var(--accent-2);
+  font-size: 0.82rem;
+}
+
+.roster-bar {
+  min-height: 68px;
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.roster-bar__seg {
+  position: relative;
+  transition: filter 0.2s ease, flex-grow 0.35s ease;
+}
+
+.roster-bar__seg:hover {
+  filter: brightness(1.25);
+}
+
+.class-chips {
+  margin-top: 18px;
+}
+
+.class-chip {
+  border-radius: 5px;
+  background: rgba(255,255,255,.025);
+}
+
+.utility-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.utility-item {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 54px;
+  padding: 9px 10px;
+  border: 1px solid rgba(255,255,255,.07);
+  background: rgba(255,255,255,.025);
+}
+
+.utility-item__state {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+
+.utility-item.is-covered .utility-item__state {
+  background: rgba(126, 255, 168, 0.14);
+  color: #7effa8;
+}
+
+.utility-item.is-missing .utility-item__state {
+  background: rgba(255, 106, 99, 0.12);
+  color: #ff8d87;
+}
+
+.utility-item strong,
+.utility-item small {
+  display: block;
+}
+
+.utility-item strong {
+  color: #e8f0ec;
+  font-size: 0.78rem;
+}
+
+.utility-item small {
+  margin-top: 2px;
+  overflow: hidden;
+  color: #82948b;
+  font-size: 0.66rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.roster-toolbar {
+  position: sticky;
+  top: 78px;
+  z-index: 25;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.4fr) auto;
+  gap: 18px;
+  align-items: end;
+  margin: 0;
+  padding: 16px 18px;
+  border: 1px solid rgba(197, 224, 207, 0.13);
+  background: rgba(7, 12, 11, 0.92);
+  box-shadow: 0 14px 34px rgba(0,0,0,.26);
+  backdrop-filter: blur(18px);
+}
+
+.roster-toolbar__search label,
+.roster-class-filter > span {
+  display: block;
+  margin-bottom: 7px;
+  color: #84978e;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.roster-search,
+.roster-class-filter select {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 13px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 4px;
+  background: #0b1210;
+  color: var(--white);
+  font: inherit;
+  outline: none;
+}
+
+.roster-search:focus,
+.roster-class-filter select:focus {
+  border-color: rgba(126,255,168,.55);
+  box-shadow: 0 0 0 3px rgba(126,255,168,.09);
+}
+
+.roster-toolbar__controls {
+  display: flex;
+  gap: 14px;
+  align-items: end;
+}
+
+.roster-filters {
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+.filter-chip {
+  min-height: 44px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.filter-chip:hover,
+.filter-chip.is-active {
+  transform: none;
+  border-color: rgba(126,255,168,.42);
+  background: rgba(126,255,168,.1);
+}
+
+.roster-class-filter {
+  min-width: 180px;
+}
+
+.roster-result-count {
+  min-width: 112px;
+  margin: 0 0 13px;
+  color: #84978e;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.roster-shell {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.roster-role-section {
+  position: relative;
+  padding: clamp(24px, 3vw, 36px) 0 0;
+  border-top: 1px solid rgba(197, 224, 207, 0.13);
+}
+
+.roster-role-section + .roster-role-section {
+  margin-top: clamp(32px, 5vw, 60px);
+}
+
+.roster-role-section__header {
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.roster-role-section__title {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.roster-role-section__index {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid currentColor;
+  color: var(--role-color, #f0c868);
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.roster-role-section--tank { --role-color: #7bc2ff; }
+.roster-role-section--healer { --role-color: #7effa8; }
+.roster-role-section--dps { --role-color: #f0c868; }
+
+.roster-role-section__title p {
+  margin: 5px 0 0;
+  color: #8ca097;
+  font-size: 0.82rem;
+}
+
+.roster-role-section__count {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--role-color);
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 2.1rem;
+  line-height: 1;
+}
+
+.roster-role-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.roster-role-section--tank .roster-role-grid,
+.roster-role-section--healer .roster-role-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.roster-role-section--tank .member-card__open,
+.roster-role-section--healer .member-card__open {
+  grid-template-columns: 168px minmax(0, 1fr);
+}
+
+.member-card--pro {
+  --class-color: #7effa8;
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgba(197, 224, 207, 0.11);
+  border-radius: 0;
+  background: #0b1211;
+  box-shadow: 0 18px 45px rgba(0,0,0,.2);
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+.member-card--pro::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 3;
+  width: 3px;
+  background: var(--class-color);
+}
+
+.member-card--pro:hover,
+.member-card--pro:focus-within {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--class-color) 48%, transparent);
+  box-shadow: 0 24px 60px rgba(0,0,0,.34);
+}
+
+.member-card__open {
+  display: grid;
+  grid-template-columns: 138px minmax(0, 1fr);
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.member-card__open:focus-visible {
+  outline: 2px solid var(--class-color);
+  outline-offset: -3px;
+}
+
+.member-card--pro .member-card__media {
+  position: relative;
+  display: block;
+  min-height: 228px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--class-color) 20%, transparent), transparent 45%),
+    linear-gradient(160deg, #101a17, #060b09 72%);
+}
+
+.member-card--pro .member-card__media img,
+.member-card--pro .member-card__media video,
+.member-card--pro .member-card__fallback {
+  width: 100%;
+  height: 100%;
+  min-height: 228px;
+  border: 0;
+  border-radius: 0;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform .45s ease, filter .3s ease;
+}
+
+.member-card--pro .member-card__media .member-media--armory {
+  object-fit: cover;
+  object-position: center center;
+  transform: scale(1.45);
+  filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.48));
+}
+
+.member-card--pro .member-card__media .member-media--custom {
+  object-fit: cover;
+  object-position: center top;
+}
+
+.member-card--pro:hover .member-card__media img,
+.member-card--pro:hover .member-card__media video {
+  transform: scale(1.045);
+}
+
+.member-card--pro:hover .member-card__media .member-media--custom {
+  filter: contrast(1.05) saturate(1.08);
+}
+
+.member-card--pro:hover .member-card__media .member-media--armory {
+  transform: scale(1.55);
+  filter: drop-shadow(0 14px 17px rgba(0, 0, 0, 0.58));
+}
+
+.member-card__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 56%, rgba(11,18,17,.9) 100%), linear-gradient(0deg, rgba(0,0,0,.35), transparent 45%);
+  pointer-events: none;
+}
+
+.member-card--pro .member-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 18px 17px 16px;
+}
+
+.member-card__eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: #7f9188;
+  font-size: .68rem;
+  font-weight: 700;
+}
+
+.member-card__eyebrow .role-badge {
+  min-height: 24px;
+  padding: 4px 8px;
+  font-size: .62rem;
+}
+
+.member-card__identity {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 9px;
+  align-items: center;
+}
+
+.member-card__identity strong,
+.member-card__identity small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.member-card__identity strong {
+  color: var(--white);
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 1.15rem;
+  line-height: 1.1;
+}
+
+.member-card__identity small {
+  margin-top: 4px;
+  color: var(--class-color);
+  font-size: .7rem;
+}
+
+.member-card__tagline {
+  color: #d8e3de;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.member-card--pro .member-card__snippet {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: #91a39a;
+  font-size: .78rem;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.member-card__cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 9px;
+  border-top: 1px solid rgba(255,255,255,.07);
+  color: var(--class-color);
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.member-card--pro .member-card__footer {
+  min-height: 42px;
+  padding: 7px 12px 7px 15px;
+  border-top: 1px solid rgba(255,255,255,.07);
+  background: rgba(0,0,0,.16);
+}
+
+.member-card--pro .member-card__footer a {
+  color: #9aacA3;
+  font-size: .66rem;
+  font-weight: 900;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.member-card--pro .member-card__footer a:hover {
+  color: var(--white);
+}
+
+.member-card--pro .member-card__footer img {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 0;
+  object-fit: contain;
+}
+
+.member-card--pro[data-class="deathknight"] { --class-color: #c41e3a; }
+.member-card--pro[data-class="demonhunter"] { --class-color: #a330c9; }
+.member-card--pro[data-class="druid"]       { --class-color: #ff7c0a; }
+.member-card--pro[data-class="evoker"]      { --class-color: #33937f; }
+.member-card--pro[data-class="hunter"]      { --class-color: #aad372; }
+.member-card--pro[data-class="mage"]        { --class-color: #3fc7eb; }
+.member-card--pro[data-class="monk"]        { --class-color: #00ff98; }
+.member-card--pro[data-class="paladin"]     { --class-color: #f48cba; }
+.member-card--pro[data-class="priest"]      { --class-color: #e8eef0; }
+.member-card--pro[data-class="rogue"]       { --class-color: #fff468; }
+.member-card--pro[data-class="shaman"]      { --class-color: #0070dd; }
+.member-card--pro[data-class="warlock"]     { --class-color: #8788ee; }
+.member-card--pro[data-class="warrior"]     { --class-color: #c69b6d; }
+
+body.roster-drawer-open {
+  overflow: hidden;
+}
+
+.roster-drawer[hidden] {
+  display: none;
+}
+
+.roster-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+.roster-drawer__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  border: 0;
+  background: rgba(0, 0, 0, 0.68);
+  opacity: 0;
+  cursor: default;
+  backdrop-filter: blur(5px);
+  transition: opacity .24s ease;
+}
+
+.roster-drawer__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(560px, 94vw);
+  overflow-y: auto;
+  border-left: 1px solid rgba(197,224,207,.17);
+  background: #09100e;
+  box-shadow: -30px 0 80px rgba(0,0,0,.48);
+  transform: translateX(102%);
+  transition: transform .3s cubic-bezier(.22,.8,.2,1);
+}
+
+.roster-drawer.is-open .roster-drawer__backdrop { opacity: 1; }
+.roster-drawer.is-open .roster-drawer__panel { transform: translateX(0); }
+
+.roster-drawer__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 50%;
+  background: rgba(0,0,0,.54);
+  color: var(--white);
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.roster-profile__media {
+  --class-color: #7effa8;
+  position: relative;
+  height: min(48vh, 440px);
+  overflow: hidden;
+  border-bottom: 3px solid var(--class-color);
+  background:
+    radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--class-color) 22%, transparent), transparent 48%),
+    linear-gradient(160deg, #111c18, #050a08 74%);
+}
+
+.roster-profile__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #09100e 0%, transparent 48%);
+}
+
+.roster-profile__media img,
+.roster-profile__media video,
+.roster-profile__media .member-card__fallback {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  border: 0;
+  border-radius: 0;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.roster-profile__media .member-media--armory {
+  object-fit: cover;
+  object-position: center center;
+  transform: scale(1.2);
+  filter: drop-shadow(0 18px 20px rgba(0, 0, 0, 0.55));
+}
+
+.roster-profile__media .member-media--custom {
+  object-fit: cover;
+  object-position: center top;
+}
+
+.roster-profile__media[data-class="deathknight"] { --class-color: #c41e3a; }
+.roster-profile__media[data-class="demonhunter"] { --class-color: #a330c9; }
+.roster-profile__media[data-class="druid"]       { --class-color: #ff7c0a; }
+.roster-profile__media[data-class="evoker"]      { --class-color: #33937f; }
+.roster-profile__media[data-class="hunter"]      { --class-color: #aad372; }
+.roster-profile__media[data-class="mage"]        { --class-color: #3fc7eb; }
+.roster-profile__media[data-class="monk"]        { --class-color: #00ff98; }
+.roster-profile__media[data-class="paladin"]     { --class-color: #f48cba; }
+.roster-profile__media[data-class="priest"]      { --class-color: #e8eef0; }
+.roster-profile__media[data-class="rogue"]       { --class-color: #fff468; }
+.roster-profile__media[data-class="shaman"]      { --class-color: #0070dd; }
+.roster-profile__media[data-class="warlock"]     { --class-color: #8788ee; }
+.roster-profile__media[data-class="warrior"]     { --class-color: #c69b6d; }
+
+.roster-profile__content {
+  padding: clamp(24px, 5vw, 42px);
+  text-align: left;
+}
+
+.roster-profile__badges {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #84978e;
+  font-size: .75rem;
+}
+
+.roster-profile__kicker {
+  margin: 24px 0 7px;
+  color: var(--accent-2);
+  font-size: .75rem;
+  font-weight: 900;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.roster-profile__content h2 {
+  margin: 0;
+  font-size: clamp(2.3rem, 8vw, 4.2rem);
+  line-height: .96;
+}
+
+.roster-profile__spec {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  margin-top: 20px;
+  padding: 14px 0;
+  border-block: 1px solid rgba(255,255,255,.08);
+}
+
+.roster-profile__spec img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.roster-profile__spec strong,
+.roster-profile__spec small {
+  display: block;
+}
+
+.roster-profile__spec strong { color: var(--white); }
+.roster-profile__spec small { margin-top: 2px; color: #82948b; }
+
+.roster-profile__bio {
+  margin: 24px 0 0;
+  color: #cbd7d1;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.roster-profile__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+@media (max-width: 1180px) {
+  .roster-overview { grid-template-columns: 1fr; }
+  .roster-overview__metrics { max-width: 720px; }
+  .roster-intelligence { grid-template-columns: 1fr; }
+  .roster-role-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .roster-toolbar { grid-template-columns: 1fr; align-items: stretch; }
+  .roster-result-count { margin: 0; text-align: left; }
+}
+
+@media (max-width: 760px) {
+  .roster-overview { padding: 24px 18px; }
+  .roster-overview__actions { display: grid; }
+  .roster-overview__metrics { grid-template-columns: repeat(3, 1fr); }
+  .roster-metric { min-height: 102px; padding: 13px; }
+  .roster-metric--total { min-height: 84px; }
+  .roster-metric__label { font-size: .58rem; letter-spacing: .07em; }
+  .utility-grid { grid-template-columns: 1fr; }
+  .roster-toolbar { position: static; padding: 14px; }
+  .roster-toolbar__controls { display: grid; }
+  .roster-filters { display: grid; grid-template-columns: repeat(2, 1fr); }
+  .roster-class-filter { min-width: 0; }
+  .roster-role-grid { grid-template-columns: 1fr; }
+  .roster-role-section--tank .roster-role-grid,
+  .roster-role-section--healer .roster-role-grid { grid-template-columns: 1fr; }
+  .roster-role-section--tank .member-card__open,
+  .roster-role-section--healer .member-card__open { grid-template-columns: 124px minmax(0, 1fr); }
+  .roster-role-section__header { align-items: flex-start; }
+  .roster-role-section__title p { display: none; }
+  .member-card__open { grid-template-columns: 124px minmax(0, 1fr); }
+  .member-card--pro .member-card__media,
+  .member-card--pro .member-card__media img,
+  .member-card--pro .member-card__media video,
+  .member-card--pro .member-card__fallback { min-height: 214px; }
+}
+
+@media (max-width: 460px) {
+  .roster-overview__metrics { gap: 6px; }
+  .roster-metric { padding: 10px; }
+  .roster-metric__value { font-size: 1.65rem; }
+  .member-card__open { grid-template-columns: 104px minmax(0, 1fr); }
+  .member-card--pro .member-card__body { padding: 14px 12px; gap: 9px; }
+  .member-card__identity strong { font-size: 1rem; }
+  .member-card__tagline { font-size: .72rem; }
+  .member-card--pro .member-card__snippet { -webkit-line-clamp: 2; }
+  .roster-profile__media { height: 38vh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .member-card--pro,
+  .member-card--pro .member-card__media img,
+  .member-card--pro .member-card__media video,
+  .roster-drawer__backdrop,
+  .roster-drawer__panel {
+    transition: none;
+  }
+}

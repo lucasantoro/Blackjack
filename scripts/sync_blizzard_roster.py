@@ -13,6 +13,16 @@ DATA_PATH = ROOT / "data" / "aceofspades-roster.json"
 URLS_PATH = ROOT / "data" / "aceofspades-armory-urls.txt"
 USER_AGENT = "Mozilla/5.0"
 
+# The Armory reports the specialization used at logout. These overrides reflect
+# the character's actual assignment in the guild raid roster.
+ROSTER_OVERRIDES = {
+    "allenor": {"overrideClass": "Paladin", "overrideSpec": "Retribution", "overrideRole": "dps"},
+    "corondor": {"overrideClass": "Druid", "overrideSpec": "Balance", "overrideRole": "dps"},
+    "ejlin": {"overrideClass": "Monk", "overrideSpec": "Brewmaster", "overrideRole": "tank"},
+    "gearstrike": {"overrideClass": "Warrior", "overrideSpec": "Protection", "overrideRole": "tank"},
+    "trolluido": {"overrideClass": "Druid", "overrideSpec": "Restoration", "overrideRole": "healer"},
+}
+
 TAGLINES = {
     "allenor": "La luce arriva puntuale",
     "aqualara": "Calma, acqua e cure giuste",
@@ -47,6 +57,7 @@ TAGLINES = {
     "odetta": "Taglio netto, chiusura pulita",
     "ponzqt": "Numeri seri, aria rilassata",
     "preot": "Se serve ordine, arriva lui",
+    "rasal": "Luce accesa, bersaglio scelto",
     "resal": "Affila il setup e non spreca niente",
     "siodexiel": "Controllo fine, zero scene",
     "takamura": "Entra piano, lascia il segno",
@@ -59,6 +70,7 @@ TAGLINES = {
 }
 
 SUMMARIES = {
+    "arkunn": "Tiro preciso, posizione pulita e bersagli scelti con calma.",
     "baunella": "Scudi prima del danno e cure costruite attorno ai momenti pericolosi.",
     "belzeth": "Ghoul al seguito, malattie ben stese e danno che cresce con il fight.",
     "botolan": "Soffi caricati, voli rapidi e fuoco draconico dove serve.",
@@ -72,7 +84,10 @@ SUMMARIES = {
     "lokesvara": "Cure in movimento e nebbie pronte a seguire il raid ovunque.",
     "maelphas": "Accumula risorse con pazienza, poi svuota tutto nella finestra giusta.",
     "milkhalifa": "Totem e maree tengono insieme il gruppo quando il danno sale.",
+    "blabber": "Arms diretto e pesante, con ogni apertura trasformata in pressione.",
+    "rasal": "Retribution ordinato, ali al momento giusto e utility sempre presente.",
     "tylissia": "Martello e utility: spinge in melee senza dimenticare il gruppo.",
+    "trolluido": "Cure continue, movimenti puliti e il raid tenuto in piedi senza rumore.",
     "xrufezz": "Tiro scelto con calma, bersaglio giusto e distanza sempre sotto controllo.",
     "zasty": "Ali, verdetti e una soluzione molto melee a ogni problema.",
 }
@@ -130,8 +145,11 @@ BIOS = {
     "maelphas": "Maelphas tratta il mana come un budget: lo conserva, lo investe e poi lo spende tutto in pochi secondi. Se la finestra e quella giusta, il ritorno e decisamente visibile.",
     "milkhalifa": "Milkhalifa tiene sempre una marea di riserva per il momento in cui le barre vita decidono di crollare insieme. Pianta i totem, alza l'acqua e rimanda il wipe a data da destinarsi.",
     "odetta": "Odetta ha un rapporto molto semplice con le distanze: le chiude. Si muove tra le meccaniche con naturalezza e torna sul bersaglio prima che il boss possa godersi la pausa.",
+    "arkunn": "Arkunn sceglie il bersaglio con calma e lascia parlare il tiro. Dalla distanza tiene una linea pulita, cambia priorita senza perdere il ritmo e fa sembrare ogni freccia molto meno casuale di quanto il boss vorrebbe.",
+    "blabber": "Blabber non spreca parole quando puo usare un'arma a due mani. Aspetta l'apertura, entra con decisione e trasforma ogni finestra di danno in una discussione che il boss tende a perdere.",
     "preot": "Preot porta il Sacro senza fare il predicatore. Quando il danno arriva, sceglie la cura giusta, rimette in piedi chi serve e lascia che siano le barre vita a testimoniare il miracolo.",
-    "trolluido": "Trolluido guarda il cielo, consulta le stelle e poi lascia cadere il risultato sul boss. Dietro l'aria tranquilla c'e sempre un'eclissi pronta a rovinare la giornata a qualcuno.",
+    "rasal": "Rasal porta la Luce in melee con idee molto semplici: ali quando servono, martello sul bersaglio giusto e utility prima che qualcuno debba chiederla. Il risultato e un Retribution concreto, presente e difficile da ignorare.",
+    "trolluido": "Trolluido non aspetta che le barre vita chiedano aiuto: prepara le cure, lascia lavorare i suoi HoT e accompagna il raid anche quando il fight costringe tutti a muoversi. Se il gruppo supera un momento caotico con una calma quasi sospetta, probabilmente c'erano gia le sue foglie in giro.",
     "tylissia": "Tylissia porta la Luce in prima linea, senza troppi sermoni. Prima salva la situazione con un'utility, poi torna al martello come se niente fosse.",
     "xrufezz": "Xrufezz preferisce vedere tutto da lontano e scegliere con calma il punto esatto. Un bersaglio alla volta, una freccia alla volta; il resto e rumore.",
     "zasty": "Zasty non discute con il boss: presenta il verdetto. Ali accese, martello in mano e quella sana convinzione che ogni problema possa essere giudicato in melee.",
@@ -399,15 +417,21 @@ def fetch_armory_profile(url: str) -> dict:
     spec = character.get("spec") or {}
     role = ((spec.get("role") or {}).get("slug") or "unknown").lower()
 
+    realm = character["realm"]
+    realm_slug = clean_text(realm.get("slug", "")).lower()
+    realm_name = {
+        "pozzo-delleternita": "Pozzo dell'Eternità",
+    }.get(realm_slug, clean_text(realm["name"]))
+
     return {
         "name": clean_text(character["name"]),
         "slug": slugify(clean_text(character["name"])),
-        "server": clean_text(character["realm"]["name"]),
+        "server": realm_name,
         "class": clean_text(character["class"]["name"]),
         "spec": clean_text(spec.get("name", "")),
         "role": {"damage": "dps", "healer": "healer", "tank": "tank"}.get(role, "unknown"),
         "armoryUrl": url,
-        "rio": raider_io_url(clean_text(character["name"]), clean_text(character["realm"]["name"])),
+        "rio": raider_io_url(clean_text(character["name"]), realm_name),
         "sourceImage": (character.get("bust") or {}).get("url") or (character.get("avatar") or {}).get("url", ""),
     }
 
@@ -500,7 +524,7 @@ def apply_member_overrides(member: dict, preserved: dict) -> None:
 def build_member(url: str, customizations: dict[str, dict]) -> dict:
     member = fetch_armory_profile(url)
     key = normalize_name(member["name"])
-    preserved = customizations.get(key, {})
+    preserved = {**customizations.get(key, {}), **ROSTER_OVERRIDES.get(key, {})}
     apply_member_overrides(member, preserved)
 
     member.update(

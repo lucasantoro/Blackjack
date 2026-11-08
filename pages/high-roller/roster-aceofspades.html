@@ -31,11 +31,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap">
-  <link rel="stylesheet" href="../../css/style.css?v=24">
+  <link rel="stylesheet" href="../../css/style.css?v=26">
   <script src="../../js/boot.js"></script>
   <script src="../../js/config.js" defer></script>
   <script src="../../js/site.js" defer></script>
-  <script src="../../js/page-roster.js" defer></script>
+  <script src="../../js/page-roster.js?v=3" defer></script>
 <!--#/bj:head-->
 </head>
 
@@ -87,10 +87,28 @@
 
     <section class="section-shell">
       <div class="roster-layout">
-        <div class="roster-composition" id="roster-composition" hidden></div>
-        <div class="roster-toolbar">
-          <input id="roster-search" class="roster-search" type="search" placeholder="Cerca per nome, classe o server">
-          <div class="roster-filters" id="roster-filters"></div>
+        <div class="roster-overview" id="roster-overview" aria-live="polite"></div>
+
+        <div class="roster-intelligence">
+          <div class="roster-composition" id="roster-composition" hidden></div>
+          <aside class="roster-utility" id="roster-utility" hidden></aside>
+        </div>
+
+        <div class="roster-toolbar" aria-label="Filtri del roster">
+          <div class="roster-toolbar__search">
+            <label for="roster-search">Cerca un raider</label>
+            <input id="roster-search" class="roster-search" type="search" placeholder="Nome, classe, specializzazione o server" autocomplete="off">
+          </div>
+          <div class="roster-toolbar__controls">
+            <div class="roster-filters" id="roster-filters"></div>
+            <label class="roster-class-filter" for="roster-class-filter">
+              <span>Classe</span>
+              <select id="roster-class-filter">
+                <option value="all">Tutte le classi</option>
+              </select>
+            </label>
+          </div>
+          <p class="roster-result-count" id="roster-result-count" aria-live="polite"></p>
         </div>
 
         <div class="roster-shell" id="roster-container"></div>
@@ -98,6 +116,14 @@
     </section>
 
   </main>
+</div>
+
+<div class="roster-drawer" id="roster-drawer" hidden>
+  <button class="roster-drawer__backdrop" type="button" data-roster-close aria-label="Chiudi il profilo"></button>
+  <aside class="roster-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="roster-drawer-title">
+    <button class="roster-drawer__close" type="button" data-roster-close aria-label="Chiudi il profilo">&times;</button>
+    <div id="roster-drawer-content"></div>
+  </aside>
 </div>
 
 <!--#bj:footer-->

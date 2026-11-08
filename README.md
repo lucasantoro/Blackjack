@@ -165,6 +165,49 @@ dati remoti.
    versione superata (quella in uso è `-unified`, come dichiara
    `workerVersion` nelle risposte). Si può eliminare.
 
+## Scene per lo streaming
+
+Tre SVG in `img/stream/`, generati da un unico script:
+
+```powershell
+python .\scriptsuild_stream_overlays.py
+```
+
+| file | misura | uso |
+|---|---|---|
+| `starting-soon.svg` | 1920x1080 | scena di attesa prima del raid |
+| `loot.svg` | 1920x1080 | scena durante la distribuzione del loot |
+| `chat-cover.svg` | 640x300 | pannello che copre la chat di gioco |
+
+Orari, sito, realm e colori stanno nelle costanti in cima allo script: si
+cambiano li e si rilancia, le tre scene restano allineate. Il logo e
+incorporato in base64, quindi ogni file e autosufficiente.
+
+### Metterle in OBS
+
+**Image Source non legge gli SVG.** Vanno aggiunte come **Browser Source**:
+
+- sorgente locale: `file:///Z:/Blackjack/img/stream/starting-soon.svg`
+- oppure, dopo il deploy: `https://www.blackjackguild.it/img/stream/starting-soon.svg`
+
+Imposta larghezza e altezza uguali a quelle del file (1920x1080, oppure
+640x300 per la chat) e spunta *Shutdown source when not visible*.
+
+Con la Browser Source restano vettoriali a qualsiasi dimensione e le piccole
+animazioni (bagliore, puntini, aloni del loot) funzionano.
+
+### Font
+
+Il titolo usa Cinzel, caricato da Google Fonts: in OBS serve la connessione.
+Senza rete il testo ripiega su Georgia, il layout resta identico.
+
+### Se ti serve un PNG
+
+Su questa macchina non c'e un convertitore SVG (niente Inkscape, ImageMagick o
+librsvg, e ffmpeg non decodifica SVG). Le strade sono due: aprire il file in
+Chrome e fare uno screenshot a schermo intero, oppure installare Inkscape e
+usare `inkscape file.svg -o file.png -w 1920`.
+
 ## Guide Achievement e Collezioni
 
 La sezione guide parte da:
